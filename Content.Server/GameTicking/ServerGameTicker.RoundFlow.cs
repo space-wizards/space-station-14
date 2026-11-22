@@ -41,6 +41,8 @@ public sealed partial class ServerGameTicker
         "ss14_round_length",
         "Round length in seconds.");
 
+    private static readonly ProtoId<RoleTypePrototype> FamiliarRoleType = "Familiar";
+
 #if EXCEPTION_TOLERANCE
         [ViewVariables]
         private int _roundStartFailCount = 0;
@@ -496,7 +498,6 @@ public sealed partial class ServerGameTicker
         // Grab the great big book of all the Minds, we'll need them for this.
         var allMinds = EntityQueryEnumerator<MindComponent>();
         var pvsOverride = Cfg.GetCVar(CCVars.RoundEndPVSOverrides);
-        var familiarRoleType = new ProtoId<RoleTypePrototype>("Familiar");
         while (allMinds.MoveNext(out var mindId, out var mind))
         {
             // TODO don't list redundant observer roles?
@@ -534,7 +535,7 @@ public sealed partial class ServerGameTicker
 
             var roles = Role.MindGetAllRoleInfo(mindId);
             var familiar = mind.MindRoleContainer.ContainedEntities.Any(role =>
-                TryComp<MindRoleComponent>(role, out var mindRole) && mindRole.RoleType == familiarRoleType);
+                TryComp<MindRoleComponent>(role, out var mindRole) && mindRole.RoleType == FamiliarRoleType);
 
             var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
             {

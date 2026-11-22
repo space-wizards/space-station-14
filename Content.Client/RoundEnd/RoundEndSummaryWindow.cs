@@ -322,6 +322,10 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         {
             playerTypeLabel.FontColorOverride = Color.Red;
         }
+        else if (playerInfo.Familiar)
+        {
+            playerTypeLabel.FontColorOverride = Color.Cyan;
+        }
         else if (playerInfo.Observer)
         {
             playerTypeLabel.FontColorOverride = Color.Gray;
