@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
@@ -73,7 +72,7 @@ public sealed class EntityPainter
             }
 
             var rsi = layer.ActualRsi;
-            Image image;
+            Image? image;
 
             if (rsi == null || !rsi.TryGetState(layer.RsiState, out var state))
             {
@@ -81,32 +80,15 @@ public sealed class EntityPainter
             }
             else
             {
-                var key = (rsi.Path!.ToString(), state.StateId.Name!);
+                var key = (rsi.Path.ToString(), state.StateId.Name!);
 
-                if (!_images.TryGetValue(key, out image!))
+                if (!_images.TryGetValue(key, out image))
                 {
-                    var stream = _resManager.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
+                    using var stream = _resManager.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
                     image = Image.Load<Rgba32>(stream);
 
                     _images[key] = image;
                 }
-            }
-
-            image = image.CloneAs<Rgba32>();
-
-            (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
-            {
-                if (rsi is null)
-                    return (0, 0, EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
-
-                var statesX = image.Width / rsi.Size.X;
-                var statesY = image.Height / rsi.Size.Y;
-                var stateCount = statesX * statesY;
-                var frames = stateCount / _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer);
-                var target = direction * frames;
-                var targetY = target / statesX;
-                var targetX = target % statesX;
-                return (targetX * rsi.Size.X, targetY * rsi.Size.Y, rsi.Size.X, rsi.Size.Y);
             }
 
             var dir = _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer) switch
@@ -124,7 +106,7 @@ public sealed class EntityPainter
                 return;
             }
 
-            image.Mutate(o => o.Crop(rect));
+            using var frame = image.Clone(o => o.Crop(rect));
 
             var spriteRotation = 0f;
             if (!entity.Sprite.NoRotation && !entity.Sprite.SnapCardinals && _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer) == 1)
@@ -134,7 +116,7 @@ public sealed class EntityPainter
 
             var colorMix = entity.Sprite.Color * layer.Color;
             var imageColor = Color.FromRgba(colorMix.RByte, colorMix.GByte, colorMix.BByte, colorMix.AByte);
-            var coloredImage = new Image<Rgba32>(image.Width, image.Height);
+            using var coloredImage = new Image<Rgba32>(frame.Width, frame.Height);
             coloredImage.Mutate(o => o.BackgroundColor(imageColor));
 
             var (imgX, imgY) = rsi?.Size ?? (EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
@@ -151,16 +133,31 @@ public sealed class EntityPainter
             var offsetX = (int)MathF.Round(spriteOffset.X * EyeManager.PixelsPerMeter);
             var offsetY = (int)MathF.Round(spriteOffset.Y * EyeManager.PixelsPerMeter);
 
-            image.Mutate(o => o
+            frame.Mutate(o => o
                 .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
                 .Resize(imgX, imgY)
                 .Flip(FlipMode.Vertical)
                 .Rotate(spriteRotation));
 
-            var pointX = (int)entity.X + offsetX - image.Width / 2;
-            var pointY = (int)entity.Y + offsetY - image.Height / 2;
+            var pointX = (int)entity.X + offsetX - frame.Width / 2;
+            var pointY = (int)entity.Y + offsetY - frame.Height / 2;
 
-            canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
+            canvas.Mutate(o => o.DrawImage(frame, new Point(pointX, pointY), 1));
         }
+    }
+
+    private (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
+    {
+        if (rsi is null)
+            return (0, 0, EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
+
+        var statesX = image.Width / rsi.Size.X;
+        var statesY = image.Height / rsi.Size.Y;
+        var stateCount = statesX * statesY;
+        var frames = stateCount / _sprite.LayerGetDirectionCount((SpriteComponent.Layer)layer);
+        var target = direction * frames;
+        var targetY = target / statesX;
+        var targetX = target % statesX;
+        return (targetX * rsi.Size.X, targetY * rsi.Size.Y, rsi.Size.X, rsi.Size.Y);
     }
 }
