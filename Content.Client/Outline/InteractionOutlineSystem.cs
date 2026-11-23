@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
 using Content.Client.Graphics;
@@ -18,30 +18,38 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Outline;
 
+/// <summary>
+/// Gives moused-over entities an interaction outline.
+/// </summary>
 public sealed partial class InteractionOutlineSystem : EntitySystem
 {
-    private static readonly ProtoId<ShaderPrototype> ShaderInRange = "SelectionOutlineInrange";
-    private static readonly ProtoId<ShaderPrototype> ShaderOutOfRange = "SelectionOutline";
-    private const float DefaultWidth = 1;
-    private readonly Dictionary<(bool InRange, int RenderScale), ShaderInstance> _shaderCache = new();
-
     [Dependency] private IConfigurationManager _configManager = default!;
-    [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private IStateManager _stateManager = default!;
     [Dependency] private IUserInterfaceManager _uiManager = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+
+    [Dependency] private EntityQuery<InteractionOutlineComponent> _outlineQuery;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+
+    private static readonly ProtoId<ShaderPrototype> ShaderInRange = "SelectionOutlineInrange";
+    private static readonly ProtoId<ShaderPrototype> ShaderOutOfRange = "SelectionOutline";
+
+    private ShaderInstance? _shaderInRange;
+    private ShaderInstance? _shaderOutOfRange;
+
+    private const float DesiredOutlineThickness = 1f;
 
     /// <summary>
-    ///     Whether to currently draw the outline. The outline may be temporarily disabled by other systems
+    /// Whether to currently draw the outline. The outline may be temporarily disabled by other systems
     /// </summary>
     private bool _enabled = true;
 
     /// <summary>
-    ///     Whether to draw the outline at all. Overrides <see cref="_enabled"/>.
+    /// Whether to draw the outline at all. Overrides <see cref="_enabled"/>.
     /// </summary>
     private bool _cvarEnabled = true;
 
@@ -49,12 +57,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
 
     public override void Shutdown()
     {
-        foreach (var shader in _shaderCache.Values)
-        {
-            shader.Dispose();
-        }
-
-        _shaderCache.Clear();
+        _shaderInRange?.Dispose();
+        _shaderOutOfRange?.Dispose();
         base.Shutdown();
     }
 
@@ -63,13 +67,13 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         base.Initialize();
 
         Subs.CVar(_configManager, CCVars.OutlineEnabled, SetCvarEnabled);
-        SubscribeLocalEvent<InteractionOutlineComponent, ComponentShutdown>(OnShutdown);
         UpdatesAfter.Add(typeof(SharedEyeSystem));
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<InteractionOutlineComponent> ent, ref ComponentShutdown args)
     {
-        RemoveOutline(ent);
+        RemoveOutline(ent.Owner);
 
         if (_lastHoveredEntity == ent.Owner)
             _lastHoveredEntity = null;
@@ -79,16 +83,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
     {
         _cvarEnabled = cvarEnabled;
 
-        // clear last hover if required:
-
-        if (_cvarEnabled)
-            return;
-
-        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
-            return;
-
-        if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            RemoveOutline((_lastHoveredEntity.Value, outline));
+        if (!_cvarEnabled)
+            ClearOutline();
     }
 
     public void SetEnabled(bool enabled)
@@ -98,16 +94,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
 
         _enabled = enabled;
 
-        // clear last hover if required:
-
-        if (enabled)
-            return;
-
-        if (_lastHoveredEntity == null || Deleted(_lastHoveredEntity))
-            return;
-
-        if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            RemoveOutline((_lastHoveredEntity.Value, outline));
+        if (!enabled)
+            ClearOutline();
     }
 
     public override void FrameUpdate(float frameTime)
@@ -115,153 +103,123 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         base.FrameUpdate(frameTime);
 
         if (!_enabled || !_cvarEnabled)
+        {
+            ClearOutline();
             return;
+        }
 
         // If there is no local player, there is no session, and therefore nothing to do here.
         var localSession = _playerManager.LocalSession;
         if (localSession == null)
+        {
+            ClearOutline();
             return;
-
-        // TODO InteractionOutlineComponent
-        // BUG: The logic that gets the renderScale here assumes that the entity is only visible in a single
-        // viewport. The entity will be highlighted in ALL viewport where it is visible, regardless of which
-        // viewport is being used to hover over it. If these Viewports have very different render scales, this may
-        // lead to extremely thick outlines in the other viewports. Fixing this probably requires changing how the
-        // hover outline works, so that it only highlights the entity in a single viewport.
+        }
 
         // GameScreen is still in charge of what entities are visible under a specific cursor position.
         // Potentially change someday? who knows.
         var currentState = _stateManager.CurrentState;
 
-        if (currentState is not GameplayStateBase screen) return;
+        if (currentState is not GameplayStateBase screen)
+        {
+            ClearOutline();
+            return;
+        }
 
         EntityUid? entityToClick = null;
-        var renderScale = 1;
-        if (_uiManager.CurrentlyHovered is IViewportControl vp
-            && _inputManager.MouseScreenPosition.IsValid)
-        {
-            var mousePosWorld = vp.PixelToMap(_inputManager.MouseScreenPosition.Position);
 
-            if (vp is ScalingViewport svp)
-            {
-                renderScale = svp.CurrentRenderScale;
-                entityToClick = screen.GetClickedEntity(mousePosWorld, svp.Eye);
-            }
-            else
-            {
-                entityToClick = screen.GetClickedEntity(mousePosWorld);
-            }
-        }
-        else if (_uiManager.CurrentlyHovered is EntityMenuElement element)
+        switch (_uiManager.CurrentlyHovered)
         {
-            entityToClick = element.Entity;
-            // TODO InteractionOutlineComponent
-            // Currently we just take the renderscale from the main viewport. In the future, when the bug mentioned
-            // above is fixed, the viewport should probably be the one that was clicked on to open the entity menu
-            // in the first place.
-            renderScale = _eyeManager.MainViewport.GetRenderScale();
+            case IViewportControl vp
+                when _inputManager.MouseScreenPosition.IsValid:
+            {
+                var mousePosWorld = vp.PixelToMap(_inputManager.MouseScreenPosition.Position);
+
+                if (vp is ScalingViewport svp)
+                    entityToClick = screen.GetClickedEntity(mousePosWorld, svp.Eye);
+                else
+                    entityToClick = screen.GetClickedEntity(mousePosWorld);
+                break;
+            }
+            case EntityMenuElement element:
+                entityToClick = element.Entity;
+                break;
         }
 
         var inRange = false;
         if (localSession.AttachedEntity != null && !Deleted(entityToClick))
             inRange = _interactionSystem.InRangeUnobstructed(localSession.AttachedEntity.Value, entityToClick.Value);
 
-        InteractionOutlineComponent? outline;
+        if (entityToClick != _lastHoveredEntity)
+            ClearOutline();
 
-        if (entityToClick == _lastHoveredEntity)
+        if (entityToClick != null && !Deleted(entityToClick) && _outlineQuery.HasComp(entityToClick.Value))
         {
-            if (entityToClick != null && TryComp(entityToClick, out outline))
-            {
-                UpdateOutline((entityToClick.Value, outline), inRange, renderScale);
-            }
-
-            return;
+            _lastHoveredEntity = entityToClick;
+            SetPostShader(entityToClick.Value, inRange);
         }
-
-        if (_lastHoveredEntity != null && !Deleted(_lastHoveredEntity) &&
-            TryComp(_lastHoveredEntity, out outline))
+        else
         {
-            RemoveOutline((_lastHoveredEntity.Value, outline));
-        }
-
-        _lastHoveredEntity = entityToClick;
-
-        if (_lastHoveredEntity != null && TryComp(_lastHoveredEntity, out outline))
-        {
-            AddOutline((_lastHoveredEntity.Value, outline), inRange, renderScale);
+            ClearOutline();
         }
     }
 
-    private void AddOutline(Entity<InteractionOutlineComponent> ent, bool inInteractionRange, int renderScale)
+    private void RemoveOutline(EntityUid uid)
     {
-        ent.Comp.LastRenderScale = renderScale;
-        ent.Comp.InRange = inInteractionRange;
-        ent.Comp.Active = true;
+        if (_spriteQuery.TryComp(uid, out var sprite))
+            _sprite.RemovePostShader((uid, sprite), ContentPostShaderIds.InteractionOutline);
+    }
 
-        if (!TryComp(ent.Owner, out SpriteComponent? sprite))
+    private void ClearOutline()
+    {
+        if (_lastHoveredEntity != null && !Deleted(_lastHoveredEntity))
+            RemoveOutline(_lastHoveredEntity.Value);
+
+        _lastHoveredEntity = null;
+    }
+
+    private void SetPostShader(EntityUid uid, bool inInteractionRange)
+    {
+        if (!_spriteQuery.TryComp(uid, out var sprite))
             return;
 
-        SetOutlinePostShader((ent.Owner, sprite), inInteractionRange, renderScale);
-    }
+        var shader = GetShader(inInteractionRange);
 
-    private void RemoveOutline(Entity<InteractionOutlineComponent> ent)
-    {
-        if (TryComp(ent.Owner, out SpriteComponent? sprite))
-        {
-            _sprite.RemovePostShader((ent.Owner, sprite), ContentPostShaderIds.InteractionOutline);
-            sprite.RenderOrder = 0;
-        }
-
-        ent.Comp.Active = false;
-    }
-
-    private void UpdateOutline(Entity<InteractionOutlineComponent> ent, bool inInteractionRange, int renderScale)
-    {
-        if (!TryComp(ent.Owner, out SpriteComponent? sprite)
-            || !_sprite.HasPostShader((ent.Owner, sprite), ContentPostShaderIds.InteractionOutline)
-            || inInteractionRange == ent.Comp.InRange && ent.Comp.LastRenderScale == renderScale)
-        {
-            return;
-        }
-
-        ent.Comp.InRange = inInteractionRange;
-        ent.Comp.LastRenderScale = renderScale;
-
-        SetOutlinePostShader((ent.Owner, sprite), ent.Comp.InRange, ent.Comp.LastRenderScale);
-    }
-
-    private void SetOutlinePostShader(Entity<SpriteComponent?> sprite, bool inRange, int renderScale)
-    {
-        var shader = GetShader(inRange, renderScale);
         if (_sprite.TryGetPostShader(sprite, ContentPostShaderIds.InteractionOutline, out var entry) &&
             entry.Shader == shader)
         {
             return;
         }
 
-        _sprite.SetPostShader(sprite, new SpriteComponent.PostShaderArgs(ContentPostShaderIds.InteractionOutline, shader)
+        _sprite.SetPostShader((uid, sprite), new SpriteComponent.PostShaderArgs(ContentPostShaderIds.InteractionOutline, shader)
         {
             After = ContentPostShaderIds.AfterBaseEffects,
+            RaiseShaderEvent = true,
         });
     }
 
-    private ShaderInstance GetShader(bool inRange, int renderScale)
+    private ShaderInstance GetShader(bool inRange)
     {
-        var key = (inRange, renderScale);
-        if (_shaderCache.TryGetValue(key, out var shader))
-            return shader;
+        var shader = inRange
+            ? _shaderInRange ??= _prototype.Index(ShaderInRange).InstanceUnique()
+            : _shaderOutOfRange ??= _prototype.Index(ShaderOutOfRange).InstanceUnique();
 
-        shader = MakeNewShader(inRange, renderScale);
-        _shaderCache.Add(key, shader);
+        shader.SetParameter("outline_width", DesiredOutlineThickness);
         return shader;
     }
 
-    private ShaderInstance MakeNewShader(bool inRange, int renderScale)
+    [SubscribeLocalEvent]
+    private void OnBeforePostShaderRender(Entity<InteractionOutlineComponent> ent, ref BeforePostShaderRenderEvent args)
     {
-        var shaderName = inRange ? ShaderInRange : ShaderOutOfRange;
+        if (args.Id != ContentPostShaderIds.InteractionOutline)
+            return;
 
-        var instance = _prototypeManager.Index(shaderName).InstanceUnique();
-        instance.SetParameter("outline_width", DefaultWidth * renderScale);
-        return instance;
+        var zoom = args.Viewport.Eye?.Zoom ?? Vector2.Zero;
+        var zoomLength = zoom.Length();
+
+        if (zoomLength < float.Epsilon)
+            return;
+
+        args.Shader.SetParameter("outline_width", DesiredOutlineThickness * args.Viewport.RenderScale.Length() / zoomLength);
     }
 }

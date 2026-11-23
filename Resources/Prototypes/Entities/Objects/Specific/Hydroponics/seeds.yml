@@ -449,6 +449,26 @@
 
 - type: entity
   parent: SeedBase
+  id: AloeIgnisSeeds
+  name: packet of aloe ignis seeds
+  components:
+  - type: Seed
+    plantId: AloeIgnisPlants
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
+
+- type: entity
+  parent: SeedBase
+  id: DragonTailSeeds
+  name: packet of dragon's tail seeds
+  components:
+  - type: Seed
+    plantId: DragonTailPlants
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lingzhi spores
   description: "Also known as reishi."
   id: LingzhiSeeds

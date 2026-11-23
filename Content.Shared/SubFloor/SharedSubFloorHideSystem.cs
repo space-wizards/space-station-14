@@ -98,7 +98,7 @@ namespace Content.Shared.SubFloor
             EnsureComp<CollideOnAnchorComponent>(uid);
         }
 
-        private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
+        private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ref ComponentShutdown _)
         {
             // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
             if (Comp<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
