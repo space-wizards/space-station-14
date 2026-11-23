@@ -35,7 +35,7 @@ namespace Content.Client.Jittering
             _animationPlayer.Play((uid, animationPlayer), GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
-        private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, JitteringComponent jittering, ref ComponentShutdown args)
         {
             if (TryComp(uid, out AnimationPlayerComponent? animationPlayer))
                 _animationPlayer.Stop(uid, animationPlayer, _jitterAnimationKey);

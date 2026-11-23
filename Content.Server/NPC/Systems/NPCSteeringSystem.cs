@@ -153,7 +153,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             _subscribedSessions.Remove(args.SenderSession);
     }
 
-    private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
+    private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ref ComponentShutdown args)
     {
         // Cancel any active pathfinding jobs as they're irrelevant.
         component.PathfindToken?.Cancel();

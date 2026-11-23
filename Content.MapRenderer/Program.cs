@@ -177,8 +177,14 @@ namespace Content.MapRenderer
                 }
             }
 
-            await Run(arguments, maps, testContext);
-            PoolManager.Shutdown();
+            try
+            {
+                await Run(arguments, maps, testContext);
+            }
+            finally
+            {
+                PoolManager.Shutdown();
+            }
         }
 
         private static async Task Run(
@@ -207,11 +213,12 @@ namespace Content.MapRenderer
                 mapNames.Add(mapShort);
 
                 var i = 0;
+                var painted = true;
                 try
                 {
                     await foreach (var renderedGrid in painter.Paint())
                     {
-                        var grid = renderedGrid.Image;
+                        using var grid = renderedGrid.Image;
                         Directory.CreateDirectory(directory);
 
                         var savePath = $"{directory}{Path.DirectorySeparatorChar}{mapShort}-{i}.{arguments.Format}";
@@ -237,20 +244,19 @@ namespace Content.MapRenderer
                                 break;
                         }
 
-                        grid.Dispose();
-
                         mapViewerData.Grids.Add(new GridLayer(renderedGrid, Path.Combine(mapShort, Path.GetFileName(savePath))));
                         i++;
                     }
                 }
                 catch (Exception ex)
                 {
+                    Environment.ExitCode = 1;
                     Console.WriteLine($"Painting map {map} failed due to an internal exception:");
                     Console.WriteLine(ex);
-                    continue;
+                    painted = false;
                 }
 
-                if (arguments.ExportViewerJson)
+                if (arguments.ExportViewerJson && painted)
                 {
                     var json = JsonSerializer.Serialize(mapViewerData);
                     await File.WriteAllTextAsync(Path.Combine(directory, "map.json"), json);
@@ -262,6 +268,7 @@ namespace Content.MapRenderer
                 }
                 catch (Exception e)
                 {
+                    Environment.ExitCode = 1;
                     Console.WriteLine($"Exception while shutting down painter: {e}");
                 }
             }

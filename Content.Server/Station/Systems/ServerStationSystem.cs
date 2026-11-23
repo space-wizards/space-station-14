@@ -58,7 +58,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         AddGridToStation(component.Station, args.Grid); // Add the new grid as a member.
     }
 
-    private void OnStationGridDeleted(EntityUid uid, StationMemberComponent component, ComponentShutdown args)
+    private void OnStationGridDeleted(EntityUid uid, StationMemberComponent component, ref ComponentShutdown args)
     {
         if (!TryComp<StationDataComponent>(component.Station, out var stationData))
             return;
@@ -105,7 +105,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         _pvsOverride.AddGlobalOverride(uid);
     }
 
-    private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
+    private void OnStationDeleted(EntityUid uid, StationDataComponent component, ref ComponentShutdown args)
     {
         foreach (var grid in component.Grids)
         {

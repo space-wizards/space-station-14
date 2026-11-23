@@ -14,6 +14,8 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class FillLevelSpriteTest : GameTest
 {
+    public override PoolSettings PoolSettings => new() { Connected = true, PreloadClientResources = true };
+
     private static readonly string[] HandStateNames = ["left", "right"];
     private static readonly string[] EquipStateNames = ["back", "suitstorage"];
 
