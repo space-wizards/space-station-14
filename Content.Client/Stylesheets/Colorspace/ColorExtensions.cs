@@ -93,6 +93,7 @@ public static class ColorExtensions
             A = from.A,
         };
     }
+
     /// <summary>
     /// Returns Black or White based on the background color to allow readability
     /// </summary>
