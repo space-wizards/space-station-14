@@ -38,7 +38,6 @@ public sealed partial class SpawnEntityTableEntityEffectSystem : EntityEffectSys
                 PredictedSpawnNextToOrDrop(spawn, entity, entity.Comp);
             }
         }
-
         else if (_net.IsServer)
         {
             foreach (var spawn in spawns)
