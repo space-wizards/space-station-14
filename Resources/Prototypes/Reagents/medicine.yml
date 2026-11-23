@@ -1651,4 +1651,3 @@
       effects:
       - !type:Flammable
         multiplier: 0.1
-      - !type:Ignite
