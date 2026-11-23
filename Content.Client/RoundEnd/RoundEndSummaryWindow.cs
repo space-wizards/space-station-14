@@ -377,7 +377,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
             (p.Observer ? "zzz_observer" : p.Role).ToLowerInvariant();
 
         static int GetPlayerTypeSortKey(RoundEndPlayerInfo p) =>
-            p.Antag ? 1 : p.Observer ? 3 : 2;
+            p.Antag ? 1 : p.Familiar ? 2 : p.Observer ? 4 : 3;
 
         return _currentSortField switch
         {
@@ -403,7 +403,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Gets a sort key for player type to ensure consistent ordering: Antagonist -> Crew -> Observer
+    /// Gets a sort key for player type to ensure consistent ordering: Antagonist -> Familiar -> Crew -> Observer
     /// </summary>
 
     /// <summary>
