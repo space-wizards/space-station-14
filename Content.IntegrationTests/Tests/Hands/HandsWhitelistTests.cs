@@ -2,12 +2,6 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Tag;
-using Content.Shared.Whitelist;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using System.Collections.Generic;
 
 namespace Content.IntegrationTests.Tests.Hands;
 
@@ -15,14 +9,12 @@ namespace Content.IntegrationTests.Tests.Hands;
 [TestOf(typeof(SharedHandsSystem))]
 public sealed partial class HandWhitelistTests : GameTest
 {
-    [SidedDependency(Side.Server)] private readonly SharedHandsSystem _handsSys = default!;
-    public override PoolSettings PoolSettings => new() { Dirty = true };
+    [SidedDependency(Side.Server)] private readonly SharedHandsSystem _sHandsSys = default!;
 
     private const string EntityWithHandWhitelist = "TestDummyWithWhitelist";
     private const string EntityWithHandBlackList = "TestDummyWithBlacklist";
     private const string DummyTaggedItemId = "DummyTaggedItem";
     private const string DummyRegularItemId = "DummyRegularItem";
-    private const string DummyTagId = "DummyTag";
     private const string RestrictedHandId = "restricted_hand";
 
     // Define our dummy entities and tags for testing
@@ -37,7 +29,7 @@ public sealed partial class HandWhitelistTests : GameTest
         location: Right
         whitelist:
           tags:
-          - {DummyTagId}
+          - DummyTagId
 
 - type: entity
   id: {EntityWithHandBlackList}
@@ -48,10 +40,10 @@ public sealed partial class HandWhitelistTests : GameTest
         location: Right
         blacklist:
           tags:
-          - {DummyTagId}
+          - DummyTagId
 
 - type: Tag
-  id: {DummyTagId}
+  id: DummyTagId
 
 - type: entity
   id: {DummyTaggedItemId}
@@ -59,7 +51,7 @@ public sealed partial class HandWhitelistTests : GameTest
   - type: Item
   - type: Tag
     tags:
-    - {DummyTagId}
+    - DummyTagId
 
 - type: entity
   id: {DummyRegularItemId}
@@ -77,19 +69,20 @@ public sealed partial class HandWhitelistTests : GameTest
         var taggedItem = SSpawn(DummyTaggedItemId);
         var regularItem = SSpawn(DummyRegularItemId);
 
-        Assume.That(STryComp<HandsComponent>(user, out var _));
+        var comp = SComp<HandsComponent>(user);
+        Assume.That(comp, Is.Not.Null, "HandsComponent is null on the user entity.");
         using (Assert.EnterMultipleScope())
         {
             // Attempt to pick up the item that lacks the required tag
-            var pickupDenied = _handsSys.TryPickup(user, regularItem);
+            var pickupDenied = _sHandsSys.TryPickup(user, regularItem, handsComp: comp);
             Assert.That(pickupDenied, Is.False, "System allowed picking up a non-whitelisted item.");
 
             // Attempt to pick up the item that has the required tag
-            var pickupAllowed = _handsSys.TryPickup(user, taggedItem);
+            var pickupAllowed = _sHandsSys.TryPickup(user, taggedItem, handsComp: comp);
             Assert.That(pickupAllowed, Is.True, "System blocked picking up a whitelisted item.");
 
             // Verify the state of the HandsComponent accurately reflects the successful pickup
-            Assert.That(_handsSys.IsHolding(user, taggedItem, out var holdingHand));
+            Assert.That(_sHandsSys.IsHolding((user, comp), taggedItem, out var holdingHand));
             Assert.That(holdingHand, Is.EqualTo(RestrictedHandId));
         }
     }
@@ -104,19 +97,20 @@ public sealed partial class HandWhitelistTests : GameTest
         var taggedItem = SSpawn(DummyTaggedItemId);
         var regularItem = SSpawn(DummyRegularItemId);
 
-        Assume.That(STryComp<HandsComponent>(user, out var _));
+        var comp = SComp<HandsComponent>(user);
+        Assume.That(comp, Is.Not.Null, "HandsComponent is null on the user entity.");
         using (Assert.EnterMultipleScope())
         {
             // Attempt to pick up the item that has the blacklisted tag
-            var pickupOfTagged = _handsSys.TryPickup(user, taggedItem);
+            var pickupOfTagged = _sHandsSys.TryPickup(user, taggedItem, handsComp: comp);
             Assert.That(pickupOfTagged, Is.False, "System allowed picking up a blacklisted item.");
 
             // Attempt to pick up the item that lacks the blacklisted tag
-            var pickupRegular = _handsSys.TryPickup(user, regularItem);
+            var pickupRegular = _sHandsSys.TryPickup(user, regularItem, handsComp: comp);
             Assert.That(pickupRegular, Is.True, "System blocked picking up a non-blacklisted item.");
 
             // Verify the state of the HandsComponent accurately reflects the successful pickup
-            Assert.That(_handsSys.IsHolding(user, regularItem, out var holdingHand));
+            Assert.That(_sHandsSys.IsHolding((user, comp), regularItem, out var holdingHand));
             Assert.That(holdingHand, Is.EqualTo(RestrictedHandId));
         }
     }
