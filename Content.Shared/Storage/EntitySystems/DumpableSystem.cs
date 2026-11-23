@@ -97,10 +97,10 @@ public sealed partial class DumpableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable, bool needHand = true)
+    private bool StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable, bool needHand = true)
     {
-        if (!TryComp<StorageComponent>(storageUid, out var storage))
-            return;
+        if (!TryComp<StorageComponent>(storageUid, out var storage) || storage.Container.ContainedEntities.Count == 0)
+            return false;
 
         var delay = 0f;
 
@@ -117,7 +117,7 @@ public sealed partial class DumpableSystem : EntitySystem
 
         delay *= (float)dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
+        return _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
             BreakOnMove = true,
             NeedHand = needHand,
@@ -158,7 +158,7 @@ public sealed partial class DumpableSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDumpStorageAction(Entity<DumpableComponent> ent, ref DumpStorageActionEvent args)
     {
-        StartDoAfter(ent, ent, ent, ent, false);
+        args.Handled = StartDoAfter(ent, ent, args.Performer, ent, false);
     }
 }
 
