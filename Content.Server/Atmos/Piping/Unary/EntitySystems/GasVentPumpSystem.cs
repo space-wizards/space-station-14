@@ -378,7 +378,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGetVerbs(Entity<GasVentPumpComponent> ent, ref GetVerbsEvent<Verb> args)
         {
-            if (ent.Comp.UnderPressureLockout == false || !Transform(ent).Anchored)
+            if (ent.Comp.UnderPressureLockout == false || !Transform(ent).Anchored || args.Hands == null)
                 return;
 
             var user = args.User;
