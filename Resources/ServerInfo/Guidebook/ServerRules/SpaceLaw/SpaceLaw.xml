@@ -20,20 +20,22 @@
   These stages together are termed as "being in custody".
 
   A "category of crime" is a collection of crimes that have similar motivations and means. Under Space Law, they are the following:
-  [color=#a4885c]E[/color] – Crimes against the judicial system,
-  [color=#a4885c]H[/color] – Crimes of theft,
-  [color=#a4885c]D[/color] – Crimes against the physical structure of the station,
-  [color=#a4885c]T[/color] – Crimes of trespass,
-  [color=#a4885c]V[/color] – Violent, harming crimes,
+  [color=#a4885c]E[/color] – crimes against the judicial system,
+  [color=#a4885c]H[/color] – crimes of theft,
+  [color=#a4885c]D[/color] – crimes against the physical structure of the station,
+  [color=#a4885c]T[/color] – crimes of trespass,
+  [color=#a4885c]V[/color] – violent, harming crimes,
   and [color=#a4885c]R[/color] – Crimes against the peace of the station.
 
   ## SolGov Bill of Rights Disclaimer
   All sentient people, including those in Security custody, retain certain rights under the SolGov bill of rights:
   - They have the right to as much medical care as is necessary to ensure that they will be restored to good health.
   - They have the right to adequate clothing, food, and water.
+  - They have the right to life.
+  - They have the right to bodily integrity.
   - They have the right to shelter and physical safety. If the station brig is no longer safe, confinement must be established in another location.
 
-  These rights are waived in the case of lawful Execution or DNR.
+  These rights are not inalienable and are subject to the balance of the rights of others. These rights are waived in the case of lawful Execution or DNR.
 
   ## Treatment of Those in Custody
   This Space Law provides additional rights to detainees, arrestees, and prisoners.
@@ -55,22 +57,22 @@
 
   Confiscated contraband should be transferred to the Security department for secure storage or be permanently disposed of. Collaborating with Cargo to sell confiscated contraband is highly encouraged, as it generally fetches a high value.
 
-  During a Blue alert or greater, Security is permitted and generally obligated to perform routine searches to confiscate contraband among crew, unless other obligations present themselves.
+  During a Blue alert or greater, Security is permitted and encouraged to perform routine searches to confiscate contraband among crew, unless other obligations present themselves.
 
   ### Search and Seizure
   Routine searches, also known as partial personnel searches, are the searching of a person's bag, belt, pockets, and coat. If any contraband is present within these, or any contraband is obviously visually present – such as a person wearing a syndicate jumpsuit – it must be confiscated by Security.
 
-  A full personnel search is search of all items on a person for contraband. These are conducted when there is high suspicion that a person possesses contraband, or during brig processing. If any contraband is found during this search, Security must confiscate the restricted items. Non-restricted items may be seized by Security if they were used to facilitate a crime. After the search is conducted, all other items must be returned to the person unless stated otherwise.
+  A full personnel search is search of all items on a person for contraband. These are conducted when there is high suspicion that a person possesses cotraband, or during brig processing. If any contraband is found during this search, Security must confiscate the restricted items. Non-restricted items may be seizend by Security if they were used to facilitate a crime. After the search is conducted, all other items must be returned to the person unless stated otherwise.
 
-  A crewmate may legally decline any search conducted without probable cause or a warrant while the alert level is green.
+  A crewmember may legally decline any search conducted without probable cause or a warrant while the alert level is green.
 
   A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. These can only be done with the permission of or, ideally, a warrant signed by the department head or the Captain.
 
   ## Procedures
 
-  ### Chain of Seniority
+  ### Chain of Authority
 
-  The chain of seniority is represented by the the following list of groups:
+  The chain of authority is represented, but not defined, by the following list of groups:
   - Central Command (which has commanding authority over all other groups),
   - The Captain,
   - All department heads,
@@ -82,6 +84,8 @@
   Commanding authority may not breach Space Law, and may not force a crewmember to take unreasonable actions or actions that do not further the general goals of Space Station 14. In case of conflicting orders, the highest group in the list takes precedent.
 
   The Captain may promote any non-head staff member to the relevant department head, or any crewmember should the relevant department be completely unstaffed. Department heads may promote any crewmember to a position within their department. Staff may hold multi-departmental positions, such as Lawyer or Brig Medic.
+
+  Any authority to promote comes with the legal ability to demote should Failure to Comply be committed. Security is not required to preside over these cases unless other crimes have been committed.
 
   ### Captaincy
 
@@ -101,7 +105,7 @@
 
   [color=#a4885c]Tracking Implants:[/color] Trackers may be applied to any suspect that has been convicted of a violent crime (the red crimes with a V category code).
 
-  [color=#a4885c]Mind Shields:[/color] Mind Shields may be administered to any suspect convicted of a crime if there is reasonable and articulable suspicion to believe they committed the crime while under mind control.
+  [color=#a4885c]Mind Shields:[/color] MindShields may be administered to any suspect convicted of a crime if there is reasonable and articulable suspicion to believe they committed the crime while under mind control.
 
   If, and only if, there is undeniable proof of ongoing mind control on the station, such as due to successful deconversion, the two the following statements apply:
 
@@ -109,7 +113,7 @@
   - If a person refuses to cooperate with the above or the implant fails to function, they should be charged with Refusal of Mental Shielding.
 
   ## Sentencing
-  The Warden should be informed of all confinement sentences issued. The Captain, Head of Security, and Warden are responsible for ensuring that security officers issue appropriate sentences that comply with Space Law. If they are aware of an inappropriate sentence, including an excessively long one they must work to correct it.
+  The Warden (or, if absent, the Head of Security) should be informed of all confinement sentences issued. The Captain, Head of Security, and Warden are responsible for ensuring that security officers issue appropriate sentences that comply with Space Law. If they are aware of an inappropriate sentence, including an excessively long one they must work to correct it.
 
   The time described below for each confinement sentence is the maximum sentence, not a mandatory sentence. Prisoners cooperating with Security and on good behavior should have their sentences reduced. Severity of the crime committed should also factor into sentence reduction.
 
@@ -136,10 +140,10 @@
   ### Capital Sentences
   These are the sentences that may be applied to any Capital crime. If the crime committed was Accessory, Attempt, or Intention to Commit, a Standard sentence may be applied instead.
   - [color=#a4885c]Permanent Confinement:[/color] Being permanently confined in the brig for the remaining duration of the shift. A prisoner is additionally eligible for permanent confinement if their confinement sentence would exceed 15 minutes.
-  - [color=#a4885c]Execution:[/color] Within reason, a prisoner who has been sentenced to execution may pick how they wish to be executed. Common, reasonable, methods include death by firing line, lethal injection, exile, and high voltage electrocution. Alternatively or including, the convict's brain may be placed inside a cyborg – but this option is not permitted without the convict's consent. Execution may only be issued with the Captain's written approval.
-  - [color=#a4885c]DNR:[/color] A DNR (do not resuscitate) order is an alternative to execution.  If a convict is dead, the Captain may issue a written, indefinite, DNR order. Once a DNR has been placed, it is illegal to defibrillate a person (carrying a crime of Obstruction of Justice).
+  - [color=#a4885c]Execution:[/color] Within reason, a prisoner who has been sentenced to execution may pick how they wish to be executed. Common, reasonable, methods include death by firing line, lethal injection, exile, and high voltage electrocution. Alternatively or including, the convict's brain may be placed inside a cyborg – but this option is not permitted without the convict's consent. Execution may only be issued with the Captain's direct written approval.
+  - [color=#a4885c]DNR:[/color] A DNR (do not resuscitate) order is an alternative to execution.  If a convict is dead, the Captain may issue a written, indefinite, DNR order. Once a DNR has been placed, it is illegal to revive a person (carrying a crime of Obstruction of Justice).
 
-  In order to facilitate DNRs, and other situations in which the revival of a person would be inappropriate, the Captain, Head of Security, or Warden may issue a verbal "delay resuscitation" (DR). While a DR or DNR has been placed on a person, it is illegal to defibrillate a person (in the same manner as a DNR). A person must be kept in a rot-preventing state while a DR is issued, and a DR expires after 10 minutes (another may not be placed during the same period of death).
+  In order to facilitate DNRs, and other situations in which the revival of a person would be inappropriate, the Captain or any Security staff may issue a verbal "delay resuscitation" (DR). While a DR is placed on a person, it is illegal to revive a person (carrying the same offense as a DNR). A person must be kept in a rot-preventing state while a DR is issued, and a DR expires after 10 minutes (another may not be placed during the same period of death).
 
   ## Crime Listing
   - [textlink="Crime Listing" link="SpaceLawCrimeList"]
