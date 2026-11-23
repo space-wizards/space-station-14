@@ -210,7 +210,7 @@
     - Dinnerware
     - Trash
 
-# Weird empty shakes
+# Filled shakes
 
 - type: entity
   abstract: true
@@ -218,6 +218,8 @@
   id: DrinkShakeBase
   description: ''
   components:
+  - type: SolutionContainerVisuals
+    inHandsFillBaseName: null
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
@@ -248,9 +250,6 @@
       reagents:
       - ReagentId: ShakeBlue
         Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-blue.rsi
 
@@ -264,9 +263,6 @@
       reagents:
       - ReagentId: ShakeMeat
         Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-meat.rsi
 
@@ -280,9 +276,6 @@
       reagents:
       - ReagentId: ShakeRobo
         Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-robo.rsi
 
@@ -296,8 +289,5 @@
       reagents:
       - ReagentId: ShakeWhite
         Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    inHandsFillBaseName: null
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
