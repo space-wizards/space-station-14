@@ -120,18 +120,11 @@ public sealed partial class PlantCommand : ToolshedCommand
         if (holder.ReadyForHarvest)
             return input; //Why'd you even call this command...
 
-        int readyAge;
+        _plant ??= GetSys<PlantSystem>();
+        var readyAge = _plant.GetNextHarvestAge((input, plant));
 
-        if (holder.Age < plant.Maturation)
-        {
-            readyAge = (int)MathF.Ceiling(plant.Maturation) + (int)MathF.Floor(plant.Production) + 1;
-        }
-        else
-        {
-            readyAge = holder.LastHarvest + (int)MathF.Floor(plant.Production) + 1;
-        }
-
-        TryAgeTicks((input, plant), (input, holder), readyAge - holder.Age);
+        if (!TryAgeTicks((input, plant), (input, holder), readyAge - holder.Age))
+            return null;
 
         return input;
     }
@@ -248,7 +241,8 @@ public sealed partial class PlantCommand : ToolshedCommand
         if (!TryGetPlant(input, ctx, out var plant, out var holder))
             return null;
 
-        TryAgeTicks((input, plant), (input, holder), ticks);
+        if (!TryAgeTicks((input, plant), (input, holder), ticks))
+            return null;
 
         return input;
     }
