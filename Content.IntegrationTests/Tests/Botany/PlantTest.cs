@@ -13,7 +13,6 @@ using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Robust.Server.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -43,7 +42,6 @@ public sealed class PlantTest : GameTest
 
     private static readonly string[] SeedEntities = GameDataScrounger.EntitiesWithComponent("Seed");
 
-
     public override PoolSettings PoolSettings => new() { Connected = false };
 
     public override async Task DoSetup()
@@ -63,7 +61,6 @@ public sealed class PlantTest : GameTest
 
     [Test, RunOnSide(Side.Server)]
     [Description("Checks that all plants can be harvested when using the proper equipment.")]
-
     public void AllPlantsCanBeHarvestedWithBotanistEquipment()
     {
         Assume.That(TestMap != null);
@@ -78,7 +75,7 @@ public sealed class PlantTest : GameTest
         _sInventory.TryEquip(botanist, gloves, "gloves");
         _sHands.TryPickupAnyHand(botanist, hatchet);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             foreach (var seed in GetSeedPrototypes())
             {
@@ -102,12 +99,14 @@ public sealed class PlantTest : GameTest
                 if (entityManager.Deleted(plant))
                     continue;
 
-                Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder), Is.True,
+                Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder),
+                    Is.True,
                     $"Plant grown from {seed.ID} lost its {nameof(PlantHolderComponent)} when harvested.");
-                Assert.That(holder!.ReadyForHarvest, Is.False,
+                Assert.That(holder!.ReadyForHarvest,
+                    Is.False,
                     $"Plant grown from {seed.ID} was not harvested.");
             }
-        });
+        }
     }
 
     [Test, RunOnSide(Side.Server)]
@@ -126,29 +125,34 @@ public sealed class PlantTest : GameTest
         _sInventory.TryEquip(botanist, gloves, "gloves");
 
         var seeds = GetSeedPrototypes()
-                        .Where(seed =>
-                        {
-                            if (!seed.TryComp<SeedComponent>(out var seedComponent, componentFactory))
-                                return false;
-                            return prototypeManager.Index(seedComponent.PlantProtoId).HasComp<PlantTraitLigneousComponent>(componentFactory);
-                        });
-        Assert.Multiple(() =>
+            .Where(seed =>
+            {
+                if (!seed.TryComp<SeedComponent>(out var seedComponent, componentFactory))
+                    return false;
+
+                return prototypeManager.Index(seedComponent.PlantProtoId)
+                    .HasComp<PlantTraitLigneousComponent>(componentFactory);
+            });
+        using (Assert.EnterMultipleScope())
         {
             foreach (var seed in seeds)
             {
                 var plant = SpawnHarvestablePlant(seed);
                 _sInteraction.InteractHand(botanist, plant);
 
-                Assert.That(entityManager.Deleted(plant), Is.False,
+                Assert.That(entityManager.Deleted(plant),
+                    Is.False,
                     $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
-                Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder), Is.True,
+                Assert.That(entityManager.TryGetComponent(plant, out PlantHolderComponent? holder),
+                    Is.True,
                     $"Ligneous plant grown from {seed.ID} lost its {nameof(PlantHolderComponent)}.");
                 if (holder == null)
                     continue; // Already failed on the assert, but since multiple we want to see the other failures in the loop
-                Assert.That(holder!.ReadyForHarvest, Is.True,
+                Assert.That(holder.ReadyForHarvest,
+                    Is.True,
                     $"Ligneous plant grown from {seed.ID} was harvested without a hatchet.");
             }
-        });
+        }
     }
 
     private EntityUid SpawnHarvestablePlant(EntityPrototype seed)
@@ -174,9 +178,6 @@ public sealed class PlantTest : GameTest
 
     private List<EntityPrototype> GetSeedPrototypes()
     {
-        var componentFactory = Server.ResolveDependency<IComponentFactory>();
-
-        return SeedEntities.Select(SProtoMan.Index<EntityPrototype>).ToList();
+        return [.. SeedEntities.Select(SProtoMan.Index<EntityPrototype>)];
     }
-
 }
