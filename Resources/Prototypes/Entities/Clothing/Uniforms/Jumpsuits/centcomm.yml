@@ -11,7 +11,7 @@
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCentcommContraband ]
-  id: ClothingUniformJumpsuitCentcommLawyer
+  id: ClothingUniformJumpsuitCentcomLawyer
   name: CentComm lawyer suit
   description: A suit worn by CentComm's legal team. Smells of burnt coffee.
   components:

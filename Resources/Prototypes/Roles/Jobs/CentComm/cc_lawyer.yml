@@ -22,7 +22,7 @@
     eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetCentComLawyer
     back: ClothingBackpackSatchelLeather
-    jumpsuit: ClothingUniformJumpsuitCentcommLawyer
+    jumpsuit: ClothingUniformJumpsuitCentcomLawyer
     neck: ClothingNeckLawyerbadge
     shoes: ClothingShoesLeather
     id: CentcomLawyerPDA

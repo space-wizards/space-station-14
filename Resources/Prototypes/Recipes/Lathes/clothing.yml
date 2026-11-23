@@ -135,8 +135,8 @@
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
-  id: ClothingUniformJumpsuitCentcommLawyer
-  result: ClothingUniformJumpsuitCentcommLawyer
+  id: ClothingUniformJumpsuitCentcomLawyer
+  result: ClothingUniformJumpsuitCentcomLawyer
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe

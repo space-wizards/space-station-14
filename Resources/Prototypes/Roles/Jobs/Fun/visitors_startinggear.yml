@@ -1194,7 +1194,7 @@
 - type: startingGear
   id: VisitorLawyerCentcom
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCentcommLawyer
+    jumpsuit: ClothingUniformJumpsuitCentcomLawyer
     shoes: ClothingShoesLeather
     gloves: ClothingHandsGlovesColorBrown
     head: BladedFlatcapBrown
