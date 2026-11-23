@@ -1773,5 +1773,19 @@ Entries:
   id: 238
   time: '2026-10-07T08:28:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/46366
+- author: ToastEnjoyer
+  changes:
+  - message: The round restart vote is disabled in the lobby
+    type: Tweak
+  id: 239
+  time: '2026-10-23T01:20:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46476
+- author: piskaczek
+  changes:
+  - message: The admin camera now respects the same logic as ghost following. It will jump between entities as followers do. (Such as AI going to and from holopad, ghost roles being taken, polymorph, and lings going in and out of headslug form)
+    type: Tweak
+  id: 240
+  time: '2026-11-18T22:59:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46821
 Name: Admin
 Order: 3

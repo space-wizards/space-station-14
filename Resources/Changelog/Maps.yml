@@ -1491,4 +1491,58 @@ Entries:
   id: 193
   time: '2026-10-18T15:20:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/46429
+- author: SuperDicq
+  changes:
+  - message: On Sushi Station, no more unpowered exterior lights at arrivals.
+    type: Fix
+  - message: On Sushi Station, vents in the space bridges.
+    type: Add
+  - message: On Sushi Station, firelocks going down in the kitchen now stop the belt.
+    type: Tweak
+  - message: On Sushi Station, added wheelchair and janicart.
+    type: Add
+  - message: On Sushi Station, the Sci material silo is now behind a locked windoor.
+    type: Tweak
+  - message: On Sushi Station, the Toob Church no longer empties the distro.
+    type: Fix
+  - message: On Sushi Station, the ore processor has edge firelocks now.
+    type: Add
+  id: 194
+  time: '2026-10-28T18:50:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46568
+- author: SomeAspy
+  changes:
+  - message: On Plasma, make all buttons in HoP office clickable.
+    type: Fix
+  id: 195
+  time: '2026-10-28T18:52:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46527
+- author: SomeAspy
+  changes:
+  - message: On Tram2, relocated the firelock on top of the ore processor so it does not crush it.
+    type: Tweak
+  id: 196
+  time: '2026-10-28T18:52:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46562
+- author: SomeAspy
+  changes:
+  - message: On Sushi, standardize atmos pumps and move a few things around.
+    type: Tweak
+  id: 197
+  time: '2026-10-29T19:04:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46625
+- author: LowFatBananamilk
+  changes:
+  - message: On Marathon, rotate medical locker room airlock correctly.
+    type: Fix
+  id: 198
+  time: '2026-11-16T03:39:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46724
+- author: emagnova
+  changes:
+  - message: On Elkridge Depot, significantly reduced the amount of z-fighting wallmount objects
+    type: Tweak
+  id: 199
+  time: '2026-11-19T02:49:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/46806
 Order: 2
