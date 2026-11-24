@@ -99,3 +99,15 @@ reagent-desc-mopwata = Dirty, stagnant mop water.
 
 reagent-name-orange-lime-soda = citrus bikeshed
 reagent-desc-orange-lime-soda = The soda should be orange! No, it should be lemon-lime!
+
+reagent-name-shake-blue = blue milkshake
+reagent-desc-shakeblue = A milkshake, but blue.
+
+reagent-name-shake-meat = meat shake
+reagent-desc-shakemeat = A milkshake made of blended bits of a once-living thing.
+
+reagent-name-shake-robo = robo shake
+reagent-desc-shakerobo = A robot has been ground into a fine dust and drowned in milk, sugar, and cream.
+
+reagent-name-shake-white = white shake
+reagent-desc-shakewhite = This shake is white, not vanilla.

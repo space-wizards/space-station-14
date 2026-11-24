@@ -54,9 +54,9 @@
     price: 500
 
 - type: entity
-  name: AKMS
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleAk
+  name: AKM
   description: A somewhat battered combat rifle of a design originating from old Earth. Favored by criminals, militias, and terrorists due to its famed reliability and easy-to-manufacture design. Feeds from .30 rifle magazines.
   components:
   - type: Sprite
