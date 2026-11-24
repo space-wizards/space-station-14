@@ -5,7 +5,7 @@
 
   - node: start
     edges:
-    - to: entity
+    - to: conveyor
       steps:
       - material: ConveyorBeltStack
         amount: 1
@@ -17,7 +17,7 @@
     - !type:SetAnchor
       value: false
 
-  - node: entity
+  - node: conveyor
     entity: ConveyorBelt
     actions:
     - !type:SetAnchor
@@ -28,3 +28,39 @@
       steps:
       - tool: Prying
         doAfter: 3
+    - to: conveyor_left
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: conveyor_left
+    entity: ConveyorBeltLeft
+    actions:
+    - !type:SetAnchor
+      value: true
+    - !type:SnapToGrid
+    edges:
+    - to: item
+      steps:
+      - tool: Prying
+        doAfter: 3
+    - to: conveyor_right
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: conveyor_right
+    entity: ConveyorBeltRight
+    actions:
+    - !type:SetAnchor
+      value: true
+    - !type:SnapToGrid
+    edges:
+    - to: item
+      steps:
+      - tool: Prying
+        doAfter: 3
+    - to: conveyor
+      steps:
+      - tool: Screwing
+        doAfter: 1

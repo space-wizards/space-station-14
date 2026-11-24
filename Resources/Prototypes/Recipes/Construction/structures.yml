@@ -629,19 +629,7 @@
   parent: BaseStructureFullTileDirectional
   id: ConveyorBelt
   graph: ConveyorGraph
-  targetNode: entity
-
-- type: construction
-  parent: BaseStructureFullTileDirectional
-  id: ConveyorBeltLeft
-  graph: ConveyorLeftGraph
-  targetNode: entity
-
-- type: construction
-  parent: BaseStructureFullTileDirectional
-  id: ConveyorBeltRight
-  graph: ConveyorRightGraph
-  targetNode: entity
+  targetNode: conveyor
 
 - type: construction
   parent: BaseStructureFullTile

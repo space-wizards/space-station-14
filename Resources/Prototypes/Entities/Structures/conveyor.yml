@@ -55,7 +55,7 @@
           Reverse: { state: conveyor_started_r }
   - type: Construction
     graph: ConveyorGraph
-    node: entity
+    node: conveyor
   - type: Damageable
     damageModifierSet: PlasticMod
   - type: Destructible
@@ -96,8 +96,8 @@
           Forward: { state: conveyor_left_started }
           Reverse: { state: conveyor_left_started_r }
   - type: Construction
-    graph: ConveyorLeftGraph
-    node: entity
+    graph: ConveyorGraph
+    node: conveyor_left
 
 - type: entity
   parent: ConveyorBelt
@@ -119,8 +119,8 @@
           Forward: { state: conveyor_right_started }
           Reverse: { state: conveyor_right_started_r }
   - type: Construction
-    graph: ConveyorRightGraph
-    node: entity
+    graph: ConveyorGraph
+    node: conveyor_right
 
 - type: entity
   id: ConveyorBeltAssembly
