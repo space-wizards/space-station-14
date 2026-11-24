@@ -44,7 +44,7 @@
 
 - type: entity
   parent: [SolutionSmall, DrinkBottlePlasticBase]
-  id: DrinkBottlePlasticSmallBaseFull
+  id: DrinkBottlePlasticSmall
   name: plastic bottle
   description: A simple plastic bottle, microplastic included!
   suffix: Empty
@@ -57,7 +57,7 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmall]
   id: DrinkWaterBottleFull
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
   suffix: Full

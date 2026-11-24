@@ -312,8 +312,8 @@
     Glass: 200
 
 - type: latheRecipe
-  id: DrinkBottlePlasticSmallBaseFull
-  result: DrinkBottlePlasticSmallBaseFull
+  id: DrinkBottlePlasticSmall
+  result: DrinkBottlePlasticSmall
   completetime: 1
   materials:
     Plastic: 50
