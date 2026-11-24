@@ -258,6 +258,23 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
         if (_actions.Contains(action))
             return;
 
+        InsertByPriority(action);
+    }
+
+    private void InsertByPriority(Entity<ActionComponent> action)
+    {
+        for (var i = 0; i < _actions.Count; i++)
+        {
+            if (_actionsSystem?.GetAction(_actions[i], false) is not { } existing)
+                continue;
+
+            if (existing.Comp.Priority <= action.Comp.Priority)
+                continue;
+
+            _actions.Insert(i, action);
+            return;
+        }
+
         _actions.Add(action);
     }
 
