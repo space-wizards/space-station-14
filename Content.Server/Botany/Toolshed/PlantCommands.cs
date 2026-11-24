@@ -41,7 +41,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         EntProtoId seedPrototype)
     {
         return coordinates.Select(coordinate => SpawnPlant(ctx, coordinate, seedPrototype))
-                          .CastNotNullOnly();
+                          .OfType<Entity<PlantComponent>>();
     }
 
     [CommandImplementation("spawn")]
@@ -52,7 +52,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         EntProtoId seedPrototype)
     {
         return targets.Select(target => SpawnPlant(ctx, target, seedPrototype))
-                      .CastNotNullOnly();
+                      .OfType<Entity<PlantComponent>>();
     }
 
     [CommandImplementation("age")]
@@ -69,7 +69,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         }
 
         return input.Select(entity => Age(ctx, entity, ticks))
-                    .CastNotNullOnly();
+                    .OfType<Entity<PlantComponent>>();
     }
 
     [CommandImplementation("ageuntilready")]
@@ -78,7 +78,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         [PipedArgument] IEnumerable<Entity<PlantComponent>> input)
     {
         return input.Select(entity => AgeUntilReady(ctx, entity))
-                    .CastNotNullOnly();
+                    .OfType<Entity<PlantComponent>>();
     }
 
     [CommandImplementation("addmutation")]
@@ -90,7 +90,7 @@ public sealed partial class PlantCommand : ToolshedCommand
     )
     {
         return input.Select(entity => AddMutation(ctx, entity, plantMutation.TableId, plantMutation.MutationName))
-                    .CastNotNullOnly();
+                    .OfType<Entity<PlantComponent>>();
     }
 
     [CommandImplementation("addchem")]
@@ -103,7 +103,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         bool inherent = false)
     {
         return input.Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))
-                    .CastNotNullOnly();
+                    .OfType<Entity<PlantComponent>>();
     }
 
     public Entity<PlantComponent>? AgeUntilReady(IInvocationContext ctx, [PipedArgument] Entity<PlantComponent> input)
@@ -392,12 +392,3 @@ public sealed partial class PlantCommand : ToolshedCommand
 /// Combination of Id for RandomPlantMutationListPrototype and name of mutation, which should uniquely identify a mutation.
 /// </summary>
 public record PlantMutationSelector(ProtoId<RandomPlantMutationListPrototype> TableId, string MutationName);
-
-static file class LocalExtensions
-{
-    public static IEnumerable<Entity<PlantComponent>> CastNotNullOnly(this IEnumerable<Entity<PlantComponent>?> source)
-    {
-        return source.Where(x => x is { Comp: not null })
-                     .Select(x => new Entity<PlantComponent>(x!.Value, x.Value));
-    }
-}
