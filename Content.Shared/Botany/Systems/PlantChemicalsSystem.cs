@@ -144,7 +144,5 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
             amount: amount,
             inherent: false
         );
-
-        Dirty(ent);
     }
 }
