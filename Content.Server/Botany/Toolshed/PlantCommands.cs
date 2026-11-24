@@ -297,7 +297,7 @@ public sealed partial class PlantCommand : ToolshedCommand
             if (!_prototypeManager.TryIndex(seed, out var prototype))
             {
                 ctx.Error = new PlantCommandError(
-                    $"Couldn't find prototype '{result}'");
+                    $"Couldn't find prototype '{seed}'");
                 ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
                 return false;
             }
@@ -305,7 +305,7 @@ public sealed partial class PlantCommand : ToolshedCommand
             if (!prototype.HasComp<SeedComponent>(_componentFactory))
             {
                 ctx.Error = new PlantCommandError(
-                    $"Prototype '{result}' isn't a seed.");
+                    $"Prototype '{seed}' isn't a seed.");
                 ctx.Error.Contextualize(ctx.Input, (start, ctx.Index));
 
                 return false;
