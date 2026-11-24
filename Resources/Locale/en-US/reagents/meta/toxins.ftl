@@ -65,7 +65,7 @@ reagent-name-honk = honk
 reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
 
 reagent-name-lead = lead
-reagent-desc-lead = A slow-acting but incredibly lethal toxin. Reported to be bio-accumulated in changelings, and utilized in covert assassinations.
+reagent-desc-lead = A slow-acting but incredibly lethal toxin. Often utilized in covert assassinations.
 
 reagent-name-bungotoxin = bungotoxin
 reagent-desc-bungotoxin = A moderately slow-acting poison found within the pit of the bungo fruit.
