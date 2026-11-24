@@ -27,7 +27,6 @@ namespace Content.Client.CombatMode
             worldHandle.UseShader(_shader);
             var viewport = args.WorldAABB;
             worldHandle.DrawRect(viewport, Color.White);
-            worldHandle.UseShader(null);
         }
     }
 }

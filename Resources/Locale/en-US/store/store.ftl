@@ -18,3 +18,7 @@ store-preset-name-nukie-delivery = NukeOps Bluespace Delivery
 store-preset-name-changeling = DNA Store
 
 store-listing-locked = Locked
+
+store-generator-examine = { CAPITALIZE(SUBJECT($entity)) } contains [color=yellow]{$amount} {$currency}[/color].
+store-generator-collect-empty-popup = There is nothing to collect.
+store-generator-collect-popup = You gather {$amount} {$currency} from {THE($entity)}.

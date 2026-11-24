@@ -2,29 +2,30 @@ using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Cargo.Components;
 
 /// <summary>
 /// Handles teleporting in requested cargo after the specified delay.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedCargoSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedCargoSystem)), AutoGenerateComponentPause]
 public sealed partial class CargoTelepadComponent : Component
 {
     [DataField]
     public List<CargoOrderData> CurrentOrders = new();
 
     /// <summary>
-    /// The actual amount of time it takes to teleport from the telepad
+    /// The delay between each teleport in seconds
     /// </summary>
     [DataField]
-    public float Delay = 5f;
+    public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// How much time we've accumulated until next teleport.
+    /// The next time the teleporter can teleport.
     /// </summary>
-    [DataField]
-    public float Accumulator;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextTeleport;
 
     [DataField]
     public CargoTelepadState CurrentState = CargoTelepadState.Unpowered;

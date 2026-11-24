@@ -623,3 +623,4 @@
     sprite: *icon-rsi
     state: Sus
   jobName: job-name-sus
+  isCrewJob: false

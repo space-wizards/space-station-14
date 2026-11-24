@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github) icon-inflatable.png made by FungiFellow (GitHub), Xenoborg modules sprites by Samuka-C (github), icon-xenoborg-laser3 and icon-xenoborg-shield by august-sun(github), Nanite gun module sprite made by YoungThugSS14 (Github), icon-artistry by Kittygyat, icon-xenoborg-radioactive by august-sun (github), icon-xenoborg-bio beck-thompson (github), icon-xenoborg-rocket beck-thompson (github), icon-xenoborg-construction made by ThatGuyUSA (github)",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github) icon-inflatable.png made by FungiFellow (GitHub), Xenoborg modules sprites by Samuka-C (github), icon-xenoborg-laser3 and icon-xenoborg-shield by august-sun(github), Nanite gun module sprite made by YoungThugSS14 (Github), icon-artistry by Kittygyat, icon-xenoborg-radioactive by august-sun (github), icon-xenoborg-bio beck-thompson (github), icon-xenoborg-rocket beck-thompson (github), icon-xenoborg-construction and icon-cooking made by ThatGuyUSA (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -26,6 +26,9 @@
             "name": "icon-artifacts"
         },
         {
+            "name": "icon-botany"
+        },
+        {
             "name": "icon-cables"
         },
         {
@@ -47,6 +50,9 @@
             "name": "icon-construction"
         },
         {
+            "name": "icon-cooking"
+        },
+        {
             "name": "icon-defib"
         },
         {
@@ -59,9 +65,6 @@
             "name": "icon-artistry"
         },
         {
-            "name": "icon-gardening"
-        },
-        {
             "name": "icon-gas-analyzer"
         },
         {
@@ -69,9 +72,6 @@
         },
         {
             "name": "icon-grappling-gun"
-        },
-        {
-            "name": "icon-harvesting"
         },
         {
             "name": "icon-light-replacer"

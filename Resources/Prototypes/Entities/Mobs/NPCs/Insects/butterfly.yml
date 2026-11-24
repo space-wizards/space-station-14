@@ -1,0 +1,72 @@
+- type: entity
+  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase, BaseSlicingRefinableButchering ]
+  id: MobButterfly
+  name: butterfly
+  description: Despite popular misconceptions, it's not actually made of butter.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: butterfly
+      sprite: Mobs/Animals/Insects/butterfly.rsi
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        butterfly: Rainbow
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: butterfly
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 6
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 7.5
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      10: Dead
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 20
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+  - type: Item
+    size: Tiny
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 0.1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 1
+  - type: Extractable
+    grindableSolutionName: food
+  - type: ToolRefinable
+    refineResult: [] # Should give nothing when you butcher it so we set the item id it needs to spawn to null
+  - type: Tag
+    tags:
+    - Trash
+  - type: MobPrice
+    price: 50
+  - type: ZombieImmune

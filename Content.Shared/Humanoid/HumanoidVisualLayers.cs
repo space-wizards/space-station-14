@@ -20,6 +20,8 @@ namespace Content.Shared.Humanoid
         HeadSide, // side parts (i.e., frills)
         HeadTop,  // top parts (i.e., ears)
         Eyes,
+        Eyelids,
+        OverEyes,
         RArm,
         LArm,
         RHand,

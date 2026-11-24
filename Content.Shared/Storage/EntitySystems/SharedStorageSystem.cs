@@ -1,4 +1,3 @@
-using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -100,9 +99,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
     private readonly List<EntityUid> _entList = new();
     private readonly HashSet<EntityUid> _entSet = new();
 
-    private readonly List<ItemSizePrototype> _sortedSizes = new();
-    private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
-
     private const string QuickInsertUseDelayID = "quickInsert";
     private const string OpenUiUseDelayID = "storage";
 
@@ -169,7 +165,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         Subs.CVar(_cfg, CCVars.NestedStorage, OnNestedStorageCvar, true);
 
-        UpdatePrototypeCache();
+        CacheDefaultStorageSize();
     }
 
     private void OnItemSizeChanged(ref ItemSizeChangedEvent ev)
@@ -242,30 +238,15 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        // TODO: This should update all entities in storage as well.
-        if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
-            || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
-        {
-            UpdatePrototypeCache();
-        }
+        // TODO: This should update all entities in storage.
+
+        if (args.WasModified<ItemSizePrototype>())
+            CacheDefaultStorageSize();
     }
 
-    private void UpdatePrototypeCache()
+    private void CacheDefaultStorageSize()
     {
         _defaultStorageMaxItemSize = ProtoMan.Index(DefaultStorageMaxItemSize);
-        _sortedSizes.Clear();
-        _sortedSizes.AddRange(ProtoMan.EnumeratePrototypes<ItemSizePrototype>());
-        _sortedSizes.Sort();
-
-        var nextSmallest = new KeyValuePair<string, ItemSizePrototype>[_sortedSizes.Count];
-        for (var i = 0; i < _sortedSizes.Count; i++)
-        {
-            var k = _sortedSizes[i].ID;
-            var v = _sortedSizes[Math.Max(i - 1, 0)];
-            nextSmallest[i] = new(k, v);
-        }
-
-        _nextSmallest = nextSmallest.ToFrozenDictionary();
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -451,7 +432,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         }
     }
 
-    public virtual void UpdateUI(Entity<StorageComponent?> entity) {}
+    public virtual void UpdateUI(Entity<StorageComponent?> entity) { }
 
     private void AddTransferVerbs(EntityUid uid, StorageComponent component, GetVerbsEvent<UtilityVerb> args)
     {
@@ -1827,7 +1808,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity.
-        return _nextSmallest[item.Size];
+        return ItemSystem.GetSizeSmaller(item.Size) ?? ItemSystem.GetSmallestSize();
     }
 
     /// <summary>

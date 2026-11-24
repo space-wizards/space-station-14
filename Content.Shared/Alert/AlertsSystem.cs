@@ -306,7 +306,7 @@ public abstract partial class AlertsSystem : EntitySystem
             Dirty(entity, alertComp);
     }
 
-    protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
+    protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ref ComponentShutdown args)
     {
         RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
     }

@@ -15,10 +15,58 @@ namespace Content.IntegrationTests.Pair;
 // This partial class contains logic related to recycling & disposing test pairs.
 public sealed partial class TestPair
 {
+    private bool _cleanedEmptyWorld;
+
+    public override bool CanFastRecycle(PairSettings next) =>
+        _cleanedEmptyWorld && base.CanFastRecycle(next);
+
     protected override async Task Cleanup()
     {
+        _cleanedEmptyWorld = false;
         await base.Cleanup();
         await ResetModifiedPreferences();
+
+        if (Settings is not PoolSettings { DummyTicker: true, Dirty: false } || Settings.MustNotBeReused)
+            return;
+
+        await Server.WaitPost(() =>
+        {
+            var ticker = Server.System<ServerGameTicker>();
+            if (!ticker.DummyTicker || ticker.RunLevel != GameRunLevel.PreRoundLobby ||
+                ticker.CurrentPreset != null || ticker.GetLastGameRule() != null)
+                return;
+
+            Server.EntMan.EventBus.RaiseEvent(Robust.Shared.GameObjects.EventSource.Local, new RoundRestartCleanupEvent());
+            Server.EntMan.FlushEntities();
+            _cleanedEmptyWorld = true;
+        });
+        if (!_cleanedEmptyWorld)
+            return;
+
+        // Make sure server deletions come in before we start lawnmowering the client entities.
+        await RunUntilSynced();
+
+        await Client.WaitPost(() =>
+        {
+            Client.EntMan.EventBus.RaiseEvent(Robust.Shared.GameObjects.EventSource.Local, new RoundRestartCleanupEvent());
+            foreach (var uid in Client.EntMan.GetEntities().Where(uid => Client.EntMan.IsClientSide(uid)).ToArray())
+            {
+                Client.EntMan.DeleteEntity(uid);
+            }
+        });
+    }
+
+    protected override async Task ValidateCleanup()
+    {
+        await base.ValidateCleanup();
+        if (!_cleanedEmptyWorld)
+            return;
+
+        await RunUntilSynced();
+        await Server.WaitAssertion(() => Assert.That(Server.EntMan.EntityCount, Is.Zero,
+            "Server entities remained after pair cleanup"));
+        await Client.WaitAssertion(() => Assert.That(Client.EntMan.EntityCount, Is.Zero,
+            "Client entities remained after pair cleanup"));
     }
 
     private async Task ResetModifiedPreferences()
@@ -34,27 +82,37 @@ public sealed partial class TestPair
 
     protected override async Task Recycle(PairSettings next, TextWriter testOut)
     {
-        // Move to pre-round lobby. Required to toggle dummy ticker on and off
+        var settings = (PoolSettings) next;
         var gameTicker = Server.System<ServerGameTicker>();
-        if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
+        await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Resetting round.");
+
+        if (settings.DummyTicker)
         {
-            await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting round.");
-            Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
-            Assert.That(gameTicker.DummyTicker, Is.False);
-            Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
-            await Server.WaitPost(() => gameTicker.RestartRound());
-            await RunTicksSync(1);
+            await Server.WaitPost(() =>
+            {
+                if (!gameTicker.DummyTicker || gameTicker.RunLevel != GameRunLevel.PreRoundLobby ||
+                    gameTicker.CurrentPreset != null || gameTicker.GetLastGameRule() != null)
+                {
+                    // Finish the round before disabling its ticker. Keep the lobby enabled so
+                    // cleanup doesn't start another map that would immediately be dumped and waste time.
+                    Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
+                    Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
+                    gameTicker.RestartRound();
+                }
+                else
+                {
+                    // RestartRound is a NOOP for a dummy ticker.
+                    Server.EntMan.FlushEntities();
+                }
+            });
+            await ApplySettings(next);
+        }
+        else
+        {
+            await ApplySettings(next);
+            await Server.WaitPost(gameTicker.RestartRound);
         }
 
-        //Apply Cvars
-        await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Setting CVar ");
-        await ApplySettings(next);
-        await RunTicksSync(1);
-
-        // Restart server.
-        await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting server again");
-        await Server.WaitPost(() => Server.EntMan.FlushEntities());
-        await Server.WaitPost(() => gameTicker.RestartRound());
         await RunTicksSync(1);
     }
 

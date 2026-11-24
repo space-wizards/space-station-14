@@ -69,6 +69,7 @@
     alert: Adrenaline
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-adrenaline
+    requiresConciousness: true
 
 - type: entity
   parent: MobStatusEffectBase

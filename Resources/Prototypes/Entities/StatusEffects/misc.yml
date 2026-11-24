@@ -128,6 +128,7 @@
   - type: SeeingRainbowsStatusEffect
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-seeing-rainbow
+    requiresConciousness: true
 
 # Causes your vision to become blurry and gives me a headache.
 - type: entity
@@ -145,6 +146,7 @@
   components:
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-drunk
+    requiresConciousness: true
   - type: StatusEffectAlert
     alert: DrunkAlert
 
@@ -163,6 +165,7 @@
   - type: BlindnessStatusEffect
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-temporary-blindness
+    requiresConciousness: true
   - type: StatusEffectAlert
     alert: BlindAlert
 
@@ -218,3 +221,14 @@
       collection: gib # Same as ActionRetractableItemArmblade
     despawnSound:
       collection: gib # Same as ActionRetractableItemArmblade
+
+# The horror form needs to be handless; this serves as a very hacky fix for it.
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectHorrorFormArmblades
+  name: forced armblade
+  components:
+  - type: ForcedItemStatusEffect
+    handItems:
+    - ArmbladeHorror
+    - ArmbladeHorror

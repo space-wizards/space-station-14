@@ -5,7 +5,7 @@ uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector t
     The guardian can punch rapidly and is immune to hazardous environments while being resistant to direct trauma, but shares any damage it takes with the user.
 
 uplink-reinforcement-radio-name = Reinforcement Teleporter
-uplink-reinforcement-radio-traitor-desc = Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. Call in a medic, spy, or thief to help you out. Good luck.
+uplink-reinforcement-radio-traitor-desc = Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. Call in a combat medic, spy, or thief to help you out. Good luck.
 
 uplink-reinforcement-radio-nukeops-name = Nuclear Operative Teleporter
 uplink-reinforcement-radio-nukeops-desc = Radio in a nuclear operative of extremely questionable quality. No off button, buy this if you're ready to party. They have basic nuclear operative gear.

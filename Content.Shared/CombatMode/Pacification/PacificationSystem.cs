@@ -120,7 +120,7 @@ public sealed partial class PacificationSystem : EntitySystem
         _alertsSystem.ShowAlert(uid, component.PacifiedAlert);
     }
 
-    private void OnShutdown(EntityUid uid, PacifiedComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, PacifiedComponent component, ref ComponentShutdown args)
     {
         if (!TryComp<CombatModeComponent>(uid, out var combatMode))
             return;
