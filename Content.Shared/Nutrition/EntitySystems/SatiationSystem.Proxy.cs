@@ -418,7 +418,6 @@ public abstract partial class SatiationSystem
         }
 
         SetOverrideThreshold(entity, satiation, proto, key.Key, value);
-
     }
 
     /// <summary>
