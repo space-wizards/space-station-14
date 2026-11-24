@@ -215,9 +215,7 @@ namespace Content.Shared.Random.Helpers
         public static IRobustRandom PredictedRandom(IGameTiming timing, NetEntity netEnt, NetEntity? netEnt2 = null)
         {
             var seed = HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
-            var random = new RobustRandom();
-            random.SetSeed(seed);
-            return random;
+            return new RobustRandom(seed);
         }
 
         /// <summary>
