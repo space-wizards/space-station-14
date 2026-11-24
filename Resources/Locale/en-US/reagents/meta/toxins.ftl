@@ -74,7 +74,7 @@ reagent-name-vestine = vestine
 reagent-desc-vestine = Has an adverse reaction within the body causing major jittering. While not particularly useful on its own, it can be used to produce a small variety of chemicals.
 
 reagent-name-tazinide = tazinide
-reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.https://github.com/space-wizards/space-station-14/pull/46869
+reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.
 
 reagent-name-lipolicide = lipolicide
 reagent-desc-lipolicide = A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. Deadly to those without nutriment in their body.
