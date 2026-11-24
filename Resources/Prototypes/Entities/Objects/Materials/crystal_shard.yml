@@ -12,7 +12,7 @@
     doAfterDuration: 4.0
   - type: Sprite
     layers:
-      - sprite: Objects/Materials/Shards/crystal.rsi
+      - sprite: Objects/Materials/Shards/crystal-shard.rsi
         state: shard1
         map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite

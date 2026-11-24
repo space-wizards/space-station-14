@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By AftrLite (GitHub), based on the sprites of Twaticus (GitHub).",
+    "source": "https://github.com/Twaticus/tgstation/blob/689f454a7889b5749a300e39e0961cf426cd9a9e/icons/obj/storage/closet.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "open"
+        }
+    ]
+}

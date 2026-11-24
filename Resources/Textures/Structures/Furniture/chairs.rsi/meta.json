@@ -12,23 +12,11 @@
             "directions": 4
         },
         {
-            "name": "bar-knocked",
-            "directions": 4
-        },
-        {
             "name": "chair",
             "directions": 4
         },
         {
-            "name": "chair-knocked",
-            "directions": 4
-        },
-        {
             "name": "chair-greyscale",
-            "directions": 4
-        },
-        {
-            "name": "chair-greyscale-knocked",
             "directions": 4
         },
         {
@@ -64,10 +52,6 @@
             "directions": 4
         },
         {
-            "name": "stool-knocked",
-            "directions": 4
-        },
-        {
             "name": "wooden",
             "directions": 4
         },
@@ -77,10 +61,6 @@
         },
         {
             "name": "wooden-wings",
-            "directions": 4
-        },
-        {
-            "name": "wooden-wings-knocked",
             "directions": 4
         },
         {

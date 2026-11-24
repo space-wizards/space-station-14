@@ -1,14 +1,53 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/fd35c5efa6973db72eaa646c3e653d230b8412ca/icons/obj/mining.dmi",
+  "license": "CC-BY-SA-4.0",
+  "copyright": "by vladimir.s",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "crystal_grey"
+      "name": "big0"
+    },
+    {
+      "name": "big1"
+    },
+    {
+      "name": "big2"
+    },
+    {
+      "name": "medium0"
+    },
+    {
+      "name": "medium1"
+    },
+    {
+      "name": "medium2"
+    },
+    {
+      "name": "medium3"
+    },
+    {
+      "name": "medium4"
+    },
+    {
+      "name": "small0"
+    },
+    {
+      "name": "small1"
+    },
+    {
+      "name": "small2"
+    },
+    {
+      "name": "small3"
+    },
+    {
+      "name": "small4"
+    },
+    {
+      "name": "small5"
     }
   ]
 }

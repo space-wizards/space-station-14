@@ -333,7 +333,7 @@ public sealed class SegmentedBarChart : Control
 
             yield return (entry, xStart, xEnd);
 
-            xStart = xEnd + gapWidth;
+            xStart = MathF.Min(xEnd + gapWidth, chartWidth);
         }
     }
 

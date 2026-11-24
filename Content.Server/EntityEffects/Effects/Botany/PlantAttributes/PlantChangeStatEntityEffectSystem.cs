@@ -12,7 +12,6 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantChangeStat>
 {
-    [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
@@ -25,7 +24,7 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         var targetDataField = args.Effect.TargetDataField;
         var targetComponent = args.Effect.TargetComponent;
 
-        if (!_componentFactory.TryGetRegistration(targetComponent, out var registration))
+        if (!Factory.TryGetRegistration(targetComponent, out var registration))
         {
             Log.Error($"{nameof(PlantChangeStat)} Error: Component '{targetComponent}' is not a valid component name.");
             return;

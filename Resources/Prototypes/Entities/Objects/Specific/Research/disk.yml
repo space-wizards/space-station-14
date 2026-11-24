@@ -86,7 +86,8 @@
         t3_border:
           3: { visible: true }
   - type: StealTarget
-    stealGroup: TechnologyDisk
+    stealGroup:
+    - TechnologyDisk
   - type: TechnologyDisk
 
 # random tech disks by tier

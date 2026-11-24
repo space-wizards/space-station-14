@@ -1,4 +1,4 @@
-﻿using Content.Shared.Guidebook;
+using Content.Shared.Guidebook;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Power.Generator;

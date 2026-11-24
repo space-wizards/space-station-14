@@ -2,6 +2,7 @@ using Content.Shared.Body;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Roles;
@@ -82,7 +83,7 @@ public sealed partial class ZombieComponent : Component
     public TimeSpan NextTick;
 
     [DataField("zombieStatusIcon")]
-    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
+    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
 
     /// <summary>
     /// Healing each second
@@ -145,6 +146,12 @@ public sealed partial class ZombieComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
+
+    /// <summary>
+    /// The blood refresh of the humanoid to restore in case of cloning.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 BeforeZombifiedBloodRefresh = new();
 
     /// <summary>
     /// The blood reagents of the humanoid to restore in case of cloning

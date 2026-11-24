@@ -7,13 +7,14 @@ namespace Content.Shared.Disposal.Components;
 
 /// <summary>
 /// Entities that pass through disposal tubes with this component can be marked with a tag.
+/// Entities flushed from a disposal unit with this component can be marked with a tag.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DisposalTaggerSystem))]
 public sealed partial class DisposalTaggerComponent : Component
 {
     /// <summary>
-    /// Tag to apply to passing entities.
+    /// Tag to apply to passing or flushing entities.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string Tag = string.Empty;
@@ -23,6 +24,12 @@ public sealed partial class DisposalTaggerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
+    /// <summary>
+    /// If false editing the tag is disabled.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Editable = true;
 }
 
 /// <summary>
@@ -40,18 +47,10 @@ public sealed class DisposalTaggerUiActionMessage : BoundUserInterfaceMessage
 }
 
 /// <summary>
-/// Sends tag data to disposal tagger UIs.
+/// A message to open the disposal tagger UI sent from a separate UI.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
-{
-    public readonly string Tags;
-
-    public DisposalTaggerUserInterfaceState(string tags)
-    {
-        Tags = tags;
-    }
-}
+public sealed class DisposalTaggerOpenUiMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 /// Key for opening disposal tagger UIs.

@@ -37,7 +37,7 @@ public sealed partial class NearbyTilesPercentConditionSystem : EntityConditionS
             // Only consider collidable anchored (for reasons some subfloor stuff has physics but non-collidable)
             if (args.Condition.IgnoreAnchored)
             {
-                var gridEnum = _map.GetAnchoredEntitiesEnumerator(entity.Comp.GridUid.Value, grid, tile.GridIndices);
+                var gridEnum = _map.GetAnchoredEntities(entity.Comp.GridUid.Value, grid, tile.GridIndices);
                 var found = false;
 
                 while (gridEnum.MoveNext(out var ancUid))

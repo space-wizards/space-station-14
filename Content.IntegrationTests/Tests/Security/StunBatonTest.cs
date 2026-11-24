@@ -22,7 +22,7 @@ public sealed class StunBatonTests : InteractionTest
     private static readonly EntProtoId HumanProtoId = "MobHuman";
 
     // If you are rebalancing stun batons you will have to change this number.
-    private const int NumberOfHitsToStun = 3;
+    private const int NumberOfHitsToStun = 5;
 
     [SidedDependency(Side.Server)] private readonly SharedBatterySystem _battery = default!;
     [SidedDependency(Side.Server)] private readonly DamageableSystem _damageable = default!;
@@ -163,7 +163,7 @@ public sealed class StunBatonTests : InteractionTest
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: true);
         var sBaton = ToServer(baton);
         var batteryComp = Comp<BatteryComponent>(baton);
-        var batonIntialCharge = _battery.GetCharge(sBaton);
+        var batonIntialCharge = _battery.GetCharge(sBaton).Charge;
 
         using (Assert.EnterMultipleScope())
         {
@@ -176,7 +176,7 @@ public sealed class StunBatonTests : InteractionTest
         await RunSeconds(2); // Weapon cooldown.
         await AttemptLightAttackMiss();
 
-        var batonNewCharge = _battery.GetCharge(sBaton);
+        var batonNewCharge = _battery.GetCharge(sBaton).Charge;
         Assert.That(batonNewCharge, Is.EqualTo(batonIntialCharge), "Stun baton lost charge when missing an attack.");
     }
 }

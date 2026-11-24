@@ -23,6 +23,7 @@
   icon: "JobIconCaptain"
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
+  guides: [ Command ] # TODO: should have a more specific guidebook page instead of using the department itself
   accessGroups:
   - AllAccess
   special:

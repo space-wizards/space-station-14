@@ -11,6 +11,7 @@
   mode: Deconstruct
   prototype: EffectRCDDeconstructPreview
   rotation: Camera
+  menuOrder: -1
 
 - type: rcd
   id: DeconstructLattice   # Hidden prototype - do not add to RCDs
@@ -30,7 +31,7 @@
   rotation: Camera
   fx: EffectRCDDeconstruct4
 
-# Flooring
+# region Walls and Flooring
 - type: rcd
   id: Plating
   name: rcd-component-plating
@@ -44,6 +45,7 @@
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstruct1
+  menuOrder: 0
 
 - type: rcd
   id: FloorSteel
@@ -58,6 +60,7 @@
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstruct1
+  menuOrder: 1
 
 - type: rcd
   id: Catwalk
@@ -73,8 +76,8 @@
     - IsCatwalk
   rotation: Fixed
   fx: EffectRCDConstruct1
+  menuOrder: 2
 
-# Walls
 - type: rcd
   id: WallSolid
   category: WallsAndFlooring
@@ -86,7 +89,10 @@
   collisionMask: FullTileMask
   rotation: Fixed
   fx: EffectRCDConstruct2
+  menuOrder: 3
+# endregion Walls and Flooring
 
+# region Windows and Grilles
 - type: rcd
   id: Grille
   category: WindowsAndGrilles
@@ -98,8 +104,8 @@
   collisionMask: Impassable
   rotation: Fixed
   fx: EffectRCDConstruct2
+  menuOrder: 0
 
-# Windows
 - type: rcd
   id: Window
   category: WindowsAndGrilles
@@ -113,6 +119,22 @@
     - IsWindow
   rotation: Fixed
   fx: EffectRCDConstruct2
+  menuOrder: 1
+
+- type: rcd
+  id: ReinforcedWindow
+  category: WindowsAndGrilles
+  sprite: /Textures/Interface/Radial/RCD/window_reinforced.png
+  mode: ConstructObject
+  prototype: ReinforcedWindow
+  cost: 4
+  delay: 3
+  collisionMask: Impassable
+  rules:
+    - IsWindow
+  rotation: User
+  fx: EffectRCDConstruct3
+  menuOrder: 2
 
 - type: rcd
   id: WindowDirectional
@@ -129,20 +151,7 @@
   rotation: User
   fx: EffectRCDConstruct1
   allowMultiDirection: true
-
-- type: rcd
-  id: ReinforcedWindow
-  category: WindowsAndGrilles
-  sprite: /Textures/Interface/Radial/RCD/window_reinforced.png
-  mode: ConstructObject
-  prototype: ReinforcedWindow
-  cost: 4
-  delay: 3
-  collisionMask: Impassable
-  rules:
-    - IsWindow
-  rotation: User
-  fx: EffectRCDConstruct3
+  menuOrder: 3
 
 - type: rcd
   id: WindowReinforcedDirectional
@@ -159,8 +168,10 @@
   rotation: User
   fx: EffectRCDConstruct2
   allowMultiDirection: true
+  menuOrder: 4
+# endregion Windows and Grilles
 
-# Airlocks
+# region Airlocks
 - type: rcd
   id: Airlock
   category: Airlocks
@@ -172,6 +183,7 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct4
+  menuOrder: 0
 
 - type: rcd
   id: AirlockGlass
@@ -184,6 +196,7 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct4
+  menuOrder: 1
 
 - type: rcd
   id: Firelock
@@ -196,8 +209,10 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct3
+  menuOrder: 2
+# endregion Airlocks
 
-# Lighting
+# region Lighting
 - type: rcd
   id: TubeLight
   category: Lighting
@@ -211,6 +226,7 @@
   rotation: User
   fx: EffectRCDConstruct1
   allowMultiDirection: true
+  menuOrder: 0
 
 - type: rcd
   id: BulbLight
@@ -225,163 +241,7 @@
   rotation: User
   fx: EffectRCDConstruct1
   allowMultiDirection: true
-
-# Electrical
-- type: rcd
-  id: LVCable
-  category: Electrical
-  sprite: /Textures/Interface/Radial/RCD/lv_coil.png
-  mode: ConstructObject
-  prototype: CableApcExtension
-  cost: 1
-  delay: 0
-  rules:
-  - MustBuildOnSubfloor
-  rotation: Fixed
-  fx: EffectRCDConstruct0
-
-- type: rcd
-  id: MVCable
-  category: Electrical
-  sprite: /Textures/Interface/Radial/RCD/mv_coil.png
-  mode: ConstructObject
-  prototype: CableMV
-  cost: 1
-  delay: 0
-  rules:
-  - MustBuildOnSubfloor
-  rotation: Fixed
-  fx: EffectRCDConstruct0
-
-- type: rcd
-  id: HVCable
-  category: Electrical
-  sprite: /Textures/Interface/Radial/RCD/hv_coil.png
-  mode: ConstructObject
-  prototype: CableHV
-  cost: 1
-  delay: 0
-  rules:
-  - MustBuildOnSubfloor
-  rotation: Fixed
-  fx: EffectRCDConstruct0
-
-- type: rcd
-  id: CableTerminal
-  category: Electrical
-  sprite: /Textures/Interface/Radial/RCD/cable_terminal.png
-  mode: ConstructObject
-  prototype: CableTerminal
-  cost: 1
-  delay: 0
-  collisionMask: Impassable
-  rotation: User
-  fx: EffectRCDConstruct0
-
-# Xenoborg
-- type: rcd
-  id: AirlockXenoborgLocked
-  category: XenoborgAirlocks
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_airlock.png
-  mode: ConstructObject
-  prototype: AirlockXenoborgLocked
-  cost: 4
-  delay: 4
-  collisionMask: FullTileMask
-  rotation: Camera
-  fx: EffectRCDConstruct4
-
-- type: rcd
-  id: AirlockShuttleXenoborgLocked
-  category: XenoborgAirlocks
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_airlock_dock.png
-  mode: ConstructObject
-  prototype: AirlockShuttleXenoborgLocked
-  cost: 5
-  delay: 4
-  collisionMask: FullTileMask
-  fx: EffectRCDConstruct4
-  allowMultiDirection: true
-
-- type: rcd
-  id: WallXenoborg
-  category: XenoborgWallsAndFlooring
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_wall.png
-  mode: ConstructObject
-  prototype: WallXenoborg
-  cost: 4
-  delay: 4
-  collisionMask: FullTileMask
-  rotation: Fixed
-  fx: EffectRCDConstruct4
-
-- type: rcd
-  id: XenoborgGrille # so that it can fit in its own category...
-  category: XenoborgWindowsAndGrilles
-  sprite: /Textures/Interface/Radial/RCD/grille.png
-  mode: ConstructObject
-  prototype: Grille #it's just a grille, really
-  cost: 4
-  delay: 2
-  collisionMask: Impassable
-  rotation: Fixed
-  fx: EffectRCDConstruct2
-
-- type: rcd
-  id: XenoborgWindow
-  category: XenoborgWindowsAndGrilles
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_window.png
-  mode: ConstructObject
-  prototype: XenoborgWindow
-  cost: 4
-  delay: 3
-  collisionMask: Impassable
-  rules:
-  - IsWindow
-  rotation: User
-  fx: EffectRCDConstruct3
-
-- type: rcd
-  id: FloorXenoborg
-  category: XenoborgWallsAndFlooring
-  name: rcd-component-floor-xenoborg
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_tile.png
-  mode: ConstructTile
-  prototype: FloorXenoborg
-  cost: 1
-  delay: 1
-  collisionMask: InteractImpassable
-  rules:
-  - CanBuildOnEmptyTile
-  fx: EffectRCDConstruct1
-
-- type: rcd
-  id: FloorXenoborgBlueCircuit #again, it's just blue circuit floor
-  category: XenoborgWallsAndFlooring
-  name: rcd-component-floor-blue-circuit
-  sprite: /Textures/Interface/Radial/RCD/blue_circuit_tile.png
-  mode: ConstructTile
-  prototype: FloorBlueCircuit
-  cost: 1
-  delay: 1
-  collisionMask: InteractImpassable
-  rules:
-  - CanBuildOnEmptyTile
-  fx: EffectRCDConstruct1
-
-- type: rcd
-  id: XenoborgPlating # . . .
-  category: XenoborgWallsAndFlooring
-  name: rcd-component-plating
-  sprite: /Textures/Interface/Radial/RCD/plating.png
-  mode: ConstructTile
-  prototype: PlatingRCD
-  cost: 1
-  delay: 1
-  collisionMask: InteractImpassable
-  rules:
-  - CanBuildOnEmptyTile
-  fx: EffectRCDConstruct1
+  menuOrder: 1
 
 - type: rcd
   id: PoweredlightBlue
@@ -396,3 +256,181 @@
   rotation: User
   fx: EffectRCDConstruct1
   allowMultiDirection: true
+  menuOrder: 2
+
+# endregion Lighting
+
+# region Electrical
+- type: rcd
+  id: LVCable
+  category: Electrical
+  sprite: /Textures/Interface/Radial/RCD/lv_coil.png
+  mode: ConstructObject
+  prototype: CableApcExtension
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  rotation: Fixed
+  fx: EffectRCDConstruct0
+  menuOrder: 0
+
+- type: rcd
+  id: MVCable
+  category: Electrical
+  sprite: /Textures/Interface/Radial/RCD/mv_coil.png
+  mode: ConstructObject
+  prototype: CableMV
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  rotation: Fixed
+  fx: EffectRCDConstruct0
+  menuOrder: 1
+
+- type: rcd
+  id: HVCable
+  category: Electrical
+  sprite: /Textures/Interface/Radial/RCD/hv_coil.png
+  mode: ConstructObject
+  prototype: CableHV
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  rotation: Fixed
+  fx: EffectRCDConstruct0
+  menuOrder: 2
+
+- type: rcd
+  id: CableTerminal
+  category: Electrical
+  sprite: /Textures/Interface/Radial/RCD/cable_terminal.png
+  mode: ConstructObject
+  prototype: CableTerminal
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+  menuOrder: 3
+# endregion Electrical
+
+# region XenoborgAirlocks
+- type: rcd
+  id: AirlockXenoborgLocked
+  category: XenoborgAirlocks
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_airlock.png
+  mode: ConstructObject
+  prototype: AirlockXenoborgLocked
+  cost: 4
+  delay: 4
+  collisionMask: FullTileMask
+  rotation: Camera
+  fx: EffectRCDConstruct4
+  menuOrder: 0
+
+- type: rcd
+  id: AirlockShuttleXenoborgLocked
+  category: XenoborgAirlocks
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_airlock_dock.png
+  mode: ConstructObject
+  prototype: AirlockShuttleXenoborgLocked
+  cost: 5
+  delay: 4
+  collisionMask: FullTileMask
+  fx: EffectRCDConstruct4
+  allowMultiDirection: true
+  menuOrder: 1
+# endregion XenoborgAirlocks
+
+# region XenoborgWallsAndFlooring
+- type: rcd
+  id: WallXenoborg
+  category: XenoborgWallsAndFlooring
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_wall.png
+  mode: ConstructObject
+  prototype: WallXenoborg
+  cost: 4
+  delay: 4
+  collisionMask: FullTileMask
+  rotation: Fixed
+  fx: EffectRCDConstruct4
+  menuOrder: 0
+
+- type: rcd
+  id: FloorXenoborg
+  category: XenoborgWallsAndFlooring
+  name: rcd-component-floor-xenoborg
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_tile.png
+  mode: ConstructTile
+  prototype: FloorXenoborg
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+  - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct1
+  menuOrder: 1
+
+- type: rcd
+  id: FloorXenoborgBlueCircuit #again, it's just blue circuit floor
+  category: XenoborgWallsAndFlooring
+  name: rcd-component-floor-blue-circuit
+  sprite: /Textures/Interface/Radial/RCD/blue_circuit_tile.png
+  mode: ConstructTile
+  prototype: FloorBlueCircuit
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+  - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct1
+  menuOrder: 2
+
+- type: rcd
+  id: XenoborgPlating # . . .
+  category: XenoborgWallsAndFlooring
+  name: rcd-component-plating
+  sprite: /Textures/Interface/Radial/RCD/plating.png
+  mode: ConstructTile
+  prototype: PlatingRCD
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+  - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct1
+  menuOrder: 3
+# endregion XenoborgWallsAndFlooring
+
+# region XenoborgWindowsAndGrilles
+- type: rcd
+  id: XenoborgGrille # so that it can fit in its own category...
+  category: XenoborgWindowsAndGrilles
+  sprite: /Textures/Interface/Radial/RCD/grille.png
+  mode: ConstructObject
+  prototype: Grille #it's just a grille, really
+  cost: 4
+  delay: 2
+  collisionMask: Impassable
+  rotation: Fixed
+  fx: EffectRCDConstruct2
+  menuOrder: 0
+
+- type: rcd
+  id: XenoborgWindow
+  category: XenoborgWindowsAndGrilles
+  sprite: /Textures/Interface/Radial/RCD/xenoborg_window.png
+  mode: ConstructObject
+  prototype: XenoborgWindow
+  cost: 4
+  delay: 3
+  collisionMask: Impassable
+  rules:
+  - IsWindow
+  rotation: User
+  fx: EffectRCDConstruct3
+  menuOrder: 1
+# endregion XenoborgWindowsAndGrilles

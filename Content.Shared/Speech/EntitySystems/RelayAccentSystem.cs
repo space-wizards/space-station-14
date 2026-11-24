@@ -7,8 +7,10 @@ namespace Content.Shared.Speech.EntitySystems;
 /// <summary>
 /// Base system for accents that should apply both directly and when relayed through other entities.
 /// </summary>
-public abstract class RelayAccentSystem<T> : EntitySystem where T : BaseAccentComponent
+public abstract partial class RelayAccentSystem<T> : EntitySystem where T : BaseAccentComponent
 {
+    [Dependency] private InventorySystem _inventory = default!;
+
     /// <summary>
     /// Systems this accent should run before for direct speech accenting.
     /// </summary>
@@ -42,7 +44,39 @@ public abstract class RelayAccentSystem<T> : EntitySystem where T : BaseAccentCo
         if (!ent.Comp.RelayAccent)
             return;
 
+        // Prevent the same accent from applying twice.
+        if (HasAccent(args.Owner, ent))
+            return;
+
         OnAccent(ent, ref args.Args);
+    }
+
+    /// <summary>
+    /// Checks if target already has this accent.
+    /// </summary>
+    public bool HasAccent(EntityUid target, Entity<T> accentEnt)
+    {
+        // If not ReplacementAccent all accentProto checks are null == null (true).
+        var accentProto = (accentEnt.Comp as ReplacementAccentComponent)?.Accent;
+
+        // Check owner (character trait accents).
+        if (TryComp<T>(target, out var own) && (own as ReplacementAccentComponent)?.Accent == accentProto)
+            return true;
+
+        // Check items in invontery that apply the same accent.
+        var enumerator = _inventory.GetSlotEnumerator(target, SlotFlags.WITHOUT_POCKET);
+        while (enumerator.NextItem(out var item))
+        {
+            if (item == accentEnt.Owner)
+                // Runs for every relayAccent item. A continue here would make neither apply.
+                break;
+
+            if (TryComp<T>(item, out var other) && other.RelayAccent
+                && (other as ReplacementAccentComponent)?.Accent == accentProto)
+                return true;
+        }
+
+        return false;
     }
 
     protected virtual void OnStatusEffectRelayAccent(Entity<T> ent, ref StatusEffectRelayedEvent<AccentGetEvent> args)

@@ -13,7 +13,7 @@
                 <Button Name="ExitButton" Text="{Loc 'connecting-exit'}"
                         HorizontalAlignment="Right" HorizontalExpand="True" />
             </BoxContainer>
-            <controls:HighDivider />
+            <controls:Separator StyleClasses="HighDivider"/>
             <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4 4 4 0">
                 <Control VerticalExpand="True" Margin="0 0 0 8">
                     <BoxContainer Orientation="Vertical" Name="ConnectingStatus">

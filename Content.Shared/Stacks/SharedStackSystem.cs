@@ -38,7 +38,7 @@ public abstract partial class SharedStackSystem : EntitySystem
         base.Initialize();
 
         _vvm.GetTypeHandler<StackComponent>()
-            .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
+            .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, (uid, value, comp) => SetCount((uid, comp), value));
     }
 
     public override void Shutdown()

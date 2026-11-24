@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
+            var gameTicker = entitySystemManager.GetEntitySystem<ServerGameTicker>();
 
             await server.WaitAssertion(() =>
             {

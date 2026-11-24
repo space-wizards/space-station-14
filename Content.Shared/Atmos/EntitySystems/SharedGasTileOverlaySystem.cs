@@ -162,6 +162,11 @@ public struct ThermalByte : IEquatable<ThermalByte>
     public const float TempDegreeResolution = (TempMaximum - TempMinimum) / TempResolution;
     public const float TempToByteFactor = TempResolution / (TempMaximum - TempMinimum);
 
+    /// <summary>
+    /// The minimum pressure gas must have for tile temperature to be networked to clients. Below this threshold thermal byte is set to StateVacuum.
+    /// </summary>
+    public const float MinimalPressureThreshold = 20f;
+
     private byte _coreValue;
 
     public ThermalByte(float temperatureKelvin)

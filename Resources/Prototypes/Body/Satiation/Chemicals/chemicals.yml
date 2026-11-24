@@ -1,0 +1,13 @@
+- type: satiation
+  id: ChemicalsChangeling
+  baseChangeRate: 0.5 # actually slowly goes up
+  maximumValue: 100
+  thresholds:
+    Full: 100
+    Empty: 0
+  startingValueMinimum: Full
+  startingValueMaximum: Full
+  alertCategory: Chemicals
+  alerts:
+    Full: ChemicalsChangeling
+    Empty: ChemicalsChangeling

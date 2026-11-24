@@ -54,11 +54,11 @@ uplink-bulldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun
 uplink-estoc-bundle-name = Estoc DMR bundle
 uplink-estoc-bundle-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat. Bundled with three rifle magazines (.20 rifle).
 
-uplink-grenade-launcher-name = China-Lake
-uplink-grenade-launcher-desc = An old China-Lake grenade launcher bundled with 5 rounds of anti-personnel ammo.
+uplink-grenade-launcher-name = China Lake
+uplink-grenade-launcher-desc = An old China Lake grenade launcher bundled with 5 rounds of anti-personnel ammo.
 
-uplink-grenade-launcher-bundle-name = China-Lake Bundle
-uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.
+uplink-grenade-launcher-bundle-name = China Lake Bundle
+uplink-grenade-launcher-bundle-desc = An old China Lake grenade launcher bundled with 11 rounds of varying destructive capability.
 
 uplink-l6-saw-bundle-name = L6 Saw Bundle
 uplink-l6-saw-bundle-desc = More dakka: The iconic L6 light machine gun, bundled with 2 box magazines.

@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: LivestockBee
   icon:
-    sprite: Mobs/Animals/bee.rsi
+    sprite: Mobs/Animals/Insects/bee.rsi
     state: 0
   product: CrateNPCBee
   cost: 7000
@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: LivestockButterfly
   icon:
-    sprite: Mobs/Animals/butterfly.rsi
+    sprite: Mobs/Animals/Insects/butterfly.rsi
     state: butterfly
   product: CrateNPCButterflies
   cost: 4400
@@ -31,7 +31,7 @@
 - type: cargoProduct
   id: LivestockChicken
   icon:
-    sprite: Mobs/Animals/chicken.rsi
+    sprite: Mobs/Animals/Farm/chicken.rsi
     state: icon-1
   product: CrateNPCChicken
   cost: 4000
@@ -51,7 +51,7 @@
 - type: cargoProduct
   id: LivestockDuck
   icon:
-    sprite: Mobs/Animals/duck.rsi
+    sprite: Mobs/Animals/Farm/duck.rsi
     state: icon-0
   product: CrateNPCDuck
   cost: 4000
@@ -81,8 +81,8 @@
 - type: cargoProduct
   id: LivestockCow
   icon:
-    sprite: Mobs/Animals/cow.rsi
-    state: cow
+    sprite: Mobs/Animals/Farm/cow.rsi
+    state: alive
   product: CrateNPCCow
   cost: 3200
   category: cargoproduct-category-name-livestock
@@ -91,8 +91,8 @@
 - type: cargoProduct
   id: LivestockGoat
   icon:
-    sprite: Mobs/Animals/goat.rsi
-    state: goat
+    sprite: Mobs/Animals/Farm/goat.rsi
+    state: alive
   product: CrateNPCGoat
   cost: 1200
   category: cargoproduct-category-name-livestock
@@ -145,9 +145,22 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockSlimeCube
+  icon:
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_slime
+  product: SlimeCubeBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockMouse
   icon:
-    sprite: Mobs/Animals/mouse.rsi
+    sprite: Mobs/Animals/Rodents/mouse.rsi
     state: icon-0
   product: CrateNPCMouse
   cost: 4400
@@ -177,8 +190,8 @@
 - type: cargoProduct
   id: LivestockPig
   icon:
-    sprite: Mobs/Animals/pig.rsi
-    state: pig
+    sprite: Mobs/Animals/Farm/pig.rsi
+    state: alive
   product: CrateNPCPig
   cost: 1100
   category: cargoproduct-category-name-livestock
@@ -187,7 +200,7 @@
 - type: cargoProduct
   id: LivestockSheep
   icon:
-    sprite: Mobs/Animals/sheep.rsi
+    sprite: Mobs/Animals/Farm/sheep.rsi
     state: icon
   product: CrateNPCSheep
   cost: 1300
@@ -207,7 +220,7 @@
 - type: cargoProduct
   id: LivestockHamster
   icon:
-    sprite: Mobs/Animals/hamster.rsi
+    sprite: Mobs/Animals/Rodents/hamster.rsi
     state: icon-0
   product: CrateNPCHamster
   cost: 2800
@@ -237,7 +250,7 @@
 - type: cargoProduct
   id: LivestockMothroach
   icon:
-    sprite: Mobs/Animals/mothroach/mothroach.rsi
+    sprite: Mobs/Animals/Insects/mothroach/mothroach.rsi
     state: mothroach
   product: CrateNPCMothroach
   cost: 5000

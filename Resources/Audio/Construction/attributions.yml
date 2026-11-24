@@ -1,0 +1,34 @@
+- files: ["place_electronics_1.ogg", "place_electronics_2.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Mixed by iaada (GitHub) using material [https://freesound.org/people/el_boss/sounds/669921/] by el_boss (freesound.org) and [https://freesound.org/people/SiriusBizdness/sounds/565193/] by SiriusBizdness (freesound.org)."
+  source: "https://github.com/space-wizards/space-station-14/pull/45625"
+
+- files: ["place_glass_1.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "By lsprice (freesound.org)."
+  source: "https://freesound.org/people/lsprice/sounds/88851/"
+
+- files: ["place_glass_2.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "By lsprice (freesound.org)."
+  source: "https://freesound.org/people/lsprice/sounds/88852/"
+
+- files: ["place_glass_3.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "By lsprice (freesound.org)."
+  source: "https://freesound.org/people/lsprice/sounds/88853/"
+
+- files: ["place_item_1.ogg", "place_item_2.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Material by izzl (freesound.org). Mixed by iaada (GitHub)."
+  source: "https://freesound.org/people/izzl/sounds/790525/"
+
+- files: ["place_metal_1.ogg", "place_metal_2.ogg", "place_metal_3.ogg", "place_metal_4.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Material by jerry.berumen (freesound.org). Mixed by iaada (GitHub)."
+  source: "https://freesound.org/people/jerry.berumen/sounds/770810/"
+
+- files: ["place_wires_1.ogg", "place_wires_2.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Mixed by iaada (GitHub) using material [https://freesound.org/people/Clearwavsound/sounds/541035/] by Clearwavsound (freesound.org) and [https://freesound.org/people/SiriusBizdness/sounds/565193/] by SiriusBizdness (freesound.org)."
+  source: "https://github.com/space-wizards/space-station-14/pull/45625"
