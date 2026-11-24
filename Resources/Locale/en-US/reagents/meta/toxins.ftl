@@ -47,7 +47,7 @@ reagent-name-amatoxin = amatoxin
 reagent-desc-amatoxin = A deadly toxin found in some mushrooms, primarily fly amanita. Small doses can be lethal.
 
 reagent-name-vent-crud = vent crud
-reagent-desc-vent-crud = A jet black substance found in poorly maintained ventilation systems. Can cause vent cough.
+reagent-desc-vent-crud = A jet black substance found in poorly maintained ventilation systems.
 
 reagent-name-romerol = romerol
 reagent-desc-romerol = An otherworldly concoction able to bring the undead to life. If untreated, the effects are irreversible and will bring certain doom upon the station. Handle with care.
