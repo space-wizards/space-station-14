@@ -61,7 +61,7 @@ public sealed partial class InnateToolSystem : EntitySystem
         component.ToolUids.Add(item);
     }
 
-    private void OnShutdown(EntityUid uid, InnateToolComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, InnateToolComponent component, ref ComponentShutdown args)
     {
         foreach (var tool in component.ToolUids)
         {

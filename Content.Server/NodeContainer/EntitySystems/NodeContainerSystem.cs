@@ -136,7 +136,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
-        private void OnShutdownEvent(EntityUid uid, NodeContainerComponent component, ComponentShutdown args)
+        private void OnShutdownEvent(EntityUid uid, NodeContainerComponent component, ref ComponentShutdown args)
         {
             foreach (var node in component.Nodes.Values)
             {

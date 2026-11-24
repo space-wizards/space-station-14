@@ -126,9 +126,9 @@ public sealed partial class HTNSystem : EntitySystem
         }
     }
 
-    private void OnHTNShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
+    private void OnHTNShutdown(EntityUid uid, HTNComponent component, ref ComponentShutdown args)
     {
-        _npc.OnNPCShutdown(uid, component, args);
+        _npc.OnNPCShutdown(uid, component, ref args);
         component.PlanningToken?.Cancel();
         component.PlanningJob = null;
     }

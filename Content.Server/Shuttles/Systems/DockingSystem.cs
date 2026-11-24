@@ -45,7 +45,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, DockingComponent component, ref ComponentShutdown args)
     {
         if (component.DockedWith == null ||
             MetaData(uid).EntityLifeStage > EntityLifeStage.MapInitialized)

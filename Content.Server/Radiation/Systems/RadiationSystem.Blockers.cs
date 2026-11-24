@@ -26,7 +26,7 @@ public partial class RadiationSystem
         AddTile(uid, component);
     }
 
-    private void OnShutdown(EntityUid uid, RadiationBlockerComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, RadiationBlockerComponent component, ref ComponentShutdown args)
     {
         if (component.Enabled)
             return;

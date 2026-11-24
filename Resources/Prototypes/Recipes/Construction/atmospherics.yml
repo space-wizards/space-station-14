@@ -99,6 +99,7 @@
   parent: BaseGasPipe
   id: !type:CreateVariants
     values: [ GasPipeHalf, GasPipeHalfAlt1, GasPipeHalfAlt2 ]
+  name: construction-recipe-gas-pipe-half
   hide: !type:CreateVariants
     values: [ false, true, true ]
   graph: !type:CreateVariants
@@ -119,6 +120,7 @@
   parent: BaseGasPipe
   id: !type:CreateVariants
     values: [ GasPipeBend, GasPipeBendAlt1, GasPipeBendAlt2 ]
+  name: construction-recipe-gas-pipe-bend
   hide: !type:CreateVariants
     values: [ false, true, true ]
   graph: !type:CreateVariants
@@ -129,6 +131,7 @@
   parent: BaseGasPipe
   id: !type:CreateVariants
     values: [ GasPipeTJunction, GasPipeTJunctionAlt1, GasPipeTJunctionAlt2 ]
+  name: construction-recipe-gas-pipe-t-junction
   hide: !type:CreateVariants
     values: [ false, true, true ]
   graph: !type:CreateVariants
@@ -139,6 +142,7 @@
   parent: BaseGasPipe
   id: !type:CreateVariants
     values: [ GasPipeFourway, GasPipeFourwayAlt1, GasPipeFourwayAlt2 ]
+  name: construction-recipe-gas-pipe-fourway
   hide: !type:CreateVariants
     values: [ false, true, true ]
   graph: !type:CreateVariants
@@ -179,7 +183,7 @@
   id: !type:CreateVariants
     values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
   hide: !type:CreateVariants
-    values: [ false, true, true ]  
+    values: [ false, true, true ]
   graph: !type:CreateVariants
     values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
   targetNode: ventscrubber

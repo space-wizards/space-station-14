@@ -60,7 +60,7 @@ public sealed partial class ServerStationJobsSystem : StationJobsSystem
         }
     }
 
-    private void OnStationDeletion(EntityUid uid, StationJobsComponent component, ComponentShutdown args)
+    private void OnStationDeletion(EntityUid uid, StationJobsComponent component, ref ComponentShutdown args)
     {
         UpdateJobsAvailable(); // we no longer exist so the jobs list is changed.
     }
