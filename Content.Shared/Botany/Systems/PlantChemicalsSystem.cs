@@ -8,7 +8,6 @@ using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -20,7 +19,6 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private PlantMutationSystem _mutation = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     [SubscribeLocalEvent]
@@ -49,7 +47,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
 
         var seedChemQuantity = new PlantChemQuantity
         {
-            Inherent = inherent //Overwrite inherent property with incoming chem value
+            Inherent = inherent // Overwrite inherent property with incoming chem value.
         };
 
         if (TryGetChemical(ent, chemicalId, out var value))
@@ -61,7 +59,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         }
         else
         {
-            //Otherwise initialize it with min and max as min + amount
+            // Otherwise initialize it with min and max as min + amount
             seedChemQuantity.Min = min;
             seedChemQuantity.Max = min + amount;
         }

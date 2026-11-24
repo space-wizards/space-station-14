@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Botany.Components;
@@ -13,8 +15,6 @@ using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Botany.Toolshed;
 
@@ -37,7 +37,8 @@ public sealed partial class PlantCommand : ToolshedCommand
     public IEnumerable<Entity<PlantComponent>> SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityCoordinates> coordinates,
-        [CommandArgument(typeof(PlantSeedPrototypeParser))] EntProtoId seedPrototype)
+        [CommandArgument(typeof(PlantSeedPrototypeParser))]
+        EntProtoId seedPrototype)
     {
         return coordinates.Select(coordinate => SpawnPlant(ctx, coordinate, seedPrototype))
                           .CastNotNullOnly();
@@ -47,7 +48,8 @@ public sealed partial class PlantCommand : ToolshedCommand
     public IEnumerable<Entity<PlantComponent>> SpawnPlant(
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityUid> targets,
-        [CommandArgument(typeof(PlantSeedPrototypeParser))] EntProtoId seedPrototype)
+        [CommandArgument(typeof(PlantSeedPrototypeParser))]
+        EntProtoId seedPrototype)
     {
         return targets.Select(target => SpawnPlant(ctx, target, seedPrototype))
                       .CastNotNullOnly();
@@ -66,7 +68,7 @@ public sealed partial class PlantCommand : ToolshedCommand
             return [];
         }
 
-        return input.Select(entity => Age(ctx, entity, ticks))!
+        return input.Select(entity => Age(ctx, entity, ticks))
                     .CastNotNullOnly();
     }
 
@@ -75,7 +77,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         IInvocationContext ctx,
         [PipedArgument] IEnumerable<Entity<PlantComponent>> input)
     {
-        return input.Select(entity => AgeUntilReady(ctx, entity))!
+        return input.Select(entity => AgeUntilReady(ctx, entity))
                     .CastNotNullOnly();
     }
 
@@ -87,7 +89,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         PlantMutationSelector plantMutation
     )
     {
-        return input.Select(entity => AddMutation(ctx, entity, plantMutation.TableId, plantMutation.MutationName))!
+        return input.Select(entity => AddMutation(ctx, entity, plantMutation.TableId, plantMutation.MutationName))
                     .CastNotNullOnly();
     }
 
@@ -100,7 +102,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         float amount,
         bool inherent = false)
     {
-        return input.Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))!
+        return input.Select(entity => AddChemical(ctx, entity, reagent, min, amount, inherent))
                     .CastNotNullOnly();
     }
 
@@ -118,18 +120,11 @@ public sealed partial class PlantCommand : ToolshedCommand
         if (holder.ReadyForHarvest)
             return input; //Why'd you even call this command...
 
-        int readyAge;
+        _plant ??= GetSys<PlantSystem>();
+        var readyAge = _plant.GetNextHarvestAge((input, plant));
 
-        if (holder.Age < plant.Maturation)
-        {
-            readyAge = (int)MathF.Ceiling(plant.Maturation) + (int)MathF.Floor(plant.Production) + 1;
-        }
-        else
-        {
-            readyAge = holder.LastHarvest + (int)MathF.Floor(plant.Production) + 1;
-        }
-
-        TryAgeTicks((input, plant), (input, holder), readyAge - holder.Age);
+        if (!TryAgeTicks((input, plant), (input, holder), readyAge - holder.Age))
+            return null;
 
         return input;
     }
@@ -168,7 +163,7 @@ public sealed partial class PlantCommand : ToolshedCommand
         var mutation = table.Mutations.FirstOrDefault(candidate =>
             string.Equals(candidate.Name, mutationName, StringComparison.OrdinalIgnoreCase));
 
-        //This shouldn't ever happen because the parser *should* catch it
+        // This shouldn't ever happen because the parser *should* catch it
         if (mutation == null)
             return null;
 
@@ -246,7 +241,8 @@ public sealed partial class PlantCommand : ToolshedCommand
         if (!TryGetPlant(input, ctx, out var plant, out var holder))
             return null;
 
-        TryAgeTicks((input, plant), (input, holder), ticks);
+        if (!TryAgeTicks((input, plant), (input, holder), ticks))
+            return null;
 
         return input;
     }
@@ -277,7 +273,9 @@ public sealed partial class PlantCommand : ToolshedCommand
         }
     }
 
-    /// <summary> Parser for toolshed commands that can read out and provide autocomplete for seed prototypes. </summary>
+    /// <summary>
+    /// Parser for toolshed commands that can read out and provide autocomplete for seed prototypes.
+    /// </summary>
     public sealed partial class PlantSeedPrototypeParser : CustomTypeParser<EntProtoId>
     {
         private static readonly ProtoId<EntityCategoryPrototype> SeedsCategoryId = "Seeds";
@@ -387,10 +385,8 @@ public sealed partial class PlantCommand : ToolshedCommand
 
             return CompletionResult.FromHintOptions(options, "<mutation name>");
         }
-
     }
 }
-
 
 /// <summary>
 /// Combination of Id for RandomPlantMutationListPrototype and name of mutation, which should uniquely identify a mutation.
@@ -402,6 +398,6 @@ static file class LocalExtensions
     public static IEnumerable<Entity<PlantComponent>> CastNotNullOnly(this IEnumerable<Entity<PlantComponent>?> source)
     {
         return source.Where(x => x is { Comp: not null })
-                     .Select(x => new Entity<PlantComponent>(x!.Value, x.Value!));
+                     .Select(x => new Entity<PlantComponent>(x!.Value, x.Value));
     }
 }
