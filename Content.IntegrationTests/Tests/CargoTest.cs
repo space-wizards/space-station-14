@@ -158,7 +158,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
 
-                    if (proto.HasComp<StackComponent>(_sCompFact))
+                    if (proto.HasComp<StackComponent>(SEntMan.ComponentFactory))
                     {
                         Assert.That(
                             staticPriceComp.Price,
