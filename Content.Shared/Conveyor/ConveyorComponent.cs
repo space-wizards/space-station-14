@@ -9,29 +9,28 @@ namespace Content.Shared.Conveyor;
 public sealed partial class ConveyorComponent : Component
 {
     /// <summary>
-    ///     The angle to move entities by in relation to the owner's rotation.
+    /// The angle to move entities by in relation to the owner's rotation.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public Angle Angle = Angle.Zero;
 
     /// <summary>
-    ///     The amount of units to move the entity by per second.
+    /// The amount of units to move the entity by per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public float Speed = 2f;
 
     /// <summary>
-    ///     The current state of this conveyor
+    /// The current state of this conveyor
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public ConveyorState State;
 
     /// <summary>
-    ///     If and how the reverse direction should turn.
+    /// If and how the reverse direction should turn.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public ConveyorCornerDirection CornerDirection;
 
