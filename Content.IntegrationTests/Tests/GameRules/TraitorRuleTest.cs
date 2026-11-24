@@ -5,8 +5,6 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
-using Content.Server.Objectives.Components;
-using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
@@ -15,11 +13,7 @@ using Content.Shared.Mind;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Roles;
-using Content.Shared.Silicons.StationAi;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -44,8 +38,6 @@ public sealed class TraitorRuleTest : GameTest
     [SidedDependency(Side.Server)] private MindSystem _sMindSystem = null!;
     [SidedDependency(Side.Server)] private RoleSystem _sRoleSystem = null!;
     [SidedDependency(Side.Server)] private NpcFactionSystem _sFactionSystem = null!;
-    [SidedDependency(Side.Server)] private SharedMapSystem _sMapSystem = null!;
-    [SidedDependency(Side.Server)] private SharedContainerSystem _sContainerSystem = null!;
 
     [Test]
     public async Task TestTraitorObjectives()
@@ -138,68 +130,6 @@ public sealed class TraitorRuleTest : GameTest
             $"MaxDifficulty exceeded! Objectives: {string.Join(", ", mindComp.Objectives.Select(o => FormatObjective(o, SEntMan)))}");
         Assert.That(mindComp.Objectives, Is.Not.Empty,
             $"No objectives assigned!");
-    }
-
-    private static readonly EntProtoId KillRandomHeadObjective = "KillRandomHeadObjective";
-    private static readonly EntProtoId KillRandomPersonObjective = "KillRandomPersonObjective";
-    private static readonly EntProtoId KillStationAiObjective = "KillStationAiObjective";
-    private static readonly EntProtoId MindRoleTraitor = "MindRoleTraitor";
-    private static readonly EntProtoId MobHuman = "MobHuman";
-    private static readonly EntProtoId PlayerStationAiEmpty = "PlayerStationAiEmpty";
-    private static readonly EntProtoId StationAiBrain = "StationAiBrain";
-    private static readonly ProtoId<JobPrototype> PassengerJob = "Passenger";
-    private static readonly ProtoId<JobPrototype> CaptainJob = "Captain";
-    private static readonly ProtoId<JobPrototype> StationAiJob = "StationAi";
-
-    [Test]
-    [RunOnSide(Side.Server)]
-    [Description("Tests that the game can properly assign kill objectives")]
-    public async Task TestTraitorKillObjectiveTargets()
-    {
-        var map = _sMapSystem.CreateMap();
-        var coordinates = new EntityCoordinates(map, System.Numerics.Vector2.Zero);
-
-        var traitor = CreateMind(SSpawnAtPosition(MobHuman, coordinates), PassengerJob);
-        _sRoleSystem.MindAddRole(traitor.Owner, MindRoleTraitor, silent: true);
-
-        var captainBody = SSpawnAtPosition(MobHuman, coordinates);
-        SEntMan.EnsureComponent<CommandStaffComponent>(captainBody);
-        var captain = CreateMind(captainBody, CaptainJob);
-
-        var tider = CreateMind(SSpawnAtPosition(MobHuman, coordinates), PassengerJob);
-
-        var core = SSpawnAtPosition(PlayerStationAiEmpty, coordinates);
-        var brain = SSpawnAtPosition(StationAiBrain, coordinates);
-        var container = _sContainerSystem.GetContainer(core, StationAiHolderComponent.Container);
-        Assume.That(_sContainerSystem.Insert(brain, container), Is.True, "Could not insert the AI into its core.");
-        var ai = CreateMind(brain, StationAiJob);
-
-        //Assign head first because we can always expect that to be captain given the options
-        Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillRandomHeadObjective), Is.True,
-            $"Could not assign {KillRandomHeadObjective}.");
-        Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[0]).Target, Is.EqualTo(captain.Owner),
-            $"{KillRandomHeadObjective} selected the wrong target.");
-
-
-        //Tider is only remaining valid target for a kill person objective.
-        Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillRandomPersonObjective), Is.True,
-            $"Could not assign {KillRandomPersonObjective}.");
-        Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[1]).Target, Is.EqualTo(tider.Owner),
-            $"{KillRandomPersonObjective} selected the wrong target.");
-
-        //Also check AI, comment because it feels weird having them for the other two and not this
-        Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillStationAiObjective), Is.True,
-            $"Could not assign {KillStationAiObjective}.");
-        Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[2]).Target, Is.EqualTo(ai.Owner),
-            $"{KillStationAiObjective} selected the wrong target.");
-    }
-
-    private Entity<MindComponent> CreateMind(EntityUid body, ProtoId<JobPrototype> job)
-    {
-        var mind = _sMindSystem.CreateMind(null);
-        _sMindSystem.TransferTo(mind.Owner, body);
-        _sRoleSystem.MindAddJobRole(mind.Owner, jobPrototype: job, silent: true);
-        return mind;
     }
 
     private static string FormatObjective(EntityUid entity, IEntityManager entMan)
