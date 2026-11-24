@@ -1,3 +1,5 @@
+# When adding new crystals also add them to id: RandomCrystalTable
+
 - type: entity
   abstract: true
   parent: [ BaseStructure, StructureHealthFurnitureWeak ]

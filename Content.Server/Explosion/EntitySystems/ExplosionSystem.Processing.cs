@@ -327,7 +327,6 @@ public sealed partial class ExplosionSystem
 
         foreach (var (uid, xform) in state.Item1)
         {
-            processed.Add(uid);
             ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
         }
 
@@ -359,7 +358,10 @@ public sealed partial class ExplosionSystem
         {
             // parented directly to the map, use local position
             if (state.GridBox.Contains(Vector2.Transform(xform.LocalPosition, state.InvSpaceMatrix)))
+            {
+                state.Processed.Add(uid);
                 state.List.Add((uid, xform));
+            }
 
             return true;
         }
@@ -367,7 +369,10 @@ public sealed partial class ExplosionSystem
         // finally check if it intersects our tile
         var wpos = state.System.GetWorldPosition(xform);
         if (state.GridBox.Contains(Vector2.Transform(wpos, state.InvSpaceMatrix)))
+        {
+            state.Processed.Add(uid);
             state.List.Add((uid, xform));
+        }
 
         return true;
     }
