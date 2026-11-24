@@ -2,6 +2,7 @@ using Content.Shared.Antag;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Follower;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
@@ -21,6 +22,7 @@ public sealed partial class ServerChangelingLastResortSystem : ChangelingLastRes
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private FollowerSystem _follower = default!;
 
     [SubscribeLocalEvent]
     private void OnTakeOverCorpseAction(Entity<ChangelingSlugComponent> ent,
@@ -64,7 +66,7 @@ public sealed partial class ServerChangelingLastResortSystem : ChangelingLastRes
     /// </summary>
     private bool CanTakeOver(EntityUid user, EntityUid target, bool showPopups = true)
     {
-        if (!HasComp<HumanoidProfileComponent>(target))
+        if (!HasComp<HumanoidProfileComponent>(target) || HasComp<ChangelingHorrorComponent>(target))
             return false;
 
         if (HasComp<ChangelingIdentityComponent>(target) || HasComp<ZombieComponent>(target))
@@ -105,7 +107,7 @@ public sealed partial class ServerChangelingLastResortSystem : ChangelingLastRes
         MindComponent mind)
     {
         _mind.TransferTo(mindId, target, mind: mind);
-
+        _follower.TransferFollowers(ent.Owner, target);
         _antag.AssignAntagComponents(target, ChangelingAntag);
 
         var ev = new BodyTakenByHeadslugEvent(target, ent.Comp.AutoStasis, ent.Comp.AutoStasisDurationMultiplier);

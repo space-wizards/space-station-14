@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
@@ -86,7 +85,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         SetActive(camera, args.Powered, component);
     }
 
-    private void OnShutdown(EntityUid camera, SurveillanceCameraComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid camera, SurveillanceCameraComponent component, ref ComponentShutdown args)
     {
         Deactivate(camera, component);
     }

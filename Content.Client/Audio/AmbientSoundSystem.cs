@@ -103,7 +103,7 @@ public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
         SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnShutdown(EntityUid uid, AmbientSoundComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, AmbientSoundComponent component, ref ComponentShutdown args)
     {
         if (!_playingSounds.Remove((uid, component), out var sound))
             return;

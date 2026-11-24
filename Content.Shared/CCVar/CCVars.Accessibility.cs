@@ -53,6 +53,13 @@ public sealed partial class CCVars
         CVarDef.Create("accessibility.speech_bubble_background_opacity", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    ///     Preview bubble background opacity slider, controlling the alpha of the preview bubble's background.
+    ///     Goes from to 0 (completely transparent) to 1 (completely opaque)
+    /// </summary>
+    public static readonly CVarDef<float> PreviewBubbleBackgroundOpacity =
+        CVarDef.Create("accessibility.preview_bubble_background_opacity", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the client.
     /// Both this and AccessibilityServerCensorNudity must be false to display nudity on the client.
     /// </summary>

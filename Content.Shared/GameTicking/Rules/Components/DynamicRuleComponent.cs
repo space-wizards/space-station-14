@@ -25,7 +25,13 @@ public sealed partial class DynamicRuleComponent : Component
     /// The amount of budget accumulated every second.
     /// </summary>
     [DataField]
-    public float BudgetPerSecond = 0.1f;
+    public float BudgetPerSecond;
+
+    [DataField]
+    public float MinBudgetPerSecond = 0.05f;
+
+    [DataField]
+    public float MaxBudgetPerSecond = 0.1f;
 
     /// <summary>
     /// The minimum or lower bound for budgets to start at.

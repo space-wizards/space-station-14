@@ -1,7 +1,7 @@
 # Deception
 
-uplink-syndicate-id-card-name = Syndicate ID Card
-uplink-syndicate-id-card-desc = A Syndicate ID card, with Syndicate access. Unlikely to be useful on its own, but goes great with reconfigured doors. Does not come with access-copying functionality.
+uplink-syndicate-id-card-name = Adaptive Syndicate ID Card
+uplink-syndicate-id-card-desc = An adaptive Syndicate ID card, with Syndicate access. Goes great with reconfigured doors. Does not come with access-copying functionality, but can be modified to fool security HUDs and access logs.
 
 uplink-agent-id-card-name = Agent ID Card
 uplink-agent-id-card-desc = A modified ID card that can copy accesses from other cards and change its name and job title at-will.

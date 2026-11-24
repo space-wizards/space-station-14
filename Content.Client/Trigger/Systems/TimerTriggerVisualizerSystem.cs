@@ -10,12 +10,7 @@ public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<Time
 {
     [Dependency] private SharedAudioSystem _audioSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<TimerTriggerVisualsComponent, ComponentInit>(OnComponentInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnComponentInit(Entity<TimerTriggerVisualsComponent> ent, ref ComponentInit args)
     {
         ent.Comp.PrimingAnimation = new Animation
@@ -47,7 +42,7 @@ public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<Time
         || !TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
             return;
 
-        if (!AppearanceSystem.TryGetData<TriggerVisualState>(uid, TriggerVisuals.VisualState, out var state, args.Component))
+        if (!args.TryGetData<TriggerVisualState>(TriggerVisuals.VisualState, out var state))
             state = TriggerVisualState.Unprimed;
 
         switch (state)

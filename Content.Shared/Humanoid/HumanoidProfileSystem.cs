@@ -41,6 +41,9 @@ public sealed partial class HumanoidProfileSystem : EntitySystem
 
     private void OnExamined(Entity<HumanoidProfileComponent> ent, ref ExaminedEvent args)
     {
+        if (!ent.Comp.Examinable)
+            return;
+
         var identity = Identity.Entity(ent, EntityManager);
         var species = GetSpeciesRepresentation(ent.Comp.Species).ToLower();
         var age = GetAgeRepresentation(ent.Comp.Species, ent.Comp.Age);

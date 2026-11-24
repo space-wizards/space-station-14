@@ -250,10 +250,10 @@ public sealed partial class XenoArtifactSystem
         public TriggerPoolData(int requestedSize)
         {
             _usedTriggers = new(requestedSize);
-            Context = new EntityTableContext(new Dictionary<string, object>
+            Context = new EntityTableContext
             {
-                [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = _usedTriggers
-            });
+                { ExcludeEntitiesFromContextCondition.EntitiesToExclude, _usedTriggers }
+            };
         }
 
         public readonly EntityTableContext Context;

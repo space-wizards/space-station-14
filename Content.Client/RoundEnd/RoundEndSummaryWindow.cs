@@ -322,6 +322,10 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         {
             playerTypeLabel.FontColorOverride = Color.Red;
         }
+        else if (playerInfo.Familiar)
+        {
+            playerTypeLabel.FontColorOverride = Color.Cyan;
+        }
         else if (playerInfo.Observer)
         {
             playerTypeLabel.FontColorOverride = Color.Gray;
@@ -350,6 +354,8 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
             return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-observer");
         if (playerInfo.Antag)
             return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-antag");
+        if (playerInfo.Familiar)
+            return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-familiar");
 
         return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-crew");
     }
@@ -371,7 +377,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
             (p.Observer ? "zzz_observer" : p.Role).ToLowerInvariant();
 
         static int GetPlayerTypeSortKey(RoundEndPlayerInfo p) =>
-            p.Antag ? 1 : p.Observer ? 3 : 2;
+            p.Antag ? 1 : p.Familiar ? 2 : p.Observer ? 4 : 3;
 
         return _currentSortField switch
         {
@@ -397,7 +403,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Gets a sort key for player type to ensure consistent ordering: Antagonist -> Crew -> Observer
+    /// Gets a sort key for player type to ensure consistent ordering: Antagonist -> Familiar -> Crew -> Observer
     /// </summary>
 
     /// <summary>

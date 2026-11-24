@@ -18,6 +18,17 @@ namespace Content.Client.Eui
 
         private readonly Dictionary<uint, EuiData> _openUis = new();
 
+        public bool IsOpen<T>() where T : BaseEui
+        {
+            foreach (var eui in _openUis.Values)
+            {
+                if (eui.Eui is T)
+                    return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Initialisation of the EuiManager.
         /// </summary>

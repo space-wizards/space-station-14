@@ -21,9 +21,14 @@ entity-effect-guidebook-spawn-entity =
         [1] Creates
         *[other] create
     } { $amount ->
-        [1] {INDEFINITE($entname)}
+        [1] {INDEFINITE($entname)} {$entname}
         *[other] {$amount} {MAKEPLURAL($entname)}
     }
+
+entity-effect-guidebook-spawn-entity-table = { $chance ->
+    [1] Creates
+    *[other] create
+} some amount of { $names }
 
 entity-effect-guidebook-destroy =
     { $chance ->

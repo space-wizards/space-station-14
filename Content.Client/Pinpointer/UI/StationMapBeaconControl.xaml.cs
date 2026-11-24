@@ -16,7 +16,7 @@ public sealed partial class StationMapBeaconControl : Control, IComparable<Stati
     private StyleBoxFlat _styleBox;
     public Color Color => _styleBox.BackgroundColor;
 
-    public StationMapBeaconControl(EntityUid mapUid, SharedNavMapSystem.NavMapBeacon beacon)
+    public StationMapBeaconControl(EntityUid mapUid, NavMapSystem.NavMapBeacon beacon)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);

@@ -7,17 +7,17 @@
         "y": 32
     },
     "states": [
-		{
-			"name": "base"
-		},
-		{
-			"name": "mag-1"
-		},
-		{
-			"name": "mag-2"
-		},
-		{
-			"name": "mag-3"
-		}
+        {
+            "name": "base"
+        },
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "mag-2"
+        },
+        {
+            "name": "mag-3"
+        }
     ]
 }

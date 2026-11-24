@@ -150,6 +150,9 @@
   id: Bot # Targeting whitelist: ChameleonProjector
 
 - type: Tag
+  id: BotanyTool # For borg gardening module whitelisted module slot
+
+- type: Tag
   id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
@@ -325,7 +328,7 @@
   id: CleanerGrenade # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
 
 - type: Tag
-  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
+  id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth, BorgModuleCooking
 
 - type: Tag
   id: ClownMask # ConstructionGraph: Honker, BananaClownMask
@@ -362,6 +365,9 @@
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
+
+- type: Tag
+  id: Cookware # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
@@ -457,6 +463,9 @@
 
 - type: Tag
   id: Diamond # CargoBounty: BountySalvageDiamond
+
+- type: Tag
+  id: Dinnerware # Storage whitelist: BorgModuleCooking
 
 - type: Tag
   id: Dice # Storage whitelist: BorgModuleService, DiceBag, BooksBag
@@ -566,6 +575,9 @@
   id: Figurine # Storage whitelist: BooksBag, BorgModuleService. CargoBounty: BountyFigurine
 
 - type: Tag
+  id: FinishedMeal # Storage whitelist: BorgModuleCooking
+
+- type: Tag
   id: FireAlarm # Used by AtmosAlarmableComponent for syncing devices.
 
 - type: Tag
@@ -620,7 +632,7 @@
   id: FreezerElectronics # ConstructionGraph: CrateFreezer, ClosetFreezer
 
 - type: Tag
-  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit
+  id: Fruit # SpecialDigestible: OrganReptilianStomach. CargoBounty: BountyFruit. StorageWhitelist: BorgModuleCooking
 
 ## G ##
 
@@ -813,6 +825,9 @@
   id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
 
 - type: Tag
+  id: Ingredient # StorageWhitelist: BorgModuleCooking
+
+- type: Tag
   id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
 
 - type: Tag
@@ -965,7 +980,7 @@
   id: Mineshaft # PrefabDunGen whitelist on Mineshaft DungeonConfig.
 
 - type: Tag
-  id: ModularReceiver # ConstructionGraph: ImprovisedShotgunGraph
+  id: ModularReceiver # ConstructionGraph: ImprovisedShotgunGraph, MakeshiftLaserGraph
 
 - type: Tag
   id: MonkeyCube # Storage whitelist: ClothingBeltChef. CargoBounty: BountyMonkeyCube
@@ -1166,6 +1181,9 @@
 - type: Tag
   id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
                      # ConstructionGraph: WallmountSubstation, makeshiftstunprod
+
+- type: Tag
+  id: GlassLens # ConstructionGraph: MakeshiftLaserGraph
 
 - type: Tag
   id: Powerdrill # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
@@ -1582,6 +1600,9 @@
 - type: Tag
   id: WoodwindInstrument # even more like our atmos
                          # MachineBoard construction: DawInstrumentMachineCircuitboard
+
+- type: Tag
+  id: WrappedCube # StorageWhitelist: BorgModuleCooking
 
 - type: Tag
   id: Wrench # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor, ClothingBeltMedical.

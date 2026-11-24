@@ -1,9 +1,8 @@
 namespace Content.Server.Cargo.Components;
 
 /// <summary>
-/// Any entities intersecting when a shuttle is recalled will be sold.
+/// If a pallet is able to buy, sell, or do both.
 /// </summary>
-
 [Flags]
 public enum BuySellType : byte
 {

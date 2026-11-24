@@ -54,7 +54,8 @@
   - type: UseDelay
     delay: 1
   - type: StealTarget
-    stealGroup: FireAxe
+    stealGroup:
+    - FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
 

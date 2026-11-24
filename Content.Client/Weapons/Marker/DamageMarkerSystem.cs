@@ -25,7 +25,7 @@ public sealed partial class DamageMarkerSystem : SharedDamageMarkerSystem
         _sprite.LayerSetRsi((uid, sprite), layer, component.Effect.RsiPath, component.Effect.RsiState);
     }
 
-    private void OnMarkerShutdown(EntityUid uid, DamageMarkerComponent component, ComponentShutdown args)
+    private void OnMarkerShutdown(EntityUid uid, DamageMarkerComponent component, ref ComponentShutdown args)
     {
         if (!_timing.ApplyingState || !TryComp<SpriteComponent>(uid, out var sprite) || !_sprite.LayerMapTryGet((uid, sprite), DamageMarkerKey.Key, out var weh, false))
             return;

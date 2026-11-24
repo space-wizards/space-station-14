@@ -154,7 +154,6 @@ public sealed partial class ExplosionDebugOverlay : Overlay
         handle.SetTransform(SpaceMatrix);
 
         DrawTiles(handle, gridBounds, SpaceTiles, SpaceTileSize);
-        handle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawTiles(

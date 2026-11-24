@@ -9,6 +9,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 public sealed partial class AltInteractOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+
 
     [DataField("targetKey")]
     public string Key = "Target";
@@ -21,7 +23,8 @@ public sealed partial class AltInteractOperator : HTNOperator
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard, CancellationToken cancelToken)
     {
-        return new(true, new Dictionary<string, object>()
+        return new(true,
+            new Dictionary<string, object>()
         {
             { IdleKey, 1f }
         });
@@ -31,7 +34,6 @@ public sealed partial class AltInteractOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var target = blackboard.GetValue<EntityUid>(Key);
-        var intSystem = _entManager.System<SharedInteractionSystem>();
         var count = 0;
 
         if (_entManager.TryGetComponent<DoAfterComponent>(owner, out var doAfter))
@@ -39,7 +41,7 @@ public sealed partial class AltInteractOperator : HTNOperator
             count = doAfter.DoAfters.Count;
         }
 
-        var result = intSystem.AltInteract(owner, target);
+        var result = _interactionSystem.AltInteract(owner, target);
 
         // Interaction started a doafter so set the idle time to it.
         if (result && doAfter != null && count != doAfter.DoAfters.Count)
