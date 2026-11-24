@@ -29,6 +29,10 @@
       DrinkLithiumFlask: 1
       StrangePill: 3
       ChemistryBottleToxin: 1
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingEyesGlassesChemical }
+    startingInventory:
+      HandLabeler: 1
 
 - type: vendingMachineInventory
   id: ChemVendInventorySyndicate
@@ -66,4 +70,8 @@
       ChemistryBottleMuteToxin: 3
       ChemistryBottleLead: 2
       ChemistryBottleToxin: 1
+  - name: vending-machine-category-equipment
+    icon: { entity: ClothingEyesGlassesChemical }
+    startingInventory:
+      HandLabeler: 1
 
