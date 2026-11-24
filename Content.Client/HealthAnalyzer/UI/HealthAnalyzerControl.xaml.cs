@@ -177,7 +177,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     {
         var target = _entityManager.GetEntity(targetEntity);
 
-        // If the entity has been deleted,
+        // If the entity has been deleted.
         if (_entityManager.Deleted(target))
             return;
 
