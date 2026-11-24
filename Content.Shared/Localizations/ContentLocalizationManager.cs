@@ -137,6 +137,20 @@ namespace Content.Shared.Localizations
         }
 
         /// <summary>
+        /// Formats a list as per english grammar rules, using "and/or" for the conjunction.
+        /// </summary>
+        public static string FormatListToAndOr(List<string> list)
+        {
+            return list.Count switch
+            {
+                <= 0 => string.Empty,
+                1 => list[0],
+                2 => $"{list[0]} {Loc.GetString("generic-and-or")} {list[1]}",
+                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, {Loc.GetString("generic-and-or")} {list[^1]}",
+            };
+        }
+
+        /// <summary>
         /// Formats a direction struct as a human-readable string.
         /// </summary>
         public static string FormatDirection(Direction dir)

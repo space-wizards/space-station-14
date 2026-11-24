@@ -268,9 +268,9 @@ public sealed partial class BuckleTest : GameTest
             // Put an item into every hand
             for (var i = 0; i < hands!.Count; i++)
             {
-                var akms = SSpawnAtPosition(ItemDummyId, coordinates);
+                var akm = SSpawnAtPosition(ItemDummyId, coordinates);
 
-                Assert.That(_sHands.TryPickupAnyHand(human, akms));
+                Assert.That(_sHands.TryPickupAnyHand(human, akm));
             }
         });
 
