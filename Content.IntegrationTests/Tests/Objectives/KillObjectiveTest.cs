@@ -30,18 +30,7 @@ public sealed class KillObjectiveTest : GameTest
   components:
   - type: Objective
     issuer: TheSyndicate
-    difficulty: 1.75
-    unique: false
-    icon:
-      sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-      state: icon
-  - type: RoleRequirement
-    roles:
-    - TraitorRole
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      components:
-      - SocialObjective
+    difficulty: 1
   - type: TargetObjective
     title: objective-condition-maroon-person-title
   - type: PickRandomPerson
@@ -68,20 +57,7 @@ public sealed class KillObjectiveTest : GameTest
   components:
   - type: Objective
     issuer: TheSyndicate
-    # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
-    difficulty: 3.0
-    # killing 1 head is enough
-    unique: true
-    icon:
-      sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-      state: icon
-  - type: RoleRequirement
-    roles:
-    - TraitorRole
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      components:
-      - SocialObjective
+    difficulty: 1
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
@@ -104,8 +80,6 @@ public sealed class KillObjectiveTest : GameTest
         components:
         - CommandStaff
   - type: KillPersonCondition
-    # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
-    # if ce flies a shittle to centcom you better find a way onto it
     requireDead: true
     requireMaroon: true
 
@@ -115,19 +89,7 @@ public sealed class KillObjectiveTest : GameTest
   components:
   - type: Objective
     issuer: TheSyndicate
-    difficulty: 3.0
-    # there's probably only one AI
-    unique: true
-    icon:
-      sprite: Mobs/Silicon/station_ai.rsi
-      state: ai_dead # TODO: Change this to broken when we have a better objectives UI, broken sprite is currently too big!
-  - type: RoleRequirement
-    roles:
-    - TraitorRole
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      components:
-      - SocialObjective
+    difficulty: 1
   - type: TargetObjective
     title: objective-condition-kill-station-ai
   - type: PickRandomPerson
@@ -191,24 +153,27 @@ public sealed class KillObjectiveTest : GameTest
         Assume.That(_sContainerSystem.Insert(brain, container), Is.True, "Could not insert the AI into its core.");
         var ai = CreateMind(brain, StationAiJob);
 
-        //Assign head first because we can always expect that to be captain given the options
-        Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillRandomHeadObjective), Is.True,
-            $"Could not assign {KillRandomHeadObjective}.");
-        Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[0]).Target, Is.EqualTo(captain.Owner),
-            $"{KillRandomHeadObjective} selected the wrong target.");
-
-
-        //Tider is only remaining valid target for a kill person objective.
-        Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillRandomPersonObjective), Is.True,
-            $"Could not assign {KillRandomPersonObjective}.");
-        Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[1]).Target, Is.EqualTo(tider.Owner),
-            $"{KillRandomPersonObjective} selected the wrong target.");
-
-        //Also check AI, comment because it feels weird having them for the other two and not this
-        Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillStationAiObjective), Is.True,
-            $"Could not assign {KillStationAiObjective}.");
-        Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[2]).Target, Is.EqualTo(ai.Owner),
-            $"{KillStationAiObjective} selected the wrong target.");
+        Assert.Multiple(() =>
+        {
+            //Assign head first because we can always expect that to be captain given the options
+            Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillRandomHeadObjective), Is.True,
+                $"Could not assign {KillRandomHeadObjective}.");
+            //Tider is only remaining valid target for a kill person objective.
+            Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillRandomPersonObjective), Is.True,
+                $"Could not assign {KillRandomPersonObjective}.");
+            //Also check AI, comment because it feels weird having them for the other two and not this
+            Assert.That(_sMindSystem.TryAddObjective(traitor.Owner, traitor.Comp, KillStationAiObjective), Is.True,
+                $"Could not assign {KillStationAiObjective}.");
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[0]).Target, Is.EqualTo(captain.Owner),
+                $"{KillRandomHeadObjective} selected the wrong target.");
+            Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[1]).Target, Is.EqualTo(tider.Owner),
+                $"{KillRandomPersonObjective} selected the wrong target.");
+            Assert.That(SComp<TargetObjectiveComponent>(traitor.Comp.Objectives[2]).Target, Is.EqualTo(ai.Owner),
+                $"{KillStationAiObjective} selected the wrong target.");
+        });
     }
 
     private Entity<MindComponent> CreateMind(EntityUid body, ProtoId<JobPrototype> job)
