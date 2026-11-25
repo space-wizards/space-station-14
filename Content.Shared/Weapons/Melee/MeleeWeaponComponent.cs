@@ -129,18 +129,18 @@ public sealed partial class MeleeWeaponComponent : Component
     /// Flips the sprite on the X axis if `SwingLeft` is true and `SwingFlipY` is true.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool SwingFlipX = false;
+    public bool SwingFlipX;
     /// <summary>
     /// Flips the sprite on the Y axis if `SwingLeft` is true and `SwingFlipY` is true.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool SwingFlipY = false;
+    public bool SwingFlipY;
 
     /// <summary>
     /// If true, then the animation's sprite will NOT be set to this item's sprite
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool ForceAnimationSprite = false;
+    public bool ForceAnimationSprite;
     /// <summary>
     /// How far away from the player the animation should be played.
     /// We don't connect it with attack range, because different weapons have different sprites,
