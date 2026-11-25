@@ -33,7 +33,6 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
-    gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetSecurity
     pocket1: WeaponPistolMk58
   storage:
