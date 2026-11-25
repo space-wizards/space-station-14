@@ -15,11 +15,9 @@
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
-    wideAnimationRotation: -90
+    wideAnimationRotation: 90
     attackRate: 1
-    wideAnimation: WeaponArcSlashArmblade
-    animation: WeaponArcThrustArmblade
-    forceAnimationSprite: true
+    wideAnimation: WeaponArcSlash
     swingFlipY: true
     damage:
       types:
@@ -29,7 +27,7 @@
         Structural: 12
   - type: Item
     size: Normal
-    sprite: Objects/Weapons/Melee/armblade-inhands.rsi
+    sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
     pryPowered: true
@@ -72,21 +70,3 @@
       - state: null
       right:
       - state: null
-
-- type: entity
-  id: WeaponArcSlashArmblade
-  parent: WeaponArcSlash
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/armblade.rsi
-      state: melee
-
-- type: entity
-  id: WeaponArcThrustArmblade
-  parent: WeaponArcThrust
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/armblade.rsi
-      state: melee
