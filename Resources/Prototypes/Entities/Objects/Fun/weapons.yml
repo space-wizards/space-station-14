@@ -193,7 +193,7 @@
     animation: WeaponArcThrustFoamblade
     forceAnimationSprite: true
   - type: EmitSoundOnPickup
-    soundCooldown: 0.3
+    soundCooldown: 1.5
     sound:
       collection: gib # Placeholder, change whenever changeling.yml armblade sfx changes
   - type: Item

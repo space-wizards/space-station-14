@@ -131,6 +131,7 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
 
         TryEmitSound(uid, component, args.User);
         component.NextSound = Timing.CurTime + component.SoundCooldown;
+        Dirty(uid, component);
     }
 
     private void OnEmitSoundOnDrop(EntityUid uid, EmitSoundOnDropComponent component, DroppedEvent args)

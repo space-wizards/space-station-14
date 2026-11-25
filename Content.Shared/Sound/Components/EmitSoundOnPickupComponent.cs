@@ -12,12 +12,12 @@ public sealed partial class EmitSoundOnPickupComponent : BaseEmitSoundComponent
     /// <summary>
     /// The cooldown inbetween sounds
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan SoundCooldown = TimeSpan.Zero;
 
     /// <summary>
     /// To avoid sound spam add a cooldown to it.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextSound;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
+    public TimeSpan NextSound = TimeSpan.Zero;
 }
