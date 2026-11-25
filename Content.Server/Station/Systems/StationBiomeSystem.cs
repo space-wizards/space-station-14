@@ -1,6 +1,6 @@
 using Content.Server.Parallax;
 using Content.Server.Station.Components;
-using Content.Server.Station.Events;
+using Content.Shared.Station.Events;
 
 namespace Content.Server.Station.Systems;
 

@@ -1,12 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
-using Content.Server.Station.Events;
 using Content.Shared.GameTicking;
 using Content.Shared.Station;
 using Content.Shared.Station.Components;
+using Content.Shared.Station.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
@@ -18,27 +17,18 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
 
-/// <summary>
-/// System that manages stations.
-/// A station is, by default, just a name, optional map prototype, and optional grids.
-/// For jobs, look at StationJobSystem. For spawning, look at StationSpawningSystem.
-/// </summary>
+/// <inheritdoc/>
 [PublicAPI]
 public sealed partial class ServerStationSystem : Shared.Station.Systems.StationSystem
 {
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private AtmosphereSystem _atmos = default!;
-    [Dependency] private ChatSystem _chatSystem = default!;
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
-
-    private ISawmill _sawmill = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = LogManager.GetSawmill("station");
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
@@ -101,7 +91,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
 
         var metaData = MetaData(uid);
         RaiseLocalEvent(new StationInitializedEvent(uid));
-        _sawmill.Info($"Set up station {metaData.EntityName} ({uid}).");
+        Sawmill.Info($"Set up station {metaData.EntityName} ({uid}).");
         _pvsOverride.AddGlobalOverride(uid);
     }
 
@@ -134,7 +124,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
         {
             // Oh jeez, no stations got loaded.
             // We'll yell about it, but the thing this used to do with creating a dummy is kinda pointless now.
-            _sawmill.Error($"There were no station grids for {ev.GameMap.ID}!");
+            Sawmill.Error($"There were no station grids for {ev.GameMap.ID}!");
         }
 
         foreach (var (id, gridIds) in dict)
@@ -145,7 +135,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
                 stationConfig = ev.GameMap.Stations[id];
             else
             {
-                _sawmill.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
+                Sawmill.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
                 continue;
             }
 
@@ -178,184 +168,6 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
     }
 
     #endregion Event handlers
-
-    /// <summary>
-    /// Initializes a new station with the given information.
-    /// </summary>
-    /// <param name="stationConfig">The station configuration to use.</param>
-    /// <param name="gridIds">All grids that should be added to the station.</param>
-    /// <param name="name">Optional override for the station name.</param>
-    /// <param name="gameMap">The game map that created this station, if any.</param>
-    /// <remarks>This is for ease of use, manually spawning the entity works just fine.</remarks>
-    /// <returns>The initialized station.</returns>
-    public EntityUid InitializeNewStation(
-        StationConfig stationConfig,
-        IEnumerable<EntityUid>? gridIds,
-        string? name = null,
-        Content.Shared.Maps.GameMapPrototype? gameMap = null)
-    {
-        // Use overrides for setup.
-        var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
-
-        if (name is not null)
-            RenameStation(station, name, false);
-
-        DebugTools.Assert(HasComp<StationDataComponent>(station), "Stations should have StationData in their prototype.");
-
-        var data = Comp<StationDataComponent>(station);
-        data.JobWeights = gameMap?.JobWeights;
-        Dirty(station, data);
-        name ??= MetaData(station).EntityName;
-
-        foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
-        {
-            AddGridToStation(station, grid, null, data, name);
-        }
-
-        var ev = new StationPostInitEvent((station, data));
-        RaiseLocalEvent(station, ref ev, true);
-
-        return station;
-    }
-
-    /// <summary>
-    /// Adds the given grid to a station.
-    /// </summary>
-    /// <param name="mapGrid">Grid to attach.</param>
-    /// <param name="station">Station to attach the grid to.</param>
-    /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
-    /// <param name="stationData">Resolve pattern, station data component of station.</param>
-    /// <param name="name">The name to assign to the grid if any.</param>
-    /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
-    {
-        if (!Resolve(mapGrid, ref gridComponent))
-            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
-        if (!Resolve(station, ref stationData))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        if (!string.IsNullOrEmpty(name))
-            Meta.SetEntityName(mapGrid, name);
-
-        var stationMember = EnsureComp<StationMemberComponent>(mapGrid);
-        stationMember.Station = station;
-        stationData.Grids.Add(mapGrid);
-        Dirty(station, stationData);
-        Dirty(mapGrid, stationMember);
-
-        RaiseLocalEvent(station, new StationGridAddedEvent(mapGrid, station, false), true);
-
-        _sawmill.Info($"Adding grid {mapGrid} to station {Name(station)} ({station})");
-    }
-
-    /// <summary>
-    /// Removes the given grid from a station.
-    /// </summary>
-    /// <param name="station">Station to remove the grid from.</param>
-    /// <param name="mapGrid">Grid to remove</param>
-    /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
-    /// <param name="stationData">Resolve pattern, station data component of station.</param>
-    /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
-    {
-        if (!Resolve(mapGrid, ref gridComponent))
-            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
-        if (!Resolve(station, ref stationData))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(mapGrid);
-        Dirty(station, stationData);
-
-        RaiseLocalEvent(station, new StationGridRemovedEvent(mapGrid, station), true);
-        _sawmill.Info($"Removing grid {mapGrid} from station {Name(station)} ({station})");
-    }
-
-    /// <summary>
-    /// Renames the given station.
-    /// </summary>
-    /// <param name="station">Station to rename.</param>
-    /// <param name="name">The new name to apply.</param>
-    /// <param name="loud">Whether or not to announce the rename.</param>
-    /// <param name="stationData">Resolve pattern, station data component of station.</param>
-    /// <param name="metaData">Resolve pattern, metadata component of station.</param>
-    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
-    public void RenameStation(EntityUid station, string name, bool loud = true, StationDataComponent? stationData = null, MetaDataComponent? metaData = null)
-    {
-        if (!Resolve(station, ref stationData, ref metaData))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        var oldName = metaData.EntityName;
-        Meta.SetEntityName(station, name, metaData);
-
-        if (loud)
-        {
-            _chatSystem.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
-        }
-
-        RaiseLocalEvent(station, new StationRenamedEvent(oldName, name), true);
-    }
-
-    /// <summary>
-    /// Deletes the given station.
-    /// </summary>
-    /// <param name="station">Station to delete.</param>
-    /// <param name="stationData">Resolve pattern, station data component of station.</param>
-    /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
-    public void DeleteStation(EntityUid station, StationDataComponent? stationData = null)
-    {
-        if (!Resolve(station, ref stationData))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        QueueDel(station);
-    }
-
-    /// <summary>
-    /// Get entities with <see cref="TComponent"/> on a random event-eligible station's largest grid.
-    /// </summary>
-    /// <param name="onlyAnchored">Whether to only get anchored entities.
-    /// Good check for air vents, bad for containers like crates.</param>
-    /// <returns>All matching entities.</returns>
-    public HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool onlyAnchored)
-        where TComponent : IComponent
-    {
-        return GetEntitiesWithComponentOnStation<TComponent>(onlyAnchored, out _);
-    }
-
-    /// <param name="station">The station picked to search for the entities.</param>
-    /// <inheritdoc cref="GetEntitiesWithComponentOnStation{TComponent}(bool)" />
-    public HashSet<Entity<TComponent>> GetEntitiesWithComponentOnStation<TComponent>(bool onlyAnchored,
-        out Entity<StationDataComponent>? station)
-        where TComponent : IComponent
-    {
-        HashSet<Entity<TComponent>> entities = [];
-
-        if (!TryGetRandomStation<StationEventEligibleComponent>(out var eligibleStation))
-        {
-            station = null;
-            return entities;
-        }
-
-        station = (eligibleStation.Value.Owner, eligibleStation.Value.Comp1);
-
-        var grid = GetLargestGrid(station.Value.Owner);
-        if (grid is null)
-            return entities;
-
-        var locations = EntityQueryEnumerator<TComponent, TransformComponent>();
-        while (locations.MoveNext(out var uid, out var component, out var transform))
-        {
-            if (onlyAnchored && !transform.Anchored)
-                continue;
-
-            if (transform.GridUid != grid)
-                continue;
-
-            entities.Add((uid, component));
-        }
-
-        return entities;
-    }
 
     /// <inheritdoc/>
     public override bool TryFindRandomTileOnStation(Entity<StationDataComponent> station,
@@ -407,72 +219,3 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
     }
 }
 
-/// <summary>
-/// Broadcast event fired when a station is first set up.
-/// This is the ideal point to add components to it.
-/// </summary>
-[PublicAPI]
-public sealed class StationInitializedEvent(EntityUid station) : EntityEventArgs
-{
-    /// <summary>
-    /// Station this event is for.
-    /// </summary>
-    public EntityUid Station = station;
-}
-
-/// <summary>
-/// Directed event fired on a station when a grid becomes a member of the station.
-/// </summary>
-[PublicAPI]
-public sealed class StationGridAddedEvent(EntityUid gridId, EntityUid station, bool isSetup) : EntityEventArgs
-{
-    /// <summary>
-    /// ID of the grid added to the station.
-    /// </summary>
-    public EntityUid GridId = gridId;
-
-    /// <summary>
-    /// EntityUid of the station this grid was added to.
-    /// </summary>
-    public EntityUid Station = station;
-
-    /// <summary>
-    /// Indicates that the event was fired during station setup,
-    /// so that it can be ignored if StationInitializedEvent was already handled.
-    /// </summary>
-    public bool IsSetup = isSetup;
-}
-
-/// <summary>
-/// Directed event fired on a station when a grid is no longer a member of the station.
-/// </summary>
-[PublicAPI]
-public sealed class StationGridRemovedEvent(EntityUid gridId, EntityUid station) : EntityEventArgs
-{
-    /// <summary>
-    /// ID of the grid removed from the station.
-    /// </summary>
-    public EntityUid GridId = gridId;
-
-    /// <summary>
-    /// EntityUid of the station this grid was added to.
-    /// </summary>
-    public EntityUid Station = station;
-}
-
-/// <summary>
-/// Directed event fired on a station when it is renamed.
-/// </summary>
-[PublicAPI]
-public sealed class StationRenamedEvent(string oldName, string newName) : EntityEventArgs
-{
-    /// <summary>
-    /// Prior name of the station.
-    /// </summary>
-    public string OldName = oldName;
-
-    /// <summary>
-    /// New name of the station.
-    /// </summary>
-    public string NewName = newName;
-}

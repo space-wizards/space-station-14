@@ -1,6 +1,6 @@
 using Content.Shared.Station.Components;
 
-namespace Content.Server.Station.Events;
+namespace Content.Shared.Station.Events;
 
 /// <summary>
 /// Raised directed on a station after it has been initialized, as well as broadcast.
