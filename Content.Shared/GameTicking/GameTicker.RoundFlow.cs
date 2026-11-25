@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text;
 using Content.Shared.Maps;
 using Content.Shared.Preferences;
 using Robust.Shared.EntitySerialization;
@@ -103,6 +104,7 @@ public sealed class GameRunLevelChangedEvent
 [ByRefEvent]
 public record struct RoundEndTextAppendEvent
 {
+    private readonly StringBuilder _text = new();
     private bool _doNewLine;
 
     public RoundEndTextAppendEvent() { }
@@ -110,7 +112,7 @@ public record struct RoundEndTextAppendEvent
     /// <summary>
     ///     Text to display in the round end summary screen.
     /// </summary>
-    public string Text { get; private set; } = string.Empty;
+    public string Text => _text.ToString();
 
     /// <summary>
     ///     Invoke this method to add text to the round end summary screen.
@@ -119,9 +121,9 @@ public record struct RoundEndTextAppendEvent
     public void AddLine(string text)
     {
         if (_doNewLine)
-            Text += "\n";
+            _text.Append('\n');
 
-        Text += text;
+        _text.Append(text);
         _doNewLine = true;
     }
 }
