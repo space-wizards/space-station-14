@@ -9,7 +9,7 @@ namespace Content.Shared.Radiation.Components;
 ///     Geiger counter that shows current radiation level.
 ///     Can be added as a component to clothes.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateEntityRelations]
 [Access(typeof(SharedGeigerSystem))]
 public sealed partial class GeigerComponent : Component
 {
@@ -82,7 +82,8 @@ public sealed partial class GeigerComponent : Component
     ///     Current stream of geiger counter audio.
     ///     Played only for current user.
     /// </summary>
-    public EntityUid? Stream;
+    [DataField, AutoRelationField]
+    public EntityRelation Stream;
 
     /// <summary>
     ///     Mark true if the audio should be heard by everyone around the device

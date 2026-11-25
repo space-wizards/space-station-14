@@ -15,7 +15,8 @@ namespace Content.Shared.Anomaly.Components;
 ///
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause, AutoGenerateEntityRelations]
 [Access(typeof(SharedAnomalySystem), typeof(SharedInnerBodyAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {
@@ -192,8 +193,8 @@ public sealed partial class AnomalyComponent : Component
     /// The vessel that the anomaly is connceted to. Stored so that multiple
     /// vessels cannot connect to the same anomaly.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid? ConnectedVessel;
+    [DataField, AutoRelationField]
+    public EntityRelation ConnectedVessel;
 
     /// <summary>
     /// The minimum amount of research points generated per second
@@ -291,7 +292,7 @@ public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stabili
 public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly, float PowerModifier);
 
 /// <summary>
-/// Event broadcast after an anomaly goes supercritical
+/// Event broadcast and raised on every connected vessel after an anomaly goes supercritical
 /// </summary>
 /// <param name="Anomaly">The anomaly being shut down.</param>
 /// <param name="Supercritical">Whether or not the anomaly shut down passively or via a supercritical event.</param>
@@ -306,7 +307,7 @@ public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Super
 public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Stability, float Severity);
 
 /// <summary>
-/// Event broadcast when an anomaly's stability is changed.
+/// Event broadcast and raised on every connected vessel when an anomaly's stability is changed.
 /// </summary>
 [ByRefEvent]
 public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability, float Severity);

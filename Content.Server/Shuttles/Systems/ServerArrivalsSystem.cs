@@ -3,10 +3,7 @@ using System.Numerics;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.DeviceNetwork.Systems;
-using Content.Server.GameTicking;
-using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;
-using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
 using Content.Shared.Administration;
@@ -108,8 +105,10 @@ public sealed partial class ServerArrivalsSystem : ArrivalsSystem
                 // Go to station
                 else
                 {
-                    var targetGrid = _station.GetLargestGrid(comp.Station);
+                    if (comp.Station.Entity == null)
+                        return;
 
+                    var targetGrid = _station.GetLargestGrid(comp.Station.Entity.Value);
                     if (targetGrid != null)
                         _shuttles.FTLToDock(uid, shuttle, targetGrid.Value);
 
@@ -196,7 +195,7 @@ public sealed partial class ServerArrivalsSystem : ArrivalsSystem
 
     private void SetupShuttle(EntityUid uid, StationArrivalsComponent component)
     {
-        if (!Deleted(component.Shuttle))
+        if (component.Shuttle.Entity != null)
             return;
 
         // Spawn arrivals on a dummy map then dock it to the source.
@@ -205,12 +204,12 @@ public sealed partial class ServerArrivalsSystem : ArrivalsSystem
         if (TryGetArrivals(out var arrivals) &&
             _loader.TryLoadGrid(dummyMapId, component.ShuttlePath, out var shuttle))
         {
-            component.Shuttle = shuttle.Value;
-            var shuttleComp = Comp<ShuttleComponent>(component.Shuttle);
-            var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
-            arrivalsComp.Station = uid;
+            SetRelation(uid, ref component.Shuttle, shuttle.Value.Owner);
+            var shuttleComp = Comp<ShuttleComponent>(shuttle.Value.Owner);
+            var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(shuttle.Value.Owner);
+            SetRelation(arrivals, ref arrivalsComp.Station, uid);
             EnsureComp<ProtectedGridComponent>(uid);
-            _shuttles.FTLToDock(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration);
+            _shuttles.FTLToDock(shuttle.Value.Owner, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration);
             arrivalsComp.NextTransfer = Timing.CurTime + TimeSpan.FromSeconds(Cfg.GetCVar(CCVars.ArrivalsCooldown));
         }
 
@@ -248,6 +247,9 @@ public sealed partial class ServerArrivalsSystem : ArrivalsSystem
         if (!TryGetArrivals(out EntityUid arrivals))
             return;
 
+        if (component.Station.Entity == null)
+            return;
+
         if (TryComp<DeviceNetworkComponent>(shuttleUid, out var netComp))
         {
             TryComp<FTLComponent>(shuttleUid, out var ftlComp);
@@ -265,7 +267,7 @@ public sealed partial class ServerArrivalsSystem : ArrivalsSystem
 
             if (component.FirstRun)
             {
-                var station = _station.GetLargestGrid(component.Station);
+                var station = _station.GetLargestGrid(component.Station.Entity.Value);
                 sourceMap = station == null ? null : Transform(station.Value).MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
@@ -302,7 +304,7 @@ public sealed partial class ServerArrivalsSystem : ArrivalsSystem
             {
                 // Warp all players who are still on this shuttle to a spawn point. This doesn't let them return to
                 // arrivals. It also ensures noobs, slow players or AFK players safely leave the shuttle.
-                TryTeleportToMapSpawn(pUid, component.Station, xform);
+                TryTeleportToMapSpawn(pUid, component.Station.Entity.Value, xform);
             }
 
             // Players who have remained at arrivals keep their warp coupon (PendingClockInComponent) for now.

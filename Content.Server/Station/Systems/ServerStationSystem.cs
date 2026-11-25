@@ -55,16 +55,17 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
 
     private void OnStationSplitEvent(EntityUid uid, StationMemberComponent component, ref PostGridSplitEvent args)
     {
-        AddGridToStation(component.Station, args.Grid); // Add the new grid as a member.
+        if (component.Station.Entity != null)
+            AddGridToStation(component.Station.Entity.Value, args.Grid); // Add the new grid as a member.
     }
 
     private void OnStationGridDeleted(EntityUid uid, StationMemberComponent component, ref ComponentShutdown args)
     {
-        if (!TryComp<StationDataComponent>(component.Station, out var stationData))
+        if (!TryComp<StationDataComponent>(component.Station.Entity, out var stationData))
             return;
 
-        stationData.Grids.Remove(uid);
-        Dirty(component.Station, stationData);
+        ClearRelation(component.Station.Entity.Value, stationData.Grids, uid);
+        Dirty(component.Station.Entity.Value, stationData);
     }
 
     public override void Shutdown()
@@ -109,10 +110,13 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
     {
         foreach (var grid in component.Grids)
         {
-            RemComp<StationMemberComponent>(grid);
+            if (grid.Entity == null)
+                return;
+
+            RemComp<StationMemberComponent>(grid.Entity.Value);
 
             // If the station gets deleted, we raise the event for every grid that was a part of it
-            RaiseLocalEvent(new StationGridRemovedEvent(grid, uid));
+            RaiseLocalEvent(new StationGridRemovedEvent(grid.Entity.Value, uid));
         }
 
         RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
@@ -238,8 +242,8 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
             Meta.SetEntityName(mapGrid, name);
 
         var stationMember = EnsureComp<StationMemberComponent>(mapGrid);
-        stationMember.Station = station;
-        stationData.Grids.Add(mapGrid);
+        SetRelation(mapGrid, ref stationMember.Station, station);
+        AddRelation(station, stationData.Grids, mapGrid);
         Dirty(station, stationData);
         Dirty(mapGrid, stationMember);
 
@@ -264,7 +268,7 @@ public sealed partial class ServerStationSystem : Shared.Station.Systems.Station
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(mapGrid);
+        ClearRelation(station, stationData.Grids, mapGrid);
         Dirty(station, stationData);
 
         RaiseLocalEvent(station, new StationGridRemovedEvent(mapGrid, station), true);

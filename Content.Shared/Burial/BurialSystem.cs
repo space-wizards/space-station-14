@@ -50,8 +50,8 @@ public sealed partial class BurialSystem : EntitySystem
                 NeedHand = true,
             };
 
-            if (component.Stream == null)
-                component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.User)?.Entity;
+            if (!component.Stream.HasValue)
+                SetRelation(uid, ref component.Stream, _audioSystem.PlayPredicted(component.DigSound, uid, args.User)?.Entity);
 
             if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
             {
@@ -94,7 +94,7 @@ public sealed partial class BurialSystem : EntitySystem
         if (args.Used != null)
         {
             component.ActiveShovelDigging = false;
-            component.Stream = _audioSystem.Stop(component.Stream);
+            _audioSystem.Stop(component.Stream);
         }
         else
         {
@@ -173,8 +173,8 @@ public sealed partial class BurialSystem : EntitySystem
         };
 
 
-        if (component.Stream == null)
-            component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.Entity)?.Entity;
+        if (!component.Stream.HasValue)
+            SetRelation(uid, ref component.Stream, _audioSystem.PlayPredicted(component.DigSound, uid, args.Entity)?.Entity);
 
         if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.HandDiggingDoAfter))
         {

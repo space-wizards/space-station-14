@@ -4,14 +4,14 @@ using Content.Shared.EntityTable.EntitySelectors;
 namespace Content.Server.Dragon;
 
 // TODO: replace accumulators with timespan logic
-[RegisterComponent]
+[RegisterComponent, AutoGenerateEntityRelations]
 public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
 {
     /// <summary>
     /// Dragon that spawned this rift.
     /// </summary>
-    [DataField]
-    public EntityUid? Dragon;
+    [DataField, AutoRelationField]
+    public EntityRelation Dragon;
 
     /// <summary>
     /// How long the rift has been active.

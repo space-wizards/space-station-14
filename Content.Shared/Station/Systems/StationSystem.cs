@@ -65,10 +65,10 @@ public abstract partial class StationSystem : EntitySystem
         var count = 0;
         foreach (var gridUid in ent.Comp.Grids)
         {
-            if (!TryComp<MapGridComponent>(gridUid, out var grid))
+            if (!TryComp<MapGridComponent>(gridUid.Entity, out var grid))
                 continue;
 
-            count += Map.GetAllTiles(gridUid, grid).Count();
+            count += Map.GetAllTiles(gridUid.Entity.Value, grid).Count();
         }
 
         return count;
@@ -173,9 +173,12 @@ public abstract partial class StationSystem : EntitySystem
         var query = EntityQueryEnumerator<StationDataComponent>();
         while (query.MoveNext(out var uid, out var data))
         {
-            foreach (var gridUid in data.Grids)
+            foreach (var grid in data.Grids)
             {
-                if (Transform(gridUid).MapID == map)
+                if (grid.Entity == null)
+                    continue;
+
+                if (Transform(grid.Entity.Value).MapID == map)
                 {
                     return uid;
                 }
@@ -292,7 +295,8 @@ public abstract partial class StationSystem : EntitySystem
 
             // Check if the player is directly on any station grid
             var gridUid = xform.GridUid;
-            if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
+
+            if (gridUid != null && HasRelation(dataComponent.Grids, gridUid.Value))
             {
                 filter.AddPlayer(session);
                 continue;
@@ -334,7 +338,7 @@ public abstract partial class StationSystem : EntitySystem
             if (onlyCountLargestGrid && GetLargestGrid(uid) == entityParent)
                 return true;
 
-            if (!onlyCountLargestGrid && stationDataComp.Grids.Contains(entityParent))
+            if (!onlyCountLargestGrid && HasRelation(stationDataComp.Grids, entityParent))
                 return true;
         }
 
