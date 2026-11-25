@@ -64,7 +64,7 @@ public sealed partial class PathfindingSystem
     }
 
 
-    private void OnGridPathShutdown(EntityUid uid, GridPathfindingComponent component, ComponentShutdown args)
+    private void OnGridPathShutdown(EntityUid uid, GridPathfindingComponent component, ref ComponentShutdown args)
     {
         foreach (var chunk in component.Chunks)
         {

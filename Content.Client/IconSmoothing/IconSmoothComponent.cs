@@ -12,6 +12,9 @@ namespace Content.Client.IconSmoothing;
 [Access(typeof(IconSmoothSystem))]
 public sealed partial class IconSmoothComponent : Component
 {
+    [ViewVariables]
+    internal bool UpdateQueued;
+
     [DataField]
     public bool Enabled = true;
 
