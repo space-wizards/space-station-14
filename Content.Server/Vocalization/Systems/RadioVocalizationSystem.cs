@@ -1,9 +1,11 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Vocalization.Components;
 using Content.Shared.Chat;
+using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -17,6 +19,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public override void Initialize()
     {
@@ -54,8 +57,8 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
 
             foreach (var channelProtoId in radio.Channels)
             {
-                var channelProto = ProtoMan.Index(channelProtoId);
-                if (channelProto.AllowHeadsetSend)
+                if (channelProtoId != SharedChatSystem.CommonChannel
+                    || _configurationManager.GetCVar(CCVars.ChatCommonRadioChannelAllowHeadset))
                 {
                     potentialChannels.Add(channelProtoId);
                 }

@@ -83,4 +83,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> ChatHighlightsColor =
         CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed.");
+
+    /// <summary>
+    ///     Whether the Common radio channel can be used to send messages from headsets.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatCommonRadioChannelAllowHeadset =
+        CVarDef.Create("chat.common_radio_channel_allow_headset", false, CVar.SERVER | CVar.REPLICATED);
 }

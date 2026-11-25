@@ -1,9 +1,11 @@
 using Content.Server.Popups;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -14,6 +16,7 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
     [Dependency] private INetManager _netMan = default!;
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public override void Initialize()
     {
@@ -53,7 +56,8 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
             return;
         }
 
-        if (!args.Channel.AllowHeadsetSend)
+        if (args.Channel.ID == SharedChatSystem.CommonChannel
+            && !_configurationManager.GetCVar(CCVars.ChatCommonRadioChannelAllowHeadset))
         {
             _popup.PopupEntity(Loc.GetString("chat-manager-radio-channel-forbidden-for-headset"), uid, uid);
             return;
