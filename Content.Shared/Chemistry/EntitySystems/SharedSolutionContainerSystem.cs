@@ -86,7 +86,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         base.Initialize();
 
         InitializeRelays();
-        InitializeContainerManager();
 
         SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
         SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
@@ -365,6 +364,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             foreach (var (_, solution) in EnumerateSolutions(owner))
             {
                 reagentQuantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagentId);
+            }
+        }
+
+        return reagentQuantity;
+    }
+
+    /// <summary>
+    /// Gets the combined quantity of all the given reagent prototypes across every solution of the entity.
+    /// </summary>
+    /// <param name="owner">The entity whose solutions are checked.</param>
+    /// <param name="reagents">The reagent prototypes to sum the quantities of.</param>
+    /// <returns>The combined quantity of the given reagents across the entity's solutions.</returns>
+    public FixedPoint2 GetTotalPrototypeQuantity(Entity<SolutionManagerComponent?> owner, ISet<ProtoId<ReagentPrototype>> reagents)
+    {
+        var reagentQuantity = FixedPoint2.New(0);
+        if (Exists(owner))
+        {
+            foreach (var (_, solution) in EnumerateSolutions(owner))
+            {
+                reagentQuantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagents);
             }
         }
 

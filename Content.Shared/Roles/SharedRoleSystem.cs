@@ -775,7 +775,45 @@ public abstract partial class SharedRoleSystem : EntitySystem
 /// Raised on the client to update Role Type on the character window, in case it happened to be open.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MindRoleTypeChangedEvent : EntityEventArgs
-{
+public sealed class MindRoleTypeChangedEvent : EntityEventArgs;
 
+/// <summary>
+/// Event raised on the mind to get its briefing.
+/// Handlers can either replace or append to the briefing, whichever is more appropriate.
+/// </summary>
+[ByRefEvent]
+public record struct GetBriefingEvent
+{
+    /// <summary>
+    /// The text that will be shown on the Character Screen
+    /// </summary>
+    public string? Briefing;
+
+    /// <summary>
+    /// The Mind to whose Mind Role Entities the briefing is sent to
+    /// </summary>
+    public Entity<MindComponent> Mind;
+
+    public GetBriefingEvent() { }
+
+    public GetBriefingEvent(string? briefing)
+    {
+        Briefing = briefing;
+    }
+
+    /// <summary>
+    /// If there is no briefing, sets it to the string.
+    /// If there is a briefing, adds a new line to separate it from the appended string.
+    /// </summary>
+    public void Append(string text)
+    {
+        if (Briefing == null)
+        {
+            Briefing = text;
+        }
+        else
+        {
+            Briefing += "\n" + text;
+        }
+    }
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Shared.DeviceNetwork.Events;
 
@@ -6,4 +6,4 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// Raised when the <see cref="DeviceNetworkComponent.TransmitFrequency"/> was changed.
 /// </summary>
 [ByRefEvent]
-public record struct DeviceTransmitFrequencyChangedEvent(uint? OldFrequency, uint? NewFrequency);
+public record struct DeviceTransmitFrequencyChangedEvent(DeviceFrequency? OldFrequency, DeviceFrequency? NewFrequency);

@@ -6,6 +6,7 @@ generic-article-an = an
 
 generic-and = and
 generic-or = or
+generic-and-or = and/or
 
 generic-unknown = unknown
 generic-unknown-title = Unknown
@@ -19,3 +20,6 @@ generic-seconds = seconds
 generic-playtime-title = Playtime
 
 generic-confirm = Confirm
+generic-disabled = Disabled
+
+generic-no-access = Insufficient access.

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Timing.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;

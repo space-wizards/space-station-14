@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: lightning
   id: BaseLightning
   abstract: true

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Computer;
 using Content.Client.Stylesheets;
@@ -65,7 +65,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
             var sensor = new SensorData
             {
                 Name = netSensor.Name,
-                Address = netSensor.Address,
+                Address = netSensor.Address.ToString(),
                 DeviceType = netSensor.DeviceType
             };
 
@@ -169,7 +169,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                 });
 
                 Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue * 1.1f, this) { MinHeight = 150 });
-                Asdf.AddChild(new PanelContainer { StyleClasses = { StyleClass.LowDivider } });
+                Asdf.AddChild(new Separator { StyleClasses = { StyleClass.LowDivider } });
             }
         }
     }

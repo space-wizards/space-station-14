@@ -45,7 +45,7 @@ public sealed partial class EyeLerpingSystem : EntitySystem
             AddEye(uid, component, true);
     }
 
-    private void OnEyeShutdown(EntityUid uid, EyeComponent component, ComponentShutdown args)
+    private void OnEyeShutdown(EntityUid uid, EyeComponent component, ref ComponentShutdown args)
     {
         RemCompDeferred<LerpingEyeComponent>(uid);
     }

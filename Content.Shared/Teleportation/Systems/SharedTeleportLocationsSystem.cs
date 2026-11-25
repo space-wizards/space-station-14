@@ -1,4 +1,4 @@
-﻿using Content.Shared.Maths;
+using Content.Shared.Maths;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Warps;

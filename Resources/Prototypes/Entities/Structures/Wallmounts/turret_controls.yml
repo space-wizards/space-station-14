@@ -64,10 +64,6 @@
       visible: false
   - type: GenericVisualizer
     visuals:
-      enum.WiresVisualLayers.MaintenancePanel:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: true }
-          False: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
@@ -147,7 +143,7 @@
     sendBroadcastAttemptEvent: true
     prefix: device-address-prefix-console
   - type: DeviceNetworkRequiresPower
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: ActivatableUI
     key: enum.DeployableTurretControllerUiKey.Key
   - type: ActivatableUIRequiresPower

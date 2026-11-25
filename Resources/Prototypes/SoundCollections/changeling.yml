@@ -1,4 +1,4 @@
-﻿- type: soundCollection
+- type: soundCollection
   id: ChangelingDevourConsume
   files:
   - /Audio/Effects/Changeling/devour_consume.ogg

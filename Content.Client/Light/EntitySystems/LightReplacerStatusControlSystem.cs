@@ -1,4 +1,4 @@
-﻿using Content.Client.Items;
+using Content.Client.Items;
 using Content.Client.Light.Controls;
 using Content.Shared.Light.Components;
 

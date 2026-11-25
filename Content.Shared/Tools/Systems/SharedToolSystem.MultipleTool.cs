@@ -67,7 +67,8 @@ public abstract partial class SharedToolSystem
 
         var current = multiple.Entries[multiple.CurrentEntry];
         tool.UseSound = current.UseSound;
-        tool.Qualities = current.Behavior;
+        tool.Qualities.Clear();
+        tool.Qualities.UnionWith(current.Behavior);
         Dirty(uid, tool);
 
         // TODO: Replace this with a better solution later

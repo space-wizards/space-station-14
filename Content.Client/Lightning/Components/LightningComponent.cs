@@ -1,4 +1,4 @@
-﻿using Content.Shared.Lightning.Components;
+using Content.Shared.Lightning.Components;
 
 namespace Content.Client.Lightning.Components;
 [RegisterComponent]

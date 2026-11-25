@@ -1,4 +1,4 @@
-﻿using Content.Shared.Implants;
+using Content.Shared.Implants;
 using Content.Shared.Timing.Components;
 using Content.Shared.Timing.Systems;
 using JetBrains.Annotations;

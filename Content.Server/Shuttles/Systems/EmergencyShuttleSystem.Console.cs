@@ -27,11 +27,6 @@ namespace Content.Server.Shuttles.Systems;
 /// </summary>
 public sealed partial class EmergencyShuttleSystem
 {
-    /// <summary>
-    /// Has the emergency shuttle arrived?
-    /// </summary>
-    public bool EmergencyShuttleArrived { get; private set; }
-
     public bool EarlyLaunchAuthorized { get; private set; }
 
     /// <summary>

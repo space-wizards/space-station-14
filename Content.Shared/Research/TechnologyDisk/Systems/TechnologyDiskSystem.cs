@@ -139,7 +139,7 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
             }
         }
         _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
-        PredictedQueueDel(ent.Owner);
+        QueueDel(ent.Owner);
         args.Handled = true;
     }
 

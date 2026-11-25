@@ -38,7 +38,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private IConfigurationManager _config = default!;
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IPlayerLocator _playerLocator = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private ServerGameTicker _gameTicker = default!;
         [Dependency] private SharedMindSystem _minds = default!;
         [Dependency] private IAfkManager _afkManager = default!;
         [Dependency] private IServerDbManager _dbManager = default!;

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Shared.Configuration;

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body;
+using Content.Shared.Body;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

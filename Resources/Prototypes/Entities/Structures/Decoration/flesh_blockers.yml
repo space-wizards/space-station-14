@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurniture ]
+  parent: [ BaseStructure, StructureHealthFurniture, EdibleBase ]
   id: FleshBlocker
   name: flesh clump
   description: An annoying clump of flesh.
@@ -39,8 +39,26 @@
       - !type:PlaySoundBehavior
         sound:
           collection: gib
+      - !type:SpillBehavior
+        solution: clump
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialSheetMeat1:
             min: 0
             max: 1
+  - type: Edible
+    solution: clump
+  - type: FlavorProfile
+    flavors:
+    - chewy
+  - type: Solution
+    id: clump
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 25
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 15
+      - ReagentId: Fat
+        Quantity: 10
+

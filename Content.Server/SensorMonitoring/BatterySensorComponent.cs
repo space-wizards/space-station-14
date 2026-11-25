@@ -1,4 +1,4 @@
-﻿using Content.Server.Power.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
 
 namespace Content.Server.SensorMonitoring;

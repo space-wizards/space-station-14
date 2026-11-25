@@ -251,7 +251,7 @@
       shader: unshaded
 
 - type: entity
-  parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]
+  parent: [ ClothingBackpackDuffel, BaseCBURNContraband ]
   id: ClothingBackpackDuffelCBURN
   name: CBURN duffel bag
   description: A duffel bag containing a variety of biological containment equipment.

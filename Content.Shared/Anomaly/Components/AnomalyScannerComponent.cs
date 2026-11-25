@@ -1,4 +1,4 @@
-﻿using Content.Shared.Anomaly;
+using Content.Shared.Anomaly;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 

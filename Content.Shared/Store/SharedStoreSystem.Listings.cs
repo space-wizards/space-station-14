@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Mind;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;

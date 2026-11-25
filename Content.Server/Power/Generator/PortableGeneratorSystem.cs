@@ -1,4 +1,4 @@
-﻿using Content.Server.DoAfter;
+using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -142,7 +142,7 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
     private void GetAlternativeVerb(EntityUid uid, PortableGeneratorComponent component,
         GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         var fuelGenerator = Comp<FuelGeneratorComponent>(uid);

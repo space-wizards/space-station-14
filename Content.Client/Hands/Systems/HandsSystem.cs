@@ -391,7 +391,7 @@ namespace Content.Client.Hands.Systems
                 OnPlayerHandsAdded?.Invoke((uid, component));
         }
 
-        private void OnHandsShutdown(EntityUid uid, HandsComponent component, ComponentShutdown args)
+        private void OnHandsShutdown(EntityUid uid, HandsComponent component, ref ComponentShutdown args)
         {
             if (_playerManager.LocalEntity == uid)
                 OnPlayerHandsRemoved?.Invoke();

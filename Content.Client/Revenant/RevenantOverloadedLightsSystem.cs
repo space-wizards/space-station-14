@@ -1,4 +1,4 @@
-﻿using Content.Shared.Revenant.Components;
+using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
 using Robust.Client.GameObjects;
 
@@ -39,7 +39,7 @@ public sealed partial class RevenantOverloadedLightsSystem : SharedRevenantOverl
         Dirty(uid, light);
     }
 
-    private void OnShutdown(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, RevenantOverloadedLightsComponent component, ref ComponentShutdown args)
     {
         if (!_lights.TryGetLight(uid, out var light))
             return;

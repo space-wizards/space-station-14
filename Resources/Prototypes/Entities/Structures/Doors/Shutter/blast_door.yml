@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [ BaseShutter, StructureHealthDoorStrong ]
   id: BlastDoor
   name: blast door
@@ -60,8 +60,7 @@
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
   - type: PlacementReplacement
     key: blastdoors
 

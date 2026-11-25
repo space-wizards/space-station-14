@@ -10,6 +10,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.AlertLevel;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Chat;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
@@ -33,7 +34,7 @@ namespace Content.Server.PDA
         [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
         [Dependency] private InstrumentSystem _instrument = default!;
         [Dependency] private RingerSystem _ringer = default!;
-        [Dependency] private StationSystem _station = default!;
+        [Dependency] private ServerStationSystem _station = default!;
         [Dependency] private StoreSystem _store = default!;
         [Dependency] private IChatManager _chatManager = default!;
         [Dependency] private UserInterfaceSystem _ui = default!;
@@ -128,13 +129,6 @@ namespace Content.Server.PDA
         private void OnLightToggle(EntityUid uid, PdaComponent pda, LightToggleEvent args)
         {
             pda.FlashlightOn = args.IsOn;
-            UpdatePdaUi(uid, pda);
-        }
-
-        public void SetOwner(EntityUid uid, PdaComponent pda, EntityUid owner, string ownerName)
-        {
-            pda.OwnerName = ownerName;
-            pda.PdaOwner = owner;
             UpdatePdaUi(uid, pda);
         }
 
@@ -341,7 +335,7 @@ namespace Content.Server.PDA
 
             if (TryComp(uid, out DeviceNetworkComponent? deviceNetworkComponent))
             {
-                address = deviceNetworkComponent.Address;
+                address = DeviceLocalizationHelpers.GetAddressFromId(deviceNetworkComponent);
             }
 
             return address;
