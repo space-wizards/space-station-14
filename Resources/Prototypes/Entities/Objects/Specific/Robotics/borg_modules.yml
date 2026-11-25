@@ -1620,8 +1620,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tool-module }
 
 - type: entity
-  id: XenoborgModuleAdvancedTool
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleAdvancedTool
   name: advanced tool xenoborg module
   description: Advanced engineering module containing advanced xenoborg technology.
   components:
@@ -1636,7 +1636,7 @@
     - item: WelderExperimental
     - item: Multitool
     - item: TRayScanner
-    - item: RCDXenoborg
+    - item: RCDRecharging
     - item: SelfRechargingFireExtinguisher
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-adv-tools-module }
@@ -1666,7 +1666,6 @@
     - XenoborgModuleAccessBreaker
 
 - type: entity
-  id: XenoborgModuleConstruction
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleConstruction
   name: construction xenoborg module

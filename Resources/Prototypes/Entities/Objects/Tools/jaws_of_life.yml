@@ -70,7 +70,7 @@
 
 - type: entity
   name: syndicate jaws of death
-  parent: [ JawsOfLife, BaseSyndicateContraband ]
+  parent: [ JawsOfLife, BaseSyndicateContraband]
   id: SyndicateJawsOfLife
   description: Useful for breaking into secure areas and other nefarious activities.
   components:

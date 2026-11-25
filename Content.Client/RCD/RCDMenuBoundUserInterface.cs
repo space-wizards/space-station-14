@@ -26,11 +26,8 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
         = new()
         {
             ["WallsAndFlooring"] = ("rcd-component-walls-and-flooring", 0, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/walls_and_flooring.png"))),
-            ["XenoborgWallsAndFlooring"] = ("rcd-component-xenoborg-walls-and-flooring", 0, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/xenoborg_walls_and_flooring.png"))),
             ["WindowsAndGrilles"] = ("rcd-component-windows-and-grilles", 1, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/windows_and_grilles.png"))),
-            ["XenoborgWindowsAndGrilles"] = ("rcd-component-xenoborg-windows-and-grilles", 1, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/xenoborg_windows_and_grilles.png"))),
             ["Airlocks"] = ("rcd-component-airlocks", 2, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/airlocks.png"))),
-            ["XenoborgAirlocks"] = ("rcd-component-xenoborg-airlocks", 2, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/xenoborg_airlocks.png"))),
             ["Electrical"] = ("rcd-component-electrical", 3, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/multicoil.png"))),
             ["Lighting"] = ("rcd-component-lighting", 4, new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/lighting.png"))),
         };
