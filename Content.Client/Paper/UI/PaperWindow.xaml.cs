@@ -254,6 +254,12 @@ namespace Content.Client.Paper.UI
             var msg = new FormattedMessage();
             msg.AddMarkupPermissive(state.Text);
 
+                        // size= on [bold] etc. would let players draw text at any size, [head] should be the only way to change size
+            foreach (var node in msg.Nodes)
+            {
+                node.Attributes.Remove("size");
+            }
+
             // For premade documents, we want to be able to edit them rather than
             // replace them.
             var shouldCopyText = 0 == Input.TextLength && 0 != state.Text.Length;
