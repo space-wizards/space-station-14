@@ -7,7 +7,6 @@ namespace Content.Shared.Actions;
 
 public sealed partial class DangerousActionSystem : EntitySystem
 {
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private EntityQuery<PacifiedComponent> _pacifiedQuery = default!;
 
     public override void Initialize()
@@ -24,7 +23,9 @@ public sealed partial class DangerousActionSystem : EntitySystem
         if (!_pacifiedQuery.HasComp(args.User))
             return;
 
-        _popup.PopupEntity(Loc.GetString(ent.Comp.PacificationMessage), args.User, args.User);
+        args.Reason = Loc.GetString(ent.Comp.PacificationMessage);
+        args.Type = ent.Comp.MessageType;
+
         args.Cancelled = true;
     }
 

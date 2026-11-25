@@ -40,8 +40,6 @@
       tags:
       - XenoborgModuleGeneric
       - XenoborgModuleEngi
-      - BorgModuleEngineering
-      - BorgModuleGeneric
   - type: ContainerFill
     containers:
       borg_brain:
@@ -51,6 +49,7 @@
       - XenoborgModuleAdvancedTool
       - XenoborgModuleConstruction
       - XenoborgModuleAccessBreaker
+      - XenoborgModuleTileGun
   - type: ShowElectrocutionHUD
   - type: ShowHealthBars
     damageContainers:
@@ -280,6 +279,7 @@
       - XenoborgModuleAdvancedTool
       - XenoborgModuleConstruction
       - XenoborgModuleAccessBreaker
+      - XenoborgModuleTileGun
   - type: ItemSlots
     slots:
       cell_slot:

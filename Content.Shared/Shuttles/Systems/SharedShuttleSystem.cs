@@ -67,7 +67,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
                 return false;
             }
 
-            if (!_itemSlots.TryGetSlot(consoleUid, SharedShuttleConsoleComponent.DiskSlotName, out var itemSlot, component: slot) || !itemSlot.HasItem)
+            if (!_itemSlots.TryGetSlot((consoleUid, slot), SharedShuttleConsoleComponent.DiskSlotName, out var itemSlot) || !itemSlot.HasItem)
             {
                 return false;
             }
@@ -197,6 +197,13 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
         // This is the already adjusted position
         var targetPosition = mapCoordinates.Position;
+
+        //Check for invalid entities.
+        if (!coordinates.IsValid(EntityManager) || !double.IsFinite(angle.Theta))
+        {
+            Log.Error($"Found invalid FTL destination with coordinates {coordinates} and angle {angle} for shuttle {shuttleUid}");
+            return false;
+        }
 
         // Check range even if it's cross-map.
         if ((targetPosition - ourPos).Length() > FTLRange)

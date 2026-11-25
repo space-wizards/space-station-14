@@ -64,7 +64,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (ent.Comp.Implant != null)
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
-        _itemSlots.AddItemSlot(ent, ImplanterComponent.ImplanterSlotId, ent.Comp.ImplanterSlot);
+        _itemSlots.AddItemSlot(ent.Owner, ImplanterComponent.ImplanterSlotId, ent.Comp.ImplanterSlot);
     }
 
     private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)

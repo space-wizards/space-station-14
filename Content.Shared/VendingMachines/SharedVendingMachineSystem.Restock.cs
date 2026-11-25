@@ -86,7 +86,7 @@ public abstract partial class SharedVendingMachineSystem
 
         Audio.PlayPredicted(restockComponent.SoundRestockDone, ent, args.User);
 
-        PredictedQueueDel(args.Used.Value);
+        QueueDel(args.Used.Value);
     }
 
     public bool TryAccessMachine(EntityUid uid,

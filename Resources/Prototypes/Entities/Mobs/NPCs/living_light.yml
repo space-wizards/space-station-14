@@ -66,6 +66,7 @@
   - type: Injurable
     damageContainer: Inorganic
   - type: PassiveDamage
+    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:

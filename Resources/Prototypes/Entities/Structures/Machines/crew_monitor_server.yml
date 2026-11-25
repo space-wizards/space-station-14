@@ -33,10 +33,13 @@
     deviceNetId: Wireless
     transmitFrequencyId: CrewMonitor
     receiveFrequencyId: SuitSensor
+    prefix: device-address-prefix-crew-monitoring-server
     autoConnect: false
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 500
   - type: StationLimitedNetwork
+  - type: StationTracker
+    examinable: true
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: ExtensionCableReceiver

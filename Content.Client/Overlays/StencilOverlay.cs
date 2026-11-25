@@ -76,9 +76,6 @@ public sealed partial class StencilOverlay : Overlay
 
         if (_entManager.TryGetComponent<RestrictedRangeComponent>(mapUid, out var restrictedRangeComponent))
             DrawRestrictedRange(args, res, restrictedRangeComponent, invMatrix);
-
-        args.WorldHandle.UseShader(null);
-        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()

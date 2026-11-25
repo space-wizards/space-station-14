@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.TypingIndicator;
+using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.GameObjects;
 using Content.Shared.Inventory;
 
@@ -39,7 +39,7 @@ public sealed partial class TypingIndicatorVisualizerSystem : VisualizerSystem<T
         args.Sprite.LayerSetShader(layer, proto.Shader);
         SpriteSystem.LayerSetOffset((uid, args.Sprite), layer, proto.Offset);
 
-        AppearanceSystem.TryGetData<TypingIndicatorState>(uid, TypingIndicatorVisuals.State, out var state);
+        args.TryGetData<TypingIndicatorState>(TypingIndicatorVisuals.State, out var state);
         SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, state != TypingIndicatorState.None);
         switch (state)
         {

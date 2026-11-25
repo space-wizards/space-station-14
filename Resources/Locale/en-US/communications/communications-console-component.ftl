@@ -28,7 +28,6 @@ comms-console-message-too-long = Message is too long
 comms-console-message-cannot-send = Communications temporarily disabled
 
 # Placeholder values
-comms-console-announcement-sent-by = Sent by
 comms-console-announcement-unknown-sender = Unknown
 
 # Comms console variant titles
@@ -47,3 +46,4 @@ comms-console-level-Red-flavour-label = Remain vigilant
 comms-console-level-Gamma-flavour-label = Suggest extreme caution
 comms-console-level-Delta-flavour-label = Good luck
 comms-console-level-Epsilon-flavour-label = You're fired
+comms-console-level-Unknown-flavour-label = Stay vigilant

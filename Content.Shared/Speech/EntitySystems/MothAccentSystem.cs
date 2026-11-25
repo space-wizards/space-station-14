@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
 
 namespace Content.Shared.Speech.EntitySystems;

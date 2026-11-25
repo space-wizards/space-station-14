@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
@@ -159,6 +159,12 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// </summary>
     [DataField]
     public bool GibOnEmag = true;
+
+    /// <summary>
+    /// Should it reclaim things on interaction
+    /// </summary>
+    [DataField]
+    public bool ReclaimOnInteract;
 }
 
 [NetSerializable, Serializable]

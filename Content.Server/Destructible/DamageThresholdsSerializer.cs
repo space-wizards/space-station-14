@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 using System.Linq;
 using Content.Server.Destructible.Thresholds;
 using Content.Shared.Destructible.Thresholds.Triggers;

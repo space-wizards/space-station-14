@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "By AftrLite (GitHub)",
+    "source": "https://github.com/space-wizards/space-station-14",
+    "size": {
+        "x": 32,
+        "y": 48
+    },
+    "states": [
+        {
+            "name": "icon"
+        }
+    ]
+}

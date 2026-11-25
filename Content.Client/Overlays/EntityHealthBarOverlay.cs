@@ -36,7 +36,7 @@ public sealed class EntityHealthBarOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     public HashSet<string> DamageContainers = new();
-    public ProtoId<HealthIconPrototype>? StatusIcon;
+    public ProtoId<StatusIconPrototype>? StatusIcon;
 
     public EntityHealthBarOverlay(IEntityManager entManager, IPrototypeManager prototype)
     {
@@ -128,8 +128,6 @@ public sealed class EntityHealthBarOverlay : Overlay
             pixelDarken = pixelDarken.Translated(position);
             handle.DrawRect(pixelDarken, Black.WithAlpha(128));
         }
-
-        handle.SetTransform(Matrix3x2.Identity);
     }
 
     /// <summary>

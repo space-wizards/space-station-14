@@ -1,4 +1,3 @@
-using Content.Server.GameTicking;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.GameTicking.Components;
@@ -13,7 +12,7 @@ using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
-using Content.Shared.Prototypes;
+using Content.Shared.GameTicking;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -37,8 +36,6 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-
         Subs.CVar(_cfg, CCVars.GameShowGreentext, value => _showGreentext = value, true);
 
         ProtoMan.PrototypesReloaded += CreateCompletions;
@@ -54,7 +51,8 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     /// <summary>
     /// Adds objective text for each game rule's players on round end.
     /// </summary>
-    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    [SubscribeLocalEvent]
+    private void OnRoundEndText(ref RoundEndTextAppendEvent ev)
     {
         // go through each gamerule getting data for the roundend summary.
         var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
@@ -214,7 +212,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
                 }
             }
 
-            var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
+            var successRate = totalObjectives > 0 ? (float)completedObjectives / totalObjectives : 0f;
             agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));
         }
 
@@ -324,7 +322,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     private void CreateCompletions()
     {
         _objectives = ProtoMan.EnumeratePrototypes<EntityPrototype>()
-            .Where(p => p.HasComponent<ObjectiveComponent>())
+            .Where(p => p.HasComp<ObjectiveComponent>(EntityManager.ComponentFactory))
             .Select(p => p.ID)
             .Order();
     }

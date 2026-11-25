@@ -199,16 +199,8 @@ public sealed partial class HumanoidCharacterAppearance
             foreach (var sprite in protoToAdd.Sprites)
             {
                 // code here is from MarkingColoring.GetMarkingLayerColors
-                // Getting layer name
-                var name = sprite switch
-                {
-                    SpriteSpecifier.Rsi rsi => rsi.RsiState,
-                    SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
-                    _ => null
-                };
-
-                var coloringType = (name == null ||
-                    protoToAdd.Coloring.Layers is not { } layers ||
+                var name = sprite.GetLayerStateId();
+                var coloringType = (protoToAdd.Coloring.Layers is not { } layers ||
                     !layers.TryGetValue(name, out var layerColoring))
                     ? protoToAdd.Coloring.Default
                     : layerColoring;

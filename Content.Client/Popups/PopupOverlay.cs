@@ -58,7 +58,6 @@ public sealed class PopupOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
-        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
         args.DrawingHandle.UseShader(_shader);
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
@@ -66,8 +65,6 @@ public sealed class PopupOverlay : Overlay
             scale = _uiManager.DefaultUIScale;
 
         DrawWorld(args.ScreenHandle, args, scale);
-
-        args.DrawingHandle.UseShader(null);
     }
 
     private void DrawWorld(DrawingHandleScreen worldHandle, OverlayDrawArgs args, float scale)

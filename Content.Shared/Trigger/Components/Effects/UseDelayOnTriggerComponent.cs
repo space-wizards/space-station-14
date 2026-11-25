@@ -1,4 +1,4 @@
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.Effects;

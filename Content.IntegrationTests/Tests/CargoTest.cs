@@ -6,7 +6,6 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
@@ -69,7 +68,7 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoCargoBountyArbitrageTest()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
         await Server.WaitAssertion(() =>
@@ -119,7 +118,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
 
-                    if (proto.HasComponent<StackComponent>(_sCompFact))
+                    if (proto.HasComp<StackComponent>(_sCompFact))
                     {
                         Assert.That(
                             staticPriceComp.Price,
@@ -139,7 +138,7 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoSliceableBountyArbitrageTest()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
         var bounties = SProtoMan.EnumeratePrototypes<CargoBountyPrototype>().ToList();
@@ -223,7 +222,7 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task StackPrice()
     {
-        await Pair.CreateTestMap();
+        await CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
         await Server.WaitAssertion(() =>
         {

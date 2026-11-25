@@ -34,10 +34,10 @@ uplink-carp-suit-bundle-name = Carp Suit Duffel Bag
 uplink-carp-suit-bundle-desc = Contains a carp suit and some friends to play with.
 
 uplink-operative-suit-name = Operative Jumpsuit
-uplink-operative-suit-desc = A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+uplink-operative-suit-desc = Tactical uniform worn by the Syndicate's nuclear operatives. No benefits other than looking cool.
 
 uplink-operative-skirt-name = Operative Jumpskirt
-uplink-operative-skirt-desc = A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+uplink-operative-skirt-desc = Tactical uniform worn by the Syndicate's nuclear operatives. No benefits other than looking cool.
 
 uplink-balloon-name = Syndie Balloon
 uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
