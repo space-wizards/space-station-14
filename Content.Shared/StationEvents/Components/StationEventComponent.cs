@@ -2,7 +2,7 @@ using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.StationEvents.Components;
+namespace Content.Shared.StationEvents.Components;
 
 /// <summary>
 ///     Defines basic data for a station event

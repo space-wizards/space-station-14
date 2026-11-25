@@ -1,24 +1,24 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Systems;
-using Content.Server.Station.Systems;
-using Content.Server.StationEvents.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking.Rules;
+using Content.Shared.Station.Systems;
+using Content.Shared.StationEvents.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
-namespace Content.Server.StationEvents.Events;
+namespace Content.Shared.StationEvents.Events;
 
 /// <summary>
 /// An abstract entity system inherited by all station events for their behavior.
 /// </summary>
 public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T : IComponent
 {
-    [Dependency] protected IAdminLogManager AdminLogManager = default!;
-    [Dependency] protected ChatSystem ChatSystem = default!;
+    [Dependency] protected ISharedAdminLogManager AdminLogManager = default!;
+    [Dependency] protected SharedChatSystem ChatSystem = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
-    [Dependency] protected ServerStationSystem Station = default!;
+    [Dependency] protected StationSystem Station = default!;
 
     protected ISawmill Sawmill = default!;
 
