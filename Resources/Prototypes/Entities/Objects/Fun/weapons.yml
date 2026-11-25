@@ -192,6 +192,10 @@
     wideAnimation: WeaponArcSlashFoamblade
     animation: WeaponArcThrustFoamblade
     forceAnimationSprite: true
+  - type: EmitSoundOnPickup
+    soundCooldown: 0.3
+    sound:
+      collection: gib # Placeholder, change whenever changeling.yml armblade sfx changes
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/armblade.rsi
