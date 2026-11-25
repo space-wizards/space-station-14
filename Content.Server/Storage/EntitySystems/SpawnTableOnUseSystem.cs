@@ -30,7 +30,7 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
         {
             var uid = Spawn(proto);
 
-            args.Price += _pricing.GetPrice(uid) * amount * ent.Comp.Uses;
+            args.Price += _pricing.GetPrice(uid, pricingStack: args.PricingStack) * amount * ent.Comp.Uses;
 
             Del(uid);
         }

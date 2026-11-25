@@ -28,9 +28,6 @@ public sealed partial class PricingSystem : EntitySystem
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    // Prototype ids whose price handlers are currently on the call stack.
-    private readonly HashSet<string> _pricingStack = new();
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -194,24 +191,28 @@ public sealed partial class PricingSystem : EntitySystem
     /// Appraises an entity, returning it's price.
     /// </summary>
     /// <param name="uid">The entity to appraise.</param>
+    /// <param name="includeContents">Whether to include the price of contained entities.</param>
+    /// <param name="pricingStack">The stack used to detect recursive pricing, see <see cref="PriceCalculationEvent.PricingStack"/>.</param>
     /// <returns>The price of the entity.</returns>
     /// <remarks>
     /// This fires off an event to calculate the price.
     /// Recursive price handlers are detected and broken by returning the entity's own price.
     /// </remarks>
-    public double GetPrice(EntityUid uid, bool includeContents = true)
+    public double GetPrice(EntityUid uid, bool includeContents = true, HashSet<string>? pricingStack = null)
     {
+        pricingStack ??= new HashSet<string>();
+
         // Detect recursive pricing (e.g. a spawn handler pricing an ancestor prototype).
         var prototypeId = MetaData(uid).EntityPrototype?.ID;
 
-        if (prototypeId != null && !_pricingStack.Add(prototypeId))
+        if (prototypeId != null && !pricingStack.Add(prototypeId))
             return GetOwnPrice(uid);
 
-        var ev = new PriceCalculationEvent();
+        var ev = new PriceCalculationEvent { PricingStack = pricingStack };
         RaiseLocalEvent(uid, ref ev);
 
         if (prototypeId != null)
-            _pricingStack.Remove(prototypeId);
+            pricingStack.Remove(prototypeId);
 
         if (ev.Handled)
             return ev.Price;
@@ -224,7 +225,7 @@ public sealed partial class PricingSystem : EntitySystem
             {
                 foreach (var ent in container.ContainedEntities)
                 {
-                    price += GetPrice(ent);
+                    price += GetPrice(ent, pricingStack: pricingStack);
                 }
             }
         }

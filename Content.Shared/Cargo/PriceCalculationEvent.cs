@@ -17,6 +17,13 @@ public record struct PriceCalculationEvent()
     /// Whether this event was already handled.
     /// </summary>
     public bool Handled = false;
+
+    /// <summary>
+    /// Prototype ids whose price handlers are currently on the call stack.
+    /// Handlers that recursively request a price should pass this to
+    /// <c>PricingSystem.GetPrice</c> so recursive pricing can be detected.
+    /// </summary>
+    public HashSet<string>? PricingStack;
 }
 
 /// <summary>

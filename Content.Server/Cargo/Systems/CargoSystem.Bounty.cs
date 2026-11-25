@@ -158,7 +158,7 @@ public sealed partial class CargoSystem
         args.Handled = true;
 
         component.Calculating = true;
-        args.Price = bountyPrototype.Reward - _pricing.GetPrice(container.Owner);
+        args.Price = bountyPrototype.Reward - _pricing.GetPrice(container.Owner, pricingStack: args.PricingStack);
         component.Calculating = false;
     }
 
