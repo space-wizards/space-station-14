@@ -95,7 +95,8 @@ namespace Content.Server.Solar.EntitySystems
         [SubscribeLocalEvent]
         private void OnExamined(Entity<SolarPanelComponent> ent, ref ExaminedEvent args)
         {
-            if (!TryComp(ent, out TransformComponent? xform) || !xform.Anchored)
+            var xform = Transform(ent);
+            if (!xform.Anchored)
                 return;
 
             if (ent.Comp.Coverage is 0)
