@@ -1,4 +1,4 @@
-prayer-verbs-subtle-message = Subtle Message
+﻿prayer-verbs-subtle-message = Subtle Message
 prayer-verbs-pray = Pray
 prayer-verbs-call = Call
 prayer-verbs-rub = Rub

@@ -1,12 +1,14 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Content.Client.CharacterInfo;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.CCVar;
 using Content.Shared.Roles;
+using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -114,7 +116,7 @@ public sealed class ChatHighlightTest : GameTest
 
         Assert.That(activeHighlights, Contains.Item("ling"));
         Assert.That(activeHighlights, Contains.Item("rev"));
-        Assert.That(activeHighlights, Has.Count.EqualTo(2));
+        Assert.That(activeHighlights.Count, Is.EqualTo(2));
 
         // 3. Enable auto-fill highlights
         _configManager.SetCVar(CCVars.ChatAutoFillHighlights, true);
@@ -143,7 +145,7 @@ public sealed class ChatHighlightTest : GameTest
         attachField.SetValue(chatController, true);
 
         // Invoke character update
-        method.Invoke(chatController, [characterData]);
+        method.Invoke(chatController, new object[] { characterData });
 
         // 5. Assertions:
         // - Config highlights MUST NOT be wiped and remain as custom highlights

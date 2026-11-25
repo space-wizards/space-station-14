@@ -89,48 +89,11 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (amount <= 0)
             return false;
 
-        var materials = _materialStorage.GetStoredMaterials(uid);
-
-        return HasMaterials(materials, recipe, component.MaterialUseMultiplier, amount);
-    }
-
-    /// <summary>
-    /// Returns whether or not the given lathe can produce some number of a given recipe.
-    /// </summary>
-    /// <remarks>
-    /// Useful for reducing material lookup with batched checks.
-    /// </remarks>
-    /// <param name="ent">The lathe that would produce the recipe.</param>
-    /// <param name="recipe">The recipe to be produced.</param>
-    /// <param name="materials">The set of materials to check.</param>
-    /// <param name="amount">The number of times the recipe should be made.</param>
-    public bool CanProduce(Entity<LatheComponent?> ent, LatheRecipePrototype recipe, Dictionary<ProtoId<MaterialPrototype>, int> materials, int amount)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        if (amount <= 0)
-            return false;
-
-        if (!HasRecipe(ent, recipe, ent.Comp))
-            return false;
-
-        return HasMaterials(materials, recipe, ent.Comp.MaterialUseMultiplier, amount);
-    }
-
-    /// <summary>
-    /// Returns whether or not the given materials dictionary can produce <paramref name="amount"/> copies of <paramref name="recipe"/>.
-    /// </summary>
-    private bool HasMaterials(Dictionary<ProtoId<MaterialPrototype>, int> materials, LatheRecipePrototype recipe, float materialMultiplier, int amount = 1)
-    {
         foreach (var (material, needed) in recipe.Materials)
         {
-            if (!materials.TryGetValue(material, out var availableAmount))
-                return false;
+            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, component.MaterialUseMultiplier);
 
-            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, materialMultiplier);
-
-            if (availableAmount < adjustedAmount * amount)
+            if (_materialStorage.GetMaterialAmount(uid, material) < adjustedAmount * amount)
                 return false;
         }
         return true;
@@ -148,7 +111,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     }
 
     public static int AdjustMaterial(int original, bool reduce, float multiplier)
-        => reduce ? (int)MathF.Ceiling(original * multiplier) : original;
+        => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
 
     protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
 
@@ -164,7 +127,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         InverseRecipes.Clear();
         foreach (var latheRecipe in ProtoMan.EnumeratePrototypes<LatheRecipePrototype>())
         {
-            if (latheRecipe.Result is not { } result)
+            if (latheRecipe.Result is not {} result)
                 continue;
 
             InverseRecipes.GetOrNew(result).Add(latheRecipe);
@@ -189,7 +152,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Name))
             return Loc.GetString(proto.Name);
 
-        if (proto.Result is { } result)
+        if (proto.Result is {} result)
         {
             return ProtoMan.Index(result).Name;
         }
@@ -215,7 +178,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Description))
             return Loc.GetString(proto.Description);
 
-        if (proto.Result is { } result)
+        if (proto.Result is {} result)
         {
             return ProtoMan.Index(result).Description;
         }

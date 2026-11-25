@@ -9,31 +9,17 @@ public sealed partial class PassiveDamageSystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    #region Subscriptions
-
-    [SubscribeLocalEvent]
-    private void OnPendingMapInit(Entity<PassiveDamageComponent> ent, ref MapInitEvent args)
+    public override void Initialize()
     {
-        ent.Comp.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
-        Dirty(ent);
+        base.Initialize();
+
+        SubscribeLocalEvent<PassiveDamageComponent, MapInitEvent>(OnPendingMapInit);
     }
 
-    [SubscribeLocalEvent]
-    private void OnDamageTaken(Entity<PassiveDamageComponent> ent, ref DamageDealtEvent args)
+    private void OnPendingMapInit(EntityUid uid, PassiveDamageComponent component, MapInitEvent args)
     {
-        if (ent.Comp.IntervalHaltOnDamageTaken == TimeSpan.Zero || !args.Damage.AnyPositive())
-            return;
-
-        var proposedUpdateTime = _timing.CurTime + ent.Comp.IntervalHaltOnDamageTaken;
-        if (proposedUpdateTime > ent.Comp.NextDamage)
-        {
-            ent.Comp.NextDamage = proposedUpdateTime;
-            Dirty(ent);
-        }
-
+        component.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
     }
-
-    #endregion
 
     // Every tick, attempt to damage entities
     public override void Update(float frameTime)
@@ -51,7 +37,6 @@ public sealed partial class PassiveDamageSystem : EntitySystem
 
             // Set the next time they can take damage
             comp.NextDamage = curTime + TimeSpan.FromSeconds(1f);
-            Dirty(uid, comp);
 
             // Damage them
             foreach (var allowedState in comp.AllowedStates)

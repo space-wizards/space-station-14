@@ -97,12 +97,6 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        if (!_interaction.InRangeUnobstructed(uid, component.Target, distance + 0.1f))
-        {
-            component.Status = CombatStatus.TargetUnreachable;
-            return;
-        }
-
         if (weapon.NextAttack > curTime || !Enabled)
             return;
 

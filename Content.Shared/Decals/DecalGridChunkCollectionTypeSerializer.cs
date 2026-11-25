@@ -1,6 +1,8 @@
 using System.Globalization;
+using System.Linq;
 using System.Numerics;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
@@ -10,10 +12,7 @@ using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 using Robust.Shared.Utility;
-
-#pragma warning disable CS0618 // Obsolete: enabling compatibility features.
 using static Content.Shared.Decals.DecalGridComponent;
-#pragma warning restore CS0618
 
 namespace Content.Shared.Decals
 {
@@ -29,7 +28,7 @@ namespace Content.Shared.Decals
             IDependencyCollection dependencies, ISerializationContext? context = null)
         {
             node.TryGetValue("version", out var versionNode);
-            var version = ((ValueDataNode?)versionNode)?.AsInt() ?? VersionUnspecified;
+            var version = ((ValueDataNode?) versionNode)?.AsInt() ?? VersionUnspecified;
 
             return version switch
             {
@@ -46,7 +45,7 @@ namespace Content.Shared.Decals
             ISerializationManager.InstantiationDelegate<DecalGridChunkCollection>? _ = default)
         {
             node.TryGetValue("version", out var versionNode);
-            var version = ((ValueDataNode?)versionNode)?.AsInt() ?? VersionUnspecified;
+            var version = ((ValueDataNode?) versionNode)?.AsInt() ?? VersionUnspecified;
 
             return version switch
             {
@@ -82,7 +81,7 @@ namespace Content.Shared.Decals
                     chunk.Decals[index.Id] = decal;
 
                     if (uid <= DecalChunkComponent.MaxServerDecalId)
-                        nextIndex = Math.Max(nextIndex, (ushort)(uid + 1));
+                        nextIndex = Math.Max(nextIndex, (ushort) (uid + 1));
                 }
             }
 
@@ -221,20 +220,20 @@ namespace Content.Shared.Decals
         {
             var used = usedIds.GetOrNew(chunk);
 
-            if (id <= DecalChunkComponent.MaxServerDecalId && used.Add((ushort)id))
+            if (id <= DecalChunkComponent.MaxServerDecalId && used.Add((ushort) id))
             {
-                nextIndex = Math.Max(nextIndex, (ushort)(id + 1));
-                return new DecalIndex(chunk, (ushort)id);
+                nextIndex = Math.Max(nextIndex, (ushort) (id + 1));
+                return new DecalIndex(chunk, (ushort) id);
             }
 
             for (var i = 0; i <= DecalChunkComponent.MaxServerDecalId; i++)
             {
-                var remapped = (ushort)i;
+                var remapped = (ushort) i;
 
                 if (!used.Add(remapped))
                     continue;
 
-                nextIndex = Math.Max(nextIndex, (ushort)(remapped + 1));
+                nextIndex = Math.Max(nextIndex, (ushort) (remapped + 1));
                 return new DecalIndex(chunk, remapped);
             }
 

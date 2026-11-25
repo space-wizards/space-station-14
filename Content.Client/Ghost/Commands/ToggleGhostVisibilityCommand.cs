@@ -1,4 +1,4 @@
-using Robust.Shared.Console;
+﻿using Robust.Shared.Console;
 
 namespace Content.Client.Ghost.Commands;
 
@@ -10,6 +10,9 @@ public sealed partial class ToggleGhostVisibilityCommand : LocalizedEntityComman
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _ghost.ToggleGhostVisibility();
+        if (args.Length != 0 && bool.TryParse(args[0], out var visibility))
+            _ghost.ToggleGhostVisibility(visibility);
+        else
+            _ghost.ToggleGhostVisibility();
     }
 }

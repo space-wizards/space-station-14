@@ -151,7 +151,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         if (butcherable.SpawnedEntities.Count == 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-butcher-empty", ("victim", Identity.Entity(victim.Value, EntityManager))), ent, args.User, PopupType.MediumCaution);
+            _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-butcher-empty", ("victim", Identity.Entity(victim.Value, EntityManager))), ent, args.User, PopupType.MediumCaution);
             return;
         }
 
@@ -178,7 +178,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
             args.User,
             PopupType.MediumCaution);
 
-        var delay = TimeSpan.FromSeconds(butcherable.ButcherDelay / tool.SpeedModifier);
+        var delay = TimeSpan.FromSeconds(tool.SpeedModifier * butcherable.ButcherDelay);
 
         if (_mobStateSystem.IsAlive(victim.Value))
             delay += ent.Comp.ButcherDelayAlive;

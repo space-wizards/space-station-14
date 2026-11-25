@@ -1,58 +1,67 @@
-#nullable enable
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
 using Content.Shared.CCVar;
-using Content.Shared.GameTicking;
+using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.IntegrationTests.Tests.Commands;
-
-[TestOf(typeof(RestartRoundNowCommand))]
-public sealed class RestartRoundNowTest : GameTest
+namespace Content.IntegrationTests.Tests.Commands
 {
-    public override PoolSettings PoolSettings => new()
+    [TestFixture]
+    [TestOf(typeof(RestartRoundNowCommand))]
+    public sealed class RestartRoundNowTest : GameTest
     {
-        DummyTicker = false,
-        Dirty = true
-    };
-
-    [SidedDependency(Side.Server)] private GameTicker _sTicker = default!;
-
-    [Test]
-    [TestCase(true)]
-    [TestCase(false)]
-    public async Task RestartRoundAfterStart(bool lobbyEnabled)
-    {
-        GameTick tickBeforeRestart = default;
-
-        await Server.WaitAssertion(() =>
+        public override PoolSettings PoolSettings => new PoolSettings
         {
-            Assert.That(Server.CfgMan.GetCVar(CCVars.GameLobbyEnabled), Is.False);
-            Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
+            DummyTicker = false,
+            Dirty = true
+        };
 
-            Assert.That(_sTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RestartRoundAfterStart(bool lobbyEnabled)
+        {
+            var pair = Pair;
+            var server = pair.Server;
 
-            tickBeforeRestart = SEntMan.CurrentTick;
+            var configManager = server.ResolveDependency<IConfigurationManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var gameTicker = entityManager.System<GameTicker>();
 
-            _sTicker.RestartRound();
+            await pair.RunUntilSynced();
 
-            if (lobbyEnabled)
+            GameTick tickBeforeRestart = default;
+
+            await server.WaitAssertion(() =>
             {
-                Assert.That(_sTicker.RunLevel, Is.Not.EqualTo(GameRunLevel.InRound));
-            }
-        });
+                Assert.That(configManager.GetCVar(CCVars.GameLobbyEnabled), Is.EqualTo(false));
+                configManager.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
 
-        await Pair.RunTicksSync(15);
+                Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
 
-        await Server.WaitAssertion(() =>
-        {
-            var tickAfterRestart = SEntMan.CurrentTick;
+                tickBeforeRestart = entityManager.CurrentTick;
 
-            Assert.That(tickBeforeRestart, Is.LessThan(tickAfterRestart));
-        });
+                gameTicker.RestartRound();
 
-        await Pair.RunUntilSynced();
+                if (lobbyEnabled)
+                {
+                    Assert.That(gameTicker.RunLevel, Is.Not.EqualTo(GameRunLevel.InRound));
+                }
+            });
+
+            await pair.RunTicksSync(15);
+
+            await server.WaitAssertion(() =>
+            {
+                var tickAfterRestart = entityManager.CurrentTick;
+
+                Assert.That(tickBeforeRestart, Is.LessThan(tickAfterRestart));
+            });
+
+            await pair.RunUntilSynced();
+        }
     }
 }

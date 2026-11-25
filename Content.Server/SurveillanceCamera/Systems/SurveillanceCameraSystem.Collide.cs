@@ -6,7 +6,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed partial class SurveillanceCameraSystem
+public partial class SurveillanceCameraSystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;

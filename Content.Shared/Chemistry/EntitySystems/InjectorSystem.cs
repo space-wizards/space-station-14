@@ -15,11 +15,12 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Standing;
-using Content.Shared.Timing.Systems;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -99,10 +100,10 @@ public sealed partial class InjectorSystem : EntitySystem
 
     private void OnAttack(Entity<InjectorComponent> injector, ref MeleeHitEvent args)
     {
-        if (args.HitEntities.Count == 0)
+        if (args.HitEntities is [])
             return;
 
-        TryMobsDoAfter(injector, args.User, args.HitEntities.First());
+        TryMobsDoAfter(injector, args.User, args.HitEntities[0]);
     }
 
     /// <summary>
@@ -647,7 +648,7 @@ public sealed partial class InjectorSystem : EntitySystem
         _forensics.TransferDna(injector, target);
         // Reset the delay, if present.
 
-        _useDelay.TryResetDelay(injector.Owner);
+        _useDelay.TryResetDelay(injector);
 
         // Automatically set syringe to draw after completely draining it.
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)

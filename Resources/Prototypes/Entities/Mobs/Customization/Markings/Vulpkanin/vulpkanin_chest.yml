@@ -1,6 +1,5 @@
 # Body Markings (Chest)
 - type: marking
-  parent: [ VulpBaseMarkingClamped ]
   id: VulpBellyCrest
   bodyPart: Chest
   groupWhitelist: [ Vulpkanin ]
@@ -9,7 +8,6 @@
       state: belly_crest
 
 - type: marking
-  parent: [ VulpBaseMarkingClamped ]
   id: VulpBellyFull
   bodyPart: Chest
   groupWhitelist: [ Vulpkanin ]
@@ -18,7 +16,6 @@
       state: belly_full
 
 - type: marking
-  parent: [ VulpBaseMarkingClamped ]
   id: VulpBellyFox
   bodyPart: Chest
   groupWhitelist: [ Vulpkanin ]

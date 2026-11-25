@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Fixtures.Attributes;
 /// </code>
 /// </example>
 /// <seealso cref="GameTest"/>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
 public sealed class EnsureCVarAttribute(Side side, Type definitionType, string fieldName, object value) : Attribute, IGameTestModifier, IApplyToTest
 {
     public const string ClientEnsuredCVarsProperty = "ClientEnsuredCVars";

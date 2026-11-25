@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;

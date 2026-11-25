@@ -66,18 +66,18 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             };
         }
 
-        public void FromAirAlarmData(GasVentScrubberData dataPayload)
+        public void FromAirAlarmData(GasVentScrubberData data)
         {
-            Enabled = dataPayload.Enabled;
-            IsDirty = dataPayload.Dirty;
-            PumpDirection = dataPayload.PumpDirection;
-            TransferRate = dataPayload.VolumeRate;
-            WideNet = dataPayload.WideNet;
+            Enabled = data.Enabled;
+            IsDirty = data.Dirty;
+            PumpDirection = data.PumpDirection;
+            TransferRate = data.VolumeRate;
+            WideNet = data.WideNet;
 
-            if (!dataPayload.FilterGases.SequenceEqual(FilterGases))
+            if (!data.FilterGases.SequenceEqual(FilterGases))
             {
                 FilterGases.Clear();
-                foreach (var gas in dataPayload.FilterGases)
+                foreach (var gas in data.FilterGases)
                     FilterGases.Add(gas);
             }
         }

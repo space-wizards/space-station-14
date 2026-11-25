@@ -10,25 +10,18 @@ public sealed partial class EntityEffectActionSystem : EntitySystem
 {
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
-    [SubscribeLocalEvent]
-    private void OnEntityEffectInstantAction(Entity<EntityEffectActionComponent> ent, ref EntityEffectInstantActionEvent args)
+    public override void Initialize()
     {
-        if (ent.Comp.Effects == null)
-            return;
-        
-        // we trigger the actions on the user
-        if (_effects.TryApplyEffects(args.Performer, ent.Comp.Effects, user: args.Performer))
-            args.Handled = true;
+        base.Initialize();
+        SubscribeLocalEvent<EntityEffectActionComponent, EntityEffectActionEvent>(OnEntityEffectAction);
     }
 
-    [SubscribeLocalEvent]
     private void OnEntityEffectAction(Entity<EntityEffectActionComponent> ent, ref EntityEffectActionEvent args)
     {
-        if (ent.Comp.Effects == null)
-            return;
-
-        if (_effects.TryApplyEffects(args.Target, ent.Comp.Effects, user: args.Performer))
-            args.Handled = true;
-        
+        foreach (var effect in ent.Comp.Effects)
+        {
+            if (_effects.TryApplyEffect(args.Target, effect, user: args.Performer))
+                args.Handled = true;
+        }
     }
 }

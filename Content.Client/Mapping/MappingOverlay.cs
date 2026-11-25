@@ -1,4 +1,4 @@
-using Robust.Client.GameObjects;
+﻿using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -84,5 +84,7 @@ public sealed partial class MappingOverlay : Overlay
                 break;
             }
         }
+
+        handle.UseShader(null);
     }
 }

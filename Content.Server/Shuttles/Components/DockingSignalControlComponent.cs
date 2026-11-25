@@ -11,10 +11,4 @@ public sealed partial class DockingSignalControlComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<SourcePortPrototype> DockStatusSignalPort = "DockStatus";
-
-    /// <summary>
-    /// Input port that toggles the docking status.
-    /// </summary>
-    [DataField]
-    public ProtoId<SinkPortPrototype> DockTogglePort = "DockToggle";
 }

@@ -1,13 +1,11 @@
-#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class WindowConstruction : InteractionTest
 {
-    private static readonly EntProtoId Window = "Window";
-    private static readonly EntProtoId RWindow = "ReinforcedWindow";
+    private const string Window = "Window";
+    private const string RWindow = "ReinforcedWindow";
 
     [Test]
     public async Task ConstructWindow()

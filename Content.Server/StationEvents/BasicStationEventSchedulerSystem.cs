@@ -1,11 +1,11 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Administration;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.GameTicking.Rules;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -23,16 +23,19 @@ namespace Content.Server.StationEvents
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private EventManagerSystem _event = default!;
 
-        protected override void Started(Entity<BasicStationEventSchedulerComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+        protected override void Started(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
+            GameRuleStartedEvent args)
         {
             // A little starting variance so schedulers dont all proc at once.
-            ent.Comp1.TimeUntilNextEvent = RobustRandom.NextFloat(ent.Comp1.MinimumTimeUntilFirstEvent, ent.Comp1.MinimumTimeUntilFirstEvent + ent.Comp1.MaximumSpanUntilFirstEvent);
+            component.TimeUntilNextEvent = RobustRandom.NextFloat(component.MinimumTimeUntilFirstEvent, component.MinimumTimeUntilFirstEvent + component.MaximumSpanUntilFirstEvent);
         }
 
-        protected override void Ended(Entity<BasicStationEventSchedulerComponent> rule, ref GameRuleEndedEvent args)
+        protected override void Ended(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
+            GameRuleEndedEvent args)
         {
-            rule.Comp.TimeUntilNextEvent = rule.Comp.MinimumTimeUntilFirstEvent;
+            component.TimeUntilNextEvent = component.MinimumTimeUntilFirstEvent;
         }
+
 
         public override void Update(float frameTime)
         {
@@ -44,7 +47,7 @@ namespace Content.Server.StationEvents
             var query = EntityQueryEnumerator<BasicStationEventSchedulerComponent, GameRuleComponent>();
             while (query.MoveNext(out var uid, out var eventScheduler, out var gameRule))
             {
-                if (!GameTicker.IsGameRuleActive((uid, gameRule)))
+                if (!GameTicker.IsGameRuleActive(uid, gameRule))
                     continue;
 
                 if (eventScheduler.TimeUntilNextEvent > 0)
@@ -83,7 +86,7 @@ namespace Content.Server.StationEvents
         /// </summary>
         /// <remarks>
         ///     This isn't perfect. Code path eventually goes into <see cref="EventManagerSystem.CanRun"/>, which requires
-        ///     state from <see cref="ServerGameTicker"/>. As a result, you should probably just run this locally and not doing
+        ///     state from <see cref="GameTicker"/>. As a result, you should probably just run this locally and not doing
         ///     a real round (it won't pollute the state, but it will get contaminated by previously ran events in the actual round)
         ///     and things like `MaxOccurrences` and `ReoccurrenceDelay` won't be respected.
         ///
@@ -135,7 +138,7 @@ namespace Content.Server.StationEvents
                         continue; // doesnt break because maybe the time is preventing events being available.
                     }
 
-                    if (_stationEvent.FindEvent(selectedEvents.Value) is not { } ev)
+                    if (_stationEvent.FindEvent(selectedEvents) is not { } ev)
                         continue;
 
                     occurrences[ev] += 1;

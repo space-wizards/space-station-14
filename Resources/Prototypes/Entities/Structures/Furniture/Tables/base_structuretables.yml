@@ -23,11 +23,8 @@
   - type: Icon
     state: full
   - type: IconSmooth
-    key: table
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ table ]
-      base: state_
+    key: state
+    base: state_
   - type: Climbable
   - type: Bonkable
     bonkDamage:
@@ -58,10 +55,3 @@
         - TableMask
         layer:
         - TableLayer
-        - LowImpassable
-  - type: IconSmooth
-    key: counter
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ counter ]
-      base: state_

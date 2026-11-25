@@ -1,4 +1,4 @@
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;

@@ -1,9 +1,9 @@
 - type: entity
-  abstract: true
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinableButchering, MobNightVision, BaseMobDestructible ]
-  id: BaseMobCarp
   name: space carp
+  id: BaseMobCarp
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
   description: It's a space carp.
+  abstract: true
   components:
     - type: InputMover
     - type: MobMover
@@ -32,9 +32,9 @@
             radius: 0.40
           density: 80
           mask:
-          - FlyingMobMask
+            - FlyingMobMask
           layer:
-          - FlyingMobLayer
+            - FlyingMobLayer
     - type: MobState
     - type: MobThresholds
       thresholds:
@@ -70,14 +70,15 @@
         types:
           Blunt: 5
           Slash: 7
-          Structural: 8
     - type: TypingIndicator
       proto: alien
     - type: Tag
       tags:
-      - Carp
-      - DoorBumpOpener
-      - CannotSuicide
+        - Carp
+        - DoorBumpOpener
+        - CannotSuicide
+    - type: ReplacementAccent
+      accent: genericAggressive
     - type: Speech
       speechVerb: LargeMob
     - type: InteractionPopup
@@ -87,9 +88,8 @@
         path: /Audio/Effects/bite.ogg
 
 - type: entity
-  abstract: true
   parent: BaseMobCarp
-  id: BaseMobCarpVisuals
+  id: MobCarp
   components:
   - type: Sprite
     layers:
@@ -106,29 +106,20 @@
         mouth: ""
 
 - type: entity
-  parent: BaseMobCarpVisuals
-  id: MobCarp
-  components:
-  - type: ReplacementAccent
-    accent: genericAggressive
-
-- type: entity
+  name: magicarp
   parent: BaseMobCarp
   id: MobCarpMagic
-  name: magicarp
   description: Looks like some kind of fish. Might be magical.
   components:
   - type: Sprite
     sprite: Mobs/Aliens/Carps/magic.rsi
   - type: TypingIndicator
     proto: guardian
-  - type: ReplacementAccent
-    accent: genericAggressive
 
 - type: entity
+  name: holocarp
   parent: BaseMobCarp
   id: MobCarpHolo
-  name: holocarp
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
   - type: Sprite
@@ -147,8 +138,6 @@
         - Opaque
   - type: TypingIndicator
     proto: robot
-  - type: ReplacementAccent
-    accent: genericAggressive
 
 - type: entity
   parent: MobCarp
@@ -163,30 +152,44 @@
     layers: [ 0 ]
 
 - type: entity
-  parent: MobCarp
   id: MobCarpSalvage
+  parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-  - type: SalvageMobRestrictions
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      30: Dead
+    - type: SalvageMobRestrictions
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        30: Dead
 
 - type: entity
-  parent: [ MobDragonBrood, BaseMobCarpVisuals ]
-  id: MobCarpDragon
   name: space carp
+  id: MobCarpDragon
   suffix: DragonBrood
-  components:
-  - type: GhostRole
-    name: ghost-role-information-sentient-carp-name
-    description: ghost-role-information-sentient-carp-description
-    rules: ghost-role-information-space-dragon-summoned-carp-rules
-
-- type: entity
   parent: MobCarp
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-sentient-carp-name
+      description: ghost-role-information-sentient-carp-description
+      rules: ghost-role-information-space-dragon-summoned-carp-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonistFlock
+    - type: GhostTakeoverAvailable
+    - type: HTN
+      rootTask:
+        task: DragonCarpCompound
+    - type: Flammable
+      damage:
+       types: {}
+    - type: Temperature
+    - type: TemperatureDamage
+      heatDamageThreshold: 1200
+- type: entity
   id: MobCarpDungeon
+  parent: MobCarp
   suffix: Dungeon
   components:
   - type: MobThresholds
@@ -202,10 +205,9 @@
         Slash: 6
 
 - type: entity
-  abstract: true
-  parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinableButchering ]
-  id: BaseMobShark
   name: sharkminnow
+  parent: [ BaseMobBloodsucker, BaseMobCarp, BaseSlicingRefinable ]
+  id: MobShark
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
   - type: Sprite
@@ -230,7 +232,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
   - type: Stamina
     baseCritThreshold: 150
   - type: DamageStateVisuals
@@ -241,12 +243,6 @@
       Dead:
         Base: dead
         BaseUnshaded: dead_mouth
-  - type: RandomSprite
-    available:
-    - enum.DamageStateVisualLayers.Base:
-        alive: Rainbow
-      enum.DamageStateVisualLayers.BaseUnshaded:
-        mouth: ""
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatFish
@@ -260,29 +256,8 @@
         Bloodloss: 5
 
 - type: entity
-  parent: BaseMobShark
-  id: MobShark
-  components:
-  - type: ReplacementAccent
-    accent: genericAggressive
-
-- type: entity
-  parent: MobShark
   id: MobSharkSalvage
+  parent: MobShark
   suffix: "Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      82: Dead # Might seem random, but this brings up the hits to kill with a crusher mark to 3
-
-- type: entity
-  parent: [ MobDragonBrood, BaseMobShark ]
-  id: MobSharkDragon
-  suffix: DragonBrood
-  components:
-  - type: GhostRole
-    name: ghost-role-information-sentient-sharkminnow-name
-    description: ghost-role-information-sentient-carp-description
-    rules: ghost-role-information-space-dragon-summoned-carp-rules

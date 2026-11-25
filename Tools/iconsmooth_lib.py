@@ -40,12 +40,12 @@ conversion_modes = {
 
             # BR, TL, TR, BL
             [  0,  0,  0,  0], # 0 : Standing / Outer corners
-            [  3,  3, 12, 12], # 1 : Straight line ; top half vertical bottom half horizontal
+            [ 12, 12,  3,  3], # 1 : Straight line ; top half horizontal bottom half vertical
             [  0,  0,  0,  0], # 2 : Standing / Outer corners diagonal
-            [  3,  3, 12, 12], # 3 : Seems to match 4
-            [ 12, 12,  3,  3], # 4 : Straight line ; top half horizontal bottom half vertical
+            [ 12, 12,  3,  3], # 3 : Seems to match 1
+            [  3,  3, 12, 12], # 4 : Straight line ; top half vertical bottom half horizontal
             [ 15, 15, 15, 15], # 5 : Inner corners
-            [ 12, 12,  3,  3], # 6 : Seems to match 1
+            [  3,  3, 12, 12], # 6 : Seems to match 4
             [ 46, 46, 46, 46], # 7 : Full
         ]
     ),
@@ -55,12 +55,12 @@ conversion_modes = {
         [
             # BR, TL, TR, BL
             [  0,  0,  0,  0],
-            [  3,  3, 16, 16],
+            [ 16, 16,  3,  3],
             [  0,  0,  0,  0],
+            [ 16, 16,  3,  3],
             [  3,  3, 16, 16],
-            [ 16, 16,  3,  3],
             [ 19, 19, 19, 19],
-            [ 16, 16,  3,  3],
+            [  3,  3, 16, 16],
             [ 54, 54, 54, 54],
         ]
     ),
@@ -70,12 +70,12 @@ conversion_modes = {
         [
             # BR, TL, TR, BL
             [  3,  0,  1,  2],
-            [  7,  4,  9, 10],
+            [ 11,  8,  5,  6],
             [  3,  0,  1,  2],
+            [ 11,  8,  5,  6],
             [  7,  4,  9, 10],
-            [ 11,  8,  5,  6],
             [ 15, 12, 13, 14],
-            [ 11,  8,  5,  6],
+            [  7,  4,  9, 10],
             [ 19, 16, 17, 18],
         ]
     ),
@@ -85,12 +85,12 @@ conversion_modes = {
         [
             # BR, TL, TR, BL
             [  0,  0,  0,  0],
-            [  1,  1,  2,  2],
+            [  2,  2,  1,  1],
             [  0,  0,  0,  0],
+            [  2,  2,  1,  1],
             [  1,  1,  2,  2],
-            [  2,  2,  1,  1],
             [  3,  3,  3,  3],
-            [  2,  2,  1,  1],
+            [  1,  1,  2,  2],
             [  4,  4,  4,  4],
         ]
     ),
@@ -103,12 +103,12 @@ conversion_modes = {
             # 45 # 4: Tile clockwise of indicated diagonal occupied.
             # BR, TL, TR, BL
             [  5,  2,  3,  4], # 0 X (ST)
-            [  3,  4,  2,  5], # 1
+            [  4,  3,  5,  2], # 1
             [  5,  2,  3,  4], # 2 X (ST)
-            [  3,  4,  2,  5], # 3
-            [  4,  3,  5,  2], # 4
+            [  4,  3,  5,  2], # 3
+            [  3,  4,  2,  5], # 4
             [  1,  1,  1,  1], # 5 X (IC)
-            [  4,  3,  5,  2], # 6
+            [  3,  4,  2,  5], # 6
             [  2,  5,  4,  3], # 7 X (F)
         ]
     ),
@@ -118,12 +118,12 @@ conversion_modes = {
         [
             # BR, TL, TR, BL
             [  5,  2,  3,  4], # 0 X (ST)
-            [  3,  4,  2,  5], # 1
+            [  4,  3,  5,  2], # 1
             [  0,  0,  0,  0], # 2 - diagdup of 0
-            [  7,  7,  6,  6], # 3 - diagdup of 4
-            [  4,  3,  5,  2], # 4
+            [  6,  6,  7,  7], # 3 - diagdup of 1
+            [  3,  4,  2,  5], # 4
             [  1,  1,  1,  1], # 5 X (IC)
-            [  6,  6,  7,  7], # 6 - diagdup of 1
+            [  7,  7,  6,  6], # 6 - diagdup of 4
             [  2,  5,  4,  3], # 7 X (F)
         ]
     ),
@@ -132,12 +132,12 @@ conversion_modes = {
         8, 1,
         [
             [  0,  0,  0,  0],
-            [  4,  4,  4,  4],
-            [  2,  2,  2,  2],
-            [  6,  6,  6,  6],
             [  1,  1,  1,  1],
-            [  5,  5,  5,  5],
+            [  2,  2,  2,  2],
             [  3,  3,  3,  3],
+            [  4,  4,  4,  4],
+            [  5,  5,  5,  5],
+            [  6,  6,  6,  6],
             [  7,  7,  7,  7],
         ]
     ),

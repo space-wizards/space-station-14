@@ -23,7 +23,7 @@ public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<Powe
         if (args.Sprite == null)
             return;
 
-        if (!args.TryGetData<PoweredLightState>(PoweredLightVisuals.BulbState, out var state))
+        if (!AppearanceSystem.TryGetData<PoweredLightState>(uid, PoweredLightVisuals.BulbState, out var state, args.Component))
             return;
 
         if (comp.SpriteStateMap.TryGetValue(state, out var spriteState))
@@ -42,7 +42,7 @@ public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<Powe
         SetBlinkingAnimation(
             uid,
             state == PoweredLightState.On
-            && (args.TryGetData<bool>(PoweredLightVisuals.Blinking, out var isBlinking) && isBlinking),
+            && (AppearanceSystem.TryGetData<bool>(uid, PoweredLightVisuals.Blinking, out var isBlinking, args.Component) && isBlinking),
             comp
         );
     }
@@ -127,7 +127,7 @@ public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<Powe
             {
                 KeyFrames =
                 {
-                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f, () => comp.BlinkingSound.Params)
+                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f)
                 }
             });
         }

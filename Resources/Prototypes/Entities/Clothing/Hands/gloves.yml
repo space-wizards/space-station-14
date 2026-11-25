@@ -568,8 +568,7 @@
     - WhitelistChameleon
     - Kangaroo
   - type: StealTarget
-    stealGroup:
-    - ClothingHandsKnuckleDustersQM
+    stealGroup: ClothingHandsKnuckleDustersQM
 
 - type: entity
   parent: [ClothingHandsBase, BaseSyndicateContraband]

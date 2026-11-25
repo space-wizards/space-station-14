@@ -31,18 +31,14 @@ public sealed partial class XenoArtifactNodeParser : CustomCompletionParser<(Ent
                 node =>
                 {
                     var metadata = _entityManager.GetComponent<MetaDataComponent>(node);
-                    var effect = Loc.GetString(metadata.EntityDescription);
-                    var trigger = node.Comp.TriggerTip.HasValue
-                        ? Loc.GetString(node.Comp.TriggerTip)
-                        : "Unknown";
+                    var entDescription = Loc.GetString(metadata.EntityDescription);
                     return new CompletionOption(
                         node.Owner.ToString(),
                         Loc.GetString(
                             "command-xenoartifact-common-node-hint",
                             ("depth", node.Comp.Depth),
                             ("nodeId", artifact.GetNodeId(node.Owner)),
-                            ("trigger", trigger),
-                            ("effect", effect)
+                            ("nodeDetail", entDescription)
                         )
                     );
                 });

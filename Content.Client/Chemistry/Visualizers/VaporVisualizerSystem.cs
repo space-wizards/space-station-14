@@ -50,8 +50,10 @@ public sealed partial class VaporVisualizerSystem : VisualizerSystem<VaporVisual
     /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, VaporVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite != null && args.TryGetData<Color>(VaporVisuals.Color, out var color))
+        if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
+        {
             SpriteSystem.SetColor((uid, args.Sprite), color);
+        }
     }
 }
 

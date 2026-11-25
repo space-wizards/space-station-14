@@ -1,9 +1,9 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Shared.DeviceNetwork.Systems;
+using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.Atmos.Monitor;
 
@@ -44,7 +44,7 @@ public interface IAirAlarmModeUpdate
     ///     unique identifier that ID's the
     ///     owner of the mode's executor.
     /// </summary>
-    public DeviceAddress NetOwner { get; set; }
+    public string NetOwner { get; set; }
     /// <summary>
     ///     This is executed every time the air alarm
     ///     update loop is fully executed. This should

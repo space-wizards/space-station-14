@@ -21,15 +21,10 @@ public sealed partial class RCDPrototype : IPrototype
     public RcdMode Mode { get; private set; } = RcdMode.Invalid;
 
     /// <summary>
-    /// The name associated with the prototype.
-    /// If null, uses the prototype's name, if it exists.
-    /// Defaults to the <c>generic-unknown-title</c> LocId otherwise.
+    /// The name associated with the prototype
     /// </summary>
-    /// <remarks>
-    /// Use <see cref="RCDSystem.GetPrototypeName"/> instead of using this directly.
-    /// </remarks>
     [DataField("name"), ViewVariables(VVAccess.ReadOnly)]
-    public LocId? SetName { get; private set; }
+    public string SetName { get; private set; } = "Unknown";
 
     /// <summary>
     /// The name of the radial container that this prototype will be listed under on the RCD menu
@@ -124,14 +119,6 @@ public sealed partial class RCDPrototype : IPrototype
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public RcdRotation Rotation { get; private set; } = RcdRotation.User;
-
-    /// <summary>
-    /// The relative order to use in the rotary menu.
-    /// Lower numbers appear before higher numbers, which appear before null.
-    /// Defaults to null.
-    /// </summary>
-    [DataField]
-    public int? MenuOrder { get; private set; }
 }
 
 public enum RcdMode : byte

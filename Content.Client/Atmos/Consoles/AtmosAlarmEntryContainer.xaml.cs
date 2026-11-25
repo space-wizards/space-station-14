@@ -1,5 +1,4 @@
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Palette;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -136,7 +135,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
                     {
                         Text = Loc.GetString("atmos-alerts-window-other-gases-value-nil"),
                         FontOverride = normalFont,
-                        FontColorOverride = Palettes.Neutral.Base,
+                        FontColorOverride = StyleNano.DisabledFore,
                         HorizontalAlignment = HAlignment.Center,
                         VerticalAlignment = VAlignment.Center,
                         HorizontalExpand = true,
@@ -176,13 +175,13 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
 
     public void SetAsFocus()
     {
-        FocusButton.AddStyleClass(StyleClass.Positive);
+        FocusButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/inverted_triangle.svg.png";
     }
 
     public void RemoveAsFocus()
     {
-        FocusButton.RemoveStyleClass(StyleClass.Positive);
+        FocusButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/triangle_right.png";
         FocusContainer.Visible = false;
     }
@@ -192,13 +191,13 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
         switch (alarmType)
         {
             case AtmosAlarmType.Normal:
-                return Palettes.Status.Good;
+                return StyleNano.GoodGreenFore;
             case AtmosAlarmType.Warning:
-                return Palettes.Status.Warning;
+                return StyleNano.ConcerningOrangeFore;
             case AtmosAlarmType.Danger:
-                return Palettes.Status.Critical;
+                return StyleNano.DangerousRedFore;
         }
 
-        return Palettes.Neutral.Base;
+        return StyleNano.DisabledFore;
     }
 }

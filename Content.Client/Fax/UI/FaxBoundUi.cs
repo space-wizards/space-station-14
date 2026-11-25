@@ -1,7 +1,8 @@
 using System.IO;
-using Content.Shared.DeviceNetwork;
+using System.Threading.Tasks;
 using Content.Shared.Fax;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Fax.UI;
@@ -86,7 +87,7 @@ public sealed partial class FaxBoundUi : BoundUserInterface
         SendMessage(new FaxRefreshMessage());
     }
 
-    private void OnPeerSelected(DeviceAddress address)
+    private void OnPeerSelected(string address)
     {
         SendMessage(new FaxDestinationMessage(address));
     }

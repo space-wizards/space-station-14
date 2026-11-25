@@ -1,3 +1,5 @@
+using Robust.Shared.Utility;
+
 namespace Content.Client.SurveillanceCamera;
 
 public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem

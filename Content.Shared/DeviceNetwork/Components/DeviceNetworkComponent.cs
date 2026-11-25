@@ -1,101 +1,120 @@
 using Content.Shared.DeviceNetwork.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.DeviceNetwork.Components;
-
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
-public sealed partial class DeviceNetworkComponent : Component
+namespace Content.Shared.DeviceNetwork.Components
 {
-    /// <summary>
-    /// Default device network ID to connect to.
-    /// </summary>
-    [DataField("deviceNetId")]
-    public DeviceNetIdDefaults NetIdEnum { get; set; }
+    [RegisterComponent]
+    [Access(typeof(SharedDeviceNetworkSystem), typeof(DeviceNet))]
+    public sealed partial class DeviceNetworkComponent : Component
+    {
+        public enum DeviceNetIdDefaults
+        {
+            Private,
+            Wired,
+            Wireless,
+            Apc,
+            AtmosDevices,
+            Reserved = 100,
+            // Ids outside this enum may exist
+            // This exists to let yml use nice names instead of numbers
+        }
 
-    /// <summary>
-    /// The numeric identifier of the device network this device uses.
-    /// </summary>
-    public int DeviceNetId => (int) NetIdEnum;
+        [DataField("deviceNetId")]
+        public DeviceNetIdDefaults NetIdEnum { get; set; }
 
-    /// <summary>
-    /// The device address paired with its optional localized prefix.
-    /// </summary>
-    public LocDeviceAddress LocAddress => new(Address, Prefix);
+        public int DeviceNetId => (int) NetIdEnum;
 
-    /// <summary>
-    /// The frequency that this device is listening on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DeviceFrequency? ReceiveFrequency;
+        /// <summary>
+        ///     The frequency that this device is listening on.
+        /// </summary>
+        [DataField]
+        public uint? ReceiveFrequency;
 
-    /// <summary>
-    /// The address ID of the device, either on the network it is currently connected to or whatever address it
-    /// most recently used.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DeviceAddress Address = DeviceAddress.Invalid;
+        /// <summary>
+        ///     frequency prototype. Used to select a default frequency to listen to on. Used when the map is
+        ///     initialized.
+        /// </summary>
+        [DataField]
+        public ProtoId<DeviceFrequencyPrototype>? ReceiveFrequencyId;
 
-    /// <summary>
-    /// Whether the device should listen for all device messages, regardless of the intended recipient.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ReceiveAll;
+        /// <summary>
+        ///     The frequency that this device going to try transmit on.
+        /// </summary>
+        [DataField]
+        public uint? TransmitFrequency;
 
-    /// <summary>
-    /// The frequency that this device going to try to transmit on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DeviceFrequency? TransmitFrequency;
+        /// <summary>
+        ///     frequency prototype. Used to select a default frequency to transmit on. Used when the map is
+        ///     initialized.
+        /// </summary>
+        [DataField]
+        public ProtoId<DeviceFrequencyPrototype>? TransmitFrequencyId;
 
-    /// <summary>
-    /// Frequency prototype, used to select a default frequency to listen to on.
-    /// </summary>
-    [DataField]
-    public ProtoId<DeviceFrequencyPrototype>? ReceiveFrequencyId;
+        /// <summary>
+        ///     The address of the device, either on the network it is currently connected to or whatever address it
+        ///     most recently used.
+        /// </summary>
+        [DataField]
+        public string Address = string.Empty;
 
-    /// <summary>
-    /// Frequency prototype, used to select a default frequency to transmit on.
-    /// </summary>
-    [DataField]
-    public ProtoId<DeviceFrequencyPrototype>? TransmitFrequencyId;
+        /// <summary>
+        ///     If true, the address was customized and should be preserved across networks. If false, a randomly
+        ///     generated address will be created whenever this device connects to a network.
+        /// </summary>
+        [DataField]
+        public bool CustomAddress = false;
 
-    /// <summary>
-    /// Whether to send the broadcast recipients list to the sender so it can be filtered.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool SendBroadcastAttemptEvent;
+        /// <summary>
+        ///     Prefix to prepend to any automatically generated addresses. Helps players to identify devices. This gets
+        ///     localized.
+        /// </summary>
+        [DataField]
+        public string? Prefix;
 
-    /// <summary>
-    /// If the device should show its address upon an examine.
-    /// Useful for devices that do not have a visible UI.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ExaminableAddress;
+        /// <summary>
+        ///     Whether the device should listen for all device messages, regardless of the intended recipient.
+        /// </summary>
+        [DataField]
+        public bool ReceiveAll;
 
-    /// <summary>
-    /// Prefix to prepend to any automatically generated addresses. Helps players to identify devices.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public LocId? Prefix;
+        /// <summary>
+        ///     If the device should show its address upon an examine. Useful for devices
+        ///     that do not have a visible UI.
+        /// </summary>
+        [DataField]
+        public bool ExaminableAddress;
 
-    /// <summary>
-    /// Whether the device should attempt to join the network on map init.
-    /// </summary>
-    [DataField]
-    public bool AutoConnect = true;
+        /// <summary>
+        ///     Whether the device should attempt to join the network on map init.
+        /// </summary>
+        [DataField]
+        public bool AutoConnect = true;
 
-    /// <summary>
-    /// Whether this device's address can be saved to device-lists
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool SavableAddress = true;
+        /// <summary>
+        ///     Whether to send the broadcast recipients list to the sender so it can be filtered.
+        /// <see cref="DeviceListSystem"/>
+        /// </summary>
+        [DataField]
+        public bool SendBroadcastAttemptEvent = false;
 
-    /// <summary>
-    /// If true, the address was customized and should be preserved across networks. If false, a randomly
-    /// generated address will be created whenever this device connects to a network.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool CustomAddress;
+        /// <summary>
+        ///     Whether this device's address can be saved to device-lists
+        /// </summary>
+        [DataField]
+        public bool SavableAddress = true;
+
+        /// <summary>
+        ///     A list of device-lists that this device is on.
+        /// </summary>
+        [DataField]
+        [Access(typeof(SharedDeviceListSystem))]
+        public HashSet<EntityUid> DeviceLists = new();
+
+        /// <summary>
+        ///     A list of configurators that this device is on.
+        /// </summary>
+        [DataField]
+        [Access(typeof(SharedNetworkConfiguratorSystem))]
+        public HashSet<EntityUid> Configurators = new();
+    }
 }

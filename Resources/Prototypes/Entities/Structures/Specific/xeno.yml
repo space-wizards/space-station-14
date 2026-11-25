@@ -23,6 +23,7 @@
       - state: wardingtower
       - state: wardingtower-unshaded
         shader: unshaded
+  - type: Damageable
   - type: Fixtures
     fixtures:
       fix1:

@@ -49,9 +49,6 @@ public sealed partial class ActionGrantSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<ActionGrantComponent> ent, ref ComponentShutdown args)
     {
-        if (!ent.Comp.RemoveOnShutdown)
-            return;
-
         foreach (var actionEnt in ent.Comp.ActionEntities)
         {
             _actions.RemoveAction(ent.Owner, actionEnt);

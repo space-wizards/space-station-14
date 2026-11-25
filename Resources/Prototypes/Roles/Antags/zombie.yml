@@ -5,10 +5,6 @@
   setPreference: true
   objective: roles-antag-initial-infected-objective
   guides: [ Zombies ]
-  tags:
-  - OnStation
-  - Roundstart
-  - Midround # Breakout event
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 1h
@@ -44,6 +40,3 @@
   setPreference: false
   objective: roles-antag-zombie-objective
   guides: [ Zombies ]
-  tags:
-  - OnStation
-  - Converted

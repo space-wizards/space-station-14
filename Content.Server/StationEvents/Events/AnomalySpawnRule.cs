@@ -1,49 +1,45 @@
-using Content.Server.Anomaly;
+﻿using Content.Server.Anomaly;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-/// <summary>
-/// Handler for events spawning an anomaly on station.
-/// </summary>
-/// <seealso cref="AnomalySpawnRuleComponent"/>
 public sealed partial class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleComponent>
 {
     [Dependency] private AnomalySystem _anomaly = default!;
 
-    protected override void Added(Entity<AnomalySpawnRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
+        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
         var str = Loc.GetString("anomaly-spawn-event-announcement",
             ("sighting", Loc.GetString($"anomaly-spawn-sighting-{RobustRandom.Next(1, 6)}")));
         stationEvent.StartAnnouncement = str;
 
-        base.Added(ent, ref args);
+        base.Added(uid, component, gameRule, args);
     }
 
-    protected override void Started(Entity<AnomalySpawnRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
-        base.Started(ent, ref args);
+        base.Started(uid, component, gameRule, args);
 
-        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
+        if (!TryGetRandomStation(out var chosenStation))
             return;
 
         if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
             return;
 
-        var grid = Station.GetLargestGrid((chosenStation.Value, stationData));
+        var grid = StationSystem.GetLargestGrid((chosenStation.Value, stationData));
 
         if (grid is null)
             return;
 
-        var amountToSpawn = ent.Comp1.AmountToSpawn.Next(RobustRandom);
+        var amountToSpawn = 1;
         for (var i = 0; i < amountToSpawn; i++)
         {
-            _anomaly.SpawnOnRandomGridLocation(grid.Value, ent.Comp1.AnomalySpawnerPrototype);
+            _anomaly.SpawnOnRandomGridLocation(grid.Value, component.AnomalySpawnerPrototype);
         }
     }
 }

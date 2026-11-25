@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
@@ -31,7 +31,6 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedMoverController _mover = default!;
@@ -39,15 +38,12 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
-    [Dependency] private EntityQuery<HandsComponent> _handsQuery;
-    [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
-    [Dependency] private EntityQuery<InteractionRelayComponent> _interactionRelayQuery;
-    [Dependency] private EntityQuery<MovementRelayTargetComponent> _movementRelayQuery;
-    [Dependency] private EntityQuery<RelayInputMoverComponent> _relayInputMoverQuery;
     [Dependency] private EntityQuery<VehicleComponent> _vehicleQuery;
-    [Dependency] private EntityQuery<VehicleHandBlockerComponent> _handBlockerQuery;
     [Dependency] private EntityQuery<VehicleOperatorComponent> _operatorQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
+    [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery;
+    [Dependency] private EntityQuery<VehicleHandBlockerComponent> _handBlockerQuery;
 
     /// <remarks>
     /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
@@ -170,7 +166,6 @@ public sealed partial class VehicleSystem : EntitySystem
         Dirty(operatorUid, vehicleOperator);
 
         _mover.SetRelay(operatorUid, entity);
-        _eye.SetTarget(operatorUid, entity.Owner);
 
         var enterEvent = new OnVehicleEnteredEvent(entity, operatorUid);
         RaiseLocalEvent(operatorUid, ref enterEvent);
@@ -195,9 +190,9 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not { } currentOperator)
             return false;
 
-        _eye.SetTarget(currentOperator, null);
+        _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent);
 
-        if (_operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
+        if (currentOperatorComponent != null)
         {
             var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
             RaiseLocalEvent(currentOperator, ref exitEvent);
@@ -216,25 +211,25 @@ public sealed partial class VehicleSystem : EntitySystem
         var setEvent = new VehicleOperatorSetEvent(null, currentOperator);
         RaiseLocalEvent(entity, ref setEvent);
 
-        DirtyFields(entity.Owner, entity.Comp, null, nameof(VehicleComponent.Operator));
+        Dirty(entity);
         return true;
     }
 
     private void ClearOperatorRelays(EntityUid operatorUid, EntityUid vehicleUid)
     {
-        if (_relayInputMoverQuery.TryComp(operatorUid, out var relayMover) &&
+        if (TryComp<RelayInputMoverComponent>(operatorUid, out var relayMover) &&
             relayMover.RelayEntity == vehicleUid)
         {
             RemCompDeferred<RelayInputMoverComponent>(operatorUid);
         }
 
-        if (_interactionRelayQuery.TryComp(operatorUid, out var interactionRelay) &&
+        if (TryComp<InteractionRelayComponent>(operatorUid, out var interactionRelay) &&
             interactionRelay.RelayEntity == vehicleUid)
         {
             RemCompDeferred<InteractionRelayComponent>(operatorUid);
         }
 
-        if (_movementRelayQuery.TryComp(vehicleUid, out var relayTarget) &&
+        if (TryComp<MovementRelayTargetComponent>(vehicleUid, out var relayTarget) &&
             relayTarget.Source == operatorUid)
         {
             RemCompDeferred<MovementRelayTargetComponent>(vehicleUid);
@@ -259,7 +254,6 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
             return TryRemoveOperator((vehicleUid.Value, vehicle));
 
-        _eye.SetTarget(operatorEntity.Owner, null);
         UnblockHands(vehicleUid.Value, operatorEntity.Owner);
         ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
         operatorEntity.Comp.Vehicle = null;

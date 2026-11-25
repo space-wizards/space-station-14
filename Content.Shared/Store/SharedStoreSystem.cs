@@ -215,7 +215,6 @@ public abstract partial class SharedStoreSystem : EntitySystem
                 store.Balance[type.Key] += type.Value;
         }
 
-        DirtyField(uid, store, nameof(StoreComponent.Balance));
         UpdateUserInterface(null, uid, store);
         return true;
     }
@@ -223,13 +222,6 @@ public abstract partial class SharedStoreSystem : EntitySystem
     private void OnIntrinsicStoreAction(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
     {
         ToggleUi(args.Performer, ent.Owner, ent.Comp);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        UpdateGenerator(frameTime);
     }
 }
 

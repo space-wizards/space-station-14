@@ -1,5 +1,7 @@
 using Content.Shared.NPC.Systems;
 using Robust.Shared.Containers;
+using Robust.Server.Containers;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
@@ -9,10 +11,17 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class InFriendlyContainerPrecondition : HTNPrecondition
 {
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private NpcFactionSystem _npcFaction = default!;
+    private ContainerSystem _container = default!;
+    private NpcFactionSystem _npcFaction = default!;
 
     [DataField] public bool IsInFriendlyContainer = true;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _container = sysManager.GetEntitySystem<ContainerSystem>();
+        _npcFaction = sysManager.GetEntitySystem<NpcFactionSystem>();
+    }
 
     public override bool IsMet(NPCBlackboard blackboard)
     {

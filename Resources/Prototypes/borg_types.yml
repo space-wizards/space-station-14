@@ -210,9 +210,11 @@
 
   defaultModules:
   - BorgModulePrying
+  - BorgModuleMusique
   - BorgModuleService
-  - BorgModuleBotany
-  - BorgModuleCooking
+  - BorgModuleClowning
+  - BorgModuleGardening
+  - BorgModuleHarvesting
   radioChannels:
   - Science
   - Service

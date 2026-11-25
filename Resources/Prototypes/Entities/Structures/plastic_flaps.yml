@@ -45,10 +45,9 @@
     price: 100
   - type: IconSmooth
     key: walls
+    mode: NoSprite
   - type: PlacementReplacement
     key: walls
-  - type: StructureAligner
-  - type: StructureAlignerPylon
 
 - type: entity
   id: PlasticFlapsClear

@@ -21,15 +21,6 @@
   itemDrop: FloorTileItemSteelPavement
 
 - type: tile
-  id: FloorSteelMono
-  parent: BaseStationTile
-  name: tiles-steel-floor-mono
-  sprite: /Textures/Tiles/Basic/Gray/gray-mono.png
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemSteelMono
-
-- type: tile
   id: FloorSteelPavementVertical
   parent: BaseStationTile
   name: tiles-steel-floor-pavement-vertical
@@ -71,7 +62,7 @@
   parent: BaseStationTile
   name: tiles-plastic-floor
   sprite: /Textures/Tiles/Basic/Gray/gray-plastic.png
-  itemDrop: FloorTileItemPlastic
+  itemDrop: FloorTileItemSteel
 
 - type: tile
   id: FloorSteelDamaged
@@ -157,7 +148,7 @@
   sprite: /Textures/Tiles/Basic/White/white-plastic.png
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhitePlastic
+  itemDrop: FloorTileItemWhite
 
 ### DARK
 - type: tile
@@ -235,7 +226,7 @@
   sprite: /Textures/Tiles/Basic/Dark/dark-plastic.png
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDarkPlastic
+  itemDrop: FloorTileItemDark
 
 - type: tile
   id: FloorTechMaintDark

@@ -4,7 +4,6 @@ using Content.Server.GameTicking;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.GameTicking;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Station.Components;
 using Robust.Shared.GameObjects;
@@ -31,7 +30,7 @@ public sealed class EvacShuttleTest : GameTest
         var pair = Pair;
         var server = pair.Server;
         var entMan = server.EntMan;
-        var ticker = server.System<ServerGameTicker>();
+        var ticker = server.System<GameTicker>();
 
         // Dummy ticker tests should not have centcomm
         Assert.That(entMan.Count<StationCentcommComponent>(), Is.Zero);
@@ -40,7 +39,7 @@ public sealed class EvacShuttleTest : GameTest
         pair.Server.CfgMan.SetCVar(CCVars.EmergencyShuttleEnabled, true);
         pair.Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
         var gameMap = pair.Server.CfgMan.GetCVar(CCVars.GameMap);
-        pair.Server.CfgMan.SetCVar(CCVars.GameMap, "Saltern");
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, PoolManager.TestStation);
 
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);

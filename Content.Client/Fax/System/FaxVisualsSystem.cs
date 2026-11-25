@@ -11,8 +11,15 @@ namespace Content.Client.Fax.System;
 public sealed partial class FaxVisualsSystem : EntitySystem
 {
     [Dependency] private AnimationPlayerSystem _player = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<FaxMachineComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+    }
+
     private void OnAppearanceChanged(EntityUid uid, FaxMachineComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -21,26 +28,26 @@ public sealed partial class FaxVisualsSystem : EntitySystem
         if (_player.HasRunningAnimation(uid, "faxecute"))
             return;
 
-        if (!args.TryGetData(FaxMachineVisuals.VisualState, out FaxMachineVisualState visuals)
-            || visuals != FaxMachineVisualState.Inserting)
-            return;
-
-        _player.Play(uid,
-            new Animation()
-            {
-                Length = TimeSpan.FromSeconds(2.4),
-                AnimationTracks =
+        if (_appearance.TryGetData(uid, FaxMachineVisuals.VisualState, out FaxMachineVisualState visuals) &&
+            visuals == FaxMachineVisualState.Inserting)
+        {
+            _player.Play(uid,
+                new Animation()
                 {
-                    new AnimationTrackSpriteFlick()
+                    Length = TimeSpan.FromSeconds(2.4),
+                    AnimationTracks =
                     {
-                        LayerKey = FaxMachineVisuals.VisualState,
-                        KeyFrames =
+                        new AnimationTrackSpriteFlick()
                         {
-                            new AnimationTrackSpriteFlick.KeyFrame(component.InsertingState, 0f)
+                            LayerKey = FaxMachineVisuals.VisualState,
+                            KeyFrames =
+                            {
+                                new AnimationTrackSpriteFlick.KeyFrame(component.InsertingState, 0f)
+                            },
                         },
                     },
                 },
-            },
-            "faxecute");
+                "faxecute");
+        }
     }
 }

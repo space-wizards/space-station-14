@@ -96,6 +96,7 @@ namespace Content.Client.Eye.Blinding
             worldHandle.DrawRect(viewport, Color.White);
             worldHandle.UseShader(_circleMaskShader);
             worldHandle.DrawRect(viewport, Color.White);
+            worldHandle.UseShader(null);
         }
     }
 }

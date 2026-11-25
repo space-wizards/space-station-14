@@ -32,10 +32,7 @@ public sealed partial class ParcelWrappingSystem
         entity.Comp.Contents = _container.EnsureContainer<ContainerSlot>(entity, entity.Comp.ContainerId);
     }
 
-    private void OnEntInsertedIntoContainer(
-        Entity<WrappedParcelComponent> entity,
-        ref EntInsertedIntoContainerMessage args
-    )
+    private void OnEntInsertedIntoContainer(Entity<WrappedParcelComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
         // If the entity was inserted because of a server state application, assume that the item's state is applied
         // correctly as well and that deriving them from the contents is unneeded.
@@ -43,10 +40,12 @@ public sealed partial class ParcelWrappingSystem
             return;
 
         if (args.Container != entity.Comp.Contents ||
-            !_itemQuery.TryComp(entity, out var parcelItemComp))
+            !TryComp<ItemComponent>(entity, out var parcelItemComp))
             return;
 
-        var targetItemComp = _itemQuery.CompOrNull(args.Entity);
+        // If this wrap maintains the size when wrapping, set the parcel's size to the target's size, or the fallback
+        // size if the target does not have a size.
+        var targetItemComp = CompOrNull<ItemComponent>(args.Entity);
         if (entity.Comp.GetsSizeFromContent)
         {
             var size = targetItemComp?.Size ?? _fallbackParcelSize;
@@ -54,15 +53,11 @@ public sealed partial class ParcelWrappingSystem
             _appearance.SetData(entity, WrappedParcelVisuals.Size, size.Id);
         }
 
+        // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
+        // the parcel.
         if (entity.Comp.GetsShapeFromContent)
         {
             _item.SetShape(entity, targetItemComp?.Shape, parcelItemComp);
-        }
-
-        if (entity.Comp.GetsMultiHandednessFromContent &&
-            _multiHandedItemQuery.TryComp(args.Entity, out var multiHandedItemComp))
-        {
-            EnsureComp<MultiHandedItemComponent>(entity).HandsNeeded = multiHandedItemComp.HandsNeeded;
         }
     }
 
@@ -74,10 +69,8 @@ public sealed partial class ParcelWrappingSystem
         args.Handled = TryStartUnwrapDoAfter(args.User, entity);
     }
 
-    private void OnGetVerbsForWrappedParcel(
-        Entity<WrappedParcelComponent> entity,
-        ref GetVerbsEvent<InteractionVerb> args
-    )
+    private void OnGetVerbsForWrappedParcel(Entity<WrappedParcelComponent> entity,
+        ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanComplexInteract)
             return;
@@ -100,7 +93,7 @@ public sealed partial class ParcelWrappingSystem
         if (args.Handled || args.Cancelled)
             return;
 
-        if (args.Target is { } target && _wrappedParcelQuery.TryComp(target, out var parcel))
+        if (args.Target is { } target && TryComp<WrappedParcelComponent>(target, out var parcel))
         {
             UnwrapInternal(args.User, (target, parcel));
             args.Handled = true;
@@ -172,7 +165,7 @@ public sealed partial class ParcelWrappingSystem
             _transform.DropNextTo((trash, null), (parcel, parcelTransform));
         }
 
-        QueueDel(parcel);
+        PredictedQueueDel(parcel);
 
         return containedEntity;
     }

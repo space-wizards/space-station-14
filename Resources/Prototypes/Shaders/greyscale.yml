@@ -1,4 +1,4 @@
-- type: shader
+﻿- type: shader
   id: Greyscale
   kind: source
   path: "/Textures/Shaders/greyscale.swsl"

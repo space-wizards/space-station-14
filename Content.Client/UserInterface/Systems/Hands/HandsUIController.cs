@@ -6,8 +6,7 @@ using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
-using Content.Shared.Timing.Components;
-using Content.Shared.Timing.Systems;
+using Content.Shared.Timing;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -374,8 +373,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
                 hand.CooldownDisplay.Visible = false;
                 continue;
             }
-
-            _useDelay.GetLastActiveDelay((hand.Entity.Value, useDelay), out var delay);
+            var delay = _useDelay.GetLastEndingDelay((hand.Entity.Value, useDelay));
 
             hand.CooldownDisplay.Visible = true;
             hand.CooldownDisplay.FromTime(delay.StartTime, delay.EndTime);

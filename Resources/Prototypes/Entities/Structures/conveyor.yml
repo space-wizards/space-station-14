@@ -38,7 +38,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetwork
+  - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSink
     ports:

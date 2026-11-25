@@ -13,5 +13,5 @@ public sealed partial class StealTargetComponent : Component
     /// The theft group to which this item belongs.
     /// </summary>
     [DataField(required: true)]
-    public List<ProtoId<StealTargetGroupPrototype>> StealGroup;
+    public ProtoId<StealTargetGroupPrototype> StealGroup;
 }

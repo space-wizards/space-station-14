@@ -1,24 +1,31 @@
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Examine;
+using Content.Shared.Radio.Components;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Popups;
 using Content.Shared.Power;
-using Content.Shared.Radio.Components;
-using Content.Shared.Verbs;
 
 namespace Content.Shared.Radio.EntitySystems;
 
-public sealed partial class JammerSystem : EntitySystem
+public abstract partial class SharedJammerSystem : EntitySystem
 {
     [Dependency] private ItemToggleSystem _itemToggle = default!;
-    [Dependency] private DeviceNetworkJammerSystem _jammer = default!;
+    [Dependency] private SharedDeviceNetworkJammerSystem _jammer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RadioJammerComponent, ItemToggledEvent>(OnItemToggle);
+        SubscribeLocalEvent<RadioJammerComponent, RefreshChargeRateEvent>(OnRefreshChargeRate);
+        SubscribeLocalEvent<RadioJammerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
+    }
+
     private void OnItemToggle(Entity<RadioJammerComponent> entity, ref ItemToggledEvent args)
     {
         if (args.Activated)
@@ -26,12 +33,12 @@ public sealed partial class JammerSystem : EntitySystem
             EnsureComp<ActiveRadioJammerComponent>(entity);
             EnsureComp<DeviceNetworkJammerComponent>(entity, out var jammingComp);
             _jammer.SetRange((entity, jammingComp), GetCurrentRange(entity));
-            _jammer.AddJammableNetwork((entity, jammingComp), (int) DeviceNetIdDefaults.Wireless);
+            _jammer.AddJammableNetwork((entity, jammingComp), DeviceNetworkComponent.DeviceNetIdDefaults.Wireless.ToString());
 
             // Add excluded frequencies using the system method
             foreach (var freq in entity.Comp.FrequenciesExcluded)
             {
-                _jammer.AddExcludedFrequency((entity, jammingComp), freq);
+                _jammer.AddExcludedFrequency((entity, jammingComp), (uint)freq);
             }
         }
         else
@@ -48,14 +55,12 @@ public sealed partial class JammerSystem : EntitySystem
         _popup.PopupEntity(message, args.User.Value, args.User.Value);
     }
 
-    [SubscribeLocalEvent]
     private void OnRefreshChargeRate(Entity<RadioJammerComponent> entity, ref RefreshChargeRateEvent args)
     {
         if (_itemToggle.IsActivated(entity.Owner))
             args.NewChargeRate -= GetCurrentWattage(entity);
     }
 
-    [SubscribeLocalEvent]
     private void OnGetVerb(Entity<RadioJammerComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -92,7 +97,6 @@ public sealed partial class JammerSystem : EntitySystem
         }
     }
 
-    [SubscribeLocalEvent]
     private void OnExamine(Entity<RadioJammerComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -108,46 +112,12 @@ public sealed partial class JammerSystem : EntitySystem
         args.PushMarkup(switchIndicator);
     }
 
-    [SubscribeLocalEvent]
-    private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
-    {
-        if (ShouldCancel(args.RadioSource, args.Channel.Frequency))
-            args.Cancelled = true;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
-    {
-        if (ShouldCancel(args.RadioReceiver, args.Channel.Frequency))
-            args.Cancelled = true;
-    }
-
-    private bool ShouldCancel(EntityUid sourceUid, DeviceFrequency frequency)
-    {
-        var source = Transform(sourceUid).Coordinates;
-        var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
-
-        while (query.MoveNext(out var uid, out _, out var jam, out var transform))
-        {
-            // Check if this jammer excludes the frequency
-            if (jam.FrequenciesExcluded.Contains(frequency))
-                continue;
-
-            if (_transform.InRange(source, transform.Coordinates, GetCurrentRange((uid, jam))))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static float GetCurrentWattage(Entity<RadioJammerComponent> jammer)
+    private float GetCurrentWattage(Entity<RadioJammerComponent> jammer)
     {
         return jammer.Comp.Settings[jammer.Comp.SelectedPowerLevel].Wattage;
     }
 
-    private static float GetCurrentRange(Entity<RadioJammerComponent> jammer)
+    protected float GetCurrentRange(Entity<RadioJammerComponent> jammer)
     {
         return jammer.Comp.Settings[jammer.Comp.SelectedPowerLevel].Range;
     }

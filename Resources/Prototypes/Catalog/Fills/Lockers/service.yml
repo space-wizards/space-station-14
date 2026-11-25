@@ -64,7 +64,7 @@
       - id: ReagentContainerFlour
       - id: BoxMousetrap
     - !type:AllSelector
-      rolls: 5
+      rolls: 3
       children:
       - id: FoodCondimentPacketSalt
       - id: FoodCondimentPacketPepper
@@ -89,7 +89,7 @@
     children:
     - id: WetFloorSign
       amount: 3
-    - id: LightReplacerFilled
+    - id: LightReplacer
     - id: BoxLightMixed
     - id: Holoprojector
     - id: WireBrush

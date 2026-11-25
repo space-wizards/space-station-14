@@ -17,14 +17,14 @@ public sealed partial class MsgCommand : ToolshedCommand
 {
     [Dependency] private IChatManager _chatManager = default!;
 
-    private ServerPrayerSystem? _prayer;
+    private PrayerSystem? _prayer;
     private PopupSystem? _popup;
     private TipsSystem? _tips;
 
     [CommandImplementation("subtle")]
     public IEnumerable<EntityUid> Subtle(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> targets, string popup, string message)
     {
-        _prayer ??= GetSys<ServerPrayerSystem>();
+        _prayer ??= GetSys<PrayerSystem>();
 
         foreach (var ent in targets)
         {

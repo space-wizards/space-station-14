@@ -11,19 +11,25 @@ public sealed partial class BlockingSystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
 
-    [SubscribeLocalEvent]
+    private void InitializeUser()
+    {
+        SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
+        SubscribeLocalEvent<BlockingUserComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+        SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        SubscribeLocalEvent<BlockingUserComponent, EntityTerminatingEvent>(OnEntityTerminating);
+    }
+
     private void OnParentChanged(Entity<BlockingUserComponent> entity, ref EntParentChangedMessage args)
     {
         UserStopBlocking(entity);
     }
 
-    [SubscribeLocalEvent]
     private void OnInsertAttempt(Entity<BlockingUserComponent> entity, ref ContainerGettingInsertedAttemptEvent args)
     {
         UserStopBlocking(entity);
     }
 
-    [SubscribeLocalEvent]
     private void OnAnchorChanged(Entity<BlockingUserComponent> entity, ref AnchorStateChangedEvent args)
     {
         if (args.Anchored)
@@ -32,7 +38,6 @@ public sealed partial class BlockingSystem
         UserStopBlocking(entity);
     }
 
-    [SubscribeLocalEvent]
     private void OnUserDamageModified(Entity<BlockingUserComponent> entity, ref DamageModifyEvent args)
     {
         if (entity.Comp.BlockingItem is not { } item || !_blockQuery.TryComp(item, out var blocking))
@@ -59,7 +64,6 @@ public sealed partial class BlockingSystem
             _audio.PlayPvs(blocking.BlockSound, entity);
     }
 
-    [SubscribeLocalEvent]
     private void OnEntityTerminating(Entity<BlockingUserComponent> entity, ref EntityTerminatingEvent args)
     {
         if (!_blockQuery.TryComp(entity.Comp.BlockingItem, out var blockComponent))

@@ -205,10 +205,6 @@
     inHandsMaxFillLevels: 2
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - Dinnerware
-    - Trash
 
 # Filled shakes
 

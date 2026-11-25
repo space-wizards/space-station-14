@@ -1,75 +1,102 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
 
+[TestFixture]
 public sealed class ResearchTest : GameTest
 {
-    [SidedDependency(Side.Server)] private SharedLatheSystem _sLatheSystem = null!;
-
     [Test]
-    [RunOnSide(Side.Server)]
-    public async Task DisciplineValidTierPrerequisitesTest()
+    public async Task DisciplineValidTierPrerequesitesTest()
     {
-        var allTechs = SProtoMan.EnumeratePrototypes<TechnologyPrototype>().ToList();
-        var disciplines = SProtoMan.EnumeratePrototypes<TechDisciplinePrototype>().ToDictionary(p => p.ID, p => p);
+        var pair = Pair;
+        var server = pair.Server;
 
-        using var scope = Assert.EnterMultipleScope();
+        var protoManager = server.ResolveDependency<IPrototypeManager>();
 
-        foreach (var tech in allTechs)
+        await server.WaitAssertion(() =>
         {
-            var discipline = disciplines[tech.Discipline];
+            var allTechs = protoManager.EnumeratePrototypes<TechnologyPrototype>().ToList();
 
-            // Tier 1 techs don't have prerequisites
-            if (tech.Tier == 1)
-                continue;
+            Assert.Multiple(() =>
+            {
+                foreach (var discipline in protoManager.EnumeratePrototypes<TechDisciplinePrototype>())
+                {
+                    foreach (var tech in allTechs)
+                    {
+                        if (tech.Discipline != discipline.ID)
+                            continue;
 
-            Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
-            Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
-                $"Discipline {discipline.ID} does not have a {nameof(TechDisciplinePrototype.TierPrerequisites)} definition for tier {tech.Tier}");
-        }
+                        // we ignore these, anyways
+                        if (tech.Tier == 1)
+                            continue;
+
+                        Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
+                        Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
+                            $"Discipline {discipline.ID} does not have a TierPrerequisites definition for tier {tech.Tier}");
+                    }
+                }
+            });
+        });
     }
 
     [Test]
-    [RunOnSide(Side.Server)]
     public async Task AllTechPrintableTest()
     {
-        var lathes = Pair.GetPrototypesWithComponent<LatheComponent>();
-        var latheTechs = new HashSet<ProtoId<LatheRecipePrototype>>();
-        foreach (var (proto, latheComp) in lathes)
-        {
-            _sLatheSystem.AddRecipesFromPacks(latheTechs, latheComp.DynamicPacks);
+        var pair = Pair;
+        var server = pair.Server;
 
-            if (proto.TryComp<EmagLatheRecipesComponent>(out var emag, SEntMan.ComponentFactory))
-                _sLatheSystem.AddRecipesFromPacks(latheTechs, emag.EmagDynamicPacks);
-        }
+        var entMan = server.ResolveDependency<IEntityManager>();
+        var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var compFact = server.ResolveDependency<IComponentFactory>();
 
-        using (Assert.EnterMultipleScope())
+        var latheSys = entMan.System<SharedLatheSystem>();
+
+        await server.WaitAssertion(() =>
         {
-            // check that every recipe a tech adds can be made on some lathe
-            var unlockedTechs = new HashSet<ProtoId<LatheRecipePrototype>>();
-            foreach (var tech in SProtoMan.EnumeratePrototypes<TechnologyPrototype>())
+            var allEnts = protoManager.EnumeratePrototypes<EntityPrototype>();
+            var latheTechs = new HashSet<ProtoId<LatheRecipePrototype>>();
+            foreach (var proto in allEnts)
             {
-                unlockedTechs.UnionWith(tech.RecipeUnlocks);
-                foreach (var recipe in tech.RecipeUnlocks)
+                if (proto.Abstract)
+                    continue;
+
+                if (pair.IsTestPrototype(proto))
+                    continue;
+
+                if (!proto.TryComp<LatheComponent>(out var lathe, compFact))
+                    continue;
+
+                latheSys.AddRecipesFromPacks(latheTechs, lathe.DynamicPacks);
+
+                if (proto.TryComp<EmagLatheRecipesComponent>(out var emag, compFact))
+                    latheSys.AddRecipesFromPacks(latheTechs, emag.EmagDynamicPacks);
+            }
+
+            Assert.Multiple(() =>
+            {
+                // check that every recipe a tech adds can be made on some lathe
+                var unlockedTechs = new HashSet<ProtoId<LatheRecipePrototype>>();
+                foreach (var tech in protoManager.EnumeratePrototypes<TechnologyPrototype>())
                 {
-                    Assert.That(latheTechs, Does.Contain(recipe),
-                        $"Recipe '{recipe}' from tech '{tech.ID}' cannot be unlocked on any lathes.");
+                    unlockedTechs.UnionWith(tech.RecipeUnlocks);
+                    foreach (var recipe in tech.RecipeUnlocks)
+                    {
+                        Assert.That(latheTechs, Does.Contain(recipe), $"Recipe '{recipe}' from tech '{tech.ID}' cannot be unlocked on any lathes.");
+                    }
                 }
-            }
 
-            // now check that every dynamic recipe a lathe lists can be unlocked
-            foreach (var recipe in latheTechs)
-            {
-                Assert.That(unlockedTechs, Does.Contain(recipe),
-                    $"Recipe '{recipe}' is dynamic on a lathe but cannot be unlocked by research.");
-            }
-        }
+                // now check that every dynamic recipe a lathe lists can be unlocked
+                foreach (var recipe in latheTechs)
+                {
+                    Assert.That(unlockedTechs, Does.Contain(recipe), $"Recipe '{recipe}' is dynamic on a lathe but cannot be unlocked by research.");
+                }
+            });
+        });
     }
 }

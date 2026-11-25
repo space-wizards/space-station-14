@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinableButchering, MobNightVision, BaseMobIrradiated ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
   id: BaseMobDragon
   suffix: ""
   name: space dragon
@@ -66,7 +66,6 @@
         BaseUnshaded: alive-unshaded
       Critical:
         Base: crit
-        BaseUnshaded: crit-unshaded
       Dead:
         Base: dead
         BaseUnshaded: dead-unshaded
@@ -94,13 +93,6 @@
       0: Alive
       450: Critical
       500: Dead
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTypeTrigger
-        damageType: Blunt
-        damage: 600
-      behaviors:
-      - !type:GibBehavior
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7
@@ -155,7 +147,6 @@
       - MobState
       - Door
       - Wall
-  - type: AntiRottingContainer
   - type: Tag
     tags:
     - CannotSuicide
@@ -179,10 +170,6 @@
     speedModifier: 2.5 # fast because dragon strong
     useSound:
       path: /Audio/Items/crowbar.ogg
-  - type: InnateWaypointer
-    waypointerProtoIds:
-    - NTStationWaypointer
-    - DragonRiftWaypointer
 
 - type: entity
   parent: BaseMobDragon
@@ -293,7 +280,6 @@
     event: !type:ProjectileSpellEvent
       prototype: ProjectileDragonsBreath
       projectileSpeed: 5
-      rearVelocityCompensation: 1.0 # slow projectile, speed it up if shooting backwards
 
 - type: entity
   parent: Smoke

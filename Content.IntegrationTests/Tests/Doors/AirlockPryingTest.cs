@@ -1,5 +1,3 @@
-#nullable enable
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
@@ -8,21 +6,19 @@ namespace Content.IntegrationTests.Tests.Doors;
 
 public sealed class AirlockPryingTest : InteractionTest
 {
-    [SidedDependency(Side.Server)] private DoorSystem _sDoorSystem = default!;
-
     [Test]
     public async Task PoweredClosedAirlock_Pry_DoesNotOpen()
     {
         await SpawnTarget(Airlock);
-        ToggleNeedPower();
+        await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
 
-        await RunTicksSync(1);
+        await RunTicks(1);
 
-        Assume.That(TryComp<AirlockComponent>(out var airlockComp), $"Airlock does not have {nameof(AirlockComponent)}");
-        Assume.That(airlockComp.Powered, "Airlock should be powered for this test.");
+        Assert.That(TryComp<AirlockComponent>(out var airlockComp), "Airlock does not have AirlockComponent?");
+        Assert.That(airlockComp.Powered, "Airlock should be powered for this test.");
 
-        Assume.That(TryComp<DoorComponent>(out var doorComp), $"Airlock does not have {nameof(DoorComponent)}");
-        Assume.That(doorComp.State, Is.EqualTo(DoorState.Closed), "Airlock did not start closed.");
+        Assert.That(TryComp<DoorComponent>(out var doorComp), "Airlock does not have DoorComponent?");
+        Assert.That(doorComp.State, Is.EqualTo(DoorState.Closed), "Airlock did not start closed.");
 
         await InteractUsing(Pry);
 
@@ -33,17 +29,18 @@ public sealed class AirlockPryingTest : InteractionTest
     public async Task PoweredOpenAirlock_Pry_DoesNotClose()
     {
         await SpawnTarget(Airlock);
-        ToggleNeedPower();
+        await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
 
         await RunTicks(1);
 
-        Assume.That(TryComp<AirlockComponent>(out var airlockComp), $"Airlock does not have {nameof(AirlockComponent)}");
-        Assume.That(airlockComp.Powered, "Airlock should be powered for this test.");
+        Assert.That(TryComp<AirlockComponent>(out var airlockComp), "Airlock does not have AirlockComponent?");
+        Assert.That(airlockComp.Powered, "Airlock should be powered for this test.");
 
-        await Server.WaitPost(() => _sDoorSystem.SetState(STarget.Value, DoorState.Open));
+        var doorSys = SEntMan.System<DoorSystem>();
+        await Server.WaitPost(() => doorSys.SetState(SEntMan.GetEntity(Target.Value), DoorState.Open));
 
-        Assume.That(TryComp<DoorComponent>(out var doorComp), $"Airlock does not have {nameof(DoorComponent)}");
-        Assume.That(doorComp.State, Is.EqualTo(DoorState.Open), "Airlock did not start open.");
+        Assert.That(TryComp<DoorComponent>(out var doorComp), "Airlock does not have DoorComponent?");
+        Assert.That(doorComp.State, Is.EqualTo(DoorState.Open), "Airlock did not start open.");
 
         await InteractUsing(Pry);
 
@@ -55,11 +52,11 @@ public sealed class AirlockPryingTest : InteractionTest
     {
         await SpawnTarget(Airlock);
 
-        Assume.That(TryComp<AirlockComponent>(out var airlockComp), $"Airlock does not have {nameof(AirlockComponent)}");
-        Assume.That(airlockComp.Powered, Is.False, "Airlock should not be powered for this test.");
+        Assert.That(TryComp<AirlockComponent>(out var airlockComp), "Airlock does not have AirlockComponent?");
+        Assert.That(airlockComp.Powered, Is.False, "Airlock should not be powered for this test.");
 
-        Assume.That(TryComp<DoorComponent>(out var doorComp), $"Airlock does not have {nameof(DoorComponent)}");
-        Assume.That(doorComp.State, Is.EqualTo(DoorState.Closed), "Airlock did not start closed.");
+        Assert.That(TryComp<DoorComponent>(out var doorComp), "Airlock does not have DoorComponent?");
+        Assert.That(doorComp.State, Is.EqualTo(DoorState.Closed), "Airlock did not start closed.");
 
         await InteractUsing(Pry);
 
@@ -71,13 +68,14 @@ public sealed class AirlockPryingTest : InteractionTest
     {
         await SpawnTarget(Airlock);
 
-        Assume.That(TryComp<AirlockComponent>(out var airlockComp), $"Airlock does not have {nameof(AirlockComponent)}");
-        Assume.That(airlockComp.Powered, Is.False, "Airlock should not be powered for this test.");
+        Assert.That(TryComp<AirlockComponent>(out var airlockComp), "Airlock does not have AirlockComponent?");
+        Assert.That(airlockComp.Powered, Is.False, "Airlock should not be powered for this test.");
 
-        await Server.WaitPost(() => _sDoorSystem.SetState(STarget.Value, DoorState.Open));
+        var doorSys = SEntMan.System<DoorSystem>();
+        await Server.WaitPost(() => doorSys.SetState(SEntMan.GetEntity(Target.Value), DoorState.Open));
 
-        Assume.That(TryComp<DoorComponent>(out var doorComp), $"Airlock does not have {nameof(DoorComponent)}");
-        Assume.That(doorComp.State, Is.EqualTo(DoorState.Open), "Airlock did not start open.");
+        Assert.That(TryComp<DoorComponent>(out var doorComp), "Airlock does not have DoorComponent?");
+        Assert.That(doorComp.State, Is.EqualTo(DoorState.Open), "Airlock did not start open.");
 
         await InteractUsing(Pry);
 

@@ -85,7 +85,7 @@
     edges:
     - to: assembly
       steps:
-      - material: Plastic
+      - material: Steel
         amount: 2
         doAfter: 2.0
 
@@ -102,7 +102,7 @@
     - to: start
       completed:
       - !type:GivePrototype
-        prototype: SheetPlastic1
+        prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity {}
       steps:

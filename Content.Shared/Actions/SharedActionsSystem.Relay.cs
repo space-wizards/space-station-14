@@ -1,5 +1,4 @@
 using Content.Shared.Actions.Components;
-using Content.Shared.Changeling.Systems;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.Mobs;
@@ -10,7 +9,6 @@ public abstract partial class SharedActionsSystem
 {
     private void InitializeRelay()
     {
-        SubscribeLocalEvent<ActionsComponent, BodyTakenByHeadslugEvent>(RefRelayActionEvent);
         SubscribeLocalEvent<ActionsComponent, MobStateChangedEvent>(RefRelayActionEvent);
         SubscribeLocalEvent<ActionsComponent, GhostAttemptEvent>(RefRelayActionEvent);
     }

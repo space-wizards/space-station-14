@@ -28,7 +28,6 @@ public sealed partial class NodeScannerComponent : Component
 /// Component-marker that node scanner device (<see cref="NodeScannerComponent"/>) is connected to artifact.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
-[Access(typeof(NodeScannerSystem))]
 public sealed partial class NodeScannerConnectedComponent : Component
 {
     /// <summary>

@@ -30,5 +30,6 @@ public sealed partial class BlackAndWhiteOverlay : Overlay
         _greyscaleShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         handle.UseShader(_greyscaleShader);
         handle.DrawRect(args.WorldBounds, Color.White);
+        handle.UseShader(null);
     }
 }

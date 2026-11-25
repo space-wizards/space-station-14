@@ -11,12 +11,11 @@
 - type: latheRecipePack
   id: BorgModulesStatic
   recipes:
-  - BorgModuleArtistry
+  - BorgModuleTool
   - BorgModuleCable
   - BorgModuleFireExtinguisher
   - BorgModuleInflatable
-  - BorgModuleMusique
-  - BorgModuleTool
+  - BorgModuleArtistry
 
 - type: latheRecipePack
   id: BorgLimbsStatic

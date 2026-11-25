@@ -1,8 +1,6 @@
-#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
@@ -11,8 +9,8 @@ namespace Content.IntegrationTests.Tests.Construction.Interaction;
 /// </summary>
 public sealed class GrilleWindowConstruction : InteractionTest
 {
-    private static readonly EntProtoId Grille = "Grille";
-    private static readonly EntProtoId Window = "Window";
+    private const string Grille = "Grille";
+    private const string Window = "Window";
 
     [Test]
     public async Task WindowOnGrille()
@@ -38,15 +36,11 @@ public sealed class GrilleWindowConstruction : InteractionTest
         AssertDeleted();
     }
 
-    private static readonly TestCaseData[] BlockerTestCases =
-    [
-        new TestCaseData(Grille, Grille),
-        new TestCaseData(Window, Grille),
-        new TestCaseData(Window, Window),
-    ];
-
-    [Test, TestCaseSource(nameof(BlockerTestCases))]
-    public async Task ConstructionBlocker(EntProtoId first, EntProtoId second)
+    [Test]
+    [TestCase(Grille, Grille)]
+    [TestCase(Window, Grille)]
+    [TestCase(Window, Window)]
+    public async Task ConstructionBlocker(string first, string second)
     {
         // Spawn blocking entity
         await SpawnTarget(first);

@@ -1,4 +1,5 @@
-<Control xmlns="https://spacestation14.io"
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:ot="clr-namespace:Content.Client.Administration.UI.Tabs.ObjectsTab"
          xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
@@ -9,10 +10,10 @@
                       SizeFlagsStretchRatio="1" />
             <Button Name="RefreshListButton" Text="{Loc object-tab-refresh-button}" ToggleMode="False" />
         </BoxContainer>
-        <co:Separator StyleClasses="LowDivider" MinWidth="2" />
+        <cc:HSeparator />
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             <ot:ObjectsTabHeader Name="ListHeader" />
-            <co:Separator StyleClasses="LowDivider" MinWidth="2" />
+            <cc:HSeparator />
             <co:SearchListContainer Name="SearchList" Access="Public" VerticalExpand="True" />
         </BoxContainer>
     </BoxContainer>

@@ -108,7 +108,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
     private void OnInteract(Entity<ChameleonProjectorComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || args.Target is not { } target)
+        if (args.Handled || !args.CanReach || args.Target is not {} target)
             return;
 
         args.Handled = true;
@@ -169,18 +169,18 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
     private void OnToggleNoRot(Entity<ChameleonProjectorComponent> ent, ref DisguiseToggleNoRotEvent args)
     {
-        if (ent.Comp.Disguised is not { } uid)
+        if (ent.Comp.Disguised is not {} uid)
             return;
 
         var xform = Transform(uid);
         _xform.SetLocalRotationNoLerp(uid, 0, xform);
-        _xform.SetNoLocalRotation(uid, !xform.NoLocalRotation, xform);
+        xform.NoLocalRotation = !xform.NoLocalRotation;
         args.Handled = true;
     }
 
     private void OnToggleAnchored(Entity<ChameleonProjectorComponent> ent, ref DisguiseToggleAnchoredEvent args)
     {
-        if (ent.Comp.Disguised is not { } uid)
+        if (ent.Comp.Disguised is not {} uid)
             return;
 
         var xform = Transform(uid);
@@ -294,12 +294,12 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
         if (!Resolve(disguised, ref disguised.Comp, false))
             return;
 
-        if (ent.Comp.Disguised is not { } user)
+        if (ent.Comp.Disguised == null)
             return;
 
-        var xform = Transform(user);
-        _xform.SetNoLocalRotation(user, false, xform);
-        _xform.Unanchor(user, xform);
+        var xform = Transform(ent.Comp.Disguised.Value);
+        xform.NoLocalRotation = false;
+        _xform.Unanchor(disguised, xform);
 
         ent.Comp.Disguised = null;
         Del(disguised.Comp.Disguise);
@@ -338,7 +338,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
     /// <summary>
     /// Try to get a single component from the source entity/prototype.
     /// </summary>
-    protected bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T : Component, new()
+    private bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T : Component, new()
     {
         if (TryComp(comp.SourceEntity, out src))
             return true;
@@ -350,29 +350,6 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
             return false;
 
         return proto.TryComp(out src, EntityManager.ComponentFactory);
-    }
-
-    /// <summary>
-    /// Try to get a single component, paired with its owning entity, from the source entity/prototype.
-    /// </summary>
-    protected bool GetSrcEntity<T>(ChameleonDisguiseComponent comp, out Entity<T?> src) where T : Component, new()
-    {
-        if (TryComp<T>(comp.SourceEntity, out var liveComp))
-        {
-            src = (comp.SourceEntity, liveComp);
-            return true;
-        }
-
-        if (comp.SourceProto is { } protoId
-            && ProtoMan.TryIndex<EntityPrototype>(protoId, out var proto)
-            && proto.TryComp<T>(out var protoComp, EntityManager.ComponentFactory))
-        {
-            src = (EntityUid.Invalid, protoComp);
-            return true;
-        }
-
-        src = default;
-        return false;
     }
 }
 

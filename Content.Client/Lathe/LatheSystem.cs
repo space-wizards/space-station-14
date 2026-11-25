@@ -24,7 +24,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
             return;
 
         // Lathe specific stuff
-        if (args.TryGetData<bool>(LatheVisuals.IsRunning, out var isRunning))
+        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
         {
             if (_sprite.LayerMapTryGet((uid, args.Sprite), LatheVisualLayers.IsRunning, out var runningLayer, false) &&
                 component.RunningState != null &&
@@ -35,7 +35,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
             }
         }
 
-        if (args.TryGetData<bool>(PowerDeviceVisuals.Powered, out var powered) &&
+        if (_appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
             _sprite.LayerMapTryGet((uid, args.Sprite), PowerDeviceVisualLayers.Powered, out var powerLayer, false))
         {
             _sprite.LayerSetVisible((uid, args.Sprite), powerLayer, powered);

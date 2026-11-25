@@ -45,7 +45,7 @@
 
 - type: skinColoration
   id: VulpkaninColors
-  strategy: &VulpColorClamp !type:HueNodeClampedHsvColoration
+  strategy: !type:HueNodeClampedHsvColoration
     nodes:
     - hue: 0 # From red to orange slowly increase saturation. (0.75 -> 0.9)
       saturation: [ 0, 0.75 ]
@@ -66,12 +66,3 @@
       saturation: [ 0, 0.75 ]
       value: [ 0.2, 0.9 ]
   squashEyeHairColors: true
-
-- type: marking
-  abstract: true
-  id: VulpBaseMarking
-
-- type: marking
-  abstract: true
-  id: VulpBaseMarkingClamped
-  strategy: *VulpColorClamp

@@ -74,7 +74,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetwork
+  - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSink
     ports:
@@ -95,9 +95,8 @@
   - type: PlacementReplacement
     key: shutters
   - type: IconSmooth
-    key: doors
-  - type: StructureAligner
-  - type: StructureAlignerPylon
+    key: walls
+    mode: NoSprite
 
 - type: entity
   id: ShuttersNormal
@@ -110,7 +109,7 @@
     containers:
     - board
   - type: Damageable
-    damageModifierSet: SteelStaticMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -198,7 +197,7 @@
   - type: RadiationBlocker
     resistance: 1
   - type: Damageable
-    damageModifierSet: SteelStaticMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -242,7 +241,7 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: SteelStaticMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:

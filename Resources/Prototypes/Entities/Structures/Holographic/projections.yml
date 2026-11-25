@@ -114,12 +114,11 @@
         fix1:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
+            bounds: "-0.3,-0.3,0.3,0.3"
           mask:
-          - TableMask
+            - TableMask
           layer:
-          - TableLayer
-          - LowImpassable
+            - TableLayer
     - type: TimedDespawn
       lifetime: 180
     - type: PointLight

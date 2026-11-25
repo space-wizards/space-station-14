@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: gohei
   parent: BaseItem
   id: Gohei

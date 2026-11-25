@@ -1,4 +1,4 @@
-using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
+﻿using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
 
@@ -12,14 +12,19 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 public sealed partial class MeleeAttackOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private SharedMeleeWeaponSystem _melee = default!;
-    [Dependency] private SharedCombatModeSystem _combatModeSystem = default!;
+    private SharedMeleeWeaponSystem _melee;
 
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
     [DataField(required: true)]
     public string TargetKey = default!;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _melee = sysManager.GetEntitySystem<SharedMeleeWeaponSystem>();
+    }
 
     public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
@@ -45,7 +50,7 @@ public sealed partial class MeleeAttackOperator : HTNOperator
             return HTNOperatorStatus.Failed;
         }
 
-        _combatModeSystem.SetInCombatMode(owner, true, combatMode);
+        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, true, combatMode);
 
 
         if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) ||
@@ -60,6 +65,6 @@ public sealed partial class MeleeAttackOperator : HTNOperator
     private void ExitCombatMode(NPCBlackboard blackboard)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        _combatModeSystem.SetInCombatMode(owner, false);
+        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
     }
 }

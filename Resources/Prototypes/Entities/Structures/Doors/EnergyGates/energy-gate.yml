@@ -55,7 +55,7 @@
       - MobState # no mobs
       - Pullable # no dragging things in
   - type: Damageable
-    damageModifierSet: SteelStaticMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -71,7 +71,8 @@
     node: energyGate
   - type: DirectionalArrowIndicator
   - type: IconSmooth
-    key: doors
+    key: walls
+    mode: NoSprite
   - type: PointLight
     energy: 2.2
     color: "#cc3a41"
@@ -125,4 +126,3 @@
     energy: 2.2
     color: "#50abff"
     radius: 2.2
-  - type: AmbientMusicMarkerArrivals

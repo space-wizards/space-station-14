@@ -124,9 +124,8 @@
     groups:
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
-      Acidic: [ Touch ]
     reactions:
-    - reagents: [ Water, Holywater, SpaceCleaner ]
+    - reagents: [ Water, SpaceCleaner ]
       methods: [ Touch ]
       effects:
       - !type:WashCreamPie

@@ -26,11 +26,14 @@
     canInteract: true
   - type: GhostHearing
   - type: Hands
-    startingHands:
+    hands:
       hand_right:
         location: Right
       hand_left:
         location: Left
+    sortedHands:
+    - hand_right
+    - hand_left
   - type: ComplexInteraction
   - type: Puller
     needsHands: false
@@ -92,10 +95,9 @@
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
     transmitFrequencyId: ShuttleTimer
-  - type: WirelessNetwork
+  - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
-  - type: StationTracker
   - type: Thieving
     stripTimeReduction: 9999
     stealthy: true
@@ -113,7 +115,6 @@
     damageCoefficient: 0
   - type: GluedImmune
   - type: LubedImmune
-  - type: ShowNewPlayerIcon
 
 - type: entity
   abstract: true

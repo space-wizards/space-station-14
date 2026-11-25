@@ -1,47 +1,48 @@
-#nullable enable
-using System.Linq;
+﻿using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.GameTicking;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
+[TestFixture]
 public sealed class SecretStartsTest : GameTest
 {
-    public override PoolSettings PoolSettings => new()
-    {
-        Dirty = true,
-    };
+    public override PoolSettings PoolSettings => new PoolSettings { Dirty = true };
 
     private static readonly EntProtoId SecretGameRule = "Secret";
 
-    [SidedDependency(Side.Server)] private ServerGameTicker _sGameTicker = null!;
-
     /// <summary>
-    /// Tests that when secret is started, all of the game rules it successfully adds are also started.
+    ///     Tests that when secret is started, all of the game rules it successfully adds are also started.
     /// </summary>
     [Test]
-    [Description("Tests that when secret is started, all of the game rules it successfully adds are also started.")]
     public async Task TestSecretStarts()
     {
-        await Server.WaitAssertion(() =>
+        var pair = Pair;
+
+        var server = pair.Server;
+        await server.WaitIdleAsync();
+        var entMan = server.ResolveDependency<IEntityManager>();
+        var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+
+        await server.WaitAssertion(() =>
         {
             // this mimics roundflow:
             // rules added, then round starts
-            _sGameTicker.AddGameRule(SecretGameRule);
-            _sGameTicker.StartGamePresetRules();
+            gameTicker.AddGameRule(SecretGameRule);
+            gameTicker.StartGamePresetRules();
         });
 
         // Wait three ticks for any random update loops that might happen
-        await RunTicksSync(3);
+        await server.WaitRunTicks(3);
 
-        await Server.WaitAssertion(() =>
+        await server.WaitAssertion(() =>
         {
-            Assert.That(_sGameTicker.GetAddedGameRules().ToList(), Has.Count.GreaterThan(1), $"No additional rules started by secret rule.");
+            Assert.That(gameTicker.GetAddedGameRules().Count(), Is.GreaterThan(1), $"No additional rules started by secret rule.");
 
             // End all rules
-            _sGameTicker.ClearGameRules();
+            gameTicker.ClearGameRules();
         });
     }
 }

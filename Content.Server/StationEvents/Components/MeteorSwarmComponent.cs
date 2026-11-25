@@ -1,5 +1,4 @@
-using Content.Server.StationEvents.Events;
-using Content.Shared.Audio;
+﻿using Content.Server.StationEvents.Events;
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -11,12 +10,6 @@ public sealed partial class MeteorSwarmComponent : Component
 {
     [DataField, AutoPausedField]
     public TimeSpan NextWaveTime;
-
-    /// <summary>
-    /// Grid which this game rule is targeting.
-    /// </summary>
-    [DataField]
-    public EntityUid? TargetGrid;
 
     /// <summary>
     /// We'll send a specific amount of waves of meteors towards the station per ending rather than using a timer.
@@ -40,7 +33,6 @@ public sealed partial class MeteorSwarmComponent : Component
     public LocId? Announcement = "station-event-meteor-swarm-start-announcement";
 
     [DataField]
-    [AllowStereo]
     public SoundSpecifier? AnnouncementSound = new SoundPathSpecifier("/Audio/Announcements/meteors.ogg")
     {
         Params = new()

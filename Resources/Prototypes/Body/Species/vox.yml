@@ -168,7 +168,7 @@
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
-    allowedEmotes: ['Click', 'Chitter', 'Hiss', 'Caw']
+    allowedEmotes: ['Click', 'Chitter']
   - type: TypingIndicator
     proto: vox
   - type: CreamPied
@@ -197,7 +197,6 @@
   - type: PassiveDamage
     # Augment normal health regen to be able to tank some Poison damage
     # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
-    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:
@@ -329,27 +328,23 @@
   id: OrganVoxFootRight
 
 - type: entity
-  parent: [ OrganBaseBrain, OrganVoxInternal ]
+  parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganVoxInternal ]
   id: OrganVoxBrain
 
 - type: entity
   parent: [ OrganVoxVisual, OrganBaseEyes, OrganVoxInternal ]
   id: OrganVoxEyes
-  components:
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Vox/parts.rsi
-  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseTongue, OrganVoxInternal ]
   id: OrganVoxTongue
 
 - type: entity
-  parent: [ OrganBaseAppendix, OrganVoxInternal ]
+  parent: [ OrganBaseAppendix, OrganSpriteHumanInternal, OrganVoxInternal ]
   id: OrganVoxAppendix
 
 - type: entity
-  parent: [ OrganBaseEars, OrganVoxInternal ]
+  parent: [ OrganBaseEars, OrganSpriteHumanInternal, OrganVoxInternal ]
   id: OrganVoxEars
 
 - type: entity
@@ -371,9 +366,9 @@
     isSpecialDigestibleExclusive: false
 
 - type: entity
-  parent: [ OrganBaseLiver, OrganVoxInternal, OrganVoxMetabolizer ]
+  parent: [ OrganBaseLiver, OrganSpriteHumanInternal, OrganVoxInternal, OrganVoxMetabolizer ]
   id: OrganVoxLiver
 
 - type: entity
-  parent: [ OrganBaseKidneys, OrganVoxInternal, OrganVoxMetabolizer ]
+  parent: [ OrganBaseKidneys, OrganSpriteHumanInternal, OrganVoxInternal, OrganVoxMetabolizer ]
   id: OrganVoxKidneys

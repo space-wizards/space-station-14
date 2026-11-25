@@ -1,12 +1,11 @@
-using Robust.Server.Containers;
+﻿using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
 public sealed partial class ContainerOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private ContainerSystem _container = default!;
-
+    private ContainerSystem _container = default!;
     private EntityQuery<TransformComponent> _transformQuery;
 
     [DataField("shutdownState")]
@@ -15,9 +14,10 @@ public sealed partial class ContainerOperator : HTNOperator
     [DataField("targetKey", required: true)]
     public string TargetKey = default!;
 
-    public override void Initialize(IDependencyCollection deps)
+    public override void Initialize(IEntitySystemManager sysManager)
     {
-        base.Initialize(deps);
+        base.Initialize(sysManager);
+        _container = sysManager.GetEntitySystem<ContainerSystem>();
         _transformQuery = _entManager.GetEntityQuery<TransformComponent>();
     }
 

@@ -1,110 +1,115 @@
-#nullable enable
 using System.Linq;
 using Content.Client.UserInterface.Systems.Alerts.Controls;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
-using Content.IntegrationTests.NUnit.Constraints;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs;
-
-[TestOf(typeof(AlertsComponent))]
-public sealed class AlertsComponentTests : GameTest
+namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
-    public override PoolSettings PoolSettings => new()
+    [TestFixture]
+    [TestOf(typeof(AlertsComponent))]
+    public sealed class AlertsComponentTests : GameTest
     {
-        Connected = true,
-        DummyTicker = false
-    };
-
-    private static readonly ProtoId<AlertPrototype> Debug1 = "Debug1";
-    private static readonly ProtoId<AlertPrototype> Debug2 = "Debug2";
-    private static readonly ProtoId<AlertPrototype> HumanHealth = "HumanHealth";
-
-    [SidedDependency(Side.Client)] private IUserInterfaceManager _cUIManager = default!;
-    [SidedDependency(Side.Server)] private IPlayerManager _sPlayerManager = default!;
-    [SidedDependency(Side.Server)] private AlertsSystem _sAlertsSystem = default!;
-
-    [Test]
-    public async Task AlertsTest()
-    {
-        EntityUid playerUid = default;
-        await Server.WaitAssertion(() =>
+        public override PoolSettings PoolSettings => new()
         {
-            playerUid = _sPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
-            Assume.That(playerUid, Is.Not.Default);
-            // Making sure it exists
-            Assume.That(playerUid, Has.Comp<AlertsComponent>(Server));
+            Connected = true,
+            DummyTicker = false
+        };
 
-            var alerts = _sAlertsSystem.GetActiveAlerts(playerUid);
-            Assume.That(alerts, Is.Not.Null);
-            var alertCount = alerts.Count;
-
-            _sAlertsSystem.ShowAlert(playerUid, Debug1);
-            _sAlertsSystem.ShowAlert(playerUid, Debug2);
-
-            Assert.That(alerts, Has.Count.EqualTo(alertCount + 2));
-        });
-
-        await RunTicksSync(5);
-
-        AlertsUI? clientAlertsUI = default!;
-        await Client.WaitAssertion(() =>
+        [Test]
+        public async Task AlertsTest()
         {
-            var local = Client.Session;
-            Assert.That(local, Is.Not.Null);
-            var controlled = local.AttachedEntity;
-            Assert.That(controlled, Is.Not.Null);
-            // Making sure it exists
-            Assert.That(controlled, Has.Comp<AlertsComponent>(Client));
+            var pair = Pair;
+            var server = pair.Server;
+            var client = pair.Client;
 
-            // find the alertsui
-            Assert.That(_cUIManager.ActiveScreen, Is.Not.Null);
-            clientAlertsUI = FindAlertsUI(_cUIManager.ActiveScreen);
-            Assert.That(clientAlertsUI, Is.Not.Null);
+            var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
+            var clientEntManager = client.ResolveDependency<IEntityManager>();
 
-            static AlertsUI? FindAlertsUI(Control control)
+            var entManager = server.ResolveDependency<IEntityManager>();
+            var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
+            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
+
+            EntityUid playerUid = default;
+            await server.WaitAssertion(() =>
             {
-                if (control is AlertsUI alertUI)
-                    return alertUI;
-                foreach (var child in control.Children)
+                playerUid = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
+#pragma warning disable NUnit2045 // Interdependent assertions.
+                Assert.That(playerUid, Is.Not.EqualTo(default(EntityUid)));
+                // Making sure it exists
+                Assert.That(entManager.HasComponent<AlertsComponent>(playerUid));
+#pragma warning restore NUnit2045
+
+                var alerts = alertsSystem.GetActiveAlerts(playerUid);
+                Assert.That(alerts, Is.Not.Null);
+                var alertCount = alerts.Count;
+
+                alertsSystem.ShowAlert(playerUid, "Debug1");
+                alertsSystem.ShowAlert(playerUid, "Debug2");
+
+                Assert.That(alerts, Has.Count.EqualTo(alertCount + 2));
+            });
+
+            await pair.RunTicksSync(5);
+
+            AlertsUI clientAlertsUI = default;
+            await client.WaitAssertion(() =>
+            {
+                var local = client.Session;
+                Assert.That(local, Is.Not.Null);
+                var controlled = local.AttachedEntity;
+#pragma warning disable NUnit2045 // Interdependent assertions.
+                Assert.That(controlled, Is.Not.Null);
+                // Making sure it exists
+                Assert.That(clientEntManager.HasComponent<AlertsComponent>(controlled.Value));
+#pragma warning restore Nunit2045
+
+                // find the alertsui
+
+                clientAlertsUI = FindAlertsUI(clientUIMgr.ActiveScreen);
+                Assert.That(clientAlertsUI, Is.Not.Null);
+
+                static AlertsUI FindAlertsUI(Control control)
                 {
-                    var found = FindAlertsUI(child);
-                    if (found != null)
-                        return found;
+                    if (control is AlertsUI alertUI)
+                        return alertUI;
+                    foreach (var child in control.Children)
+                    {
+                        var found = FindAlertsUI(child);
+                        if (found != null)
+                            return found;
+                    }
+
+                    return null;
                 }
 
-                return null;
-            }
+                // we should be seeing 3 alerts - our health, and the 2 debug alerts, in a specific order.
+                Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(3));
+                var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
+                var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
+                var expectedIDs = new[] { "HumanHealth", "Debug1", "Debug2" };
+                Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
+            });
 
-            // we should be seeing 3 alerts - our health, and the 2 debug alerts, in a specific order.
-            Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(3));
-            var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl)c);
-            var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
-            var expectedIDs = new[] { HumanHealth, Debug1, Debug2 };
-            Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
-        });
+            await server.WaitAssertion(() =>
+            {
+                alertsSystem.ClearAlert(playerUid, "Debug1");
+            });
 
-        await Server.WaitAssertion(() =>
-        {
-            _sAlertsSystem.ClearAlert(playerUid, Debug1);
-        });
+            await pair.RunTicksSync(5);
 
-        await RunTicksSync(5);
-
-        await Client.WaitAssertion(() =>
-        {
-            // we should be seeing 2 alerts now because one was cleared
-            Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(2));
-            var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl)c);
-            var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
-            var expectedIDs = new[] { HumanHealth, Debug2 };
-            Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
-        });
+            await client.WaitAssertion(() =>
+            {
+                // we should be seeing 2 alerts now because one was cleared
+                Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(2));
+                var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
+                var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
+                var expectedIDs = new[] { "HumanHealth", "Debug2" };
+                Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
+            });
+        }
     }
 }

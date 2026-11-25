@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Light.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Doors.Components;
@@ -11,39 +10,28 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-/// <summary>
-/// Handler for events that cause a solar flare for some amount of time.
-/// </summary>
-/// <remarks>
-/// When a solar flare is active, radio communications are disabled on a random set of channels,
-/// doors can randomly open and close, and lights can explode.
-/// </remarks>
-/// <seealso cref="SolarFlareRuleComponent"/>
 public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
 {
     [Dependency] private PoweredLightSystem _poweredLight = default!;
     [Dependency] private SharedDoorSystem _door = default!;
 
-    [Dependency] private EntityQuery<HeadsetComponent> _headsetQuery;
+    private float _effectTimer = 0;
 
-    private float _effectTimer;
-
-    protected override void Started(Entity<SolarFlareRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+    public override void Initialize()
     {
-        base.Started(ent, ref args);
+        base.Initialize();
+        SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
+    }
 
-        for (var i = 0; i < ent.Comp1.ExtraCount; i++)
+    protected override void Started(EntityUid uid, SolarFlareRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    {
+        base.Started(uid, comp, gameRule, args);
+
+        for (var i = 0; i < comp.ExtraCount; i++)
         {
-            var channel = RobustRandom.Pick(ent.Comp1.ExtraChannels);
-            ent.Comp1.AffectedChannels.Add(channel);
+            var channel = RobustRandom.Pick(comp.ExtraChannels);
+            comp.AffectedChannels.Add(channel);
         }
-
-        ent.Comp1.AffectedLights = Station.GetEntitiesWithComponentOnStation<PoweredLightComponent>(true)
-            .Select(e => (e.Owner, e.Comp))
-            .ToHashSet();
-        ent.Comp1.AffectedAirlocks = Station.GetEntitiesWithComponentOnStation<AirlockComponent>(true)
-            .Select(e => (e.Owner, e.Comp))
-            .ToHashSet();
     }
 
     protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -51,43 +39,37 @@ public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleCo
         base.ActiveTick(uid, component, gameRule, frameTime);
 
         _effectTimer -= frameTime;
-        if (!(_effectTimer < 0))
-            return;
-
-        _effectTimer += 1;
-        foreach (var light in component.AffectedLights)
+        if (_effectTimer < 0)
         {
-            if (RobustRandom.Prob(component.LightBreakChancePerSecond))
-                _poweredLight.TryDestroyBulb(light.Item1, light.Item2);
-        }
-
-        foreach (var airlockEnt in component.AffectedAirlocks)
-        {
-            if (airlockEnt.Item2.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
-                _door.TryToggleDoor(airlockEnt.Item1);
+            _effectTimer += 1;
+            var lightQuery = EntityQueryEnumerator<PoweredLightComponent>();
+            while (lightQuery.MoveNext(out var lightEnt, out var light))
+            {
+                if (RobustRandom.Prob(component.LightBreakChancePerSecond))
+                    _poweredLight.TryDestroyBulb(lightEnt, light);
+            }
+            var airlockQuery = EntityQueryEnumerator<AirlockComponent, DoorComponent>();
+            while (airlockQuery.MoveNext(out var airlockEnt, out var airlock, out var door))
+            {
+                if (airlock.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
+                    _door.TryToggleDoor(airlockEnt, door);
+            }
         }
     }
 
-    [SubscribeLocalEvent]
     private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
     {
-        if (args.Cancelled)
-            return;
-
         var query = EntityQueryEnumerator<SolarFlareRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var flare, out var gameRule))
         {
-            if (!GameTicker.IsGameRuleActive((uid, gameRule)))
+            if (!GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
 
             if (!flare.AffectedChannels.Contains(args.Channel.ID))
                 continue;
 
-            if (!flare.OnlyJamHeadsets || _headsetQuery.HasComp(args.RadioReceiver) || _headsetQuery.HasComp(args.RadioSource))
-            {
+            if (!flare.OnlyJamHeadsets || (HasComp<HeadsetComponent>(args.RadioReceiver) || HasComp<HeadsetComponent>(args.RadioSource)))
                 args.Cancelled = true;
-                return;
-            }
         }
     }
 }

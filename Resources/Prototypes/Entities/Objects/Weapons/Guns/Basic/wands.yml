@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: WeaponWandBase
   id: WeaponWandPolymorphBase
   abstract: true

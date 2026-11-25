@@ -182,7 +182,7 @@
     layers:
     - state: green
     - state: icon-0
-      sprite: Mobs/Animals/Rodents/hamster.rsi
+      sprite: Mobs/Animals/hamster.rsi
     - state: ai
   - type: ConditionalSpawner
     prototypes:
@@ -213,7 +213,7 @@
     layers:
     - state: green
     - state: monkey
-      sprite: Mobs/Animals/Ancestors/monkey.rsi
+      sprite: Mobs/Animals/monkey.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobMonkeyPunpun

@@ -124,5 +124,3 @@
     spread: 90
   - type: Paintable
     group: CrateSecure
-  - type: StaticPrice
-    price: 300

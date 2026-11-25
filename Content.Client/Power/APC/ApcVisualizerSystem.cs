@@ -19,7 +19,7 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
             return;
 
         // Handle APC screen overlay and channel markers.
-        if (!args.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var chargeState))
+        if (!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
             chargeState = ApcChargeState.Lack;
 
         if (chargeState < ApcChargeState.NumStates)
@@ -28,7 +28,7 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.ChargeState, screenState);
 
             // Unlike the charge state, we don't have an emag with special visuals, everything's in the array.
-            if (!args.TryGetData<ApcChannelState>(ApcVisuals.ChannelState, out var channelState)
+            if (!AppearanceSystem.TryGetData<ApcChannelState>(uid, ApcVisuals.ChannelState, out var channelState, args.Component)
                 || channelState >= ApcChannelState.NumStates)
             {
                 channelState = ApcChannelState.Off;

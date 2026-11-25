@@ -7,7 +7,13 @@ public sealed partial class StickyVisualizerSystem : VisualizerSystem<StickyVisu
 {
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<StickyVisualizerComponent, ComponentInit>(OnInit);
+    }
+
     private void OnInit(Entity<StickyVisualizerComponent> ent, ref ComponentInit args)
     {
         if (!_spriteQuery.TryComp(ent, out var sprite))
@@ -21,7 +27,7 @@ public sealed partial class StickyVisualizerSystem : VisualizerSystem<StickyVisu
         if (args.Sprite == null)
             return;
 
-        if (!args.TryGetData<bool>(StickyVisuals.IsStuck, out var isStuck))
+        if (!AppearanceSystem.TryGetData<bool>(uid, StickyVisuals.IsStuck, out var isStuck, args.Component))
             return;
 
         var drawDepth = isStuck ? comp.StuckDrawDepth : comp.OriginalDrawDepth;

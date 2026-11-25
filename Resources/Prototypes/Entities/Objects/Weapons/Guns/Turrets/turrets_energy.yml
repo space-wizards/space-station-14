@@ -116,7 +116,7 @@
     prefix: device-address-prefix-turret
     examinableAddress: true
   - type: DeviceNetworkRequiresPower
-  - type: WiredNetwork
+  - type: WiredNetworkConnection
   - type: UserInterface
     interfaces:
       enum.WiresUiKey.Key:

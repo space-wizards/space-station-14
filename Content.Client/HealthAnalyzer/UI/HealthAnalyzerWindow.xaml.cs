@@ -13,8 +13,8 @@ public sealed partial class HealthAnalyzerWindow : FancyWindow
         RobustXamlLoader.Load(this);
     }
 
-    public void Populate(HealthAnalyzerUiState state)
+    public void Populate(HealthAnalyzerScannedUserMessage msg)
     {
-        HealthAnalyzer.Populate(state);
+        HealthAnalyzer.Populate(msg.State);
     }
 }

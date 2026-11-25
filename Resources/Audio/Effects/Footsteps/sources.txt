@@ -1,0 +1,13 @@
+Most sounds in this folder taken from here unless otherwise specified:
+https://github.com/discordia-space/CEV-Eris/tree/04f9e57ecf8a1c89ae2cba0f6803b6c5e9887c15/sound/effects/footstep
+https://github.com/tgstation/tgstation/tree/f8ee37afc00bce1ad421615eaa0e4cbddd5eea90/sound/effects
+https://github.com/vgstation-coders/vgstation13/tree/fbe7abec4cbadf2ad01369838828704fd7ca81ea/sound/effects
+
+bare foorsteps taken from tgstation at commit https://github.com/tgstation/tgstation/commit/e0bbbca40f6cdbcf2b497228215a37e9c9ec8473
+
+catwalk, floor, plating, tile, hull and wood sfx modified by mirrorcult.
+
+grass1.ogg and grass2.ogg are taken from https://freesound.org/people/D001447733/sounds/464609/ by D001447733 licensed under CC BY-3.0 and split by mirrorcult
+grass3.ogg and grass4.ogg are taken from https://freesound.org/people/jevans27/sounds/563529/ by jevans27 licensed under CC-0 and split/modified by mirrorcult
+
+snowstep1.ogg, snowstep2.ogg, snowstep3.ogg, and snowstep4.ogg are taken from https://freesound.org/people/alexo400/sounds/543385/ by alexo400 licensed under CC-0 and split by EmoGarbage404

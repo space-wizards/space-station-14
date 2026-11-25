@@ -1,4 +1,4 @@
-- type: constructionGraph
+﻿- type: constructionGraph
   id: ModularMineGraph
   start: start
   graph:

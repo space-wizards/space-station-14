@@ -1,4 +1,4 @@
-using Content.Shared.Medical.SuitSensors;
+using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.CrewMonitoring;

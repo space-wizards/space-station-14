@@ -1,35 +1,37 @@
+using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
+using Content.Shared.Storage;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Light.Components;
 
 /// <summary>
-/// Device that allows user to quickly change bulbs in <see cref="PoweredLightComponent"/>
-/// Can be reloaded by new light tubes or light bulbs
+///     Device that allows user to quikly change bulbs in <see cref="PoweredLightComponent"/>
+///     Can be reloaded by new light tubes or light bulbs
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(LightReplacerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedLightReplacerSystem))]
 public sealed partial class LightReplacerComponent : Component
 {
-    [DataField]
+    [DataField("sound")]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg")
     {
-        Params = new AudioParams
+        Params = new()
         {
-            Volume = -4f,
+            Volume = -4f
         }
     };
 
     /// <summary>
-    /// This string defines what kind of tube will be inserted into light fixtures.
+    /// Bulbs that were inserted inside light replacer
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntProtoId ActiveLightTube = "LightTube";
+    [ViewVariables]
+    public Container InsertedBulbs = default!;
 
     /// <summary>
-    /// This string defines what kind of bulb will be inserted into light fixtures.
+    /// The default starting bulbs
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntProtoId ActiveLightBulb = "LightBulb";
+    [DataField("contents")]
+    public List<EntitySpawnEntry> Contents = new();
 }

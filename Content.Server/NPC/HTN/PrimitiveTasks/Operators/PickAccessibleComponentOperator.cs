@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
@@ -11,8 +12,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 public sealed partial class PickAccessibleComponentOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private PathfindingSystem _pathfinding = default!;
-    [Dependency] private EntityLookupSystem _lookup = default!;
+    private PathfindingSystem _pathfinding = default!;
+    private EntityLookupSystem _lookup = default!;
 
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
@@ -31,6 +32,13 @@ public sealed partial class PickAccessibleComponentOperator : HTNOperator
     /// </summary>
     [DataField("pathfindKey")]
     public string PathfindKey = NPCBlackboard.PathfindKey;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
+        _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
+    }
 
     /// <inheritdoc/>
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -59,7 +67,7 @@ public sealed partial class PickAccessibleComponentOperator : HTNOperator
         // TODO: Need type
         foreach (var entity in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            if (entity == owner || !query.HasComp(entity))
+            if (entity == owner || !query.TryGetComponent(entity, out var comp))
                 continue;
 
             targets.Add(entity);

@@ -15,13 +15,13 @@ namespace Content.Server.Station.Commands;
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class StationsCommand : ToolshedCommand
 {
-    private ServerStationSystem? _station;
+    private StationSystem? _station;
     private CargoSystem? _cargo;
 
     [CommandImplementation("list")]
     public IEnumerable<EntityUid> List()
     {
-        _station ??= GetSys<ServerStationSystem>();
+        _station ??= GetSys<StationSystem>();
 
         return _station.GetStationsSet();
     }
@@ -29,7 +29,7 @@ public sealed class StationsCommand : ToolshedCommand
     [CommandImplementation("get")]
     public EntityUid Get(IInvocationContext ctx)
     {
-        _station ??= GetSys<ServerStationSystem>();
+        _station ??= GetSys<StationSystem>();
 
         var set = _station.GetStationsSet();
         if (set.Count > 1 || set.Count == 0)
@@ -45,7 +45,7 @@ public sealed class StationsCommand : ToolshedCommand
     [CommandImplementation("getowningstation")]
     public EntityUid? GetOwningStation([PipedArgument] EntityUid input)
     {
-        _station ??= GetSys<ServerStationSystem>();
+        _station ??= GetSys<StationSystem>();
 
         return _station.GetOwningStation(input);
     }
@@ -53,7 +53,7 @@ public sealed class StationsCommand : ToolshedCommand
     [CommandImplementation("largestgrid")]
     public EntityUid? LargestGrid([PipedArgument] EntityUid input)
     {
-        _station ??= GetSys<ServerStationSystem>();
+        _station ??= GetSys<StationSystem>();
         return _station.GetLargestGrid(input);
     }
 
@@ -81,21 +81,21 @@ public sealed class StationsCommand : ToolshedCommand
     [CommandImplementation("addgrid")]
     public void AddGrid([PipedArgument] EntityUid input, EntityUid grid)
     {
-        _station ??= GetSys<ServerStationSystem>();
+        _station ??= GetSys<StationSystem>();
         _station.AddGridToStation(input, grid);
     }
 
     [CommandImplementation("rmgrid")]
     public void RmGrid([PipedArgument] EntityUid input, EntityUid grid)
     {
-        _station ??= GetSys<ServerStationSystem>();
+        _station ??= GetSys<StationSystem>();
         _station.RemoveGridFromStation(input, grid);
     }
 
     [CommandImplementation("rename")]
     public void Rename([PipedArgument] EntityUid input, string name)
     {
-        _station ??= GetSys<ServerStationSystem>();
+        _station ??= GetSys<StationSystem>();
         _station.RenameStation(input, name);
     }
 

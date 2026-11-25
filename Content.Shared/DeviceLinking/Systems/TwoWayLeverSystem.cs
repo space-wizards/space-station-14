@@ -3,107 +3,115 @@ using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.DeviceLinking.Systems;
-
-public sealed partial class TwoWayLeverSystem : EntitySystem
+namespace Content.Shared.DeviceLinking.Systems
 {
-    [Dependency] private DeviceLinkSystem _signalSystem = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-
-    private const string LeftToggleImage = "rotate_ccw.svg.192dpi.png";
-    private const string RightToggleImage = "rotate_cw.svg.192dpi.png";
-
-    [SubscribeLocalEvent]
-    private void OnInit(Entity<TwoWayLeverComponent> ent, ref ComponentInit args)
+    public sealed partial class TwoWayLeverSystem : EntitySystem
     {
-        _signalSystem.EnsureSourcePorts(ent.Owner, ent.Comp.LeftPort, ent.Comp.RightPort, ent.Comp.MiddlePort);
-    }
+        [Dependency] private SharedDeviceLinkSystem _signalSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    [SubscribeLocalEvent]
-    private void OnActivated(Entity<TwoWayLeverComponent> ent, ref ActivateInWorldEvent args)
-    {
-        if (args.Handled || !args.Complex)
-            return;
+        const string _leftToggleImage = "rotate_ccw.svg.192dpi.png";
+        const string _rightToggleImage = "rotate_cw.svg.192dpi.png";
 
-        ent.Comp.State = ent.Comp.State switch
+        public override void Initialize()
         {
-            TwoWayLeverState.Middle => ent.Comp.NextSignalLeft ? TwoWayLeverState.Left : TwoWayLeverState.Right,
-            TwoWayLeverState.Right or TwoWayLeverState.Left => TwoWayLeverState.Middle,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            base.Initialize();
+            SubscribeLocalEvent<TwoWayLeverComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<TwoWayLeverComponent, ActivateInWorldEvent>(OnActivated);
+            SubscribeLocalEvent<TwoWayLeverComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
+        }
 
-        StateChanged(ent);
-
-        args.Handled = true;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnGetInteractionVerbs(Entity<TwoWayLeverComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
-            return;
-
-        var disabled = ent.Comp.State == TwoWayLeverState.Left;
-        InteractionVerb verbLeft = new()
+        private void OnInit(EntityUid uid, TwoWayLeverComponent component, ComponentInit args)
         {
-            Act = () =>
+            _signalSystem.EnsureSourcePorts(uid, component.LeftPort, component.RightPort, component.MiddlePort);
+        }
+
+        private void OnActivated(EntityUid uid, TwoWayLeverComponent component, ActivateInWorldEvent args)
+        {
+            if (args.Handled || !args.Complex)
+                return;
+
+            component.State = component.State switch
             {
-                ent.Comp.State = ent.Comp.State switch
-                {
-                    TwoWayLeverState.Middle => TwoWayLeverState.Left,
-                    TwoWayLeverState.Right => TwoWayLeverState.Middle,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-                StateChanged(ent);
-            },
-            Category = VerbCategory.Lever,
-            Message = disabled ? Loc.GetString("two-way-lever-cant") : null,
-            Disabled = disabled,
-            Icon = new SpriteSpecifier.Texture(new ($"/Textures/Interface/VerbIcons/{LeftToggleImage}")),
-            Text = Loc.GetString("two-way-lever-left"),
-        };
+                TwoWayLeverState.Middle => component.NextSignalLeft ? TwoWayLeverState.Left : TwoWayLeverState.Right,
+                TwoWayLeverState.Right => TwoWayLeverState.Middle,
+                TwoWayLeverState.Left => TwoWayLeverState.Middle,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-        args.Verbs.Add(verbLeft);
+            StateChanged(uid, component);
 
-        disabled = ent.Comp.State == TwoWayLeverState.Right;
-        InteractionVerb verbRight = new()
+            args.Handled = true;
+        }
+
+        private void OnGetInteractionVerbs(EntityUid uid, TwoWayLeverComponent component, GetVerbsEvent<InteractionVerb> args)
         {
-            Act = () =>
+            if (!args.CanAccess || !args.CanInteract || (args.Hands == null))
+                return;
+
+            var disabled = component.State == TwoWayLeverState.Left;
+            InteractionVerb verbLeft = new()
             {
-                ent.Comp.State = ent.Comp.State switch
+                Act = () =>
                 {
-                    TwoWayLeverState.Left => TwoWayLeverState.Middle,
-                    TwoWayLeverState.Middle => TwoWayLeverState.Right,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-                StateChanged(ent);
-            },
-            Category = VerbCategory.Lever,
-            Message = disabled ? Loc.GetString("two-way-lever-cant") : null,
-            Disabled = disabled,
-            Icon = new SpriteSpecifier.Texture(new ($"/Textures/Interface/VerbIcons/{RightToggleImage}")),
-            Text = Loc.GetString("two-way-lever-right"),
-        };
+                    component.State = component.State switch
+                    {
+                        TwoWayLeverState.Middle => TwoWayLeverState.Left,
+                        TwoWayLeverState.Right => TwoWayLeverState.Middle,
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                    StateChanged(uid, component);
+                },
+                Category = VerbCategory.Lever,
+                Message = disabled ? Loc.GetString("two-way-lever-cant") : null,
+                Disabled = disabled,
+                Icon = new SpriteSpecifier.Texture(new ($"/Textures/Interface/VerbIcons/{_leftToggleImage}")),
+                Text = Loc.GetString("two-way-lever-left"),
+            };
 
-        args.Verbs.Add(verbRight);
-    }
+            args.Verbs.Add(verbLeft);
 
-    private void StateChanged(Entity<TwoWayLeverComponent> ent)
-    {
-        if (ent.Comp.State == TwoWayLeverState.Middle)
-            ent.Comp.NextSignalLeft = !ent.Comp.NextSignalLeft;
+            disabled = component.State == TwoWayLeverState.Right;
+            InteractionVerb verbRight = new()
+            {
+                Act = () =>
+                {
+                    component.State = component.State switch
+                    {
+                        TwoWayLeverState.Left => TwoWayLeverState.Middle,
+                        TwoWayLeverState.Middle => TwoWayLeverState.Right,
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                    StateChanged(uid, component);
+                },
+                Category = VerbCategory.Lever,
+                Message = disabled ? Loc.GetString("two-way-lever-cant") : null,
+                Disabled = disabled,
+                Icon = new SpriteSpecifier.Texture(new ($"/Textures/Interface/VerbIcons/{_rightToggleImage}")),
+                Text = Loc.GetString("two-way-lever-right"),
+            };
 
-        _appearance.SetData(ent.Owner, TwoWayLeverVisuals.State, ent.Comp.State);
+            args.Verbs.Add(verbRight);
+        }
 
-        var port = ent.Comp.State switch
+        private void StateChanged(EntityUid uid, TwoWayLeverComponent component)
         {
-            TwoWayLeverState.Left => ent.Comp.LeftPort,
-            TwoWayLeverState.Right => ent.Comp.RightPort,
-            TwoWayLeverState.Middle => ent.Comp.MiddlePort,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            if (component.State == TwoWayLeverState.Middle)
+                component.NextSignalLeft = !component.NextSignalLeft;
 
-        Dirty(ent);
-        _signalSystem.InvokePort(ent.Owner, port);
+            if (TryComp(uid, out AppearanceComponent? appearance))
+                _appearance.SetData(uid, TwoWayLeverVisuals.State, component.State, appearance);
+
+            var port = component.State switch
+            {
+                TwoWayLeverState.Left => component.LeftPort,
+                TwoWayLeverState.Right => component.RightPort,
+                TwoWayLeverState.Middle => component.MiddlePort,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            Dirty(uid, component);
+            _signalSystem.InvokePort(uid, port);
+        }
     }
 }

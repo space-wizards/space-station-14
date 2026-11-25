@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Atmos.Components
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause] // TODO: Access restriction so that other systems have to use the API to modify fire stacks
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause] // TODO: Access restriction so that other systems have to use the API to modify fire stacks
     public sealed partial class FlammableComponent : Component
     {
         /// <summary>
@@ -36,34 +36,43 @@ namespace Content.Shared.Atmos.Components
         /// The time resisting being on fire will take.
         /// The mob will be paralyzed for this duration.
         /// </summary>
-        [DataField, AutoNetworkedField]
+        [DataField]
         public TimeSpan ResistTime = TimeSpan.FromSeconds(2);
 
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public bool OnFire;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public float FireStacks;
 
-        [DataField, AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float MaximumFireStacks = 10f;
 
-        [DataField, AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float MinimumFireStacks = -10f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public string FlammableFixtureID = "flammable";
 
-        [DataField, AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float MinIgnitionTemperature = 373.15f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public bool FireSpread { get; private set; } = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public bool CanResistFire { get; private set; } = false;
 
-        [DataField(required: true), AutoNetworkedField]
+        [DataField(required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = new(); // Empty by default, we don't want any funny NREs.
 
         /// <summary>
@@ -75,25 +84,28 @@ namespace Content.Shared.Atmos.Components
         /// <summary>
         ///     Should the component be set on fire by interactions with isHot entities
         /// </summary>
-        [DataField, AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool AlwaysCombustible = false;
 
         /// <summary>
         ///     Can the component anyhow lose its FireStacks?
         /// </summary>
-        [DataField, AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool CanExtinguish = true;
 
         /// <summary>
         ///     How many firestacks should be applied to component when being set on fire?
         /// </summary>
-        [DataField, AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float FirestacksOnIgnite = 2.0f;
 
         /// <summary>
         /// Determines how quickly the object will fade out. With positive values, the object will flare up instead of going out.
         /// </summary>
-        [DataField, AutoNetworkedField]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float FirestackFade = -0.1f;
 
         [DataField]
@@ -102,7 +114,7 @@ namespace Content.Shared.Atmos.Components
         /// <summary>
         /// If set, applies the displacement map associated with the <see cref="DisplacementDataPrototype"/>.
         /// </summary>
-        [DataField, AutoNetworkedField]
+        [DataField]
         public ProtoId<DisplacementDataPrototype>? Displacement;
     }
 }

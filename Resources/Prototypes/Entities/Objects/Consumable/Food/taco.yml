@@ -32,9 +32,6 @@
     nameGeneration: food-sequence-taco-gen
     contentSeparator: ", "
   - type: Appearance
-  - type: Tag
-    tags:
-    - Taco
 
 # Old tacos
 
@@ -65,8 +62,7 @@
     storedOffset: 0,1
   - type: Tag
     tags:
-    - FinishedMeal
-    - Meat
+      - Meat
 
 - type: entity
   name: beef taco
@@ -203,5 +199,4 @@
     state: softtaco
   - type: Tag
     tags:
-    - FinishedMeal
-    - Meat
+      - Meat

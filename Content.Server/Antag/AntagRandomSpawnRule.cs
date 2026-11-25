@@ -1,14 +1,11 @@
 using Content.Server.Antag.Components;
-using Content.Server.Station.Systems;
-using Content.Shared.Antag;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.GameTicking.Rules;
+using Content.Server.GameTicking.Rules;
 
 namespace Content.Server.Antag;
 
 public sealed partial class AntagRandomSpawnSystem : GameRuleSystem<AntagRandomSpawnComponent>
 {
-    [Dependency] private ServerStationSystem _station = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -18,15 +15,15 @@ public sealed partial class AntagRandomSpawnSystem : GameRuleSystem<AntagRandomS
         SubscribeLocalEvent<AntagRandomSpawnComponent, AntagSelectLocationEvent>(OnSelectLocation);
     }
 
-    protected override void Added(Entity<AntagRandomSpawnComponent, GameRuleComponent> rule, ref GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, AntagRandomSpawnComponent comp, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        base.Added(rule, ref args);
+        base.Added(uid, comp, gameRule, args);
 
         // we have to select this here because AntagSelectLocationEvent is raised twice because MakeAntag is called twice
         // once when a ghost role spawner is created and once when someone takes the ghost role
 
-        if (_station.TryFindRandomTile(out _, out _, out _, out var coords))
-            rule.Comp1.Coords = coords;
+        if (TryFindRandomTile(out _, out _, out _, out var coords))
+            comp.Coords = coords;
     }
 
     private void OnSelectLocation(Entity<AntagRandomSpawnComponent> ent, ref AntagSelectLocationEvent args)

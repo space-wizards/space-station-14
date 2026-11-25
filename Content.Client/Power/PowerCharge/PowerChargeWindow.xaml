@@ -20,10 +20,26 @@
                     HorizontalExpand="True"
                     StyleClasses="highlight" />
 
-                <controls:SwitchButton
-                    Name="PowerSwitch"
+                <BoxContainer
+                    Orientation="Horizontal"
                     MinWidth="120"
-                    SetWidth="160" />
+                    SetWidth="160">
+
+                    <Button Name="OnButton"
+                        Text="{Loc 'power-charge-window-power-on'}"
+                        StyleClasses="OpenRight"
+                        MinWidth="60"
+                        SetWidth="80"
+                        HorizontalAlignment="Center"/>
+
+                    <Button
+                        Name="OffButton"
+                        Text="{Loc 'power-charge-window-power-off'}"
+                        StyleClasses="OpenLeft"
+                        MinWidth="60"
+                        SetWidth="80"
+                        HorizontalAlignment="Center"/>
+                </BoxContainer>
 
                 <Control /> <!-- Empty control to act as a spacer in the grid. -->
 

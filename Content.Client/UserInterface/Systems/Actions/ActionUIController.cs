@@ -857,7 +857,7 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
         if (!entity.CanTargetSelf)
             predicate = e => e != attachedEnt;
 
-        float? range = target.CheckCanAccess || target.Range > 0 ? target.Range : null;
+        var range = target.CheckCanAccess ? target.Range : -1;
 
         _interactionOutline?.SetEnabled(false);
         _targetOutline?.Enable(range, target.CheckCanAccess, predicate, entity.Whitelist, entity.Blacklist, null);

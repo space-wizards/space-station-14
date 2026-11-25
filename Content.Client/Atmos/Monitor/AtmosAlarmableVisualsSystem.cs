@@ -12,8 +12,11 @@ public sealed partial class AtmosAlarmableVisualsSystem : VisualizerSystem<Atmos
         if (args.Sprite == null || !SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.LayerMap, out var layer, false))
             return;
 
-        if (!args.TryGetData<bool>(PowerDeviceVisuals.Powered, out var powered))
+        if (!args.AppearanceData.TryGetValue(PowerDeviceVisuals.Powered, out var poweredObject) ||
+            poweredObject is not bool powered)
+        {
             return;
+        }
 
         if (component.HideOnDepowered != null)
         {
@@ -33,7 +36,8 @@ public sealed partial class AtmosAlarmableVisualsSystem : VisualizerSystem<Atmos
             }
         }
 
-        if (args.TryGetData<AtmosAlarmType>(AtmosMonitorVisuals.AlarmType, out var alarmType)
+        if (args.AppearanceData.TryGetValue(AtmosMonitorVisuals.AlarmType, out var alarmTypeObject)
+            && alarmTypeObject is AtmosAlarmType alarmType
             && powered
             && component.AlarmStates.TryGetValue(alarmType, out var state))
         {

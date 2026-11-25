@@ -30,54 +30,31 @@
     - state: beam
       shader: unshaded
       visible: false
-      map: ["enum.PowerStateDeviceVisualLayers.Lights"]
+      map: ["enum.EmitterVisualLayers.Lights"]
     - state: locked
       shader: unshaded
       visible: false
       map: ["enum.LockVisualLayers.Lock"]
   - type: Emitter
-  - type: PowerState
-    idlePowerDraw: 5
-    workingPowerDraw: 600
-    ensureApc: false
-  - type: NotifyOnNonFunctioning
-    locDestroyed: emitter-destroyed-broadcast
-    locUnlocked: emitter-unlocked-broadcast
-    locUnpowered: emitter-unpowered-broadcast
-    locUnanchored: emitter-unpowered-broadcast
-    locTurnedOff: emitter-turn-off-broadcast
-    radioChannel: Engineering
-    requirePowered: true
+    alertRadio: true
   - type: Gun
     showExamineText: false
-    burstCooldown: 1.4
-    burstFireRate: 0.5
-    selectedMode: Burst
+    fireRate: 10 #just has to be fast enough to keep up with upgrades
+    selectedMode: SemiAuto
     availableModes:
-      - Burst
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/emitter.ogg
-  - type: NetworkPoweredAmmoProvider
-    adminLogToggleLevel: FieldGeneration
-    prototype: EmitterBolt
-  - type: AutoShootGun
   - type: PowerConsumer
     voltage: Medium
-    drawRate: 5
   - type: NodeContainer
     examinable: true
     nodes:
       input:
         !type:CableDeviceNode
         nodeGroupID: MVPower
-  - type: Electrified
-    onHandInteract: false
-    onInteractUsing: false
-    onBump: false
-    usesApcPower: false
-    mediumVoltageNode: input
   - type: Damageable
-    damageModifierSet: PlasteelStaticMod
+    damageModifierSet: PlasteelMod
   - type: ActiveRadio
     channels:
     - Engineering
@@ -114,7 +91,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetwork
+  - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSink
     ports:

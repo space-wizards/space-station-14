@@ -60,17 +60,17 @@ public sealed partial class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealt
         args.StatusIcons.AddRange(healthIcons);
     }
 
-    private IReadOnlyList<StatusIconPrototype> DecideHealthIcons(Entity<InjurableComponent> entity)
+    private IReadOnlyList<HealthIconPrototype> DecideHealthIcons(Entity<InjurableComponent> entity)
     {
         var injurableComp = entity.Comp;
 
         if (injurableComp.DamageContainer == null ||
             !DamageContainers.Contains(injurableComp.DamageContainer))
         {
-            return Array.Empty<StatusIconPrototype>();
+            return Array.Empty<HealthIconPrototype>();
         }
 
-        var result = new List<StatusIconPrototype>();
+        var result = new List<HealthIconPrototype>();
 
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
         if (injurableComp?.DamageContainer == "Biological")

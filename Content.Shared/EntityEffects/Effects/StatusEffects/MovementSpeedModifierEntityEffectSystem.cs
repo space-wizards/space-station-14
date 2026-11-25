@@ -1,4 +1,4 @@
-using Content.Shared.Movement.Components;
+﻿using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
@@ -17,11 +17,9 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
 
     protected override void Effect(Entity<MovementSpeedModifierComponent> entity, ref EntityEffectEvent<MovementSpeedModifier> args)
     {
-        var duration = args.Effect.Time * args.Scale;
         var proto = args.Effect.EffectProto;
         var sprintMod = args.Effect.SprintSpeedModifier;
         var walkMod = args.Effect.WalkSpeedModifier;
-        var delay = args.Effect.Delay;
 
         switch (args.Effect.Type)
         {
@@ -29,38 +27,35 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
                 _movementModStatus.TryUpdateMovementSpeedModDuration(
                     entity,
                     proto,
-                    duration,
+                    args.Effect.Time * args.Scale,
                     sprintMod,
-                    walkMod,
-                    delay);
+                    walkMod);
                 break;
             case StatusEffectMetabolismType.Add:
-                if (duration != null)
+                if (args.Effect.Time != null)
                 {
                     _movementModStatus.TryAddMovementSpeedModDuration(
                         entity,
                         proto,
-                        duration.Value,
+                        args.Effect.Time.Value * args.Scale,
                         sprintMod,
-                        walkMod,
-                        delay);
+                        walkMod);
                 }
                 else
                 {
                     _movementModStatus.TryUpdateMovementSpeedModDuration(
                         entity,
                         proto,
-                        duration,
+                        args.Effect.Time * args.Scale,
                         sprintMod,
-                        walkMod,
-                        delay);
+                        walkMod);
                 }
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, args.Effect.EffectProto, duration);
+                _status.TryRemoveTime(entity, args.Effect.EffectProto, args.Effect.Time * args.Scale);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, proto, duration, delay);
+                _status.TrySetStatusEffectDuration(entity, proto, args.Effect.Time * args.Scale);
                 break;
         }
     }

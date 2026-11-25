@@ -1,4 +1,4 @@
-using Robust.Shared.Containers;
+﻿using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 
@@ -75,7 +75,7 @@ public sealed class IdentityRepresentation
         };
 
         // i.e. 'young assistant man' or 'old cargo technician person' or 'middle-aged captain'
-        return string.IsNullOrWhiteSpace(PresumedJob)
+        return PresumedJob is null
             ? $"{AgeString} {genderString}"
             : $"{AgeString} {PresumedJob} {genderString}";
     }

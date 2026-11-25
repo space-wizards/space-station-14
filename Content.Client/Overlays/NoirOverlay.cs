@@ -30,5 +30,6 @@ public sealed partial class NoirOverlay : Overlay
         _noirShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         handle.UseShader(_noirShader);
         handle.DrawRect(args.WorldBounds, Color.White);
+        handle.UseShader(null);
     }
 }

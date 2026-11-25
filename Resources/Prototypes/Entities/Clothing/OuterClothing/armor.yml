@@ -162,12 +162,12 @@
   - type: StaticPrice
     price: 1500
 
-#Energy web vest
+#Elite web vest
 - type: entity
   parent: [ClothingOuterArmorBase, TemperatureProtection, ClothingOuterStorageBase, BaseSyndicateContraband]
   id: ClothingOuterVestWebElite
-  name: energy web vest
-  description: A synthetic armor vest. This one has added webbing with heat and radiation resistant fibers, with the trade-off of weaker ballistic protection.
+  name: elite web vest
+  description: A synthetic armor vest. This one has added webbing and heat resistant fibers.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi

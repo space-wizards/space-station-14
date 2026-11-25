@@ -1,6 +1,5 @@
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.EntityTable.EntitySelectors;
-using Robust.Shared.Audio;
 
 namespace Content.Server.Storage.Components;
 
@@ -15,16 +14,4 @@ public sealed partial class SpawnTableOnUseComponent : Component
     /// </summary>
     [DataField(required: true)]
     public EntityTableSelector Table = default!;
-
-    /// <summary>
-    /// A sound to play when the items are spawned. For example, gift boxes being unwrapped.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? Sound;
-
-    /// <summary>
-    /// How many uses before the item should delete itself.
-    /// </summary>
-    [DataField]
-    public int Uses = 1;
 }

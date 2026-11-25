@@ -74,7 +74,7 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -123,7 +123,7 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinableButchering, BaseMobDestructible]
+  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -184,7 +184,7 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -289,7 +289,7 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinableButchering, BaseMobDestructible]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -400,15 +400,16 @@
   description: A sheep... in space!
   components:
   - type: Sprite
-    sprite: Mobs/Animals/spacesheep.rsi
     drawdepth: Mobs
     layers:
     - state: space_sheep_bare
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
+      sprite: Mobs/Animals/sheep.rsi
     - state: space_sheep_wool_glowmask
       map: [ "wooly" ]
       visible: true
+      sprite: Mobs/Animals/sheep.rsi
   - type: GenericVisualizer
     visuals:
       enum.ShearableVisuals.Shearable:
@@ -439,7 +440,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: space_sheep_bare
+        Base: space_sheep_harvested
       Critical:
         Base: space_sheep_dead
       Dead:
@@ -474,28 +475,14 @@
         variation: 0.05
   - type: MobPrice
     price: 600
-  - type: SolutionManager
-    solutions:
-    - SolutionUdderSheep
-    - SolutionWoolSpaceSheep
+  - type: Wooly
+    quantity: 10
+    growthDelay: 120 #2 minutes
   - type: Speech
     speechSounds: SheepSpace
     speechVerb: Sheep
   - type: Vocal
     emoteSounds: SheepSpace
-
-- type: entity
-  parent: SolutionWool
-  id: SolutionWoolSpaceSheep
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: SatiationProduction
-    delay: 120 #2 minutes
-  - type: SolutionProducer
-    generated:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 10
 
 - type: entity
   parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
@@ -566,8 +553,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
-  - type: NameIdentifier
-    group: AdjectivePrefix
   - type: DamageStateVisuals
     states:
       Alive:
@@ -683,7 +668,7 @@
 - type: entity
   parent: [ BaseMobMothroach, MobSnail ]
   id: MobSnailMoth
-  name: snoth
+  name: Snoth
   components:
   - type: GhostRole
     name: ghost-role-information-snoth-name

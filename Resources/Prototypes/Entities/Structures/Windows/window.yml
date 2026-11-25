@@ -48,30 +48,8 @@
     fx: EffectRCDDeconstruct4
   - type: Airtight
   - type: IconSmooth
-    key: windows
-    states:
-    - !type:CardinalCornerSpriteSmoothing
-      mask: [ windows ]
-      altMask:
-      - windows-reinf
-      - windows-tinted
-      - windows-plasma
-      - windows-plasma-reinf
-      - windows-uranium
-      - windows-uranium-reinf
-      - windows-exo
-      - windows-shuttle
-      - windows-plastitanium
-      - windows-regal
-      - walls-exo
-      - walls-shuttle
-      - walls-plastitanium
-      - walls-material
-      - walls-marble
-      - walls
-      - grilles
-      - doors
-      base: window
+    key: walls
+    base: window
   - type: PlacementReplacement
     key: walls
   - type: InteractionPopup
@@ -92,10 +70,6 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
-  - type: StructureAlignerPylon
-    pylons:
-    - Door
-    - Firelock
 
 - type: entity
   parent: [ BaseWindowStructure, StructureHealthBarrier ]
@@ -133,30 +107,7 @@
   - type: Icon
     sprite: Structures/Windows/window-tinted.rsi
   - type: IconSmooth
-    key: windows-tinted
-    states:
-    - !type:CardinalCornerSpriteSmoothing
-      mask: [ windows-tinted ]
-      altMask:
-      - windows
-      - windows-reinf
-      - windows-plasma
-      - windows-plasma-reinf
-      - windows-uranium
-      - windows-uranium-reinf
-      - windows-exo
-      - windows-shuttle
-      - windows-plastitanium
-      - windows-regal
-      - walls-exo
-      - walls-shuttle
-      - walls-plastitanium
-      - walls-material
-      - walls-marble
-      - walls
-      - grilles
-      - doors
-      base: window
+    base: twindow
   - type: Construction
     graph: Window
     node: tintedWindow
@@ -359,20 +310,15 @@
   components:
   - type: Sprite
     sprite: Structures/Windows/window-base-diagonal.rsi
+    state: state0
   - type: Tag
     tags:
     - Diagonal
     - Window
   - type: IconSmooth
-    states:
-    - !type:DiagonalSpriteSmoothing
-      mask:
-      - walls
-      - windows
-      - grilles
-      - marble
-      - doors
-      base: state
+    mode: Diagonal
+    key: walls
+    base: state
   - type: Icon
     sprite: Structures/Windows/window-base-diagonal.rsi
     state: state0

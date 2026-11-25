@@ -1,4 +1,5 @@
 using Content.Shared.Robotics;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Robotics.UI;
@@ -21,11 +22,11 @@ public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
 
         _window.OnDisablePressed += address =>
         {
-            SendMessage(new RoboticsConsoleDisableMessage(address.AddressId));
+            SendMessage(new RoboticsConsoleDisableMessage(address));
         };
         _window.OnDestroyPressed += address =>
         {
-            SendMessage(new RoboticsConsoleDestroyMessage(address.AddressId));
+            SendMessage(new RoboticsConsoleDestroyMessage(address));
         };
     }
 

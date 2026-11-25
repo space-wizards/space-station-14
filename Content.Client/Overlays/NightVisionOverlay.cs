@@ -65,5 +65,8 @@ public sealed partial class NightVisionOverlay : Overlay
 
         var drawingColor = isSpace ? OverlayColor : LightingColor;
         handle.DrawRect(args.WorldBounds, drawingColor);
+
+        if (isSpace)
+            handle.UseShader(null);
     }
 }

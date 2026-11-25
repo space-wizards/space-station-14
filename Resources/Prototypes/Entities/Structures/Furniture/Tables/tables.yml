@@ -25,13 +25,10 @@
         layer:
         - TableLayer
   - type: IconSmooth
-    key: tableframe
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ tableframe ]
-      base: state_
+    key: state
+    base: state_
   - type: Damageable
-    damageModifierSet: RodMetalMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger: &DamageFurnitureWeak
@@ -78,11 +75,8 @@
   - type: Damageable
     damageModifierSet: WoodMod
   - type: IconSmooth
-    key: tableframe
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ tableframe ]
-      base: state_
+    key: state
+    base: state_
   - type: Destructible
     thresholds:
     - trigger: *DamageFurnitureWeak
@@ -125,13 +119,10 @@
         layer:
         - TableLayer
   - type: Damageable
-    damageModifierSet: RodMetalMod
+    damageModifierSet: SteelMod
   - type: IconSmooth
-    key: tableframe
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ tableframe ]
-      base: state_
+    key: state
+    base: state_
   - type: Destructible
     thresholds:
     - trigger: *DamageFurnitureWeak
@@ -175,6 +166,9 @@
           SheetSteel1:
             min: 1
             max: 1
+  - type: IconSmooth
+    key: metaltable
+    base: state_
   - type: Construction
     graph: Table
     node: Table
@@ -206,11 +200,7 @@
             min: 0
             max: 1
   - type: IconSmooth
-    key: metaltable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ metaltable ]
-      base: state_
+    key: metalreinforcedtable
   - type: Construction
     graph: Table
     node: TableReinforced
@@ -257,10 +247,6 @@
       - *ChangeNodeFrame
   - type: IconSmooth
     key: glasstable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ glasstable ]
-      base: state_
   - type: Construction
     graph: Table
     node: TableGlass
@@ -302,10 +288,6 @@
       - *ChangeNodeFrame
   - type: IconSmooth
     key: cardtable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ cardtable ]
-      base: state_
   - type: Construction
     graph: Table
     node: TableCard
@@ -348,11 +330,7 @@
             min: 1
             max: 1
   - type: IconSmooth
-    key: glasstable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ glasstable ]
-      base: state_
+    key: reinforcedglasstable
   - type: Construction
     graph: Table
     node: TableReinforcedGlass
@@ -395,11 +373,7 @@
             min: 1
             max: 1
   - type: IconSmooth
-    key: glasstable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ glasstable ]
-      base: state_
+    key: plasmaglasstable
   - type: Construction
     graph: Table
     node: TablePlasmaGlass
@@ -431,11 +405,7 @@
             min: 1
             max: 1
   - type: IconSmooth
-    key: metaltable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ metaltable ]
-      base: state_
+    key: brasstable
   - type: Construction
     graph: Table
     node: TableBrass
@@ -465,10 +435,6 @@
             max: 1
   - type: IconSmooth
     key: woodtable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ woodtable ]
-      base: state_
   - type: Construction
     graph: Table
     node: TableWood
@@ -503,11 +469,7 @@
       - !type:ChangeConstructionNodeBehavior
         node: TableWood
   - type: IconSmooth
-    key: woodtable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ woodtable ]
-      base: state_
+    key: woodgambletable
   - type: Construction
     graph: Table
     node: TableCarpet
@@ -539,10 +501,6 @@
           path: /Audio/Effects/break_stone.ogg
   - type: IconSmooth
     key: stonetable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ stonetable ]
-      base: state_
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepFloor
@@ -576,10 +534,6 @@
           "/Audio/Weapons/slash.ogg"
   - type: IconSmooth
     key: webtable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ webtable ]
-      base: state_
   - type: Construction
     graph: WebStructures
     node: table
@@ -634,10 +588,6 @@
         node: TableWood
   - type: IconSmooth
     key: fancytable
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ fancytable ]
-      base: state_
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCarpet
@@ -663,6 +613,8 @@
   - type: Construction
     graph: Table
     node: TableFancyBlue
+  - type: IconSmooth
+    key: fancytableblue
 
 - type: entity
   id: TableFancySkyBlue
@@ -683,6 +635,8 @@
   - type: Construction
     graph: Table
     node: TableFancySkyBlue
+  - type: IconSmooth
+    key: fancytableskyblue
 
 - type: entity
   id: TableFancyCyan
@@ -703,6 +657,8 @@
   - type: Construction
     graph: Table
     node: TableFancyCyan
+  - type: IconSmooth
+    key: fancytablecyan
 
 - type: entity
   id: TableFancyBlack
@@ -723,6 +679,8 @@
   - type: Construction
     graph: Table
     node: TableFancyBlack
+  - type: IconSmooth
+    key: fancytableblack
 
 - type: entity
   id: TableFancyRed
@@ -743,6 +701,8 @@
   - type: Construction
     graph: Table
     node: TableFancyRed
+  - type: IconSmooth
+    key: fancytablered
 
 - type: entity
   id: TableFancyPurple
@@ -763,6 +723,8 @@
   - type: Construction
     graph: Table
     node: TableFancyPurple
+  - type: IconSmooth
+    key: fancytablepurple
 
 - type: entity
   id: TableFancyPink
@@ -783,6 +745,8 @@
   - type: Construction
     graph: Table
     node: TableFancyPink
+  - type: IconSmooth
+    key: fancytablepink
 
 - type: entity
   id: TableFancyGreen
@@ -803,6 +767,8 @@
   - type: Construction
     graph: Table
     node: TableFancyGreen
+  - type: IconSmooth
+    key: fancytablegreen
 
 - type: entity
   id: TableFancyOrange
@@ -823,6 +789,8 @@
   - type: Construction
     graph: Table
     node: TableFancyOrange
+  - type: IconSmooth
+    key: fancytableorange
 
 - type: entity
   id: TableFancyWhite
@@ -843,6 +811,8 @@
   - type: Construction
     graph: Table
     node: TableFancyWhite
+  - type: IconSmooth
+    key: fancytablewhite
 
 #endregion
 #Debug
@@ -894,6 +864,9 @@
           MaterialWoodPlank1:
             min: 0
             max: 1
+  - type: IconSmooth
+    key: counterwood
+    base: state_
   - type: Construction
     graph: Table
     node: CounterWood
@@ -926,6 +899,9 @@
           SheetSteel1:
             min: 0
             max: 1
+  - type: IconSmooth
+    key: countermetal
+    base: state_
   - type: Construction
     graph: Table
     node: CounterMetal

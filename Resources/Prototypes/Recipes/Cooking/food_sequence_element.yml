@@ -15,11 +15,11 @@
   id: RatBurger
   name: food-sequence-burger-content-rat
   sprites:
-  - sprite: Mobs/Animals/Rodents/mouse.rsi
+  - sprite: Mobs/Animals/mouse.rsi
     state: dead-0
-  - sprite: Mobs/Animals/Rodents/mouse.rsi
+  - sprite: Mobs/Animals/mouse.rsi
     state: dead-1
-  - sprite: Mobs/Animals/Rodents/mouse.rsi
+  - sprite: Mobs/Animals/mouse.rsi
     state: dead-2
 
 - type: foodSequenceElement
@@ -324,16 +324,6 @@
   - Cutlet
   - Meat
 
-- type: foodSequenceElement
-  id: MeatCutletBurger
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: meat
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
 # Bear cutlet
 
 - type: foodSequenceElement
@@ -351,8 +341,8 @@
   id: BearCutletBurger
   name: food-sequence-burger-content-bear
   sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: bear
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
   tags:
   - Cooked
   - Cutlet
@@ -375,8 +365,8 @@
   id: PenguinCutletBurger
   name: food-sequence-burger-content-penguin
   sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: poultry
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
   tags:
   - Cooked
   - Cutlet
@@ -396,18 +386,6 @@
   - Meat
   - Chicken
 
-- type: foodSequenceElement
-  id: ChickenCutletBurger
-  name: food-sequence-content-chicken
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: poultry
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-  - Chicken
-
 # Duck cutlet
 
 - type: foodSequenceElement
@@ -416,17 +394,6 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: cutlet-cooked
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
-- type: foodSequenceElement
-  id: DuckCutletBurger
-  name: food-sequence-content-duck
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: poultry
   tags:
   - Cooked
   - Cutlet
@@ -449,8 +416,8 @@
   id: LizardCutletBurger
   name: food-sequence-burger-content-lizard
   sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: lizard
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
   tags:
   - Cooked
   - Cutlet
@@ -473,8 +440,8 @@
   id: SpiderCutletBurger
   name: food-sequence-burger-content-spider
   sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: spider
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: spidercutlet-cooked
   tags:
   - Cooked
   - Cutlet
@@ -493,37 +460,6 @@
   - Cutlet
   - Meat
 
-- type: foodSequenceElement
-  id: XenoCutletBurger
-  name: food-sequence-content-xeno
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: xeno
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
-# Tofu
-
-- type: foodSequenceElement
-  id: Tofu
-  name: food-sequence-content-tofu
-  sprites:
-  - sprite: Objects/Consumable/Food/ingredients.rsi
-    state: tofu-slice
-  tags:
-  - Slice
-
-- type: foodSequenceElement
-  id: TofuBurger
-  name: food-sequence-content-tofu
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: tofu
-  tags:
-  - Slice
-
 # Dragon cutlet
 
 - type: foodSequenceElement
@@ -532,17 +468,6 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: dragoncutlet-cooked
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
-- type: foodSequenceElement
-  id: DragonCutletBurger
-  name: food-sequence-content-dragon
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_cutlet.rsi
-    state: dragon
   tags:
   - Cooked
   - Cutlet
@@ -617,9 +542,8 @@
   id: CabbageBurger
   name: food-sequence-burger-content-cabbage
   sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
-    state: leaf
-    # we don't have any other leafy vegetables besides maybe ambrosia so this will have to do
+  - sprite: Objects/Specific/Hydroponics/cabbage.rsi
+    state: produce
   tags:
   - Vegetable
 
@@ -733,16 +657,6 @@
   - Vegetable
 
 - type: foodSequenceElement
-  id: TomatoBurger
-  name: food-sequence-content-tomato
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
-    state: tomato
-  tags:
-  - Fruit
-  - Vegetable
-
-- type: foodSequenceElement
   id: TomatoSkewer
   name: food-sequence-content-tomato
   sprites:
@@ -764,16 +678,6 @@
   - Fruit
   - Vegetable
 
-- type: foodSequenceElement
-  id: BlueTomatoBurger
-  name: food-sequence-content-tomato
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
-    state: blue_tomato
-  tags:
-  - Fruit
-  - Vegetable
-
 # Blood Tomato
 
 - type: foodSequenceElement
@@ -782,16 +686,6 @@
   sprites:
   - sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
     state: produce
-  tags:
-  - Fruit
-  - Vegetable
-
-- type: foodSequenceElement
-  id: BloodTomatoBurger
-  name: food-sequence-content-tomato
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
-    state: blood_tomato
   tags:
   - Fruit
   - Vegetable
@@ -960,15 +854,6 @@
   - Vegetable
 
 - type: foodSequenceElement
-  id: ChiliPepperBurger
-  name: food-sequence-content-chili
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
-    state: chili
-  tags:
-  - Vegetable
-
-- type: foodSequenceElement
   id: ChiliPepperSkewer
   name: food-sequence-content-chili
   sprites:
@@ -985,15 +870,6 @@
   sprites:
   - sprite: Objects/Specific/Hydroponics/chilly.rsi
     state: produce
-  tags:
-  - Vegetable
-
-- type: foodSequenceElement
-  id: ChillyPepperBurger
-  name: food-sequence-content-chilly
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
-    state: chilly
   tags:
   - Vegetable
 
@@ -1237,7 +1113,7 @@
   - sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
     state: produce
   tags:
-  - Flower
+  - Fruit
 
 - type: foodSequenceElement
   id: GalaxythistleBurger
@@ -1246,7 +1122,7 @@
   - sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
     state: produce
   tags:
-  - Flower
+  - Fruit
 
 # bungo
 
@@ -1321,28 +1197,6 @@
   tags:
   - Fruit
 
-# Chanterelle
-
-- type: foodSequenceElement
-  id: Chanterelle
-  name: food-sequence-content-mushroom
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/chanterelle.rsi
-    state: produce
-  tags:
-  - Vegetable
-  - Mushroom
-
-- type: foodSequenceElement
-  id: ChanterelleBurger
-  name: food-sequence-content-mushroom
-  sprites:
-  - sprite: Objects/Consumable/Food/burger_sequence_veg.rsi
-    state: chanterelle
-  tags:
-  - Vegetable
-  - Mushroom
-
 # Suppermatter
 
 - type: foodSequenceElement
@@ -1404,22 +1258,6 @@
   name: food-sequence-cotton-burger-content-pyrotton-bol
   sprites:
   - sprite: Objects/Specific/Hydroponics/pyrotton.rsi
-    state: produce
-
-# Aloe Ignis
-
-- type: foodSequenceElement
-  id: AloeIgnis
-  name: food-sequence-content-aloe-ignis
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
-    state: produce
-
-- type: foodSequenceElement
-  id: AloeIgnisBurger
-  name: food-sequence-burger-content-aloe-ignis
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
     state: produce
 
 # Throngler Plushie

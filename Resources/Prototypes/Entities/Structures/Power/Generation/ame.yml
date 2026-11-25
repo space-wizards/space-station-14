@@ -30,7 +30,7 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: PlasteelStaticMod
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -134,6 +134,7 @@
     sprite: Structures/Power/Generation/ame.rsi
     state: shield_0
     layers:
+    - state: shield_0
     - state: core
       map: ["core"]
       visible: false
@@ -154,7 +155,7 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: PlasteelStaticMod
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -169,12 +170,9 @@
   - type: Transform
     anchored: true
   - type: IconSmooth
+    mode: CardinalFlags
+    base: shield_
     key: ame_shield
-    states:
-    - !type:DirectionSpriteSmoothing
-      mask: [ ame_shield ]
-      base: shield_
-      index: 0
   - type: AmeShield
   - type: NodeContainer
     nodes:

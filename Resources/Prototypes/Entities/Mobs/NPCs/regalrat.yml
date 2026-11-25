@@ -1,0 +1,414 @@
+- type: entity
+  name: rat king
+  id: MobRatKing
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible, BaseThirstSlowdown ]
+  description: He's da rat. He make da roolz.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/regalrat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
+  - type: TypingIndicator
+    proto: regal
+  - type: Physics
+    bodyType: KinematicController
+  - type: Puller
+    needsHands: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 230
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 12
+        Piercing: 8
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: RegalRatHunger
+      Thirst:
+        prototype: NormalSatiationThirst
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: regalrat
+        BaseUnshaded: eyes
+      Critical:
+        Base: critical
+      Dead:
+        Base: dead
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - FootstepSound
+  - type: NoSlip
+  - type: Insulated
+    coefficient: 0.5 # rat king touches more wires, see?
+  - type: Rummager
+  - type: RatKing
+    hungerPerArmyUse: 25
+    hungerPerDomainUse: 50
+  - type: MobsterAccent
+  - type: Speech
+    speechVerb: SmallMob
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingHeadHatFancyCrown #how did that get there?
+      amount: 1
+  - type: MobPrice
+    price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - NamesRegalratKingdom
+    - NamesRegalratTitle
+    nameFormat: name-format-regal-rat
+  - type: NameIdentifier
+    group: null  # Strips the numeric identifier from the rat king's name, since they already have randomly-generated names anyway
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+  - type: Tool
+    qualities: [ Slicing ]
+
+- type: entity
+  id: MobRatKingBuff
+  parent: MobRatKing
+  suffix: Buff
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/buffrat.rsi
+    scale: 1.2, 1.2
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 66 #oof ouch owie my bones
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.7
+      250: 0.5
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+
+- type: entity
+  name: rat servant
+  id: MobRatServant
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable, BaseThirstSlowdown ]
+  description: He's da mini rat. He don't make da roolz.
+  categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 3.5
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: RatServantCompound
+    blackboard:
+      IdleRange: !type:Single
+        3.5
+      FollowCloseRange: !type:Single
+        2.0
+      FollowRange: !type:Single
+        3.0
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/rat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: rat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: rat-moving
+    noMovementLayers:
+      movement:
+        state: rat
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 30 #Bulky by mouse standards...
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Critical
+      30: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 60
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+  - type: Stamina
+    baseCritThreshold: 60
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+        Piercing: 3
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: RegalRatHunger
+      Thirst:
+        prototype: NormalSatiationThirst
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: rat
+        BaseUnshaded: eyes
+      Critical:
+        Base: dead
+      Dead:
+        Base: splat
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatRat
+      amount: 1
+  - type: Vocal
+    emoteSounds: Mouse
+    wilhelmProbability: 0.001
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - FootstepSound
+  - type: NoSlip
+  - type: Insulated
+    coefficient: 0.2 # they don't make da roolz, but they sneaky
+  - type: MobPrice
+    price: 500 # rat wealth
+  - type: MobsterAccent
+    isBoss: false
+  - type: Speech
+    speechVerb: SmallMob
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
+
+- type: entityTable
+  id: RatKingLoot
+  table: !type:GroupSelector
+    children:
+    - id: RandomSpawner100
+      weight: 66
+    - id: FoodCheese
+      weight: 28
+    - id: IngotGold1
+      weight: 5
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingRaiseArmy
+  name: Raise Army
+  description: Spend some hunger to summon an allied rat to help defend you.
+  components:
+  - type: Action
+    useDelay: 4
+  - type: Sprite
+    sprite: Interface/Actions/actions_rat_king.rsi
+    layers:
+    - state: ratKingArmy
+  - type: InstantAction
+    event: !type:RatKingRaiseArmyActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingDomain
+  name: Rat King's Domain
+  description: Spend some hunger to release a cloud of ammonia into the air.
+  components:
+  - type: Action
+    useDelay: 6
+  - type: Sprite
+    sprite: Interface/Actions/actions_rat_king.rsi
+    layers:
+    - state: ratKingDomain
+  - type: InstantAction
+    event: !type:RatKingDomainActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderStay
+  name: Stay
+  description: Command your army to stand in place.
+  components:
+  - type: Action
+    useDelay: 1
+    priority: 5
+  - type: Sprite
+    sprite: Interface/Actions/actions_rat_king.rsi
+    layers:
+    - state: stayOff
+      map: ["enum.ActionVisuals.Icon"]
+    - state: stay
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: InstantAction
+    event: !type:RatKingOrderActionEvent
+      type: Stay
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderFollow
+  name: Follow
+  description: Command your army to follow you around.
+  components:
+  - type: Action
+    useDelay: 1
+    priority: 6
+  - type: Sprite
+    sprite: Interface/Actions/actions_rat_king.rsi
+    layers:
+    - state: followOff
+      map: ["enum.ActionVisuals.Icon"]
+    - state: follow
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: InstantAction
+    event: !type:RatKingOrderActionEvent
+      type: Follow
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderCheeseEm
+  name: Cheese 'Em
+  description: Command your army to attack whoever you point at.
+  components:
+  - type: Action
+    useDelay: 1
+    priority: 7
+  - type: Sprite
+    sprite: Interface/Actions/actions_rat_king.rsi
+    layers:
+    - state: attackOff
+      map: ["enum.ActionVisuals.Icon"]
+    - state: attack
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: InstantAction
+    event: !type:RatKingOrderActionEvent
+      type: CheeseEm
+
+- type: entity
+  parent: BaseAction
+  id: ActionRatKingOrderLoose
+  name: Loose
+  description: Command your army to act at their own will.
+  components:
+  - type: Action
+    useDelay: 1
+    priority: 8
+  - type: Sprite
+    sprite: Interface/Actions/actions_rat_king.rsi
+    layers:
+    - state: looseOff
+      map: ["enum.ActionVisuals.Icon"]
+    - state: loose
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: InstantAction
+    event:
+      !type:RatKingOrderActionEvent
+      type: Loose

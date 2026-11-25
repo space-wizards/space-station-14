@@ -3,10 +3,16 @@ using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Movement.Systems;
 
-public abstract partial class SharedSpriteMovementSystem : EntitySystem
+public abstract class SharedSpriteMovementSystem : EntitySystem
 {
-    [SubscribeLocalEvent]
-    protected virtual void OnSpriteMoveInput(Entity<SpriteMovementComponent> ent, ref SpriteMoveEvent args)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SpriteMovementComponent, SpriteMoveEvent>(OnSpriteMoveInput);
+    }
+
+    private void OnSpriteMoveInput(Entity<SpriteMovementComponent> ent, ref SpriteMoveEvent args)
     {
         if (ent.Comp.IsMoving == args.IsMoving)
             return;

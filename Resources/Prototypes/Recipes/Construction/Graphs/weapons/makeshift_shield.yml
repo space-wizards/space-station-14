@@ -1,4 +1,4 @@
-- type: constructionGraph
+﻿- type: constructionGraph
   id: MakeshiftShield
   start: start
   graph:
@@ -10,7 +10,7 @@
               amount: 5
               doAfter: 2
             - material: Steel
-              amount: 10
+              amount: 5
               doAfter: 2
 
     - node: makeshiftShield

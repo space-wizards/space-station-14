@@ -1,4 +1,4 @@
-# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_snack.yml
+﻿# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_snack.yml
 # Base
 
 - type: entity
@@ -13,9 +13,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
-  - type: Tag
-    tags:
-    - FinishedMeal
 
 # Ice-cream
 
@@ -98,9 +95,8 @@
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
-    - Creamsicle
-    - FinishedMeal
     - Fruit
+    - Creamsicle
 
 - type: entity
   name: berry creamsicle
@@ -119,9 +115,8 @@
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
-    - Creamsicle
-    - FinishedMeal
     - Fruit
+    - Creamsicle
 
 - type: entity
   name: jumbo ice-cream
@@ -202,7 +197,6 @@
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
-    - FinishedMeal
     - Fruit
 
 - type: entity
@@ -220,7 +214,6 @@
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
-    - FinishedMeal
     - Fruit
 
 - type: entity

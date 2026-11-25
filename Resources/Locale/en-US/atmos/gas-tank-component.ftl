@@ -1,4 +1,4 @@
-### GasTankComponent stuff.
+﻿### GasTankComponent stuff.
 
 # Examine text showing pressure in tank.
 comp-gas-tank-examine = Pressure: [color=orange]{PRESSURE($pressure)}[/color].

@@ -10,10 +10,6 @@
     - SolutionCube
   - type: RefillableSolution
     solution: cube
-  - type: DrawableSolution
-    solution: cube
-  - type: InjectableSolution
-    solution: cube
   - type: Reactive
     reactions:
     - reagents: [Water]
@@ -161,18 +157,6 @@
 
 - type: entity
   parent: RehydratableAnimalCube
-  id: SlimeCube
-  name: slime cube
-  description: Just add water, carefully, they're sensitive to it.
-  components:
-  - type: Rehydratable
-    possibleSpawns:
-    - MobAdultSlimesYellow
-    - MobAdultSlimesBlue
-    - MobAdultSlimesGreen
-
-- type: entity
-  parent: RehydratableAnimalCube
   id: SpaceCarpCube
   name: carp cube
   description: Just add water! At your own risk.
@@ -215,7 +199,7 @@
         reagent: Blood
         solution: cube
   - type: Rehydratable
-    catalysts: [Blood] # blood is fuel
+    catalyst: Blood # blood is fuel
     possibleSpawns:
     - MobAbomination
 

@@ -206,7 +206,6 @@ namespace Content.Server.Construction
                         break;
 
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                        var toFind = arbitraryStep.Amount;
                         foreach (var entity in new HashSet<EntityUid>(EnumerateNearby(user)))
                         {
                             if (!arbitraryStep.EntityValid(entity, EntityManager, Factory))
@@ -229,12 +228,8 @@ namespace Content.Server.Construction
                             else if (!_container.Insert(entity, GetContainer(arbitraryStep.Store)))
                                 continue;
 
-                            used.Add(entity);
-                            toFind--;
-                            if (toFind > 0)
-                                continue;
-
                             handled = true;
+                            used.Add(entity);
                             break;
                         }
 

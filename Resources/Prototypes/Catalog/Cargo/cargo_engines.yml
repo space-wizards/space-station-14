@@ -94,6 +94,6 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     state: grounding_rod
   product: CrateEngineeringTeslaGroundingRod
-  cost: 600
+  cost: 400
   category: cargoproduct-category-name-engineering
   group: market

@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
@@ -12,6 +12,7 @@ using Robust.Server.Player;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
+[TestFixture]
 [TestOf(typeof(AdminLogSystem))]
 public sealed class AddTests : GameTest
 {
@@ -24,7 +25,7 @@ public sealed class AddTests : GameTest
 
     [SidedDependency(Side.Server)] private readonly IAdminLogManager _sAdminLogManager = null!;
     [SidedDependency(Side.Server)] private readonly IServerDbManager _sDbManager = null!;
-    [SidedDependency(Side.Server)] private readonly ServerGameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Server)] private readonly GameTicker _sGameTicker = null!;
     [SidedDependency(Side.Server)] private readonly IPlayerManager _sPlayerManager = null!;
 
     [Test]
@@ -32,8 +33,8 @@ public sealed class AddTests : GameTest
     {
         var guid = Guid.NewGuid();
 
-        await CreateTestMap();
-        var coordinates = TestMap.GridCoords;
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
         await Server.WaitPost(() =>
         {
             var entity = SSpawnAtPosition(null, coordinates);
@@ -69,8 +70,8 @@ public sealed class AddTests : GameTest
     {
         var guid = Guid.NewGuid();
 
-        await CreateTestMap();
-        var coordinates = TestMap.GridCoords;
+        var testMap = await Pair.CreateTestMap();
+        var coordinates = testMap.GridCoords;
         await Server.WaitPost(() =>
         {
             var entity = SSpawnAtPosition(null, coordinates);
@@ -121,8 +122,8 @@ public sealed class AddTests : GameTest
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        await CreateTestMap();
-        var coordinates = TestMap.GridCoords;
+        var testMap = await Pair.CreateTestMap();
+        var coordinates = testMap.GridCoords;
         await Server.WaitPost(() =>
         {
             var entity = SSpawnAtPosition(null, coordinates);
@@ -237,7 +238,7 @@ public sealed class PreRoundAddTests : GameTest
 
     [SidedDependency(Side.Server)] private readonly IAdminLogManager _sAdminLogManager = null!;
     [SidedDependency(Side.Server)] private readonly IServerDbManager _sDbManager = null!;
-    [SidedDependency(Side.Server)] private readonly ServerGameTicker _sGameTicker = null!;
+    [SidedDependency(Side.Server)] private readonly GameTicker _sGameTicker = null!;
 
     [Test]
     public async Task PreRoundAddAndGetSingle()

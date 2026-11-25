@@ -1,4 +1,4 @@
-namespace Content.Shared.Chat;
+﻿namespace Content.Shared.Chat;
 
 public static class ChatChannelExtensions
 {

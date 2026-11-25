@@ -1,5 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
-using Content.Client.Stylesheets.Palette;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
@@ -29,10 +29,10 @@ public sealed partial class BatteryMenu : FancyWindow
     // Colors used for the storage cell bar graphic.
     private static readonly Color[] StorageColors =
     [
-        Palettes.Status.Critical,
+        StyleNano.DangerousRedFore,
         Color.FromHex("#C49438"),
         Color.FromHex("#B3BF28"),
-        Palettes.Status.Good
+        StyleNano.GoodGreenFore,
     ];
 
     // StorageColors but dimmed for "off" bars.
@@ -91,8 +91,8 @@ public sealed partial class BatteryMenu : FancyWindow
 
         InitChargeMeter();
 
-        InBreaker.OnToggled += args => OnInBreaker?.Invoke(args.Pressed);
-        OutBreaker.OnToggled += args => OnOutBreaker?.Invoke(args.Pressed);
+        InBreaker.StateChanged += val => OnInBreaker?.Invoke(val);
+        OutBreaker.StateChanged += val => OnOutBreaker?.Invoke(val);
 
         ChargeRateSlider.OnValueChanged += _ =>
         {
@@ -160,8 +160,8 @@ public sealed partial class BatteryMenu : FancyWindow
         SetPowerLineState(DischargePowerLine, storageDelta < 0);
 
         // Update breakers.
-        InBreaker.Pressed = msg.CanCharge;
-        OutBreaker.Pressed = msg.CanDischarge;
+        InBreaker.IsOn = msg.CanCharge;
+        OutBreaker.IsOn = msg.CanDischarge;
 
         // Update various power values.
         InValue.Text = FormatPower(inValue);

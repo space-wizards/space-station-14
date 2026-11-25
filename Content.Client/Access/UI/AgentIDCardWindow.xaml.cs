@@ -143,7 +143,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
             Access = AccessLevel.Public,
             Group = buttonGroup,
             ToggleMode = true,
-            StyleClasses = { ContainerButton.StyleClassButton, StyleClass.ButtonOpenBoth },
+            StyleClasses = { StyleClass.ButtonOpenBoth },
             Margin = new Thickness(8, 2)
         };
 

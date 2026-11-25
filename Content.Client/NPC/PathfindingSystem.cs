@@ -254,7 +254,7 @@ namespace Content.Client.NPC
                                 text.AppendLine(flagStr);
                             }
 
-                            screenHandle.DrawString(_font, mousePos.Position, text.ToString(), 1, Color.White, TextOutline.Default);
+                            screenHandle.DrawString(_font, mousePos.Position, text.ToString());
                             found = true;
                             break;
                         }
@@ -551,9 +551,6 @@ namespace Content.Client.NPC
 
                 foreach (var route in _system.Routes)
                 {
-                    if (route.Message.Costs.Values.Count == 0)
-                        continue;
-
                     var highestGScore = route.Message.Costs.Values.Max();
 
                     foreach (var (node, cost) in route.Message.Costs)
@@ -573,6 +570,8 @@ namespace Content.Client.NPC
                     }
                 }
             }
+
+            worldHandle.SetTransform(Matrix3x2.Identity);
         }
     }
 }

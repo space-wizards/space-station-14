@@ -2,10 +2,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen.Components;
 
-/// <summary>
-/// Applied to entities that have access to secret microwave recipes.
-/// See: <see cref="MicrowaveMealRecipePrototype.SecretRecipe"/>
-/// </summary>
 [RegisterComponent]
 public sealed partial class FoodRecipeProviderComponent : Component
 {
@@ -13,5 +9,5 @@ public sealed partial class FoodRecipeProviderComponent : Component
     /// These are additional recipes that the entity is capable of cooking.
     /// </summary>
     [DataField, ViewVariables]
-    public List<ProtoId<MicrowaveMealRecipePrototype>> ProvidedRecipes = new();
+    public List<ProtoId<FoodRecipePrototype>> ProvidedRecipes = new();
 }

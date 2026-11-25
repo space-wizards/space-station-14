@@ -24,8 +24,7 @@
     - Bartender
     - Drinks
   - type: StealTarget
-    stealGroup:
-    - BoozeDispenser
+    stealGroup: BoozeDispenser
 
 - type: entity
   id: BoozeDispenser
@@ -36,16 +35,12 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: DrinkAbsintheBottleFull
         - id: DrinkAleBottleFullGrowler
         - id: DrinkBeerGrowler
-        - id: DrinkBlueCuracaoBottleFull
-        - id: DrinkChampagneBottleFull
         - id: DrinkCoffeeLiqueurBottleFull
         - id: DrinkCognacBottleFull
         - id: DrinkGinBottleFull
         - id: DrinkMeadJug
-        - id: DrinkMelonLiquorBottleFull
         - id: DrinkRumBottleFull
         - id: DrinkTequilaBottleFull
         - id: DrinkVermouthBottleFull

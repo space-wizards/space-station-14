@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chat;
+using Content.Shared.Station;
 using Content.Shared.CCVar;
-using Content.Shared.Station.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -18,12 +18,12 @@ public sealed partial class AlertLevelSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChatSystem _chat = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private SharedStationSystem _station = default!;
 
-    // Absolute worst case fallbacks.
-    private static string _fallbackAlertName = "generic-unknown-title";
-    private static string _fallbackAlertAnnouncement = "alert-level-unknown-announcement";
-    private static string _fallbackAlertInstructions = "alert-level-unknown-instructions";
+    private static string _fallbackAlertKey = "alert-level-unknown";
+    private static string _fallbackAlertName = $"{_fallbackAlertKey}";
+    private static string _fallbackAlertAnnouncement = $"{_fallbackAlertKey}";
+    private static string _fallbackAlertInstructions = $"{_fallbackAlertKey}";
 
     public override void Update(float time)
     {

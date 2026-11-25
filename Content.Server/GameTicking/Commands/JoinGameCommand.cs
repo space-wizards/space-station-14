@@ -47,8 +47,8 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _entManager.System<ServerGameTicker>();
-            var stationJobs = _entManager.System<ServerStationJobsSystem>();
+            var ticker = _entManager.System<GameTicker>();
+            var stationJobs = _entManager.System<StationJobsSystem>();
 
             if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             {

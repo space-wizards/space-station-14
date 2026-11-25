@@ -1,18 +1,16 @@
+using Content.Shared.DeviceNetwork.Components;
+
 namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
 /// Sent to the sending entity before broadcasting network packets to recipients
 /// </summary>
-[ByRefEvent]
-public record struct BeforeBroadcastAttemptEvent
+public sealed class BeforeBroadcastAttemptEvent : CancellableEntityEventArgs
 {
-    public readonly IReadOnlySet<Device> Recipients;
+    public readonly IReadOnlySet<DeviceNetworkComponent> Recipients;
+    public HashSet<DeviceNetworkComponent>? ModifiedRecipients;
 
-    public HashSet<Device>? ModifiedRecipients;
-
-    public bool Cancelled = false;
-
-    public BeforeBroadcastAttemptEvent(IReadOnlySet<Device> recipients)
+    public BeforeBroadcastAttemptEvent(IReadOnlySet<DeviceNetworkComponent> recipients)
     {
         Recipients = recipients;
     }

@@ -1,23 +1,21 @@
-using Content.Shared.DeviceNetwork;
-using Content.Shared.Medical.SuitSensors;
+﻿using Content.Shared.Medical.SuitSensor;
+using Robust.Shared.Map;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
-/// <summary>
-/// Stores suit sensor status received by a crew monitoring server.
-/// </summary>
 [RegisterComponent]
 [Access(typeof(CrewMonitoringServerSystem))]
 public sealed partial class CrewMonitoringServerComponent : Component
 {
-    /// <summary>
-    /// List of all currently connected sensors to this server.
-    /// </summary>
-    public readonly Dictionary<DeviceAddress, SuitSensorStatus> SensorStatus = new();
 
     /// <summary>
-    /// How long without an update before a sensor is considered lost, in seconds.
+    ///     List of all currently connected sensors to this server.
     /// </summary>
-    [DataField]
+    public readonly Dictionary<string, SuitSensorStatus> SensorStatus = new();
+
+    /// <summary>
+    ///     After what time sensor consider to be lost.
+    /// </summary>
+    [DataField("sensorTimeout"), ViewVariables(VVAccess.ReadWrite)]
     public float SensorTimeout = 10f;
 }

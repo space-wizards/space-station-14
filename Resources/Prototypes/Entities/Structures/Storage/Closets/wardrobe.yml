@@ -1,16 +1,16 @@
 # Base
 - type: entity
-  abstract: true
-  parent: ClosetSteelBase
   id: WardrobeBase
+  parent: ClosetSteelBase
+  abstract: true
   description: It's a storage unit for standard-issue Nanotrasen attire.
 
 # Colored
 
 # Blue wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobeBlue
+  parent: WardrobeBase
   name: blue wardrobe
   description: "A wardrobe packed with stylish blue clothing."
   components:
@@ -22,8 +22,8 @@
 
 # Pink wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobePink
+  parent: WardrobeBase
   name: pink wardrobe
   description: "A wardrobe packed with fabulous pink clothing."
   components:
@@ -35,8 +35,8 @@
 
 # Black wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobeBlack
+  parent: WardrobeBase
   name: black wardrobe
   description: "A wardrobe packed with stylish black clothing."
   components:
@@ -48,8 +48,8 @@
 
 # Green wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobeGreen
+  parent: WardrobeBase
   name: green wardrobe
   description: "A wardrobe packed with stylish green clothing."
   components:
@@ -61,8 +61,8 @@
 
 # Prison wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobePrison
+  parent: WardrobeBase
   name: prison wardrobe
   components:
   - type: Appearance
@@ -73,8 +73,8 @@
 
 # Yellow wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobeYellow
+  parent: WardrobeBase
   name: yellow wardrobe
   description: "A wardrobe packed with stylish yellow clothing."
   components:
@@ -86,8 +86,8 @@
 
 # White wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobeWhite
+  parent: WardrobeBase
   name: white wardrobe
   description: "A wardrobe packed with stylish white clothing."
   components:
@@ -99,8 +99,8 @@
 
 # Grey wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobeGrey
+  parent: WardrobeBase
   name: grey wardrobe
   description: "A wardrobe packed with a tide of grey clothing."
   components:
@@ -112,8 +112,8 @@
 
 # Mixed wardrobe
 - type: entity
-  parent: WardrobeBase
   id: WardrobeMixed
+  parent: WardrobeBase
   name: mixed wardrobe
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
@@ -126,8 +126,8 @@
 # Jobs
 
 - type: entity
-  parent: WardrobeBase
   id: WardrobeSecurity
+  parent: WardrobeBase
   name: security wardrobe
   components:
   - type: Appearance
@@ -137,8 +137,8 @@
     stateDoorClosed: red_door
 
 - type: entity
-  parent: WardrobeBase
   id: WardrobeAtmospherics
+  parent: WardrobeBase
   name: atmospherics wardrobe
   components:
   - type: Appearance
@@ -148,82 +148,82 @@
     stateDoorClosed: atmos_wardrobe_door
 
 - type: entity
-  parent: WardrobeMixed
   id: ClosetJanitor
+  parent: WardrobeMixed
   name: custodial closet
   description: It's a storage unit for janitorial clothes and gear.
 
 - type: entity
-  parent: WardrobeBlack
   id: WardrobeFormal
+  parent: WardrobeBlack
   name: formal closet
   description: It's a storage unit for formal clothing.
 
 - type: entity
-  parent: WardrobeBlack
   id: ClosetChef
+  parent: WardrobeBlack
   name: chef's closet
   description: It's a storage unit for foodservice garments and mouse traps.
 
 - type: entity
-  parent: WardrobeBlack
   id: WardrobeChapel
+  parent: WardrobeBlack
   name: chaplain's wardrobe
   description: It's a storage unit for Nanotrasen-approved religious attire.
 
 - type: entity
-  parent: WardrobeBlue
   id: ClosetLegal
+  parent: WardrobeBlue
   name: legal closet
   description: It's a storage unit for courtroom apparel and items.
 
 - type: entity
-  parent: WardrobePrison
   id: WardrobeCargo
+  parent: WardrobePrison
   name: cargo wardrobe
 
 - type: entity
-  parent: WardrobeMixed
   id: WardrobeSalvage
+  parent: WardrobeMixed
   name: salvage wardrobe
   description: Notably not salvaged.
 
 - type: entity
-  parent: WardrobeYellow
   id: WardrobeEngineering
+  parent: WardrobeYellow
   name: engineering wardrobe
 
 - type: entity
-  parent: WardrobeWhite
   id: WardrobeMedicalDoctor
+  parent: WardrobeWhite
   name: medical doctor's wardrobe
 
 - type: entity
-  parent: WardrobeBlack
   id: WardrobeRobotics
+  parent: WardrobeBlack
   name: robotics wardrobe
 
 - type: entity
-  parent: WardrobeWhite
   id: WardrobeChemistry
+  parent: WardrobeWhite
   name: chemistry wardrobe
 
 - type: entity
-  parent: WardrobeWhite
   id: WardrobeGenetics
+  parent: WardrobeWhite
   name: genetics wardrobe
 
 - type: entity
-  parent: WardrobeWhite
   id: WardrobeVirology
+  parent: WardrobeWhite
   name: virology wardrobe
 
 - type: entity
-  parent: WardrobeWhite
   id: WardrobeScience
+  parent: WardrobeWhite
   name: science wardrobe
 
 - type: entity
-  parent: WardrobeGreen
   id: WardrobeBotanist
+  parent: WardrobeGreen
   name: botanist wardrobe

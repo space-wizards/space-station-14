@@ -1,11 +1,22 @@
 - type: constructionGraph
-  id: !type:CreateVariants
-    values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
+  id: GasBinary
   start: start
   graph:
   - node: start
     edges:
     - to: pressurepump
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pressurepumpAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pressurepumpAlt2
       steps:
       - material: Steel
         amount: 2
@@ -17,7 +28,31 @@
         amount: 2
         doAfter: 1
 
+    - to: volumepumpAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: volumepumpAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
     - to: passivegate
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: passivegateAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: passivegateAlt2
       steps:
       - material: Steel
         amount: 2
@@ -29,13 +64,49 @@
         amount: 2
         doAfter: 1
 
+    - to: valveAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: valveAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
     - to: signalvalve
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
 
+    - to: signalvalveAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: signalvalveAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
     - to: pressureregulator
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pressureregulatorAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pressureregulatorAlt2
       steps:
       - material: Steel
         amount: 2
@@ -66,8 +137,39 @@
         doAfter: 1
 
   - node: pressurepump
-    entity: !type:CreateVariants
-      values: [ GasPressurePump, GasPressurePumpAlt1, GasPressurePumpAlt2 ]
+    entity: GasPressurePump
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pressurepumpAlt1
+    entity: GasPressurePumpAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pressurepumpAlt2
+    entity: GasPressurePumpAlt2
     edges:
     - to: start
       conditions:
@@ -83,8 +185,39 @@
         doAfter: 1
 
   - node: volumepump
-    entity: !type:CreateVariants
-      values: [ GasVolumePump, GasVolumePumpAlt1, GasVolumePumpAlt2 ]
+    entity: GasVolumePump
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: volumepumpAlt1
+    entity: GasVolumePumpAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: volumepumpAlt2
+    entity: GasVolumePumpAlt2
     edges:
     - to: start
       conditions:
@@ -100,8 +233,39 @@
         doAfter: 1
 
   - node: passivegate
-    entity: !type:CreateVariants
-      values: [ GasPassiveGate, GasPassiveGateAlt1, GasPassiveGateAlt2 ]
+    entity: GasPassiveGate
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: passivegateAlt1
+    entity: GasPassiveGateAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: passivegateAlt2
+    entity: GasPassiveGateAlt2
     edges:
     - to: start
       conditions:
@@ -117,8 +281,39 @@
         doAfter: 1
 
   - node: valve
-    entity: !type:CreateVariants
-      values: [ GasValve, GasValveAlt1, GasValveAlt2 ]
+    entity: GasValve
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: valveAlt1
+    entity: GasValveAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: valveAlt2
+    entity: GasValveAlt2
     edges:
     - to: start
       conditions:
@@ -134,8 +329,39 @@
         doAfter: 1
 
   - node: signalvalve
-    entity: !type:CreateVariants
-      values: [ SignalControlledValve, SignalControlledValveAlt1, SignalControlledValveAlt2 ]
+    entity: SignalControlledValve
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: signalvalveAlt1
+    entity: SignalControlledValveAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: signalvalveAlt2
+    entity: SignalControlledValveAlt2
     edges:
     - to: start
       conditions:
@@ -151,8 +377,39 @@
         doAfter: 1
 
   - node: pressureregulator
-    entity: !type:CreateVariants
-      values: [ GasPressureRegulator, GasPressureRegulatorAlt1, GasPressureRegulatorAlt2 ]
+    entity: GasPressureRegulator
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pressureregulatorAlt1
+    entity: GasPressureRegulatorAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pressureregulatorAlt2
+    entity: GasPressureRegulatorAlt2
     edges:
     - to: start
       conditions:
@@ -168,8 +425,7 @@
         doAfter: 1
 
   - node: port
-    entity: !type:CreateVariants
-      values: [ GasPort, GasPortAlt1, GasPortAlt2 ]
+    entity: GasPort
     edges:
     - to: start
       conditions:
@@ -185,8 +441,7 @@
         doAfter: 1
 
   - node: dualportventpump
-    entity: !type:CreateVariants
-      values: [ GasDualPortVentPump, GasDualPortVentPumpAlt1, GasDualPortVentPumpAlt2 ]
+    entity: GasDualPortVentPump
     edges:
     - to: start
       conditions:

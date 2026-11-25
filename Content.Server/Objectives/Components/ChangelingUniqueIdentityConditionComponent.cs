@@ -7,11 +7,4 @@ namespace Content.Server.Objectives.Components;
 /// Depends on <see cref="NumberObjectiveComponent"/> to function.
 /// </summary>
 [RegisterComponent, Access(typeof(ChangelingObjectiveSystem))]
-public sealed partial class ChangelingUniqueIdentityConditionComponent : Component
-{
-    /// <summary>
-    /// Whether this objective requires identities to have been gained via devouring.
-    /// </summary>
-    [DataField]
-    public bool RequireDevour;
-}
+public sealed partial class ChangelingUniqueIdentityConditionComponent : Component;

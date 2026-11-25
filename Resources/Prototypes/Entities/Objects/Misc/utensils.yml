@@ -20,7 +20,6 @@
     price: 0
   - type: Tag
     tags:
-    - Dinnerware
     - Plastic
     - Trash
   - type: MeleeWeapon
@@ -38,7 +37,7 @@
   components:
   - type: Tag
     tags:
-    - Dinnerware
+    - Hoe
     - Metal
   - type: Sprite
     state: fork
@@ -72,7 +71,6 @@
   components:
   - type: Tag
     tags:
-    - Dinnerware
     - Metal
   - type: Sprite
     state: spoon
@@ -129,11 +127,10 @@
     - Knife
   - type: Tag
     tags:
-    - Dinnerware
-    - Knife
     - Plastic
-    - ToyKnife
     - Trash
+    - Knife
+    - ToyKnife
   - type: Fixtures
     fixtures:
       fix1:

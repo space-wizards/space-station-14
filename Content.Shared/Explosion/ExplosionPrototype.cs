@@ -1,4 +1,3 @@
-using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -107,13 +106,13 @@ public sealed partial class ExplosionPrototype : IPrototype
 /// <summary>
 /// Secondary sound that will be projected farther than normal sound.
 /// </summary>
-    [DataField("soundFar"), AllowStereo]
+    [DataField("soundFar")]
     public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.AddVolume(2f));
 
     /// <summary>
     /// Secondary sound that will be projected farther than normal sound for a small explosion.
     /// </summary>
-    [DataField("smallSoundFar"), AllowStereo]
+    [DataField("smallSoundFar")]
     public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.AddVolume(2f));
 
     /// <summary>

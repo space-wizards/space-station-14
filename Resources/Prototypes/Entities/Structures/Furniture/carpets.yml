@@ -11,11 +11,8 @@
   - type: Icon
     state: full
   - type: IconSmooth
-    key: carpet
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ carpet ]
-      base: carpet_
+    key: full
+    base: carpet_
   - type: Tag
     tags:
     - Carpet
@@ -29,8 +26,6 @@
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 5
-        mask:
-        - LowImpassable
         layer:
         - DoorPassable
   - type: Damageable
@@ -268,11 +263,10 @@
     sprite: Structures/Furniture/Carpets/card_carpet.rsi
     state: full
   - type: IconSmooth
-    key: cardpet
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ cardpet, cards ]
-      base: carpet_
+    key: cardpets
+    additionalKeys:
+    - cards
+    base: carpet_
   - type: Tag
     tags:
     - Carpet

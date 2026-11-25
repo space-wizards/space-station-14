@@ -1,4 +1,4 @@
-using Content.Shared.Codewords;
+using Content.Server.Codewords;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Components;

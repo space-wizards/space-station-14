@@ -22,9 +22,9 @@ public sealed partial class BotanySeedSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery;
-    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery;
-    [Dependency] private EntityQuery<PaperLabelComponent> _labelQuery;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PaperLabelComponent> _labelQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<SeedComponent> ent, ref AfterInteractEvent args)
@@ -39,23 +39,12 @@ public sealed partial class BotanySeedSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPlantAnalyzerAttempt(Entity<SeedComponent> ent, ref PlantAnalyzerAttemptEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.PlantData = ent.Comp.PlantData;
-        args.PlantProtoId = ent.Comp.PlantProtoId;
-        args.Handled = true;
-    }
-
-    [SubscribeLocalEvent]
     private void OnPlantingSeedAttempt(Entity<PlantTrayComponent> ent, ref PlantingSeedAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (_plantTray.HasPlant(ent.AsNullable()))
+        if (_plantTray.TryGetPlant(ent.AsNullable(), out _))
         {
             _popup.PopupCursor(
                 Loc.GetString("plant-component-already-seeded-popup", ("name", MetaData(ent.Owner).EntityName)),
@@ -75,13 +64,14 @@ public sealed partial class BotanySeedSystem : EntitySystem
         _popup.PopupCursor(Loc.GetString("plant-component-plant-success-popup",
                 ("seedName", name),
                 ("seedNoun", noun)),
-            args.User);
+            args.User,
+            PopupType.Medium);
 
         if (_labelQuery.TryComp(args.Seed, out var paperLabel))
             _itemSlots.TryEjectToHands(args.Seed, paperLabel.LabelSlot, args.User);
 
         _plantTray.PlantingPlantInTray(ent.Owner, plantUid, args.Seed.Comp.HealthOverride);
-        QueueDel(args.Seed);
+        PredictedQueueDel(args.Seed);
 
         if (plantData.PlantLogImpact != null)
         {

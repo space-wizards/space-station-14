@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -12,12 +13,13 @@ public sealed partial class DeviceFrequencyPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     // TODO Somehow Allow per-station or some other type of named but randomized frequencies?
-    [DataField(required: true)]
-    public ushort Frequency;
+    [DataField("frequency", required: true)]
+    public uint Frequency;
 
     /// <summary>
     ///     Optional name for this frequency, for displaying in game.
     /// </summary>
-    [DataField]
-    public LocId? Name;
+    [DataField("name")]
+    public string? Name;
+
 }

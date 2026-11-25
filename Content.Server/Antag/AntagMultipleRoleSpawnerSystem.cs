@@ -1,5 +1,4 @@
 using Content.Server.Antag.Components;
-using Content.Shared.Antag;
 using Robust.Shared.Random;
 
 namespace Content.Server.Antag;

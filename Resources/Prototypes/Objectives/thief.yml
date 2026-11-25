@@ -76,17 +76,6 @@
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
-  id: HeadHardsuitStealCollectionObjective
-  components:
-  - type: StealCondition
-    stealGroup: HeadHardsuit
-    minCollectionSize: 1
-    maxCollectionSize: 2
-  - type: Objective
-    difficulty: 3
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
   id: StampStealCollectionObjective
   components:
   - type: StealCondition

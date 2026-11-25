@@ -1,4 +1,5 @@
-using Content.Shared.Movement.Pulling.Systems;
+using Content.Shared.Pulling;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
@@ -7,10 +8,15 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class PulledPrecondition : HTNPrecondition
 {
-    [Dependency] private PullingSystem _pulling = default!;
+    private PullingSystem _pulling = default!;
 
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("isPulled")]
-    public bool IsPulled = true;
+    [ViewVariables(VVAccess.ReadWrite)] [DataField("isPulled")] public bool IsPulled = true;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _pulling = sysManager.GetEntitySystem<PullingSystem>();
+    }
 
     public override bool IsMet(NPCBlackboard blackboard)
     {

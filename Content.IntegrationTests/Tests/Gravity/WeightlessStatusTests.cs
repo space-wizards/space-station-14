@@ -1,26 +1,21 @@
-#nullable enable
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
-using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.Gravity;
 using Content.Shared.Alert;
 using Content.Shared.Gravity;
 using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests.Gravity;
-
-[TestOf(typeof(GravitySystem))]
-[TestOf(typeof(GravityGeneratorComponent))]
-public sealed class WeightlessStatusTests : GameTest
+namespace Content.IntegrationTests.Tests.Gravity
 {
-    private const string HumanWeightlessDummy = "HumanWeightlessDummy";
-    private const string WeightlessGravityGeneratorDummy = "WeightlessGravityGeneratorDummy";
-
-    [TestPrototypes]
-    private const string Prototypes = $@"
+    [TestFixture]
+    [TestOf(typeof(GravitySystem))]
+    [TestOf(typeof(GravityGeneratorComponent))]
+    public sealed class WeightlessStatusTests : GameTest
+    {
+        [TestPrototypes]
+        private const string Prototypes = @"
 - type: entity
-  name: {HumanWeightlessDummy}
-  id: {HumanWeightlessDummy}
+  name: HumanWeightlessDummy
+  id: HumanWeightlessDummy
   components:
   - type: Alerts
   - type: Physics
@@ -28,8 +23,8 @@ public sealed class WeightlessStatusTests : GameTest
   - type: GravityAffected
 
 - type: entity
-  name: {WeightlessGravityGeneratorDummy}
-  id: {WeightlessGravityGeneratorDummy}
+  name: WeightlessGravityGeneratorDummy
+  id: WeightlessGravityGeneratorDummy
   components:
   - type: GravityGenerator
   - type: PowerCharge
@@ -41,53 +36,57 @@ public sealed class WeightlessStatusTests : GameTest
     needsPower: false
   - type: UserInterface
 ";
-
-    [SidedDependency(Side.Server)] private AlertsSystem _sAlertsSystem = default!;
-
-    [Test]
-    public async Task WeightlessStatusTest()
-    {
-        var weightlessAlert = SharedGravitySystem.WeightlessAlert;
-        EntityUid human = default;
-
-        await CreateTestMap();
-
-        await Server.WaitAssertion(() =>
+        [Test]
+        public async Task WeightlessStatusTest()
         {
-            human = SSpawnAtPosition(HumanWeightlessDummy, TestMap.GridCoords);
+            var pair = Pair;
+            var server = pair.Server;
 
-            Assert.That(human, Has.Comp<AlertsComponent>(Server));
-        });
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
+            var weightlessAlert = SharedGravitySystem.WeightlessAlert;
 
-        // Let WeightlessSystem and GravitySystem tick
-        await RunTicksSync(10);
-        var generatorUid = EntityUid.Invalid;
-        await Server.WaitAssertion(() =>
-        {
-            // No gravity without a gravity generator
-            Assert.That(_sAlertsSystem.IsShowingAlert(human, weightlessAlert));
+            EntityUid human = default;
 
-            generatorUid = SSpawnAtPosition(WeightlessGravityGeneratorDummy, SComp<TransformComponent>(human).Coordinates);
-        });
+            var testMap = await pair.CreateTestMap();
 
-        // Let WeightlessSystem and GravitySystem tick
-        await RunTicksSync(10);
+            await server.WaitAssertion(() =>
+            {
+                human = entityManager.SpawnEntity("HumanWeightlessDummy", testMap.GridCoords);
 
-        await Server.WaitAssertion(() =>
-        {
-            Assert.That(_sAlertsSystem.IsShowingAlert(human, weightlessAlert), Is.False);
+                Assert.That(entityManager.TryGetComponent(human, out AlertsComponent alerts));
+            });
 
-            // This should kill gravity
-            SDeleteNow(generatorUid);
-        });
+            // Let WeightlessSystem and GravitySystem tick
+            await pair.RunTicksSync(10);
+            var generatorUid = EntityUid.Invalid;
+            await server.WaitAssertion(() =>
+            {
+                // No gravity without a gravity generator
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert));
 
-        await RunTicksSync(10);
+                generatorUid = entityManager.SpawnEntity("WeightlessGravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
+            });
 
-        await Server.WaitAssertion(() =>
-        {
-            Assert.That(_sAlertsSystem.IsShowingAlert(human, weightlessAlert));
-        });
+            // Let WeightlessSystem and GravitySystem tick
+            await pair.RunTicksSync(10);
 
-        await RunTicksSync(10);
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert), Is.False);
+
+                // This should kill gravity
+                entityManager.DeleteEntity(generatorUid);
+            });
+
+            await pair.RunTicksSync(10);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert));
+            });
+
+            await pair.RunTicksSync(10);
+        }
     }
 }

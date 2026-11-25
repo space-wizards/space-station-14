@@ -14,10 +14,8 @@ public sealed partial class PlantTraitLigneousComponent : PlantTraitsComponent
     /// Tool quality that required if plant should be harvested with specified tool.
     /// </summary>
     [DataField]
-    public ProtoId<ToolQualityPrototype> HarvestToolQuality = "Sawing";
+    public ProtoId<ToolQualityPrototype>? HarvestToolQuality = "Sawing";
 
     /// <inheritdoc/>
-    public override LocId? TraitState { get; set; } = "mutation-plant-description-ligneous";
-    /// <inheritdoc/>
-    public override LocId? TraitName { get; set; } = "mutation-plant-noun-ligneous";
+    public override LocId? TraitState { get; set; } = "mutation-plant-ligneous";
 }

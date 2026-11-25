@@ -48,7 +48,7 @@ public sealed partial class PlantComponent : Component
     public float Maturation;
 
     /// <summary>
-    /// The number of growth ticks it takes for a plant to be (re-)harvestable.
+    /// The number of growth ticks it takes for a plant to be (re-)harvestable. Shouldn't be lower than <see cref="Maturation"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Production;

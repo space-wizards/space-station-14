@@ -79,7 +79,7 @@ public sealed partial class ElectrocutionHUDVisualizerSystem : VisualizerSystem<
         if (args.Sprite == null)
             return;
 
-        if (!args.TryGetData<bool>(ElectrifiedVisuals.IsElectrified, out var electrified))
+        if (!AppearanceSystem.TryGetData<bool>(uid, ElectrifiedVisuals.IsElectrified, out var electrified, args.Component))
             return;
 
         var player = _playerMan.LocalEntity;

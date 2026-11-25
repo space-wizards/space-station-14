@@ -10,6 +10,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Decals;
 
@@ -23,24 +24,23 @@ public sealed partial class DecalSystem : SharedDecalSystem
 
     [Dependency] private EntityQuery<MapGridComponent> _gridQuery;
 
-    private static readonly Vector2 BoundsMinExpansion = new(0.01f, 0.01f);
-    private static readonly Vector2 BoundsMaxExpansion = new(1.01f, 1.01f);
+    private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
+    private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+        SubscribeLocalEvent<DecalGridComponent, ComponentStartup>(OnLegacyDecalGridStartup);
         SubscribeLocalEvent<BeforeSerializationEvent>(OnBeforeSerialization);
         SubscribeLocalEvent<PostGridSplitEvent>(OnGridSplit);
     }
 
-    [SubscribeLocalEvent]
-    [Obsolete("Uses obsolete DecalGridComponent.")]
-    private void OnLegacyDecalGridStartup(Entity<DecalGridComponent> ent, ref ComponentStartup args)
+    private void OnLegacyDecalGridStartup(EntityUid uid, DecalGridComponent component, ComponentStartup args)
     {
-        MigrateLegacyDecalGrid(ent);
-        RemCompDeferred(ent, ent.Comp);
+        MigrateLegacyDecalGrid(uid, component);
+        RemCompDeferred(uid, component);
     }
 
     private void OnBeforeSerialization(BeforeSerializationEvent ev)
@@ -56,14 +56,12 @@ public sealed partial class DecalSystem : SharedDecalSystem
 
         foreach (var uid in ev.Entities)
         {
-#pragma warning disable CS0618 // DecalGridComponent compatibility behaviour.
             if (!TryComp<DecalGridComponent>(uid, out var component))
                 continue;
 
-            MigrateLegacyDecalGrid((uid, component));
+            MigrateLegacyDecalGrid(uid, component);
             RemComp(uid, component);
             migrated.Add(uid);
-#pragma warning restore CS0618
         }
 
         foreach (var uid in migrated)
@@ -75,15 +73,14 @@ public sealed partial class DecalSystem : SharedDecalSystem
         }
     }
 
-    [Obsolete("Uses obsolete DecalGridComponent.")]
-    private void MigrateLegacyDecalGrid(Entity<DecalGridComponent> ent)
+    private void MigrateLegacyDecalGrid(EntityUid uid, DecalGridComponent component)
     {
         // Old maps store grid-wide decal chunks; convert them into chunk entities and remove the legacy component.
-        foreach (var chunk in ent.Comp.ChunkCollection.ChunkCollection.Values)
+        foreach (var chunk in component.ChunkCollection.ChunkCollection.Values)
         {
             foreach (var (id, decal) in chunk.Decals)
             {
-                AddDecalWithId(ent, id, decal);
+                AddDecalWithId(uid, id, decal);
             }
         }
     }
@@ -96,10 +93,10 @@ public sealed partial class DecalSystem : SharedDecalSystem
         var moved = new HashSet<DecalIndex>();
         var toMove = new List<(DecalIndex Id, Decal Decal)>();
 
-        foreach (var tile in _mapSystem.GetAllTiles(ev.Grid, grid))
+        foreach (var tile in _mapSystem.GetAllTilesEnumerator(ev.Grid, grid))
         {
-            var tilePos = (Vector2)tile.GridIndices;
-            var bounds = new Box2(tilePos - BoundsMinExpansion, tilePos + BoundsMaxExpansion);
+            var tilePos = (Vector2) tile.GridIndices;
+            var bounds = new Box2(tilePos - _boundsMinExpansion, tilePos + _boundsMaxExpansion);
 
             foreach (var (id, decal) in GetDecalsIntersecting(ev.OldGrid, bounds))
             {
@@ -127,7 +124,7 @@ public sealed partial class DecalSystem : SharedDecalSystem
             if (!_turf.IsSpace(change.NewTile))
                 continue;
 
-            var tilePos = (Vector2)change.GridIndices;
+            var tilePos = (Vector2) change.GridIndices;
             var bounds = new Box2(tilePos, tilePos + Vector2.One);
 
             foreach (var (id, _) in GetDecalsIntersecting(args.Entity, bounds))
@@ -374,7 +371,7 @@ public sealed partial class DecalSystem : SharedDecalSystem
                 if (chunk.Comp2.MaxDecalId >= DecalChunkComponent.MaxServerDecalId)
                     break;
 
-                next = (ushort)(chunk.Comp2.MaxDecalId + 1);
+                next = (ushort) (chunk.Comp2.MaxDecalId + 1);
             }
 
             if (chunk.Comp2.Decals.ContainsKey(next))

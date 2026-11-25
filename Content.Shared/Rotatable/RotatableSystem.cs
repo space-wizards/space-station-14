@@ -3,7 +3,6 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -19,7 +18,6 @@ namespace Content.Shared.Rotatable;
 public sealed partial class RotatableSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -64,7 +62,6 @@ public sealed partial class RotatableSystem : EntitySystem
         if (!args.CanAccess
             || !args.CanInteract
             || !args.CanComplexInteract
-            || _container.IsEntityInContainer(uid) // No point in rotating items in an inventory
             || Transform(uid).NoLocalRotation) // Good ol prototype inheritance, eh?
             return;
 

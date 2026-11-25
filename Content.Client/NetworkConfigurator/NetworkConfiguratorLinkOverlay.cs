@@ -1,6 +1,5 @@
-using Content.Shared.DeviceConfigurator.Components;
-using Content.Shared.DeviceConfigurator.Systems;
-using Robust.Client.GameObjects;
+using Content.Client.NetworkConfigurator.Systems;
+using Content.Shared.DeviceNetwork.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -56,7 +55,7 @@ public sealed partial class NetworkConfiguratorLinkOverlay : Overlay
                 continue;
             }
 
-            foreach (var device in _deviceListSystem.GetAllDevices((uid, deviceList)))
+            foreach (var device in _deviceListSystem.GetAllDevices(uid, deviceList))
             {
                 if (_entityManager.Deleted(device))
                 {

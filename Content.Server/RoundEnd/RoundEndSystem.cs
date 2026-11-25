@@ -4,19 +4,20 @@ using Content.Shared.AlertLevel;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Shared.DeviceNetwork.Systems;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.RoundEnd;
 using Content.Shared.Station.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -33,11 +34,11 @@ namespace Content.Server.RoundEnd
         [Dependency] private IChatManager _chatManager = default!;
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private ChatSystem _chatSystem = default!;
-        [Dependency] private ServerGameTicker _gameTicker = default!;
+        [Dependency] private GameTicker _gameTicker = default!;
         [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private EmergencyShuttleSystem _shuttle = default!;
         [Dependency] private SharedAudioSystem _audio = default!;
-        [Dependency] private ServerStationSystem _stationSystem = default!;
+        [Dependency] private StationSystem _stationSystem = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
 
@@ -97,7 +98,7 @@ namespace Content.Server.RoundEnd
         }
 
         /// <summary>
-        ///     Attempts to get the MapUid of the station using <see cref="ServerStationSystem.GetLargestGrid"/>
+        ///     Attempts to get the MapUid of the station using <see cref="StationSystem.GetLargestGrid"/>
         /// </summary>
         public EntityUid? GetStation()
         {
@@ -222,16 +223,16 @@ namespace Content.Server.RoundEnd
             var shuttle = _shuttle.GetShuttle();
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
-                var payload = new ScreenShuttlePayload
+                var payload = new NetworkPayload
                 {
-                    Shuttle = shuttle,
-                    SourceMap = GetCentcomm(),
-                    DestinationMap = GetStation(),
-                    ShuttleTime = countdownTime,
-                    SourceTime = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
-                    DestinationTime = countdownTime,
+                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
+                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
+                    [ShuttleTimerMasks.DestMap] = GetStation(),
+                    [ShuttleTimerMasks.ShuttleTime] = countdownTime,
+                    [ShuttleTimerMasks.SourceTime] = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
+                    [ShuttleTimerMasks.DestTime] = countdownTime,
                 };
-                _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.TransmitFrequency);
+                _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
         }
 
@@ -270,16 +271,16 @@ namespace Content.Server.RoundEnd
             var shuttle = _shuttle.GetShuttle();
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
-                var payload = new ScreenShuttlePayload
+                var payload = new NetworkPayload
                 {
-                    Shuttle = shuttle,
-                    SourceMap = GetCentcomm(),
-                    DestinationMap = GetStation(),
-                    ShuttleTime = zero,
-                    SourceTime = zero,
-                    DestinationTime = zero,
+                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
+                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
+                    [ShuttleTimerMasks.DestMap] = GetStation(),
+                    [ShuttleTimerMasks.ShuttleTime] = zero,
+                    [ShuttleTimerMasks.SourceTime] = zero,
+                    [ShuttleTimerMasks.DestTime] = zero,
                 };
-                _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.TransmitFrequency);
+                _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
         }
 
@@ -393,5 +394,23 @@ namespace Content.Server.RoundEnd
     public sealed class RoundEndSystemChangedEvent : EntityEventArgs
     {
         public static RoundEndSystemChangedEvent Default { get; } = new();
+    }
+
+    public enum RoundEndBehavior : byte
+    {
+        /// <summary>
+        /// Instantly end round
+        /// </summary>
+        InstantEnd,
+
+        /// <summary>
+        /// Call shuttle with custom announcement
+        /// </summary>
+        ShuttleCall,
+
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        Nothing
     }
 }

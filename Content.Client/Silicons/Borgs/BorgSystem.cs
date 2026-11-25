@@ -1,4 +1,4 @@
-using Content.Shared.Alert;
+﻿using Content.Shared.Alert;
 using Content.Shared.Mobs;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
@@ -93,43 +93,28 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _sprite.LayerSetRsiState((ent.Owner, ent.Comp3), BorgVisualLayers.Light, hasPlayer ? ent.Comp1.HasMindState : ent.Comp1.NoMindState);
     }
 
-    private void OnMMIAppearanceChanged(Entity<MMIComponent> ent, ref AppearanceChangeEvent args)
+    private void OnMMIAppearanceChanged(EntityUid uid, MMIComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
+        var sprite = args.Sprite;
 
-        if (!args.TryGetData(MMIVisuals.BrainPresent, out bool brain))
+        if (!_appearance.TryGetData(uid, MMIVisuals.BrainPresent, out bool brain))
             brain = false;
-        if (!args.TryGetData(MMIVisuals.HasMind, out bool hasMind))
+        if (!_appearance.TryGetData(uid, MMIVisuals.HasMind, out bool hasMind))
             hasMind = false;
 
-        var lightColor = Color.White;
-        var lightVisible = false;
-        var spriteEnt = (ent.Owner, args.Sprite);
-
-        _sprite.LayerSetVisible(spriteEnt, MMIVisualLayers.Brain, brain);
+        _sprite.LayerSetVisible((uid, sprite), MMIVisualLayers.Brain, brain);
         if (!brain)
         {
-            _sprite.LayerSetRsiState(spriteEnt, MMIVisualLayers.Base, ent.Comp.NoBrainState);
+            _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, component.NoBrainState);
         }
         else
         {
             var state = hasMind
-                ? ent.Comp.HasMindState
-                : ent.Comp.NoMindState;
-            _sprite.LayerSetRsiState(spriteEnt, MMIVisualLayers.Base, state);
-
-            lightColor = hasMind
-                ? ent.Comp.HasMindLightColor
-                : ent.Comp.NoMindLightColor;
-            lightVisible = true;
-        }
-
-        // Update color if it exists.
-        if (_sprite.LayerMapTryGet(spriteEnt, MMIVisualLayers.Unlit, out var layerIndex, logMissing: false))
-        {
-            _sprite.LayerSetVisible(spriteEnt, layerIndex, lightVisible);
-            _sprite.LayerSetColor(spriteEnt, layerIndex, lightColor);
+                ? component.HasMindState
+                : component.NoMindState;
+            _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, state);
         }
     }
 

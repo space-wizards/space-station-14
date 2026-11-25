@@ -1,4 +1,4 @@
-using Robust.Client.GameObjects;
+﻿using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.MapRenderer.Painters;

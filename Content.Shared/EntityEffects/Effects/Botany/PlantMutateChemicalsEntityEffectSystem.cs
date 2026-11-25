@@ -16,7 +16,8 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {
-        _plantChemicals.MutateRandomChemical(entity.Owner, args.Effect.RandomChemTables);
+        var randomChems = ProtoMan.Index(args.Effect.RandomPickBotanyReagent);
+        _plantChemicals.MutateRandomChemical(entity.Owner, randomChems);
     }
 }
 
@@ -24,10 +25,10 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
 public sealed partial class PlantMutateChemicals : EntityEffectBase<PlantMutateChemicals>
 {
     /// <summary>
-    /// Chemical tables from which this mutation can select.
+    /// The Reagent list this mutation draws from.
     /// </summary>
-    [DataField(required: true)]
-    public List<ProtoId<WeightedRandomFillSolutionPrototype>> RandomChemTables = [];
+    [DataField]
+    public ProtoId<WeightedRandomFillSolutionPrototype> RandomPickBotanyReagent = "RandomPickBotanyReagent";
 
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
@@ -35,20 +36,17 @@ public sealed partial class PlantMutateChemicals : EntityEffectBase<PlantMutateC
         var list = new List<string>();
 
         // If your table doesn't exist, no guidebook for you!
-        foreach (var tableId in RandomChemTables)
+        if (!prototype.Resolve(RandomPickBotanyReagent, out var table))
+            return string.Empty;
+
+        foreach (var fill in table.Fills)
         {
-            if (!prototype.Resolve(tableId, out var table))
-                continue;
-
-            foreach (var fill in table.Fills)
+            foreach (var reagent in fill.Reagents)
             {
-                foreach (var reagent in fill.Reagents)
-                {
-                    if (!prototype.Resolve(reagent, out var reagentPrototype))
-                        continue;
+                if (!prototype.Resolve(reagent, out var proto))
+                    continue;
 
-                    list.Add(reagentPrototype.LocalizedName);
-                }
+                list.Add(proto.LocalizedName);
             }
         }
 

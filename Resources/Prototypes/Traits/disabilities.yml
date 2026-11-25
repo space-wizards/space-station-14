@@ -108,13 +108,3 @@
   category: Disabilities
   components:
     - type: ImpairedMobility
-
-- type: trait
-  id: BlinkDyspraxia
-  name: trait-blink-dyspraxia-name
-  description: trait-blink-dyspraxia-desc
-  category: Disabilities
-  specials:
-  - !type:ApplyStatusEffectSpecial
-    statusEffects:
-    - TraitStatusEffectBlinkDyspraxia

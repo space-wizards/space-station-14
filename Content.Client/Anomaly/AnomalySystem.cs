@@ -46,10 +46,10 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (args.Sprite is not { } sprite)
             return;
 
-        if (!args.TryGetData<bool>(AnomalyVisuals.IsPulsing, out var pulsing))
+        if (!Appearance.TryGetData<bool>(uid, AnomalyVisuals.IsPulsing, out var pulsing, args.Component))
             pulsing = false;
 
-        if (args.TryGetData<bool>(AnomalyVisuals.Supercritical, out var super) && super)
+        if (Appearance.TryGetData<bool>(uid, AnomalyVisuals.Supercritical, out var super, args.Component) && super)
             pulsing = super;
 
         if (HasComp<AnomalySupercriticalComponent>(uid))

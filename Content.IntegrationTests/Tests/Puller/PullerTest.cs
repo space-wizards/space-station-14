@@ -1,6 +1,7 @@
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -35,7 +36,7 @@ public sealed class PullerTest : GameTest
                     if (!puller.NeedsHands)
                         continue;
 
-                    Assert.That(proto.HasComp<HandsComponent>(compFactory), $"Found puller {proto} with NeedsHand pulling but has no hands?");
+                    Assert.That(proto.HasComponent<HandsComponent>(compFactory), $"Found puller {proto} with NeedsHand pulling but has no hands?");
                 }
             });
         });

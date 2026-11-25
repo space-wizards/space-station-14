@@ -1,4 +1,4 @@
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 
@@ -17,7 +17,7 @@ public sealed partial class EmoteEntityEffectSystem : EntityEffectSystem<MetaDat
         if (args.Effect.ShowInChat)
             _chat.TryEmoteWithChat(entity, args.Effect.EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: args.Effect.Force);
         else
-            _chat.TryEmoteWithChat(entity, args.Effect.EmoteId, ChatTransmitRange.HideChat, forceEmote: args.Effect.Force);
+            _chat.TryEmoteWithoutChat(entity, args.Effect.EmoteId);
     }
 }
 
@@ -34,7 +34,7 @@ public sealed partial class Emote : EntityEffectBase<Emote>
     ///     If the emote should be recorded in chat.
     /// </summary>
     [DataField]
-    public bool ShowInChat = false;
+    public bool ShowInChat;
 
     /// <summary>
     ///     If the forced emote will be listed in the guidebook.

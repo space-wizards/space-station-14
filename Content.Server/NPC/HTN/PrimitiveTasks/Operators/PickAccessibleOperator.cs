@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 public sealed partial class PickAccessibleOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private PathfindingSystem _pathfinding = default!;
+    private PathfindingSystem _pathfinding = default!;
 
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
@@ -24,6 +24,12 @@ public sealed partial class PickAccessibleOperator : HTNOperator
     /// </summary>
     [DataField("pathfindKey")]
     public string PathfindKey = NPCBlackboard.PathfindKey;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
+    }
 
     /// <inheritdoc/>
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,

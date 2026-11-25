@@ -308,10 +308,6 @@
 - type: entity
   parent: [ OrganVulpkaninVisual, OrganBaseEyes, OrganVulpkaninInternal ]
   id: OrganVulpkaninEyes
-  components:
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Vulpkanin/parts.rsi
-  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseTongue, OrganVulpkaninInternal ]

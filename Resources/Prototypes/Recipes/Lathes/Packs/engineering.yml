@@ -22,7 +22,6 @@
   - HandheldStationMap
   - ClothingHeadHatWelding
   - ClothingHeadHatCone
-  - Binoculars
 
 - type: latheRecipePack
   id: AtmosStatic

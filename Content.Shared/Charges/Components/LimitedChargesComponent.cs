@@ -1,5 +1,4 @@
 using Content.Shared.Charges.Systems;
-using Content.Shared.Popups;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -16,12 +15,6 @@ public sealed partial class LimitedChargesComponent : Component
     /// </summary>
     [DataField]
     public LocId? OnFailPopup;
-
-    /// <summary>
-    /// The type the fail popup should show up as.
-    /// </summary>
-    [DataField]
-    public PopupType OnFailPopupType = PopupType.SmallCaution;
 
     [DataField, AutoNetworkedField]
     public int LastCharges;

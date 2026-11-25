@@ -149,7 +149,9 @@
     noRot: true
     anchored: true
   - type: Sprite
-    sprite: Fluids/puddle.rsi
+    layers:
+    - sprite: Fluids/puddle.rsi
+      state: splat0
     drawdepth: Puddles
     color: "#FFFFFF80"
   - type: Physics
@@ -167,11 +169,10 @@
         hard: false
   - type: IconSmooth
     key: puddles
-    enabled: false # Let bum ass puddle system update this.
-    states:
-    - !type:DirectionSpriteSmoothing
-      mask: [ walls, windows, marble, puddles ]
-      base: splat
+    additionalKeys:
+    - walls
+    base: splat
+    mode: CardinalFlags
   - type: Puddle
   - type: Solution
     id: puddle

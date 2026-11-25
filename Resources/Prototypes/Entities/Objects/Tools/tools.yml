@@ -163,11 +163,11 @@
   - type: UserInterface
     interfaces:
       enum.NetworkConfiguratorUiKey.List:
-        type: NetworkConfiguratorListBoundUserInterface
+        type: NetworkConfiguratorBoundUserInterface
       enum.NetworkConfiguratorUiKey.Configure:
         type: NetworkConfiguratorBoundUserInterface
       enum.NetworkConfiguratorUiKey.Link:
-        type: NetworkConfiguratorLinkBoundUserInterface
+        type: NetworkConfiguratorBoundUserInterface
   - type: Tag
     tags:
       - Multitool
@@ -225,11 +225,11 @@
     - type: UserInterface
       interfaces:
         enum.NetworkConfiguratorUiKey.List:
-          type: NetworkConfiguratorListBoundUserInterface
+          type: NetworkConfiguratorBoundUserInterface
         enum.NetworkConfiguratorUiKey.Configure:
           type: NetworkConfiguratorBoundUserInterface
         enum.NetworkConfiguratorUiKey.Link:
-          type: NetworkConfiguratorLinkBoundUserInterface
+          type: NetworkConfiguratorBoundUserInterface
     - type: StaticPrice
       price: 56
     - type: GuideHelp

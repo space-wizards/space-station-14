@@ -93,7 +93,7 @@
 - type: entity
   id: BriefcaseWeaponChinaLakeFilled
   parent: BriefcaseWeapon
-  name: secure China Lake case
+  name: secure china lake case
   components:
   - type: EntityTableContainerFill
     containers:

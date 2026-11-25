@@ -143,7 +143,7 @@ public abstract partial class SharedSubdermalImplantSystem : EntitySystem
             return;
 
         _container.Remove(implant, target.Comp.ImplantContainer);
-        QueueDel(implant);
+        PredictedQueueDel(implant);
     }
 
     /// <summary>

@@ -1,5 +1,5 @@
 <BoxContainer xmlns="https://spacestation14.io"
-              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
               Orientation="Horizontal"
               Margin="10 10 10 10"
               VerticalExpand="True"
@@ -11,7 +11,11 @@
         <!-- Populated with C# code -->
     </BoxContainer>
 
-    <controls:Separator StyleClasses="LowDivider" VerticalExpand="True" SetWidth="2" Orientation="Vertical" MinHeight="2" ColorOverride="#FFFFFF"/>
+    <PanelContainer StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#FFFFFF" />
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
 
     <!-- Access levels -->
     <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="10 0 0 0">

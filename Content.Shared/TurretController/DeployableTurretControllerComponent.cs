@@ -1,5 +1,4 @@
 using Content.Shared.Access;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Turrets;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -20,7 +19,7 @@ public sealed partial class DeployableTurretControllerComponent : Component
     /// This is used to populate the controller UI with the address and state of linked turrets.
     /// </summary>
     [ViewVariables]
-    public Dictionary<LocDeviceAddress, DeployableTurretState> LinkedTurrets = new();
+    public Dictionary<string, DeployableTurretState> LinkedTurrets = new();
 
     /// <summary>
     /// The last armament state index applied to any linked turrets.
@@ -58,9 +57,9 @@ public sealed partial class DeployableTurretControllerComponent : Component
 [Serializable, NetSerializable]
 public sealed class DeployableTurretControllerBoundInterfaceState : BoundUserInterfaceState
 {
-    public Dictionary<LocDeviceAddress, string> TurretStateByAddress;
+    public Dictionary<string, string> TurretStateByAddress;
 
-    public DeployableTurretControllerBoundInterfaceState(Dictionary<LocDeviceAddress, string> turretStateByAddress)
+    public DeployableTurretControllerBoundInterfaceState(Dictionary<string, string> turretStateByAddress)
     {
         TurretStateByAddress = turretStateByAddress;
     }

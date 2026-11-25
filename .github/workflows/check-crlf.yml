@@ -1,4 +1,4 @@
-name: CRLF Check
+﻿name: CRLF Check
 
 on:
   pull_request:

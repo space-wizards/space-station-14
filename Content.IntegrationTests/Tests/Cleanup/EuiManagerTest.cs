@@ -1,7 +1,5 @@
-#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
 using Robust.Server.Player;
@@ -10,25 +8,28 @@ namespace Content.IntegrationTests.Tests.Cleanup;
 
 public sealed class EuiManagerTest : GameTest
 {
-    public override PoolSettings PoolSettings => new()
+    public override PoolSettings PoolSettings => new PoolSettings
     {
         Connected = true,
         Dirty = true
     };
-
-    [SidedDependency(Side.Server)] private IPlayerManager _sPlayerManager = null!;
-    [SidedDependency(Side.Server)] private EuiManager _sEuiManager = null!;
 
     [Test]
     [Retry(2)]
     // Even though we are using the server EUI here, we actually want to see if the client EUIManager crashes
     public async Task EuiManagerRecycleWithOpenWindowTest()
     {
-        await Server.WaitAssertion(() =>
+        var pair = Pair;
+        var server = pair.Server;
+
+        var sPlayerManager = server.ResolveDependency<IPlayerManager>();
+        var eui = server.ResolveDependency<EuiManager>();
+
+        await server.WaitAssertion(() =>
         {
-            var clientSession = _sPlayerManager.Sessions.Single();
+            var clientSession = sPlayerManager.Sessions.Single();
             var ui = new AdminAnnounceEui();
-            _sEuiManager.OpenEui(ui, clientSession);
+            eui.OpenEui(ui, clientSession);
         });
 
         await RunUntilSynced();

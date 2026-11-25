@@ -1,4 +1,4 @@
-using Content.Shared.DeviceNetwork;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
@@ -17,14 +17,14 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
     /// <summary>
     /// Map of device network addresses to cyborg data.
     /// </summary>
-    public Dictionary<LocDeviceAddress, CyborgControlData> Cyborgs;
+    public Dictionary<string, CyborgControlData> Cyborgs;
 
     /// <summary>
     /// If the UI will have the buttons to disable and destroy.
     /// </summary>
     public bool AllowBorgControl;
 
-    public RoboticsConsoleState(Dictionary<LocDeviceAddress, CyborgControlData> cyborgs, bool allowBorgControl)
+    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs, bool allowBorgControl)
     {
         Cyborgs = cyborgs;
         AllowBorgControl = allowBorgControl;
@@ -37,9 +37,9 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class RoboticsConsoleDisableMessage : BoundUserInterfaceMessage
 {
-    public readonly DeviceAddress Address;
+    public readonly string Address;
 
-    public RoboticsConsoleDisableMessage(DeviceAddress address)
+    public RoboticsConsoleDisableMessage(string address)
     {
         Address = address;
     }
@@ -51,9 +51,9 @@ public sealed class RoboticsConsoleDisableMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 {
-    public readonly DeviceAddress Address;
+    public readonly string Address;
 
-    public RoboticsConsoleDestroyMessage(DeviceAddress address)
+    public RoboticsConsoleDestroyMessage(string address)
     {
         Address = address;
     }
@@ -136,21 +136,12 @@ public partial record struct CyborgControlData
     }
 }
 
-/// <summary>
-/// Disables a borg when received.
-/// </summary>
-public partial record struct RoboticsCyborgDisablePayload : INetworkPayload;
-
-/// <summary>
-/// Destroys a borg when received.
-/// </summary>
-public partial record struct RoboticsCyborgDestroyPayload : INetworkPayload;
-
-/// <summary>
-/// A wrapper for <see cref="CyborgControlData"/>
-/// </summary>
-public partial record struct RoboticsCyborgDataPayload : INetworkPayload
+public static class RoboticsConsoleConstants
 {
-    [DataField]
-    public CyborgControlData Data;
+    // broadcast by cyborgs on Robotics Console frequency
+    public const string NET_CYBORG_DATA = "cyborg-data";
+
+    // sent by robotics console to cyborgs on Cyborg Control frequency
+    public const string NET_DISABLE_COMMAND = "cyborg-disable";
+    public const string NET_DESTROY_COMMAND = "cyborg-destroy";
 }

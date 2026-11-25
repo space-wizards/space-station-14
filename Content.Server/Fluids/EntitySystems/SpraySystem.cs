@@ -5,6 +5,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
+using Content.Shared.Timing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -12,7 +13,6 @@ using Robust.Shared.Physics.Components;
 using System.Numerics;
 using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Fluids.Components;
-using Content.Shared.Timing.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -190,6 +190,6 @@ public sealed partial class SpraySystem : SharedSpraySystem
         audioParams = audioParams.WithVariation(0.125f);
         _audio.PlayPvs(entity.Comp.SpraySound, entity, audioParams);
 
-        _useDelay.TryResetDelay(entity.Owner);
+        _useDelay.TryResetDelay(entity);
     }
 }

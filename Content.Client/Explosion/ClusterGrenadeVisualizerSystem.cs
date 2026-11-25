@@ -1,3 +1,4 @@
+using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
 using Robust.Client.GameObjects;
 
@@ -10,7 +11,7 @@ public sealed partial class ClusterGrenadeVisualizerSystem : VisualizerSystem<Cl
         if (args.Sprite == null)
             return;
 
-        if (args.TryGetData<int>(ClusterGrenadeVisuals.GrenadesCounter, out var grenadesCounter))
+        if (AppearanceSystem.TryGetData<int>(uid, ClusterGrenadeVisuals.GrenadesCounter, out var grenadesCounter, args.Component))
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, $"{comp.State}-{grenadesCounter}");
     }
 }

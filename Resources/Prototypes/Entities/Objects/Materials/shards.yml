@@ -1,12 +1,9 @@
 - type: entity
   abstract: true
-  parent: [SolutionCryo, SolutionCompositeNormalStackable, BaseItem, BaseItemDestructible]
+  parent: MaterialBase
   id: ShardBase
   description: It's a shard of some unknown material.
   components:
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: composite
   - type: Tool
     qualities:
     - Slicing
@@ -88,9 +85,6 @@
   - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 50
   - type: DamageOnTrigger
     damage:
       types:
@@ -125,10 +119,6 @@
     refineResult:
     - id: SheetGlass1
     - id: PartRodMetal1
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 50
-      Steel: 25
   - type: DamageOnTrigger
     damage:
       types:
@@ -166,10 +156,6 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetPlasma1
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 50
-      Plasma: 50
   - type: DamageOnTrigger
     damage:
       types:
@@ -206,10 +192,6 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetUranium1
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 50
-      Uranium: 50
   - type: DamageOnTrigger
     damage:
       types:
@@ -242,10 +224,6 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetBrass1
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 50
-      Brass: 50
   - type: DamageOnTrigger
     damage:
       types:

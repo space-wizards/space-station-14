@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Mind;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -119,25 +119,18 @@ public abstract partial class SharedStoreSystem
             if (listing.Conditions != null)
             {
                 var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
-                var locked = false;
-                var failed = false;
+                var conditionsMet = true;
 
                 foreach (var condition in listing.Conditions)
                 {
                     if (!condition.Condition(args))
                     {
-                        if (condition.Lock)
-                            locked = true;
-                        else
-                            failed = true;
-
+                        conditionsMet = false;
                         break;
                     }
                 }
 
-                listing.Locked = locked && !failed;
-
-                if (failed)
+                if (!conditionsMet)
                     continue;
             }
 

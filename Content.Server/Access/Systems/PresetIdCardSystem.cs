@@ -1,20 +1,25 @@
 using Content.Server.Access.Components;
+using Content.Server.GameTicking;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
-using Content.Shared.GameTicking;
-using Content.Shared.Station.Components;
+using Content.Shared.Roles;
 
 namespace Content.Server.Access.Systems;
 
 public sealed partial class PresetIdCardSystem : EntitySystem
 {
-    [Dependency] private IdCardSystem _card = default!;
-    [Dependency] private SharedAccessSystem _access = default!;
-    [Dependency] private ServerStationSystem _station = default!;
+    [Dependency] private IdCardSystem _cardSystem = default!;
+    [Dependency] private SharedAccessSystem _accessSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
 
-    [Dependency] private EntityQuery<StationJobsComponent> _stationJobsQuery;
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<PresetIdCardComponent, MapInitEvent>(OnMapInit);
 
-    [SubscribeLocalEvent]
+        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(PlayerJobsAssigned);
+    }
+
     private void PlayerJobsAssigned(RulePlayerJobsAssignedEvent ev)
     {
         // Go over all ID cards and make sure they're correctly configured for extended access.
@@ -22,60 +27,59 @@ public sealed partial class PresetIdCardSystem : EntitySystem
         var query = EntityQueryEnumerator<PresetIdCardComponent>();
         while (query.MoveNext(out var uid, out var card))
         {
-            var station = _station.GetOwningStation(uid);
+            var station = _stationSystem.GetOwningStation(uid);
 
             // If we're not on an extended access station, the ID is already configured correctly from MapInit.
-            if (station == null || !_stationJobsQuery.TryComp(station.Value, out var jobsComp) || !jobsComp.ExtendedAccess)
+            if (station == null || !TryComp<StationJobsComponent>(station.Value, out var jobsComp) || !jobsComp.ExtendedAccess)
                 continue;
 
-            SetupIdAccess((uid, card), true);
+            SetupIdAccess(uid, card, true);
+            SetupIdName(uid, card);
         }
     }
 
-    [SubscribeLocalEvent]
-    private void OnMapInit(Entity<PresetIdCardComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(EntityUid uid, PresetIdCardComponent id, MapInitEvent args)
     {
         // If a preset ID card is spawned on a station at setup time,
         // the station may not exist,
         // or may not yet know whether it is on extended access (players not spawned yet).
         // PlayerJobsAssigned makes sure extended access is configured correctly in that case.
 
-        var station = _station.GetOwningStation(ent);
+        var station = _stationSystem.GetOwningStation(uid);
         var extended = false;
 
         // Station not guaranteed to have jobs (e.g. nukie outpost).
-        if (_stationJobsQuery.TryComp(station, out var stationJobs))
+        if (TryComp(station, out StationJobsComponent? stationJobs))
             extended = stationJobs.ExtendedAccess;
 
-        SetupIdAccess(ent, extended);
-        SetupIdName(ent);
+        SetupIdAccess(uid, id, extended);
+        SetupIdName(uid, id);
     }
 
-    private void SetupIdName(Entity<PresetIdCardComponent> ent)
+    private void SetupIdName(EntityUid uid, PresetIdCardComponent id)
     {
-        if (ent.Comp.IdName == null)
+        if (id.IdName == null)
             return;
-
-        _card.TryChangeFullName(ent, Loc.GetString(ent.Comp.IdName));
+        _cardSystem.TryChangeFullName(uid, id.IdName);
     }
 
-    private void SetupIdAccess(Entity<PresetIdCardComponent> ent, bool extended)
+    private void SetupIdAccess(EntityUid uid, PresetIdCardComponent id, bool extended)
     {
-        if (ent.Comp.JobName == null)
+        if (id.JobName == null)
             return;
 
-        if (!ProtoMan.TryIndex(ent.Comp.JobName, out var job))
+        if (!ProtoMan.TryIndex(id.JobName, out JobPrototype? job))
         {
-            Log.Error($"Invalid job id ({ent.Comp.JobName}) for preset card");
+            Log.Error($"Invalid job id ({id.JobName}) for preset card");
             return;
         }
 
-        _access.SetAccessToJob(ent, job, extended);
+        _accessSystem.SetAccessToJob(uid, job, extended);
 
-        _card.TryChangeJobTitle(ent, job.LocalizedName);
-        _card.TryChangeJobDepartment(ent, job);
+        _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
+        _cardSystem.TryChangeJobDepartment(uid, job);
 
         if (ProtoMan.Resolve(job.Icon, out var jobIcon))
-            _card.TryChangeJobIcon(ent, jobIcon);
+            _cardSystem.TryChangeJobIcon(uid, jobIcon);
     }
 }

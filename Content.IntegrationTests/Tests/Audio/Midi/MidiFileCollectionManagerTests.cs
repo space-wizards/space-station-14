@@ -1,34 +1,34 @@
-#nullable enable
+﻿#nullable enable
 
 using System.IO;
 using System.Linq;
 using Content.Client.Audio.Midi;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Audio.Midi;
 
+[TestFixture]
 public sealed partial class MidiFileCollectionManagerTests : GameTest
 {
     private static readonly byte[] TestBytes = [1, 2, 3, 4, 5, 6];
-    private static readonly ResPath TestFileName = new("unit_test.midi");
-    private static ResPath TestUserDataDir => new("/UserMidis/");
+    private static readonly ResPath TestFileName = new ResPath("unit_test.midi");
+    private static ResPath TestUserDataDir => new ResPath("/UserMidis/");
     private static ResPath TestFullPath => TestUserDataDir / TestFileName;
 
-    [SidedDependency(Side.Client)] private IResourceManager _cResManager = default!;
-    [SidedDependency(Side.Client)] private MidiFileCollectionManager _cMidiLibManager = default!;
+    private IResourceManager ResManager => Pair.Client.ResolveDependency<IResourceManager>();
+    private MidiFileCollectionManager MidiLibManager => Pair.Client.ResolveDependency<MidiFileCollectionManager>();
 
     [TearDown]
     public void CleanUserData()
     {
-        foreach (var file in _cResManager.UserData.DirectoryEntries(TestUserDataDir))
+        foreach (var file in ResManager.UserData.DirectoryEntries(TestUserDataDir))
         {
-            _cResManager.UserData.Delete(new ResPath(TestUserDataDir + file));
+            ResManager.UserData.Delete(new ResPath(TestUserDataDir + file));
         }
 
-        _cMidiLibManager.ReloadLibrary();
+        MidiLibManager.ReloadLibrary();
     }
 
     [Test]
@@ -36,14 +36,14 @@ public sealed partial class MidiFileCollectionManagerTests : GameTest
     {
         var addedFileName = new ResPath("");
         Stream stream = new MemoryStream(TestBytes);
-        _cMidiLibManager.MidiFileAdded += s => { addedFileName = s; };
+        MidiLibManager.MidiFileAdded += s => { addedFileName = s; };
 
-        await _cMidiLibManager.AddMidiFile(TestFileName, stream);
-        var outputBytes = _cResManager.UserData.ReadAllBytes(TestFullPath);
+        await MidiLibManager.AddMidiFile(TestFileName, stream);
+        var outputBytes = ResManager.UserData.ReadAllBytes(TestFullPath);
 
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(_cMidiLibManager.GetMidiFiles(), Contains.Item(TestFileName));
+            Assert.That(MidiLibManager.GetMidiFiles(), Contains.Item(TestFileName));
             Assert.That(outputBytes, Is.EqualTo(TestBytes));
             Assert.That(addedFileName, Is.EqualTo(TestFileName));
         }
@@ -52,8 +52,8 @@ public sealed partial class MidiFileCollectionManagerTests : GameTest
     [Test]
     public void TestGetMidiData()
     {
-        _cResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
-        var midiBytes = _cMidiLibManager.GetMidiData(TestFileName);
+        ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
+        var midiBytes = MidiLibManager.GetMidiData(TestFileName);
 
         Assert.That(TestBytes, Is.EqualTo(midiBytes));
     }
@@ -62,16 +62,16 @@ public sealed partial class MidiFileCollectionManagerTests : GameTest
     public void TestRemoveMidiFile()
     {
         var removedFileName = new ResPath("");
-        _cMidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
+        MidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
 
-        _cResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
-        Assert.That(_cResManager.UserData.Exists(TestFullPath), Is.True);
+        ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
+        Assert.That(ResManager.UserData.Exists(TestFullPath), Is.True);
 
-        _cMidiLibManager.RemoveMidiFile(TestFileName);
+        MidiLibManager.RemoveMidiFile(TestFileName);
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(_cResManager.UserData.Exists(TestFullPath), Is.False);
-            Assert.That(_cMidiLibManager.GetMidiFiles(), Is.Empty);
+            Assert.That(ResManager.UserData.Exists(TestFullPath), Is.False);
+            Assert.That(MidiLibManager.GetMidiFiles(), Is.Empty);
             Assert.That(removedFileName, Is.EqualTo(TestFileName));
         }
     }
@@ -81,17 +81,17 @@ public sealed partial class MidiFileCollectionManagerTests : GameTest
     {
         var resetFired = false;
 
-        _cMidiLibManager.MidiFilesReset += () => { resetFired = true; };
-        await _cMidiLibManager.AddMidiFile(new ResPath("1_unit_test.midi"), TestBytes);
-        await _cMidiLibManager.AddMidiFile(new ResPath("2_unit_test.midi"), TestBytes);
-        await _cMidiLibManager.AddMidiFile(new ResPath("3_unit_test.midi"), TestBytes);
+        MidiLibManager.MidiFilesReset += () => { resetFired = true; };
+        await MidiLibManager.AddMidiFile(new ResPath("1_unit_test.midi"), TestBytes);
+        await MidiLibManager.AddMidiFile(new ResPath("2_unit_test.midi"), TestBytes);
+        await MidiLibManager.AddMidiFile(new ResPath("3_unit_test.midi"), TestBytes);
 
-        Assert.That(_cMidiLibManager.GetMidiFiles().Count(), Is.EqualTo(3));
+        Assert.That(MidiLibManager.GetMidiFiles().Count(), Is.EqualTo(3));
 
-        _cMidiLibManager.RemoveAllMidiFiles();
+        MidiLibManager.RemoveAllMidiFiles();
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(_cMidiLibManager.GetMidiFiles(), Is.Empty);
+            Assert.That(MidiLibManager.GetMidiFiles(), Is.Empty);
             Assert.That(resetFired, Is.True);
         }
     }
@@ -103,17 +103,17 @@ public sealed partial class MidiFileCollectionManagerTests : GameTest
         var removedFileName = new ResPath("");
         var addedFileName = new ResPath("");
 
-        _cMidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
-        _cMidiLibManager.MidiFileAdded += s => { addedFileName = s; };
+        MidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
+        MidiLibManager.MidiFileAdded += s => { addedFileName = s; };
 
-        _cResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
-        Assert.That(_cResManager.UserData.Exists(TestFullPath), Is.True);
+        ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
+        Assert.That(ResManager.UserData.Exists(TestFullPath), Is.True);
 
-        _cMidiLibManager.RenameMidiFile(TestFileName, renamedFileName);
+        MidiLibManager.RenameMidiFile(TestFileName, renamedFileName);
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(_cResManager.UserData.Exists(TestUserDataDir / renamedFileName), Is.True);
-            Assert.That(_cResManager.UserData.Exists(TestFullPath), Is.False);
+            Assert.That(ResManager.UserData.Exists(TestUserDataDir / renamedFileName), Is.True);
+            Assert.That(ResManager.UserData.Exists(TestFullPath), Is.False);
             Assert.That(removedFileName, Is.EqualTo(TestFileName));
             Assert.That(addedFileName, Is.EqualTo(renamedFileName));
         }

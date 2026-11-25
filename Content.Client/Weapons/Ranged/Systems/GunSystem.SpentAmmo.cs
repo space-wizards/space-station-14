@@ -16,9 +16,12 @@ public sealed partial class GunSystem
         var sprite = args.Sprite;
         if (sprite == null) return;
 
-        if (!args.TryGetData<bool>(AmmoVisuals.Spent, out var spent))
+        if (!args.AppearanceData.TryGetValue(AmmoVisuals.Spent, out var varSpent))
+        {
             return;
+        }
 
+        var spent = (bool)varSpent;
         string state;
 
         if (spent)

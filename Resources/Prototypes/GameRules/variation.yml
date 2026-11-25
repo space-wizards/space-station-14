@@ -1,9 +1,9 @@
-# Base
+﻿# Base
 
 - type: entity
-  abstract: true
-  parent: BaseSilentGameRule
   id: BaseVariationPass
+  parent: BaseGameRule
+  abstract: true
   components:
   - type: StationVariationPassRule
 

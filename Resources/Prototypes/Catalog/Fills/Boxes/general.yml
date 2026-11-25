@@ -57,20 +57,76 @@
     - BoxHug
 
 - type: entity
+  name: lightbulb box
   parent: BoxCardboard
-  id: BoxLighttubeHoliday
-  name: holiday lighttube box
+  id: BoxLightbulb
+  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: Sprite
     layers:
-    - state: box
-    - state: light
+      - state: box
+      - state: light
   - type: Storage
     grid:
     - 0,0,5,3
     whitelist:
       components:
       - LightBulb
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: LightBulb
+        amount: 12
+
+- type: entity
+  name: lightbulb box warm
+  parent: BoxLightbulb
+  id: BoxWarmLightbulb
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: WarmLightBulb
+        amount: 12
+
+- type: entity
+  name: lighttube box
+  parent: BoxLightbulb
+  id: BoxLighttube
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: lighttube
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: LightTube
+        amount: 12
+
+- type: entity
+  name: mixed lights box
+  parent: BoxLightbulb
+  id: BoxLightMixed
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: lightmixed
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: LightTube
+          amount: 6
+        - id: LightBulb
+          amount: 6
+
+- type: entity
+  name: holiday lighttube box
+  parent: BoxLightbulb
+  id: BoxLighttubeHoliday
+  components:
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -213,9 +269,9 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: ClothingUniformJumpskirtVirtualSinger
-        - id: ClothingShoesBootsVirtualSinger
-        - id: ClothingHeadVirtualSingerWig
+        - id: ClothingShoesBootsPerformer
+        - id: ClothingUniformJumpskirtPerformer
+        - id: ClothingHeadPerformerWig
         - id: FoodMealMemoryleek
           amount: 2
 

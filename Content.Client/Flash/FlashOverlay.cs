@@ -96,6 +96,7 @@ public sealed partial class FlashOverlay : Overlay
             _shader.SetParameter("percentComplete", PercentComplete);
             worldHandle.UseShader(_shader);
             worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
+            worldHandle.UseShader(null);
         }
     }
 

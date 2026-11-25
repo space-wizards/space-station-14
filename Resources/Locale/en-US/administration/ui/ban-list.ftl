@@ -1,4 +1,4 @@
-# UI
+﻿# UI
 ban-list-bans = Bans
 ban-list-role-bans = Role Bans
 

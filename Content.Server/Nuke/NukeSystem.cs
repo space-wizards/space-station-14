@@ -1,9 +1,11 @@
+using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
-using Content.Shared.AlertLevel;
 using Content.Shared.Audio;
+using Content.Shared.AlertLevel;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
@@ -11,7 +13,6 @@ using Content.Shared.Examine;
 using Content.Shared.Kitchen;
 using Content.Shared.Maps;
 using Content.Shared.Nuke;
-using Content.Shared.Pinpointer;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -19,8 +20,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Nuke;
 
@@ -34,12 +35,12 @@ public sealed partial class NukeSystem : EntitySystem
     [Dependency] private NavMapSystem _navMap = default!;
     [Dependency] private PointLightSystem _pointLight = default!;
     [Dependency] private PopupSystem _popups = default!;
-    [Dependency] private GlobalSoundSystem _sound = default!;
+    [Dependency] private ServerGlobalSoundSystem _sound = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private ServerStationSystem _station = default!;
+    [Dependency] private StationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private TurfSystem _turf = default!;

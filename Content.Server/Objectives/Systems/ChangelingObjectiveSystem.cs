@@ -24,27 +24,15 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnChangelingGainedOrUpdatedIdentity(ref ChangelingGainedOrUpdatedIdentityEvent args)
-    {
-        if (!_mind.TryGetMind(args.Changeling, out var mind, out _))
-            return;
-        
-        EnsureComp<ChangelingMindIdentityTrackerComponent>(mind, out var tracker);
-        // Only count unique identities that the changeling didn't start as
-        if (args.NewIdentity && !args.Identity.Starting)
-            tracker.Gained++;
-    }
-
-    [SubscribeLocalEvent]
     private void OnGetUniqueIdentitiesProgress(Entity<ChangelingUniqueIdentityConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetUniqueIdentitiesProgress(args.MindId, _number.GetTarget(ent), ent.Comp.RequireDevour);
+        args.Progress = GetUniqueIdentitiesProgress(args.MindId, _number.GetTarget(ent));
     }
 
     [SubscribeLocalEvent]
-    private void OnGetMostIdentitiesProgress(Entity<ChangelingMostIdentitiesConditionComponent> ent, ref ObjectiveGetProgressEvent args)
+    private void OnGetMostIdentitiesProgress(Entity<ChangelingDevourMostConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetMostIdentitiesProgress(args.MindId, ent.Comp.RequireDevour);
+        args.Progress = GetMostIdentitiesProgress(args.MindId);
     }
 
     /// <summary>
@@ -52,7 +40,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
     /// Uses data stored on the mind.
     /// </summary>
     /// <returns>Objective progress, between 0 and 1.</returns>
-    private float GetUniqueIdentitiesProgress(EntityUid mind, int target, bool requireDevour)
+    private float GetUniqueIdentitiesProgress(EntityUid mind, int target)
     {
         // We've never actually gained an identity.
         if (!TryComp<ChangelingMindIdentityTrackerComponent>(mind, out var tracker))
@@ -62,7 +50,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         if (target == 0)
             return 1f;
 
-        var uniqueCount = requireDevour ? tracker.Devoured : tracker.Gained;
+        var uniqueCount = tracker.Devoured;
 
         if (uniqueCount >= target)
             return 1f;
@@ -71,19 +59,19 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the progress for <see cref="ChangelingMostIdentitiesConditionComponent"/> for a given mind.
+    /// Returns the progress for <see cref="ChangelingDevourMostConditionComponent"/> for a given mind.
     /// Uses data stored on the mind.
     /// </summary>
     /// <returns>Objective progress, between 0 and 1.</returns>
-    private float GetMostIdentitiesProgress(EntityUid mind, bool requireDevour)
+    private float GetMostIdentitiesProgress(EntityUid mind)
     {
         // Can't progress if we've never eaten anyone.
         if (!TryComp<ChangelingMindIdentityTrackerComponent>(mind, out var selfTracker))
             return 0f;
 
-        // We never actually gained any identities.
+        // We never actually devoured anyone.
         // We don't want to grant greentext if 0 is technically the highest.
-        if ((requireDevour ? selfTracker.Devoured : selfTracker.Gained) is var selfUniqueCount && selfUniqueCount < 1)
+        if (selfTracker.Devoured is var selfUniqueCount && selfUniqueCount < 1)
             return 0f;
 
         var query = AllEntityQuery<ChangelingMindIdentityTrackerComponent>();
@@ -96,9 +84,8 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
             if (uid == mind)
                 continue;
 
-            var trackerValue = requireDevour ? tracker.Devoured : tracker.Gained;
-            if (trackerValue > highest)
-                highest = trackerValue;
+            if (tracker.Devoured > highest)
+                highest = tracker.Devoured;
         }
 
         // No equal check. Only one can win.

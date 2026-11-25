@@ -1,4 +1,4 @@
-# Loading Screen
+﻿# Loading Screen
 
 replay-loading = Loading ({$cur}/{$total})
 replay-loading-reading = Reading Files

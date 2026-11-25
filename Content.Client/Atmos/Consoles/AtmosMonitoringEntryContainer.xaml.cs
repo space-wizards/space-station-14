@@ -1,5 +1,5 @@
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Palette;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -96,15 +96,15 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
             Loc.GetString("atmos-alerts-window-temperature-value", ("valueInC", tempC), ("valueInK", tempK)) :
             Loc.GetString("atmos-alerts-window-invalid-value");
 
-        TemperatureLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : Palettes.Neutral.Base;
+        TemperatureLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : StyleNano.DisabledFore;
 
         // Update pressure
         PressureLabel.Text = Loc.GetString("atmos-alerts-window-pressure-value", ("value", (FixedPoint2)updatedData.PressureData));
-        PressureLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : Palettes.Neutral.Base;
+        PressureLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : StyleNano.DisabledFore;
 
         // Update total mol
         TotalMolLabel.Text = Loc.GetString("atmos-alerts-window-total-mol-value", ("value", (FixedPoint2)updatedData.TotalMolData));
-        TotalMolLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : Palettes.Neutral.Base;
+        TotalMolLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : StyleNano.DisabledFore;
 
         // Update other present gases
         GasGridContainer.RemoveAllChildren();
@@ -116,7 +116,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
             {
                 Text = Loc.GetString("atmos-alerts-window-other-gases-value-nil"),
                 FontOverride = normalFont,
-                FontColorOverride = Palettes.Neutral.Base,
+                FontColorOverride = StyleNano.DisabledFore,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center,
                 HorizontalExpand = true,
@@ -155,14 +155,14 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
 
     public void SetAsFocus()
     {
-        FocusButton.AddStyleClass(StyleClass.Positive);
+        FocusButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/inverted_triangle.svg.png";
         FocusContainer.Visible = true;
     }
 
     public void RemoveAsFocus()
     {
-        FocusButton.RemoveStyleClass(StyleClass.Positive);
+        FocusButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/triangle_right.png";
         FocusContainer.Visible = false;
     }

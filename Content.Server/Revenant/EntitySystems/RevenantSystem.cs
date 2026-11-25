@@ -8,7 +8,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
@@ -32,7 +31,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private ServerGameTicker _ticker = default!;
+    [Dependency] private GameTicker _ticker = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private PhysicsSystem _physics = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -55,7 +54,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
-        SubscribeLocalEvent<RoundEndMessageEvent>(_ => MakeVisible(true));
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
 
         SubscribeLocalEvent<RevenantComponent, GetVisMaskEvent>(OnRevenantGetVis);
 

@@ -131,7 +131,7 @@
     - state: firing
       shader: unshaded
       visible: false
-      map: ["enum.PowerStateDeviceVisualLayers.Lights"]
+      map: ["enum.EmitterVisualLayers.Lights"]
     - state: locked
       shader: unshaded
       visible: false
@@ -167,6 +167,10 @@
   - type: AccessReader
     access: [[ "Research" ]]
   - type: Emitter
+    onState: firing
+    powerUseActive: 100
+    boltType: AnomalousParticleDelta
+    underpoweredState: underpowered
     selectableTypes:
     - AnomalousParticleDelta
     - AnomalousParticleEpsilon
@@ -177,31 +181,23 @@
       SetParticleEpsilon: AnomalousParticleEpsilon
       SetParticleZeta: AnomalousParticleZeta
       SetParticleSigma: AnomalousParticleSigma
-  - type: NotifyOnNonFunctioning
-    locUnlocked: ape-unlocked-broadcast
-    radioChannel: Science
-    requirePowered: true
-  - type: PowerState
-    idlePowerDraw: 5
-    workingPowerDraw: 100
-    workingState: firing
+    fireBurstSize: 1
+    fireBurstDelayMin: 2
+    fireBurstDelayMax: 6
   - type: ApcPowerReceiver
-    powerLoad: 5
+    powerLoad: 100
   - type: GuideHelp
     guides:
     - APE
   - type: Gun
     projectileSpeed: 10
-    burstCooldown: 1.4
-    burstFireRate: 0.5
-    selectedMode: Burst
+    fireRate: 10 #just has to be fast enough to keep up with upgrades
+    showExamineText: false
+    selectedMode: SemiAuto
     availableModes:
-      - Burst
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: AutoShootGun
-  - type: NetworkPoweredAmmoProvider
-    prototype: AnomalousParticleDelta
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
@@ -216,7 +212,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-  - type: WirelessNetwork
+  - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSink
     ports:

@@ -16,7 +16,6 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
-using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.GhostTypes;
@@ -66,7 +65,7 @@ namespace Content.Server.Ghost
         [Dependency] private IConfigurationManager _configurationManager = default!;
         [Dependency] private IChatManager _chatManager = default!;
         [Dependency] private SharedMindSystem _mind = default!;
-        [Dependency] private ServerGameTicker _gameTicker = default!;
+        [Dependency] private GameTicker _gameTicker = default!;
         [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private IRobustRandom _random = default!;
@@ -105,7 +104,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
-            SubscribeLocalEvent<RoundEndMessageEvent>(_ => MakeVisible(true));
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
@@ -178,7 +177,7 @@ namespace Content.Server.Ghost
             }
 
             _eye.RefreshVisibilityMask(uid);
-            var time = GameTiming.RealTime;
+            var time = _gameTiming.RealTime;
             component.TimeOfDeath = time;
 
             Dirty(uid, component);
@@ -270,33 +269,38 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var player))
+            if (!CanGhostWarp(args.SenderSession, out var entity))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
-            var response = new GhostWarpsResponseEvent(GetPlayerWarps(player).Concat(GetLocationWarps()).ToList());
+            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
             RaiseNetworkEvent(response, args.SenderSession.Channel);
+        }
+
+        public void GhostWarpRequest(ICommonSession player, NetEntity target)
+        {
+            if (!CanGhostWarp(player, out var attached))
+            {
+                Log.Warning($"User {player.Name} tried to warp to {target} without being a ghost.");
+                return;
+            }
+
+            var realTarget = GetEntity(target);
+
+            if (!Exists(realTarget))
+            {
+                Log.Warning($"User {player.Name} tried to warp to an invalid entity id: {target}");
+                return;
+            }
+
+            WarpTo(attached, realTarget);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var player))
-            {
-                Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
-                return;
-            }
-
-            var target = GetEntity(msg.Target);
-
-            if (!Exists(target))
-            {
-                Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
-                return;
-            }
-
-            WarpTo(player, target);
+            GhostWarpRequest(args.SenderSession, msg.Target);
         }
 
         /// <summary>
@@ -304,7 +308,7 @@ namespace Content.Server.Ghost
         /// </summary>
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var player))
+            if (!CanGhostWarp(args.SenderSession, out var uid))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to ghostnado without being a ghost.");
                 return;
@@ -314,24 +318,25 @@ namespace Content.Server.Ghost
                 return;
 
             // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
-            _followerSystem.StartFollowingEntity(player, target);
+            _followerSystem.StartFollowingEntity(uid, target);
         }
+
         /// <summary>
         /// Request to warp to a random player with at least one ghost follower.
         /// </summary>
         private void OnWarpToRandomFollowedRequest(WarpToRandomFollowedRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var player))
+            if (!CanGhostWarp(args.SenderSession, out var uid))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player with at least one ghost follower without being a ghost.");
                 return;
             }
 
-            var following = _followerQuery.CompOrNull(player)?.Following;
+            var following = _followerQuery.CompOrNull(uid)?.Following;
             if (_followerSystem.GetRandomGhostFollowed(except:following) is not {} target)
                 return;
 
-            _followerSystem.StartFollowingEntity(player, target);
+            _followerSystem.StartFollowingEntity(uid, target);
         }
 
         /// <summary>
@@ -339,13 +344,13 @@ namespace Content.Server.Ghost
         /// </summary>
         private void OnWarpToRandomRequest(WarpToRandomRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!CanGhostWarp(args.SenderSession, out var player))
+            if (!CanGhostWarp(args.SenderSession, out var uid))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player without being a ghost.");
                 return;
             }
 
-            var following = _followerQuery.CompOrNull(player)?.Following;
+            var following = _followerQuery.CompOrNull(uid)?.Following;
             // select player warps cuz no one wants to warp to places.
             if (GetPlayerWarps(following).ToArray() is not {} warps)
                 return;
@@ -353,9 +358,10 @@ namespace Content.Server.Ghost
                 return;
             var warp = _random.Pick(warps);
 
-            var target = GetEntity(warp.Entity);
-            _followerSystem.StartFollowingEntity(player, target);
+            var realTarget = GetEntity(warp.Entity);
+            _followerSystem.StartFollowingEntity(uid, realTarget);
         }
+
 
         private void WarpTo(EntityUid uid, EntityUid target)
         {
@@ -470,8 +476,16 @@ namespace Content.Server.Ghost
             if (spawnPosition?.IsValid(EntityManager) != true)
                 return false;
 
-            // Test if the parent is being deleted
-            return !TerminatingOrDeleted(spawnPosition.Value.EntityId);
+            var mapUid = _transformSystem.GetMap(spawnPosition.Value);
+            var gridUid = spawnPosition?.EntityId;
+            // Test if the map is being deleted
+            if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
+                return false;
+            // Test if the grid is being deleted
+            if (gridUid != null && TerminatingOrDeleted(gridUid.Value))
+                return false;
+
+            return true;
         }
 
         public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityCoordinates? spawnPosition = null,
@@ -481,21 +495,22 @@ namespace Content.Server.Ghost
                 return null;
 
             // Test if the map or grid is being deleted
-            if (spawnPosition == null || !IsValidSpawnPosition(spawnPosition))
-            {
-                // If it's bad, look for a valid point to spawn
-                spawnPosition = _gameTicker.GetObserverSpawnPoint();
+            if (!IsValidSpawnPosition(spawnPosition))
+                spawnPosition = null;
 
-                // Make sure the new point is valid too
-                if (!IsValidSpawnPosition(spawnPosition))
-                {
-                    Log.Error($"Fallback spawn position: {spawnPosition} provided for {mind.Comp.CharacterName} {ToPrettyString(mind)} was not valid.");
-                    _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
-                    return null;
-                }
+            // If it's bad, look for a valid point to spawn
+            spawnPosition ??= _gameTicker.GetObserverSpawnPoint();
+
+            // Make sure the new point is valid too
+            if (!IsValidSpawnPosition(spawnPosition))
+            {
+                Log.Warning($"No spawn valid ghost spawn position found for {mind.Comp.CharacterName}"
+                    + $" \"{ToPrettyString(mind)}\"");
+                _minds.TransferTo(mind.Owner, null, createGhost: false, mind: mind.Comp);
+                return null;
             }
 
-            var ghost = SpawnAtPosition(ServerGameTicker.ObserverPrototypeName, spawnPosition.Value);
+            var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             if (TryComp<GhostSpriteStateComponent>(ghost, out var state))  // If more TryComps are added this should be turned into an event

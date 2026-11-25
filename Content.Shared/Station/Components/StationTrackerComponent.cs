@@ -1,4 +1,3 @@
-using Content.Shared.Station.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Station.Components;
@@ -7,7 +6,7 @@ namespace Content.Shared.Station.Components;
 /// Component that tracks which station an entity is currently on.
 /// Mainly used for UI purposes on the client to easily get station-specific data like alert levels.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(StationSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStationSystem))]
 public sealed partial class StationTrackerComponent : Component
 {
     /// <summary>
@@ -16,10 +15,4 @@ public sealed partial class StationTrackerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Station;
-
-    /// <summary>
-    /// If true, will show the name of the currently linked station on examine.
-    /// </summary>
-    [DataField]
-    public bool Examinable;
 }

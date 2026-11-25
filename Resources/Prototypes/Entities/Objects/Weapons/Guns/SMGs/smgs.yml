@@ -101,12 +101,10 @@
     unwieldOnUse: false
   - type: GunWieldBonus
     minAngle: -19
-    maxAngle: -12
+    maxAngle: -16
   - type: Gun
     minAngle: 21
     maxAngle: 32
-    angleIncrease: 1.25
-    angleDecay: 20
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -185,12 +183,10 @@
       unwieldOnUse: false
     - type: GunWieldBonus
       minAngle: -19
-      maxAngle: -14
+      maxAngle: -16
     - type: Gun
       minAngle: 21
       maxAngle: 32
-      angleIncrease: 1.5
-      angleDecay: 16
       fireRate: 6
       burstFireRate: 18
       soundGunshot:
@@ -252,9 +248,9 @@
   - type: Gun
     fireRate: 5.5
     minAngle: 1
-    maxAngle: 16
+    maxAngle: 6
     angleIncrease: 1.5
-    angleDecay: 12
+    angleDecay: 6
     selectedMode: FullAuto
     shotsPerBurst: 5
     burstCooldown: 0.2

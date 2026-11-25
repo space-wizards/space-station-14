@@ -1,5 +1,0 @@
-- type: localizedDataset
-  id: DatasetActionFireballDialogue
-  values:
-    prefix: action-speech-spell-fireball-
-    count: 5

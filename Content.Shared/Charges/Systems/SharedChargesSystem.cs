@@ -69,10 +69,7 @@ public abstract partial class SharedChargesSystem : EntitySystem
         args.Cancelled = true;
 
         if (ent.Comp.OnFailPopup is { } popup)
-        {
-            args.Reason = Loc.GetString(popup);
-            args.Type = ent.Comp.OnFailPopupType;
-        }
+            _popup.PopupEntity(Loc.GetString(popup), args.User, args.User);
     }
 
     private void OnChargesPerformed(Entity<LimitedChargesComponent> ent, ref ActionPerformedEvent args)

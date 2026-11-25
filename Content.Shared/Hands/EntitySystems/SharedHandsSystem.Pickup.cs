@@ -129,8 +129,7 @@ public abstract partial class SharedHandsSystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!HandIsEmpty(ent, hand) && !TryDrop(ent, hand, checkActionBlocker: checkActionBlocker))
-            return false;
+        TryDrop(ent, hand, checkActionBlocker: checkActionBlocker);
 
         return TryPickup(ent, entity, hand, checkActionBlocker, animate: animate, handsComp: handsComp, item: item);
     }

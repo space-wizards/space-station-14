@@ -1,31 +1,14 @@
 - type: entity
-  abstract: true
-  parent: BaseWallmountMetallic
-  id: BaseStationMap
-  suffix: Wall
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
+  id: StationMapBroken
+  name: station map
+  description: A virtual map of the surrounding station.
+  suffix: Wall broken
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/station-map.rsi
     offset: 0, -0.25
     drawdepth: WallMountedItems
-  - type: WallMount
-    arc: 360
-  - type: Construction
-    graph: StationMap
-    containers:
-    - board
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
-
-- type: entity
-  parent: [ BaseStationMap, StructureHealthMachineFlimsy ]
-  id: StationMapBroken
-  name: station map
-  description: A former map of the surrounding station.
-  suffix: Wall broken
-  components:
-  - type: Sprite
     layers:
     - state: broken
   - type: Destructible
@@ -37,33 +20,29 @@
       - &SoundMetalGlassBreak !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:EmptyAllContainersBehaviour
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1: &Min0Max1
+          StationMapCircuitboard: &Min0Max1
             min: 0
             max: 1
+          SheetSteel1: *Min0Max1
           CableApcStack1: *Min0Max1
-  - type: Construction
-    node: broken
-  - type: EntityTableContainerFill
-    contextContainers: true
-    containers:
-      board:
-        id: StationMapCircuitboard
-        prob: 0.25 # The board is probably broken
-        conditions:
-        - !type:EmptyContainerCondition # If this entity is spawned via construction the circuitboard already exists
+
 
 - type: entity
-  parent: [ BaseStationMap, BaseWallmountMachine, StructureHealthMachineWeak ]
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: StationMap
   name: station map
   description: A virtual map of the surrounding station.
+  suffix: Wall
   components:
+  - type: WallMount
+    arc: 360
   - type: Appearance
   - type: StationMap
   - type: Sprite
+    sprite: Structures/Wallmounts/station-map.rsi
+    offset: 0, -0.25
     layers:
     - state: base
     - state: unshaded
@@ -78,13 +57,12 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
-  - type: EntityTableContainerFill
-    contextContainers: true
+  - type: ContainerFill
     containers:
-      board:
-        id: StationMapCircuitboard
-        conditions:
-        - !type:EmptyContainerCondition
+      board: [ StationMapCircuitboard ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: ApcPowerReceiver
     powerLoad: 50
   - type: PowerState
@@ -92,12 +70,13 @@
     workingPowerDraw: 200
   - type: UIPowerState
   - type: Construction
+    graph: StationMap
     node: station_map
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI
     key: enum.StationMapUiKey.Key
   - type: Damageable
-    damageModifierSet: GlassMod
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -105,8 +84,12 @@
         damage: 100
       behaviors:
       - *SoundMetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: broken
+      - !type:SpawnEntitiesBehavior
+        offset: 0
+        spawn:
+          StationMapBroken:
+            min: 1
+            max: 1
   - type: UserInterface
     interfaces:
       enum.StationMapUiKey.Key:
@@ -123,12 +106,16 @@
       - NoConsoleSound
 
 - type: entity
-  parent: [ BaseStationMap, StructureHealthMachineFlimsy ]
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: StationMapAssembly
   name: station map assembly
   description: A station map assembly.
   components:
+  - type: WallMount
+    arc: 360
   - type: Sprite
+    sprite: Structures/Wallmounts/station-map.rsi
+    offset: 0, -0.25
     layers:
     - state: frame0
       map: [ "enum.ConstructionVisuals.Layer" ]
@@ -140,15 +127,14 @@
           assembly: { state: frame0 }
           wired: { state: frame1 }
           electronics: { state: frame2 }
-          screen: { state: frame3 }
   - type: Construction
+    graph: StationMap
     node: assembly
   - type: Destructible
     thresholds:
     - trigger: *DamageMachineFlimsy
       behaviors:
       - *SoundMetalGlassBreak
-      - !type:EmptyAllContainersBehaviour
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1: *Min0Max1

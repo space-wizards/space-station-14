@@ -1,6 +1,5 @@
 using Content.Server.GameTicking;
 using Content.Shared.Eye;
-using Content.Shared.GameTicking;
 using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
 using Robust.Server.GameObjects;
@@ -10,7 +9,7 @@ namespace Content.Server.Revenant.EntitySystems;
 public sealed partial class CorporealSystem : SharedCorporealSystem
 {
     [Dependency] private VisibilitySystem _visibilitySystem = default!;
-    [Dependency] private ServerGameTicker _ticker = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     public override void OnStartup(EntityUid uid, CorporealComponent component, ComponentStartup args)
     {

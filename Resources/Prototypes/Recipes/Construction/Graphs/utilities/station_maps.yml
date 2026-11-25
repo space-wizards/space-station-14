@@ -3,19 +3,12 @@
   start: start
   graph:
   - node: start
-    actions: # This action on the start node ensures we delete regardless of how we get here (sometimes reduces code duplication)
-    - !type:DeleteEntity {}
     edges:
     - to: assembly
       steps:
       - material: Steel
         amount: 2
-        doAfter: 2
-      completed:
-      # An edge with no completed action feels unresponsive, so in this case a sound is added.
-      - !type:PlaySound
-        sound:
-          collection: PlaceMetal
+        doAfter: 2.0
 
   - node: assembly
     entity: StationMapAssembly
@@ -26,18 +19,16 @@
       steps:
       - material: Cable
         amount: 2
-      completed:
-      - !type:PlaySound
-        sound:
-          collection: PlaceWires
+        doAfter: 1
     - to: start
-      steps:
-      - tool: Welding
-        doAfter: 2
       completed:
       - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
 
   - node: wired
     entity: StationMapAssembly
@@ -47,50 +38,22 @@
     - to: electronics
       steps:
       - tag: StationMapElectronics
-        doAfter: 1
-        store: &Container board
+        store: board
         name: construction-graph-tag-station-map-electronics
         icon:
           sprite: "Objects/Misc/module.rsi"
-          state: "door_electronics"
-      completed:
-      - !type:PlaySound
-        sound:
-          collection: PlaceElectronics
-    - to: assembly
-      steps:
-      - tool: Cutting
+          state: "door_electronics" # /tg/ uses the same sprite, right?
         doAfter: 1
+    - to: assembly
       completed:
       - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
-
-  - node: electronics
-    entity: StationMapAssembly
-    actions:
-    - !type:AppearanceChange
-    edges:
-    - to: screen
-      steps:
-      - material: Glass
-        amount: 2
-      completed:
-      - !type:PlaySound
-        sound:
-          collection: PlaceGlass
-    - to: wired
       steps:
       - tool: Cutting
         doAfter: 1
-      completed:
-      # Empty the container instead of spawning a new electronics to maintain component changes the board might have.
-      - !type:EmptyContainer
-        container: *Container
-        pickup: true
 
-  - node: screen
-    entity: StationMapAssembly
+  - node: electronics
     actions:
     - !type:AppearanceChange
     edges:
@@ -98,49 +61,18 @@
       steps:
       - tool: Screwing
         doAfter: 2
-      completed:
-      - !type:PlaySound
-        sound: /Audio/Machines/light_tube_on.ogg
-    - to: electronics
-      conditions: # Safety condition. Should never be false but surfaces something went wrong
-      - !type:ContainerNotEmpty
-        container: *Container
-        examineText: deconstructible-verb-activate-no-target-text
-      steps:
-      - tool: Prying
-        doAfter: 1
-      completed:
-      - !type:GivePrototype
-        prototype: SheetGlass1
-        amount: 2
 
-  # Final destination
   - node: station_map
     entity: StationMap
     edges:
-    - to: screen
-      steps:
-      - tool: Screwing
-        doAfter: 2
-
-  # The entity prototype has a random fill so there's two nodes to cover both possibilities
-  - node: broken
-    entity: StationMapBroken
-    edges:
     - to: wired
       conditions:
-      - !type:ContainerEmpty
-        container: *Container
-      steps: &StepsBroken
-      - tool: Screwing
-        doAfter: 3
-      completed: &CompletedBroken
-      - !type:GivePrototype
-        prototype: ShardGlass
-        amount: 2
-    - to: electronics
-      conditions:
       - !type:ContainerNotEmpty
-        container: *Container
-      steps: *StepsBroken
-      completed: *CompletedBroken
+        container: board
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 1

@@ -4,8 +4,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Timing.Components;
-using Content.Shared.Timing.Systems;
+using Content.Shared.Timing;
 
 namespace Content.Shared.Friends.Systems;
 

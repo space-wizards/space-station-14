@@ -48,10 +48,8 @@
           amount: 2
         - id: ReagentContainerSugar
           amount: 2
-        - id: ReagentContainerSalt
-          amount: 2
-        - id: ReagentContainerPepper
-          amount: 1
+        - id: FoodCondimentPacketSalt
+          amount: 3
         - id: FoodCondimentBottleEnzyme
           amount: 2
         - id: FoodContainerEgg
@@ -104,10 +102,8 @@
           amount: 3
         - id: ReagentContainerSugar
           amount: 2
-        - id: ReagentContainerSalt
-          amount: 2
-        - id: ReagentContainerPepper
-          amount: 1
+        - id: FoodCondimentPacketSalt
+          amount: 3
         - id: DrinkMilkCarton
           amount: 2
         - id: DrinkSoyMilkCarton
@@ -180,8 +176,11 @@
           - id: ClothingMaskMime
           - id: ClothingBeltSuspendersRed
           - id: ClothingBeltSuspendersBlack
-        - !type:NestedSelector
-          tableId: RandomVirtualSingerOutfitTable
+        - !type:AllSelector # Performer starter kit
+          children:
+          - id: ClothingUniformJumpskirtPerformer
+          - id: ClothingShoesBootsPerformer
+          - id: ClothingHeadPerformerWig
 
 - type: entity
   parent: CrateGenericSteel

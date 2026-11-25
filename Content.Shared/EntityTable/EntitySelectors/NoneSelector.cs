@@ -25,10 +25,4 @@ public sealed partial class NoneSelector : EntityTableSelector
     {
         yield break;
     }
-
-    /// <inheritdoc/>
-    public override string ToString()
-    {
-        return "None";
-    }
 }

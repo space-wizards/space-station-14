@@ -4,6 +4,7 @@
   id: BaseStatue
   components:
   - type: Sprite
+    noRot: true
     drawdepth: Mobs
   - type: Damageable
     damageModifierSet: RockMod
@@ -47,35 +48,21 @@
 
 - type: entity
   parent: BaseStatue
-  id: StatueOrnateClown
-  name: ornate savior statue
-  description: A gilded statue. It portrays the return of the savior who will rise up and lead the clowns to the great honk.
+  id: StatueBananiumClown
+  name: bananium savior statue
+  description: A bananium statue. It portrays the return of the savior who will rise up and lead the clowns to the great honk.
   components:
-  - type: Transform
-    noRot: true
   - type: Sprite
-    sprite: Structures/Decoration/statue-ornate-clown.rsi
-    state: icon
+    noRot: true
+    sprite: Structures/Decoration/statues.rsi
+    state: bananium_clown
     drawdepth: Mobs
-    offset: "0.0,0.3125"
+    offset: "0.0,0.5"
   - type: Construction
-    graph: OrnateStatueClown
-    node: ornateStatueClown
+    graph: BananiumStatueClown
+    node: bananiumStatue
   - type: Damageable
-    damageModifierSet: PreciousMetalMod
-  - type: SpriteFade
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.25,0.4,0.45"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
+    damageModifierSet: BananiumMod
 
 # Ironsand Statues
 

@@ -12,10 +12,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
+
 /// <summary>
-/// This event will open and bolt airlocks and unlock lockers with access from randomly selected access groups.
+///     Greytide Virus event
+///     This will open and bolt airlocks and unlock lockers from randomly selected access groups.
 /// </summary>
-/// <seealso cref="GreytideVirusRuleComponent"/>
 public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComponent>
 {
     [Dependency] private AccessReaderSystem _access = default!;
@@ -27,30 +28,26 @@ public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirus
     [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
     [Dependency] private EntityQuery<AccessReaderComponent> _accessReaderQuery = default!;
 
-    protected override void Added(Entity<GreytideVirusRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, GreytideVirusRuleComponent virusComp, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
+        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
-
-        var virusComp = ent.Comp1;
 
         // pick severity randomly from range if not specified otherwise
         virusComp.Severity ??= virusComp.SeverityRange.Next(_random);
         virusComp.Severity = Math.Min(virusComp.Severity.Value, virusComp.AccessGroups.Count);
 
         stationEvent.StartAnnouncement = Loc.GetString("station-event-greytide-virus-start-announcement", ("severity", virusComp.Severity.Value));
-        base.Added(ent, ref args);
+        base.Added(uid, virusComp, gameRule, args);
     }
-    protected override void Started(Entity<GreytideVirusRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid, GreytideVirusRuleComponent virusComp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
-        base.Started(ent, ref args);
-
-        var virusComp = ent.Comp1;
+        base.Started(uid, virusComp, gameRule, args);
 
         if (virusComp.Severity == null)
             return;
 
-        if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
+        if (!TryGetRandomStation(out var chosenStation))
             return;
 
         // pick random access groups
@@ -71,7 +68,7 @@ public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirus
                 continue;
 
             // make sure not to hit CentCom or other maps
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
                 continue;
 
             // check access
@@ -93,7 +90,7 @@ public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirus
                 continue;
 
             // make sure not to hit CentCom or other maps
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
                 continue;
 
             // use the access reader from the door electronics if they exist

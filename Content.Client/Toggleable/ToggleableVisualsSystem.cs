@@ -8,7 +8,6 @@ using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Toggleable;
@@ -21,7 +20,6 @@ namespace Content.Client.Toggleable;
 /// <see cref="ToggleableVisualsComponent"/>
 public sealed partial class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisualsComponent>
 {
-    [Dependency] private ISerializationManager _seriMan = default!;
     [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
 
@@ -38,11 +36,11 @@ public sealed partial class ToggleableVisualsSystem : VisualizerSystem<Toggleabl
         ToggleableVisualsComponent component,
         ref AppearanceChangeEvent args)
     {
-        if (!args.TryGetData<bool>(ToggleableVisuals.Enabled, out var enabled))
+        if (!AppearanceSystem.TryGetData<bool>(uid, ToggleableVisuals.Enabled, out var enabled, args.Component))
             return;
 
         var modulateColor =
-            args.TryGetData<Color>(ToggleableVisuals.Color, out var color);
+            AppearanceSystem.TryGetData<Color>(uid, ToggleableVisuals.Color, out var color, args.Component);
 
         // Update the item's sprite
         if (args.Sprite != null && component.SpriteLayer != null &&
@@ -106,10 +104,7 @@ public sealed partial class ToggleableVisualsSystem : VisualizerSystem<Toggleabl
             if (modulateColor)
                 layer.Color = color;
 
-            // Create a copy of the layer, which might get modified.
-            PrototypeLayerData newLayer = new();
-            _seriMan.CopyTo(layer, ref newLayer, notNullableOverride: true);
-            args.Layers.Add((key, newLayer));
+            args.Layers.Add((key, layer));
         }
     }
 

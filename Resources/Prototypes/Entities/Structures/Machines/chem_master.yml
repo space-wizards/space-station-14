@@ -79,9 +79,6 @@
         whitelist:
           components:
           - FitsInDispenser
-        blacklist:
-          tags:
-          - Bottle
       outputSlot:
         whitelistFailPopup: chem-master-component-cannot-put-entity-message
         whitelist:

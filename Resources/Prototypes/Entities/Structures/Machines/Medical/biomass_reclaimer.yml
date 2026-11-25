@@ -11,6 +11,8 @@
     state: icon
     snapCardinals: true
   - type: BiomassReclaimer
+  - type: Climbable
+    delay: 7
   - type: AmbientSound
     enabled: false
     volume: -5

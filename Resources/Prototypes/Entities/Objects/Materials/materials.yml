@@ -108,7 +108,6 @@
         Quantity: 10
   - type: Tag
     tags:
-      - Ingredient
       - ClothMade
       - Gauze
       - RawMaterial
@@ -431,9 +430,6 @@
     layers:
     - state: pyrotton_3
       map: ["base"]
-  - type: IgnitionSource
-    ignited: true
-    temperature: 400
   - type: Edible
     requiresSpecialDigestion: true
     solution: composite
@@ -471,19 +467,18 @@
     materialComposition:
       Bananium: 150
   - type: Sprite
-    sprite: Objects/Materials/bananium.rsi
-    state: bananium-3
+    state: bananium_3
     layers:
-    - state: bananium-3
+    - state: bananium_3
       map: [ "base" ]
   - type: Stack
     stackType: Bananium
     count: 10
     baseLayer: base
     layerStates:
-    - bananium-1
-    - bananium-2
-    - bananium-3
+    - bananium
+    - bananium_2
+    - bananium_3
   - type: FlavorProfile
     flavors:
     - banana
@@ -510,7 +505,6 @@
         Quantity: 5
   - type: Item
     heldPrefix: bananium
-    sprite: Objects/Materials/bananium.rsi
 
 - type: entity
   parent: MaterialBananium
@@ -518,7 +512,7 @@
   suffix: Single
   components:
   - type: Sprite
-    state: bananium-1
+    state: bananium
   - type: Stack
     count: 1
 

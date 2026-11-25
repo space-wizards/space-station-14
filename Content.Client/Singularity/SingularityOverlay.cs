@@ -103,6 +103,7 @@ namespace Content.Client.Singularity
             var worldHandle = args.WorldHandle;
             worldHandle.UseShader(_shader);
             worldHandle.DrawRect(args.WorldAABB, Color.White);
+            worldHandle.UseShader(null);
         }
 
         /// <summary>

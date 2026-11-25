@@ -26,7 +26,6 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
         protected override void EnteredTree()
         {
-            base.EnteredTree();
             _data.Clear();
 
             var player = _players.LocalEntity;

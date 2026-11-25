@@ -8,10 +8,22 @@
     },
     "states": [
         {
+            "name": "bike_horn"
+        },
+        {
             "name": "birdtoy"
         },
         {
             "name": "cannedapplause"
+        },
+        {
+            "name": "drum"
+        },
+        {
+            "name": "drum_bongo"
+        },
+        {
+            "name": "drum_makeshift"
         },
         {
             "name": "helicopter"

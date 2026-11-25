@@ -13,7 +13,6 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class BaseSatiationPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private SatiationSystem _satiation = default!;
 
     /// <summary>
     /// The bottom of the range the agent's satiation must be in for this condition to be met. If null, the range has
@@ -43,6 +42,12 @@ public sealed partial class BaseSatiationPrecondition : HTNPrecondition
             !_entManager.TryGetComponent<SatiationComponent>(owner, out var satiation))
             return false;
 
-        return _satiation.IsValueInRange((owner, satiation), SatiationType, Above, Below);
+        return _entManager.System<SatiationSystem>()
+            .IsValueInRange(
+                (owner, satiation),
+                SatiationType,
+                Above,
+                Below
+            );
     }
 }

@@ -1,5 +1,4 @@
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -31,7 +30,7 @@ namespace Content.Server.Atmos.Monitor.Components;
 public sealed partial class AtmosAlarmableComponent : Component
 {
     [ViewVariables]
-    public readonly Dictionary<DeviceAddress, AtmosAlarmType> NetworkAlarmStates = new();
+    public readonly Dictionary<string, AtmosAlarmType> NetworkAlarmStates = new();
 
     [ViewVariables]
     public AtmosAlarmType LastAlarmState = AtmosAlarmType.Invalid;

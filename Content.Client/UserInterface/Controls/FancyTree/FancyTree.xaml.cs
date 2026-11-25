@@ -155,7 +155,7 @@ public sealed partial class FancyTree : Control
         SetSelectedIndex(item.Index);
     }
 
-    public void SetSelectedIndex(int? value, bool invokeEvent = true)
+    public void SetSelectedIndex(int? value)
     {
         if (value == null || value < 0 || value >= Items.Count)
             value = null;
@@ -174,8 +174,7 @@ public sealed partial class FancyTree : Control
                 newSelection.SetExpanded(true);
         }
 
-        if (invokeEvent)
-            OnSelectedItemChanged?.Invoke(newSelection);
+        OnSelectedItemChanged?.Invoke(newSelection);
     }
 
     /// <summary>

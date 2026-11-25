@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Botany.Components;
@@ -38,11 +37,10 @@ public sealed partial class PlantHolderComponent : Component
     public int MaxYieldMod = 2;
 
     /// <summary>
-    /// Current mutation level buildup per mutation table.
-    /// Levels are consumed (reset to zero) each time the plant ages and processes its mutations.
+    /// Current mutation level.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<RandomPlantMutationListPrototype>, float> MutationLevels = [];
+    public float MutationLevel;
 
     [DataField, AutoNetworkedField]
     public float MaxMutationLevel = 25f;

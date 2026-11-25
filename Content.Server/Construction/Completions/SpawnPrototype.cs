@@ -1,5 +1,6 @@
 using Content.Server.Stack;
 using Content.Shared.Construction;
+using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -23,10 +24,7 @@ namespace Content.Server.Construction.Completions
 
             var coordinates = entityManager.GetComponent<TransformComponent>(uid).Coordinates;
 
-            // TODO: pass the PrototypeManager into IGraphAction.
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
-            if (protoMan.TryIndex(Prototype, out EntityPrototype? proto) && proto.HasComp<StackComponent>(entityManager.ComponentFactory))
+            if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
             {
                 var stackEnt = entityManager.SpawnEntity(Prototype, coordinates);
                 var stack = entityManager.GetComponent<StackComponent>(stackEnt);

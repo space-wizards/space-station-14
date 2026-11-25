@@ -97,7 +97,7 @@ public sealed partial class RadiationCollectorSystem : VisualizerSystem<Radiatio
         if (!TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
             return;
 
-        if (!args.TryGetData<RadiationCollectorVisualState>(RadiationCollectorVisuals.VisualState, out var state))
+        if (!AppearanceSystem.TryGetData<RadiationCollectorVisualState>(uid, RadiationCollectorVisuals.VisualState, out var state, args.Component))
             state = RadiationCollectorVisualState.Deactive;
 
         UpdateVisuals(uid, state, comp, args.Sprite, animPlayer);

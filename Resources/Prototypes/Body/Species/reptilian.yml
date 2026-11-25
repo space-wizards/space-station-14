@@ -150,7 +150,7 @@
       types:
         Slash: 5
   - type: TemperatureDamage
-    heatDamageThreshold: 321.15
+    heatDamageThreshold: 400
     coldDamageThreshold: 285
     coldDamage:
       types:
@@ -261,9 +261,6 @@
   - type: VisualOrgan
     data:
       sprite: Mobs/Customization/eyes.rsi
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Human/parts.rsi
-  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseTongue, OrganReptilianInternal ]

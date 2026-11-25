@@ -30,27 +30,16 @@
     profile: TraitorReinforcement
 
 - type: entity
-  abstract: true
-  parent: MobHuman
-  id: MobHumanSyndicateReinforcement
-  components:
-  - type: RandomHumanoidAppearance
-    randomizeName: true
-  - type: NpcFactionMember
-    factions:
-    - Syndicate
-
-- type: entity
-  parent: MobHumanSyndicateReinforcement
+  parent: MobHumanSyndicateAgent
   id: MobHumanSyndicateAgentMedic
-  name: syndicate combat medic
+  name: syndicate medic
   components:
   - type: Loadout
     prototypes: [SyndicateReinforcementMedic]
     roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
-  parent: MobHumanSyndicateReinforcement
+  parent: MobHumanSyndicateAgent
   id: MobHumanSyndicateAgentSpy
   name: syndicate spy
   components:
@@ -59,7 +48,7 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
-  parent: MobHumanSyndicateReinforcement
+  parent: MobHumanSyndicateAgent
   id: MobHumanSyndicateAgentThief
   name: syndicate thief
   components:

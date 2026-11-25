@@ -76,6 +76,10 @@
           primed:
             True: { visible: true }
             False: { visible: false }
+        enum.WiresVisualLayers.MaintenancePanel:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: true }
+            False: { visible: false }
     - type: PointLight
       color: "#0063C7"
       radius: 1.1
@@ -109,6 +113,10 @@
       visuals:
         enum.DefusableVisuals.Active:
           primed:
+            True: { visible: true }
+            False: { visible: false }
+        enum.WiresVisualLayers.MaintenancePanel:
+          enum.WiresVisualLayers.MaintenancePanel:
             True: { visible: true }
             False: { visible: false }
     - type: PointLight

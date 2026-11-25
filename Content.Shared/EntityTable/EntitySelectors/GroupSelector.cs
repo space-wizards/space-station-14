@@ -8,15 +8,19 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// <summary>
 /// Gets the spawns from one of the child selectors, based on the weight of the children
 /// </summary>
-public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
+public sealed partial class GroupSelector : EntityTableSelector
 {
+    /// <summary>
+    /// The child entries of this selector.
+    /// </summary>
+    [DataField(required: true)]
+    public List<EntityTableSelector> Children = new();
+
     protected override IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        using var scoped = ScopedConditions(ctx);
-
         var children = new Dictionary<EntityTableSelector, float>(Children.Count);
         foreach (var child in Children)
         {
@@ -28,14 +32,11 @@ public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
         }
 
         if (children.Count == 0)
-            yield break;
+            return Array.Empty<EntProtoId>();
 
         var pick = SharedRandomExtensions.Pick(children, rand);
 
-        foreach (var spawn in pick.GetSpawns(rand, entMan, proto, ctx))
-        {
-            yield return spawn;
-        }
+        return pick.GetSpawns(rand, entMan, proto, ctx);
     }
 
     protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
@@ -64,11 +65,5 @@ public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
                 yield return (ent, prob);
             }
         }
-    }
-
-    /// <inheritdoc/>
-    public override string ToString()
-    {
-        return $"Group({string.Join(", ", Children.Select(x => $"{x}: {x.Weight}"))})";
     }
 }

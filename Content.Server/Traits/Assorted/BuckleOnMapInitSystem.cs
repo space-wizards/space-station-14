@@ -1,4 +1,4 @@
-using Content.Shared.Buckle;
+﻿using Content.Shared.Buckle;
 
 namespace Content.Server.Traits.Assorted;
 

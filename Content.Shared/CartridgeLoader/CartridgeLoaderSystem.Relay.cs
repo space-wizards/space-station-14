@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
 
 namespace Content.Shared.CartridgeLoader;
@@ -8,6 +9,7 @@ public sealed partial class CartridgeLoaderSystem
     {
         SubscribeLocalEvent<CartridgeLoaderComponent, AfterInteractEvent>(RelayEvent);
         SubscribeLocalEvent<CartridgeLoaderComponent, InteractUsingEvent>(RelayEvent);
+        SubscribeLocalEvent<CartridgeLoaderComponent, DeviceNetworkPacketEvent>(RelayEvent);
     }
 
     private void RefRelayEvent<T>(EntityUid uid, CartridgeLoaderComponent component, ref T args) where T : struct

@@ -50,9 +50,9 @@ public sealed partial class GuideMicrowaveGroupEmbed : BoxContainer, IDocumentTa
 
     private void CreateEntries(string group)
     {
-        var prototypes = _prototype.EnumeratePrototypes<MicrowaveMealRecipePrototype>()
+        var prototypes = _prototype.EnumeratePrototypes<FoodRecipePrototype>()
             .Where(p => p.Group.Equals(group))
-            .OrderBy(p => _prototype.Index<EntityPrototype>(p.Result).Name);
+            .OrderBy(p => p.Name);
 
         foreach (var recipe in prototypes)
         {

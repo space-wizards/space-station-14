@@ -1,4 +1,4 @@
-using Content.Shared.Mech;
+﻿using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
 using Robust.Client.GameObjects;
@@ -9,31 +9,39 @@ namespace Content.Client.Mech;
 /// <inheritdoc/>
 public sealed partial class MechSystem : SharedMechSystem
 {
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    [SubscribeLocalEvent]
-    private void OnAppearanceChanged(Entity<MechComponent> ent, ref AppearanceChangeEvent args)
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<MechComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+    }
+
+    private void OnAppearanceChanged(EntityUid uid, MechComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!_sprite.LayerExists((ent, args.Sprite), MechVisualLayers.Base))
+        if (!_sprite.LayerExists((uid, args.Sprite), MechVisualLayers.Base))
             return;
 
-        var state = ent.Comp.BaseState;
+        var state = component.BaseState;
         var drawDepth = DrawDepth.Mobs;
-        if (ent.Comp.BrokenState != null && args.TryGetData<bool>(MechVisuals.Broken, out var broken) && broken)
+        if (component.BrokenState != null && _appearance.TryGetData<bool>(uid, MechVisuals.Broken, out var broken, args.Component) && broken)
         {
-            state = ent.Comp.BrokenState;
+            state = component.BrokenState;
             drawDepth = DrawDepth.SmallMobs;
         }
-        else if (ent.Comp.OpenState != null && args.TryGetData<bool>(MechVisuals.Open, out var open) && open)
+        else if (component.OpenState != null && _appearance.TryGetData<bool>(uid, MechVisuals.Open, out var open, args.Component) && open)
         {
-            state = ent.Comp.OpenState;
+            state = component.OpenState;
             drawDepth = DrawDepth.SmallMobs;
         }
 
-        _sprite.LayerSetRsiState((ent, args.Sprite), MechVisualLayers.Base, state);
-        _sprite.SetDrawDepth((ent, args.Sprite), (int)drawDepth);
+        _sprite.LayerSetRsiState((uid, args.Sprite), MechVisualLayers.Base, state);
+        _sprite.SetDrawDepth((uid, args.Sprite), (int)drawDepth);
     }
 }

@@ -5,9 +5,6 @@
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
   guides: [ Traitors ]
-  tags:
-  - OnStation
-  - Roundstart
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 1h
@@ -35,9 +32,6 @@
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective
   guides: [ Traitors ]
-  tags:
-  - OnStation
-  - Midround
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 1h
@@ -82,73 +76,60 @@
     - DeathAcidifierImplanter
 
 - type: startingGear
-  id: SyndicateReinforcementClothing
+  id: SyndicateOperativeClothing
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffel
+    back: ClothingBackpackSyndicate
     shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
-    ears: ClothingHeadsetSyndicateCovert
-    id: SyndiCovertPDA
-    pocket1: WeaponPistolViper
-  inhand:
-    - PaperWrittenSyndicateInstructions
 
 - type: startingGear
-  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementMedic
   equipment:
-    head: ClothingHeadHatSurgcapPurple
-    mask: ClothingMaskSterile
+    jumpsuit: ClothingUniformJumpsuitOperative
+    shoes: ClothingShoesColorRed
     gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatSurgcapPurple
+    id: VisitorPDA
     belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackDuffelMedical
+    ears: ClothingHeadsetMedical
     eyes: ClothingEyesHudMedical
+    pocket1: HandheldHealthAnalyzer
     pocket2: PillCanisterBicaridine
   inhand:
     - MedkitCombatFilled
   storage:
     back:
-    - SyndicateFlippo
-    - EncryptionKeySyndie
-    - MagazinePistolHighCapacity
-    - EncryptionKeyMedical
-    - DefibrillatorSyndicate
+    - Defibrillator
     - CigPackSyndicate
     - UniformScrubsColorPurple
     - ChemistryBottleToxin
+    - WeaponPistolViper
     - Syringe
-    - HandheldHealthAnalyzer
-    - AdvancedJetInjector
-
+    - Syringe
+    
 - type: startingGear
-  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementSpy
   equipment:
-    pocket1: WeaponPistolCobra
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpack
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesColorBlack
+    pocket1: WeaponPistolViper
     pocket2: VoiceMaskImplanter
   inhand:
     - ClothingBackpackChameleonFillAgent
-  storage:
-    back:
-    - SyndicateFlippo
-    - EncryptionKeySyndie
-    - BodyBagFolded
-    - Syringe
-    - ChemistryBottleMuteToxin
-
 - type: startingGear
-  parent: SyndicateReinforcementClothing
   id: SyndicateReinforcementThief
+  parent: SyndicateOperativeClothing
   equipment:
-    eyes: ClothingEyesGlassesHiddenSecurity
-    outerClothing: ClothingOuterCoatJensenSyndie
-    pocket2: C4
+    pocket1: WeaponPistolViper
+    pocket2: MagazinePistolHighCapacity
   inhand:
     - ToolboxSyndicateFilled
   storage:
     back:
-    - SyndicateFlippo
-    - EncryptionKeySyndie
     - SyndicateJawsOfLife
     - CameraBug
 

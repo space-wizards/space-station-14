@@ -278,7 +278,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtColorPink
   name: pink jumpskirt
-  description: Just looking at this makes you feel [italic]fabulous[/italic].
+  description: Just looking at this makes you feel <i>fabulous</i>.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi

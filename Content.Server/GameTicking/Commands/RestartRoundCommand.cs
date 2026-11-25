@@ -1,7 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.RoundEnd;
 using Content.Shared.Administration;
-using Content.Shared.GameTicking;
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands;
@@ -9,7 +8,7 @@ namespace Content.Server.GameTicking.Commands;
 [AdminCommand(AdminFlags.Round)]
 public sealed partial class RestartRoundCommand : LocalizedEntityCommands
 {
-    [Dependency] private ServerGameTicker _gameTicker = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private RoundEndSystem _roundEndSystem = default!;
 
     public override string Command => "restartround";
@@ -29,7 +28,7 @@ public sealed partial class RestartRoundCommand : LocalizedEntityCommands
 [AdminCommand(AdminFlags.Round)]
 public sealed partial class RestartRoundNowCommand : LocalizedEntityCommands
 {
-    [Dependency] private ServerGameTicker _gameTicker = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
 
     public override string Command => "restartroundnow";
 

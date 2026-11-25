@@ -27,7 +27,7 @@ public sealed partial class ReplacementImplantSystem : EntitySystem
                 continue; // don't delete the replacement
 
             if (_whitelist.IsWhitelistPass(ent.Comp.Whitelist, implant))
-                QueueDel(implant);
+                PredictedQueueDel(implant);
         }
 
     }

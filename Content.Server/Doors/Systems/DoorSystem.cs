@@ -43,7 +43,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
         if (args.Powered)
         {
             if (ent.Comp.BoltWireCut)
-                TrySetBoltDown(ent, true);
+                SetBoltsDown(ent, true);
         }
 
         ent.Comp.Powered = args.Powered;

@@ -1,4 +1,4 @@
-- type: constructionGraph
+﻿- type: constructionGraph
   id: ThermomachineBoard
   start: freezer
   graph:

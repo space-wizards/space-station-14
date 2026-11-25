@@ -11,7 +11,7 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantAtmosphericComponent> ent, ref PlantGrowEvent args)

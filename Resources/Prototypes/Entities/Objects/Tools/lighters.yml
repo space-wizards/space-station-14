@@ -275,8 +275,7 @@
       visible: false
       shader: unshaded
   - type: StealTarget
-    stealGroup:
-    - FlippoEngravedLighter
+    stealGroup: FlippoEngravedLighter
 
 - type: entity
   parent: [BaseBrandedLighter, BaseSyndicateContraband]
@@ -372,7 +371,7 @@
     access: [["CentralCommand"]]
 
 - type: entity
-  parent: [BaseBrandedLighter, BaseHighlyIllegalContraband]
+  parent: [BaseBrandedLighter, BaseMajorContraband]
   id: SpiderclanFlippo
   name: Spider-Clan lighter
   description: A high tech jet lighter, engineered to function even in deep space. Runs on a tiny microfusion cell.

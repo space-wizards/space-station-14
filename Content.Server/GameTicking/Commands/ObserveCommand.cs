@@ -23,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _e.System<ServerGameTicker>();
+            var ticker = _e.System<GameTicker>();
 
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {

@@ -29,13 +29,13 @@ public sealed class DamageAllPrototypesTest : GameTest
     [Description("Ensures all Entity Prototypes with damageable can be damaged.")]
     public async Task TestInjurableComponentOwnersCanTakeDamage()
     {
-        await CreateTestMap();
+        var map = await Pair.CreateTestMap();
 
         try
         {
             foreach (var injurable in GameDataScrounger.EntitiesWithComponent("Injurable"))
             {
-                var entity = await SpawnAtPosition(injurable, TestMap.GridCoords);
+                var entity = await SpawnAtPosition(injurable, map.GridCoords);
 
                 try
                 {
@@ -77,7 +77,7 @@ public sealed class DamageAllPrototypesTest : GameTest
         }
         finally
         {
-            await Server.WaitPost(() => SEntMan.DeleteEntity(TestMap.MapUid));
+            await Server.WaitPost(() => SEntMan.DeleteEntity(map.MapUid));
         }
     }
 }

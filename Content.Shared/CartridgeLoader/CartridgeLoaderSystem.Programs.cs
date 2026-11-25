@@ -135,7 +135,7 @@ public sealed partial class CartridgeLoaderSystem
         if (!GetDiskPrograms(ent).Contains(program))
             return false;
 
-        QueueDel(program);
+        PredictedQueueDel(program);
 
         return true;
     }

@@ -14,7 +14,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
-  - type: GravityAffected
   - type: Fixtures
     fixtures:
       fix1:
@@ -294,6 +293,7 @@
   - type: Construction
     graph: Seat
     node: chairMeat
+  - type: Damageable
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible

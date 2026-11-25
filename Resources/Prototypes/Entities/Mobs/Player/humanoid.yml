@@ -31,7 +31,7 @@
 
 - type: entity
   id: RandomHumanoidSpawnerDeathSquad
-  name: Death Squad Commando
+  name: Death Squad Agent
   suffix: ERTRole, Death Squad
   components:
     - type: Sprite

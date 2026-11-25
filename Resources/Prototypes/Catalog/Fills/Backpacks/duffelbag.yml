@@ -124,8 +124,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
-  name: China Lake bundle
-  description: "An old China Lake grenade launcher bundled with 11 rounds of various destruction capability."
+  name: China-Lake bundle
+  description: "An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability."
   components:
   - type: EntityTableContainerFill
     containers:
@@ -133,9 +133,9 @@
         children:
         - id: WeaponLauncherChinaLake
         - id: GrenadeBlast
-          amount: 3
+          amount: 4
         - id: GrenadeFrag
-          amount: 5
+          amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -349,8 +349,9 @@
         - id: SyringeRomerol
         - id: WeaponRevolverPython
         - id: MagazineBoxMagnumIncendiary
-        - id: PillCanisterAmbuzol
-          amount: 5
+        - id: PillAmbuzolPlus
+        - id: PillAmbuzol
+          amount: 3
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -431,7 +432,7 @@
           amount: 2
         - id: MedkitCombatFilled
         - id: EmpImplanter
-        - id: ClothingShoesChameleonNoSlips
+        - id: ClothingShoesBootsMagSyndie
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -446,85 +447,3 @@
         - id: WeaponShotgunHushpup
         - id: BoxLethalshot
         - id: TreasureCoinIron
-
-- type: entity
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelVirtualSinger
-  name: virtual singer outfit bag
-  description: Contains the famous virtual singer's outfit. Have a great performance!
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingUniformJumpskirtVirtualSinger
-        - id: ClothingShoesBootsVirtualSinger
-        - id: ClothingHeadVirtualSingerWig
-        - id: FoodMealMemoryleek
-          amount: 2
-
-- type: entity
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelVirtualChimera
-  name: chimera singer outfit bag
-  description: Contains the famous chimera singer's outfit. Have a great performance!
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingUniformJumpskirtVirtualChimera
-        - id: ClothingShoesBootsVirtualChimera
-        - id: ClothingHeadVirtualChimeraWig
-        - id: FoodBreadBaguette
-          amount: 2
-
-- type: entity
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelVirtualFan
-  name: singer's fan outfit bag
-  description: Contains the singer's fan outfit. Have a great performance!
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingUniformJumpskirtVirtualFan
-        - id: ClothingShoesBootsVirtualFan
-        - id: ClothingHeadVirtualFanWig
-        - id: Multitool
-
-- type: entity
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelVirtualForeigner
-  name: foreign singer outfit bag
-  description: Contains the famous foreign singer's outfit. Have a great performance!
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingUniformJumpskirtVirtualForeigner
-        - id: ClothingHeadVirtualForeignerWig
-        - id: ClothingShoesBootsVirtualForeigner
-        - id: PlushieCarp
-          amount: 2
-
-- type: entity
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelVirtualIce
-  name: ice singer outfit bag
-  description: Contains the ice singer's outfit. Have a great performance!
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingOuterCoatVirtualIce
-        - id: ClothingUniformJumpsuitVirtualIce
-        - id: ClothingShoesBootsVirtualIce
-        - id: ClothingHeadVirtualIceWig
-        - id: ClothingNeckScarfVirtualIce
-        - id: ClothingHandsGlovesFingerless
-        - id: FoodFrozenPopsicleJumbo
-          amount: 2

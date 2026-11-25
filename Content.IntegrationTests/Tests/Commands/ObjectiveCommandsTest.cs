@@ -1,9 +1,10 @@
 #nullable enable
+using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
-using Content.Server.Objectives.Commands;
+using Content.Server.Objectives;
 using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.Commands;
 
@@ -11,6 +12,7 @@ public sealed class ObjectiveCommandsTest : GameTest
 {
 
     private const string ObjectiveProtoId = "MindCommandsTestObjective";
+    private const string DummyUsername = "MindCommandsTestUser";
 
     [TestPrototypes]
     private const string Prototypes = $"""
@@ -26,38 +28,49 @@ public sealed class ObjectiveCommandsTest : GameTest
   - type: DieCondition
 """;
 
-    [SidedDependency(Side.Server)] private SharedMindSystem _sMindSystem = null!;
+    public override PoolSettings PoolSettings => new ()
+    {
+        Connected = false
+    };
 
     /// <summary>
-    /// Tests using <c>addobjective</c>, <c>lsobjectives</c>,
-    /// and <c>rmobjective</c> on the player.
+    /// Creates a dummy session, and assigns it a mind, then
+    /// tests using <c>addobjective</c>, <c>lsobjectives</c>,
+    /// and <c>rmobjective</c> on it.
     /// </summary>
-    [TestOf(typeof(AddObjectiveCommand))]
-    [TestOf(typeof(ListObjectivesCommand))]
-    [TestOf(typeof(RemoveObjectiveCommand))]
     [Test]
-    [Description("Checks that the addobjective, lsobjectives, and rmobjective commands work as expected.")]
     public async Task AddListRemoveObjectiveTest()
     {
-        Entity<MindComponent> mind = default!;
+        var pair = Pair;
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var playerMan = server.ResolveDependency<ISharedPlayerManager>();
+        var mindSys = server.System<SharedMindSystem>();
+        var objectivesSystem = server.System<ObjectivesSystem>();
 
-        await Server.WaitPost(() =>
+        await server.AddDummySession(DummyUsername);
+        await server.WaitRunTicks(5);
+
+        var playerSession = playerMan.Sessions.Single();
+
+        Entity<MindComponent>? mindEnt = null;
+        await server.WaitPost(() =>
         {
-            mind = _sMindSystem.GetOrCreateMind(ServerSession!.UserId);
+            mindEnt = mindSys.CreateMind(playerSession.UserId);
         });
 
-        Assert.That(mind.Comp!.Objectives, Is.Empty, "Player started with objectives.");
+        Assert.That(mindEnt, Is.Not.Null);
+        var mindComp = mindEnt!.Value.Comp;
+        Assert.That(mindComp.Objectives, Is.Empty, "Dummy player started with objectives.");
 
-        await Pair.WaitCommand($"addobjective {ServerSession!.Name} {ObjectiveProtoId}");
+        await pair.WaitCommand($"addobjective {playerSession.Name} {ObjectiveProtoId}");
 
-        Assert.That(mind.Comp.Objectives, Has.Count.EqualTo(1), "addobjective failed to increase Objectives count.");
+        Assert.That(mindComp.Objectives, Has.Count.EqualTo(1), "addobjective failed to increase Objectives count.");
 
-        await Pair.WaitCommand($"lsobjectives {ServerSession.Name}");
+        await pair.WaitCommand($"lsobjectives {playerSession.Name}");
 
-        // Nothing really to assert here; but at least we're running the code and checking for errors!
+        await pair.WaitCommand($"rmobjective {playerSession.Name} 0");
 
-        await Pair.WaitCommand($"rmobjective {ServerSession.Name} 0");
-
-        Assert.That(mind.Comp.Objectives, Is.Empty, "rmobjective failed to remove objective");
+        Assert.That(mindComp.Objectives, Is.Empty, "rmobjective failed to remove objective");
     }
 }

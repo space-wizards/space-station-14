@@ -1,4 +1,5 @@
-using Content.Shared.GameTicking;
+using Content.Client.GameTicking.Managers;
+using Content.Shared;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Robust.Shared.Map.Components;
@@ -9,7 +10,7 @@ namespace Content.Client.Light;
 /// <inheritdoc/>
 public sealed partial class LightCycleSystem : SharedLightCycleSystem
 {
-    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private ClientGameTicker _ticker = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
 

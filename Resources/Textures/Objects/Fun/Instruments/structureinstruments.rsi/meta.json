@@ -16,6 +16,10 @@
             "directions": 4
         },
         {
+            "name": "minimoog-broken",
+            "directions": 4
+        },
+        {
             "name": "piano",
             "directions": 4
         },
@@ -24,7 +28,15 @@
             "directions": 4
         },
         {
+            "name": "piano-broken",
+            "directions": 4
+        },
+        {
             "name": "xylophone",
+            "directions": 4
+        },
+        {
+            "name": "xylophone-broken",
             "directions": 4
         },
         {

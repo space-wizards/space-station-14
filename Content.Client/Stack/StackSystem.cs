@@ -10,17 +10,19 @@ namespace Content.Client.Stack
     [UsedImplicitly]
     public sealed partial class StackSystem : SharedStackSystem
     {
+        [Dependency] private AppearanceSystem _appearanceSystem = default!;
         [Dependency] private ItemCounterSystem _counterSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<StackComponent, AppearanceChangeEvent>(OnAppearanceChange);
             Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
         }
 
         #region Appearance
-        [SubscribeLocalEvent]
+
         private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
         {
             var (uid, comp) = ent;
@@ -29,13 +31,13 @@ namespace Content.Client.Stack
                 return;
 
             // Skip processing if no elements in the stack
-            if (!args.TryGetData<int>(StackVisuals.Actual, out var actual))
+            if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, args.Component))
                 return;
 
-            if (!args.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
+            if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount, args.Component))
                 maxCount = comp.LayerStates.Count;
 
-            if (!args.TryGetData<bool>(StackVisuals.Hide, out var hidden))
+            if (!_appearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hidden, args.Component))
                 hidden = false;
 
             if (comp.LayerFunction != StackLayerFunction.None)

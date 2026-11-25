@@ -1,39 +1,35 @@
 using Content.Server.StationEvents.Components;
-using Content.Shared.GameTicking.Components;
+﻿using Content.Shared.GameTicking.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-/// <summary>
-/// Handler for events spawning an artifact on station with a bluespace flash.
-/// </summary>
-/// <seealso cref="BluespaceArtifactRuleComponent"/>
 public sealed partial class BluespaceArtifactRule : StationEventSystem<BluespaceArtifactRuleComponent>
 {
-    protected override void Added(Entity<BluespaceArtifactRuleComponent, GameRuleComponent> ent, ref GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        if (!TryComp<StationEventComponent>(ent, out var stationEvent))
+        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
         var str = Loc.GetString("bluespace-artifact-event-announcement",
-            ("sighting", Loc.GetString(RobustRandom.Pick(ent.Comp1.PossibleSightings))));
+            ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSightings))));
         stationEvent.StartAnnouncement = str;
 
-        base.Added(ent, ref args);
+        base.Added(uid, component, gameRule, args);
     }
 
-    protected override void Started(Entity<BluespaceArtifactRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
-        base.Started(ent, ref args);
+        base.Started(uid, component, gameRule, args);
 
-        var amountToSpawn = ent.Comp1.AmountToSpawn.Next(RobustRandom);
+        var amountToSpawn = 1;
         for (var i = 0; i < amountToSpawn; i++)
         {
-            if (!Station.TryFindRandomTile(out _, out _, out _, out var coords))
+            if (!TryFindRandomTile(out _, out _, out _, out var coords))
                 return;
 
-            Spawn(ent.Comp1.ArtifactSpawnerPrototype, coords);
-            Spawn(ent.Comp1.ArtifactFlashPrototype, coords);
+            Spawn(component.ArtifactSpawnerPrototype, coords);
+            Spawn(component.ArtifactFlashPrototype, coords);
 
             Sawmill.Info($"Spawning random artifact at {coords}");
         }

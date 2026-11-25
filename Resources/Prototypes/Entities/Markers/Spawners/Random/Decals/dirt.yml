@@ -15,7 +15,6 @@
     color: '#FFFFFF7F'
     cleanable: true
     tileBlacklist: # Everything here just looks bad if it gets regular dirt on it
-    - FloorSteelMono
     - FloorWood
     - FloorWoodLarge
     - FloorWhiteMono

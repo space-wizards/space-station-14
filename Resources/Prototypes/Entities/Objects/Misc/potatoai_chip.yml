@@ -1,8 +1,8 @@
 - type: entity
   id: PotatoAIChip
-  name: makeshift microcontroller
+  name: supercompact AI chip
   parent: BaseItem
-  description: A soldered together stripboard hosting enough computing power to run basic processes and primitive AI's. Requires exactly 1.1V to function correctly.
+  description: This high-tech AI chip requires a voltage of exactly 1.1V to function correctly.
   components:
     - type: Sprite
       sprite: Objects/Misc/potatoai_chip.rsi

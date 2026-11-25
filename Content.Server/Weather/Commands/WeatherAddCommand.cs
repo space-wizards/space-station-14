@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Prototypes;
 using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -72,7 +73,7 @@ public sealed partial class WeatherAddCommand : LocalizedEntityCommands
             var opts = new List<CompletionOption>();
             foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.HasComp<WeatherStatusEffectComponent>(_compFactory))
+                if (!proto.HasComponent<WeatherStatusEffectComponent>(_compFactory))
                     continue;
 
                 opts.Add(new CompletionOption(proto.ID, proto.Name));

@@ -22,8 +22,7 @@ namespace Content.Server.Entry
             "OptionsVisualizer",
             "AnomalyScannerScreen",
             "MultipartMachineGhost",
-            "DirectionalArrowIndicator",
-            "SandboxCopyable"
+            "DirectionalArrowIndicator"
         };
     }
 }

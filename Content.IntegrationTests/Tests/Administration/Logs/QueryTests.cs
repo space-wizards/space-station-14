@@ -1,15 +1,16 @@
-#nullable enable
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Shared.Database;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
+[TestFixture]
 [TestOf(typeof(AdminLogSystem))]
 public sealed class QueryTests : GameTest
 {
@@ -20,38 +21,42 @@ public sealed class QueryTests : GameTest
         Connected = true
     };
 
-    [SidedDependency(Side.Server)] private IAdminLogManager _sLogManager = default!;
-    [SidedDependency(Side.Server)] private IPlayerManager _sPlayerManager = default!;
-    [SidedDependency(Side.Server)] private ServerGameTicker _sTicker = default!;
-
     [Test]
-    [Description("Creates and queries a single admin log with a filter by user ID.")]
     public async Task QuerySingleLog()
     {
+        var pair = Pair;
+        var server = pair.Server;
+
+        var sSystems = server.ResolveDependency<IEntitySystemManager>();
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
+
         var date = DateTime.UtcNow;
         var guid = Guid.NewGuid();
 
-        ICommonSession player = default!;
+        ICommonSession player = default;
 
-        await Server.WaitPost(() =>
+        await server.WaitPost(() =>
         {
-            player = _sPlayerManager.Sessions.First();
+            player = sPlayers.Sessions.First();
 
-            _sLogManager.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
+            sAdminLogSystem.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
         });
 
         var filter = new LogFilter
         {
-            Round = _sTicker.RoundId,
+            Round = sGamerTicker.RoundId,
             Search = guid.ToString(),
-            Types = [LogType.Unknown],
+            Types = new HashSet<LogType> { LogType.Unknown },
             After = date,
-            AnyPlayers = [player.UserId.UserId]
+            AnyPlayers = new[] { player.UserId.UserId }
         };
 
-        await PoolManager.WaitUntil(Server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
-            foreach (var _ in await _sLogManager.All(filter))
+            foreach (var _ in await sAdminLogSystem.All(filter))
             {
                 return true;
             }

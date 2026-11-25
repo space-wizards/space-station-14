@@ -35,7 +35,6 @@
   - type: Tag
     tags:
     - Bread
-    - Ingredient
     - Slice
   - type: Solution
     solution:
@@ -96,9 +95,8 @@
       amount: 8
   - type: Tag
     tags:
-    - Bread
-    - FinishedMeal
     - Fruit
+    - Bread
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -116,9 +114,8 @@
     - state: banana-slice
   - type: Tag
     tags:
-    - Bread
-    - FinishedMeal
     - Fruit
+    - Bread
     - Slice
 
 - type: entity
@@ -142,9 +139,8 @@
       amount: 8
   - type: Tag
     tags:
-    - Bread
     - ClothMade
-    - FinishedMeal
+    - Bread
   - type: Solution
     solution:
       reagents:
@@ -170,9 +166,8 @@
     - state: cotton-slice
   - type: Tag
     tags:
-    - Bread
     - ClothMade
-    - Ingredient
+    - Bread
     - Slice
   - type: Solution
     solution:
@@ -292,10 +287,8 @@
         Quantity: 4
   - type: Tag
     tags:
-    - Bread
-    - FinishedMeal
-    - Ingredient
     - Meat
+    - Bread
 # Tastes like bread, meat.
 
 - type: entity
@@ -322,8 +315,8 @@
         Quantity: 0.5
   - type: Tag
     tags:
-    - Bread
     - Meat
+    - Bread
     - Slice
 
 - type: entity
@@ -427,8 +420,8 @@
         Quantity: 10
   - type: Tag
     tags:
-    - Bread
     - Meat
+    - Bread
 
 - type: entity
   name: sausage bread slice
@@ -452,9 +445,8 @@
         Quantity: 1.25
   - type: Tag
     tags:
-    - Bread
-    - FinishedMeal
     - Meat
+    - Bread
     - Slice
 
 - type: entity
@@ -485,8 +477,8 @@
         Quantity: 4
   - type: Tag
     tags:
-    - Bread
     - Meat
+    - Bread
 # Tastes like bread, cobwebs.
 
 - type: entity
@@ -513,9 +505,8 @@
         Quantity: 0.5
   - type: Tag
     tags:
-    - Bread
-    - FinishedMeal
     - Meat
+    - Bread
     - Slice
 
 - type: entity
@@ -593,9 +584,8 @@
         Quantity: 4
   - type: Tag
     tags:
-    - Bread
-    - FinishedMeal
     - Meat
+    - Bread
 # Tastes like bread, acid.
 
 - type: entity
@@ -622,9 +612,8 @@
         Quantity: 0.5
   - type: Tag
     tags:
-    - Bread
-    - FinishedMeal
     - Meat
+    - Bread
     - Slice
 
 # Other than bread/slice:
@@ -690,7 +679,6 @@
     tags:
     - Bread
     - ClothMade
-    - FinishedMeal
   - type: Clothing
     equippedPrefix: baguette-cotton
   - type: Item
@@ -749,9 +737,8 @@
   - type: Tag
     tags:
     - Bread
-    - ClothMade
-    - Ingredient
     - Slice
+    - ClothMade
   - type: Solution
     solution:
       reagents:
@@ -902,17 +889,9 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: [SimpleMobBase, BaseMobDestructible, SolutionLarge, FoodBase, BaseSlicingRefinableFood]
+  parent: [SolutionLarge, FoodBase, BaseSlicingRefinableFood]
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
-  - type: EntityTableContainerFill # drops nothing on gib
-    containers:
-      body_organs: !type:AllSelector
-        children: []
-  - type: Edible
-    requireDead: false
-  - type: CollisionWake
-    enabled: false # EVIL! (without that it becomes intangible after some idle time)
   - type: FlavorProfile
     flavors:
     - meaty
@@ -921,17 +900,6 @@
     refineResult:
     - id: FoodBreadSausageSlice
       amount: 5
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTypeTrigger
-        damageType: Blunt
-        damage: 400
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodBreadSausageSlice:
-            min: 3
-            max: 5
   - type: Solution
     solution:
       reagents:
@@ -943,15 +911,6 @@
         Quantity: 10
       - ReagentId: UncookedAnimalProteins
         Quantity: 25
-  - type: Bloodstream
-    bloodReferenceSolution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
-      - ReagentId: Protein
-        Quantity: 20
-      - ReagentId: Vitamin
-        Quantity: 20
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -959,14 +918,20 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: base
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: base
-      Critical:
-        Base: dead
-      Dead:
-        Base: dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
   - type: Item
     size: Ginormous
     shape:
@@ -986,42 +951,29 @@
   - type: Speech
     speechSounds: Dog
     speechVerb: SmallMob
-  - type: ReplacementAccent
-    accent: noreplacement
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 5
+    baseWalkSpeed : 5
+    baseSprintSpeed : 3
   - type: Tag
     tags:
-    - Bread
-    - DoorBumpOpener
-    - FinishedMeal
-    - Meat
     - VimPilot
+    - DoorBumpOpener
+    - Bread
+    - Meat
   - type: CanEscapeInventory
     baseResistTime: 2
   - type: Puller
     needsHands: false
+  - type: Examiner
+  - type: DoAfter
+  - type: CombatMode
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Animals/dog_bark1.ogg
     hidden: true
     damage:
       types:
-        Blunt: 4
-        Piercing: 4
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 15
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
+        Blunt: 1
 
 - type: entity
   parent: [SolutionVeryTiny, FoodBreadSliceBase]
@@ -1039,7 +991,6 @@
   - type: Tag
     tags:
     - ReptilianFood
-    - FinishedMeal
   - type: FlavorProfile
     flavors:
     - nutribrick
@@ -1066,7 +1017,6 @@
   - type: Tag
     tags:
     - ClothMade
-    - FinishedMeal
   - type: Item
     size: Small
     storedOffset: -1,0

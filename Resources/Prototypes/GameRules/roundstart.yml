@@ -5,13 +5,6 @@
   - type: GameRule
 
 - type: entity
-  id: BaseSilentGameRule
-  abstract: true
-  components:
-  - type: GameRule
-    silent: true
-
-- type: entity
   parent: BaseGameRule
   id: BaseRoundstartAntagRule
   abstract: true
@@ -41,8 +34,6 @@
       prob: 0.05
     - id: SubXenoborgs
       prob: 0.05
-    - id: Changeling
-      prob: 0.25
 
 - type: entity
   parent: BaseGameRule
@@ -54,8 +45,6 @@
       prob: 0.5
     - id: SubXenoborgs
       prob: 0.05
-    - id: Changeling
-      prob: 0.25
 
 - type: entity
   parent: BaseGameRule
@@ -67,8 +56,6 @@
       prob: 0.5
     - id: SubWizard
       prob: 0.05
-    - id: Changeling
-      prob: 0.25
 
 - type: entity
   parent: BaseGameRule
@@ -78,8 +65,6 @@
     rules:
     - id: Thief
       prob: 0.5
-    - id: Changeling
-      prob: 0.25
 
 - type: entity
   parent: BaseGameRule
@@ -221,6 +206,32 @@
       proto: TraitorReinforcement
 
 - type: entity
+  id: Changeling
+  parent: [BaseGameRule, BaseRoundstartAntagRule]
+  components:
+  - type: ChangelingRule
+  - type: GameRule
+    minPlayers: 25
+  - type: AntagSelection
+    agentName: changeling-round-end-agent-name
+    antags:
+    - !type:LinearAntagCount
+      proto: Changeling
+      playerRatio: 15
+      range:
+        min: 1
+        max: 3
+  - type: AntagRandomObjectives
+    sets:
+    - groups: ChangelingObjectiveGroupDevourDummy
+      maxPicks: 1
+    - groups: ChangelingObjectiveGroupEscapeDummy
+      maxPicks: 1
+    - groups: ChangelingObjectiveGroupKillDummy
+      maxPicks: 1
+    maxDifficulty: 8
+
+- type: entity
   id: Revolutionary
   parent: [BaseGameRule, BaseRoundstartAntagRule]
   components:
@@ -323,7 +334,7 @@
       proto: Xenoborg
       count: 4
   - type: DynamicRuleCost
-    cost: 100
+    cost: 200
 
 - type: entity
   parent: [ BaseXenoborgsRule, BaseRoundstartAntagRule]
@@ -384,9 +395,15 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - !type:NestedSelector
+      tableId: BasicCalmEventsTable
+    - !type:NestedSelector
+      tableId: BasicAntagEventsTable
+    - !type:NestedSelector
       tableId: CargoGiftsTable
     - !type:NestedSelector
       tableId: CalmPestEventsTable
+    - !type:NestedSelector
+      tableId: SpicyPestEventsTable
 
 - type: entityTable
   id: SpaceTrafficControlTable
@@ -434,7 +451,7 @@
 # variation passes
 - type: entity
   id: BasicRoundstartVariation
-  parent: BaseSilentGameRule
+  parent: BaseGameRule
   components:
   - type: RoundstartStationVariationRule
     rules:

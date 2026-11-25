@@ -1,6 +1,4 @@
-#nullable enable
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
@@ -10,6 +8,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
+[TestFixture]
 [TestOf(typeof(ChemicalReactionSystem))]
 public sealed class SolutionRoundingTest : GameTest
 {
@@ -18,9 +17,9 @@ public sealed class SolutionRoundingTest : GameTest
     // * An assert with solution heat capacity calculations that I found a repro for while testing the above.
 
     [TestPrototypes]
-    private const string Prototypes = $@"
+    private const string Prototypes = @"
 - type: entity
-  id: {SolutionRoundingTestContainer}
+  id: SolutionRoundingTestContainer
   components:
   - type: Solution
     id: beaker
@@ -29,25 +28,25 @@ public sealed class SolutionRoundingTest : GameTest
 
 # This is the Chloral Hydrate recipe fyi.
 - type: reagent
-  id: {SolutionRoundingTestReagentA}
+  id: SolutionRoundingTestReagentA
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
 
 - type: reagent
-  id: {SolutionRoundingTestReagentB}
+  id: SolutionRoundingTestReagentB
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
 
 - type: reagent
-  id: {SolutionRoundingTestReagentC}
+  id: SolutionRoundingTestReagentC
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
 
 - type: reagent
-  id: {SolutionRoundingTestReagentD}
+  id: SolutionRoundingTestReagentD
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
@@ -56,58 +55,53 @@ public sealed class SolutionRoundingTest : GameTest
   id: SolutionRoundingTestReaction
   impact: Medium
   reactants:
-    {SolutionRoundingTestReagentA}:
+    SolutionRoundingTestReagentA:
       amount: 3
-    {SolutionRoundingTestReagentB}:
+    SolutionRoundingTestReagentB:
       amount: 1
-    {SolutionRoundingTestReagentC}:
+    SolutionRoundingTestReagentC:
       amount: 1
   products:
-    {SolutionRoundingTestReagentD}: 1
+    SolutionRoundingTestReagentD: 1
 ";
-    private const string SolutionRoundingTestContainer = "SolutionRoundingTestContainer";
+
     private const string SolutionRoundingTestReagentA = "SolutionRoundingTestReagentA";
     private const string SolutionRoundingTestReagentB = "SolutionRoundingTestReagentB";
     private const string SolutionRoundingTestReagentC = "SolutionRoundingTestReagentC";
     private const string SolutionRoundingTestReagentD = "SolutionRoundingTestReagentD";
 
-    [SidedDependency(Side.Server)] private SharedSolutionContainerSystem _sSolutionContainer = null!;
-
     [Test]
     public async Task Test()
     {
-        await CreateTestMap();
+        var pair = Pair;
+        var server = pair.Server;
+        var testMap = await pair.CreateTestMap();
 
-        Solution solution = default!;
+        Solution solution = default;
         Entity<SolutionComponent> solutionEnt = default;
 
-        await Server.WaitPost(() =>
+        await server.WaitPost(() =>
         {
-            var beaker = SSpawnAtPosition(SolutionRoundingTestContainer, TestMap.GridCoords);
+            var system = server.System<SharedSolutionContainerSystem>();
+            var beaker = server.EntMan.SpawnEntity("SolutionRoundingTestContainer", testMap.GridCoords);
 
-            _sSolutionContainer.TryGetSolution(beaker, "beaker", out var newSolutionEnt, out var newSolution);
+            system.TryGetSolution(beaker, "beaker", out var newSolutionEnt, out var newSolution);
 
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(newSolutionEnt, Is.Not.Null);
-                Assert.That(newSolution, Is.Not.Null);
-            }
+            solutionEnt = newSolutionEnt!.Value;
+            solution = newSolution!;
 
-            solutionEnt = newSolutionEnt.Value;
-            solution = newSolution;
-
-            _sSolutionContainer.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentC, 50));
-            _sSolutionContainer.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentB, 30));
+            system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentC, 50));
+            system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentB, 30));
 
             for (var i = 0; i < 9; i++)
             {
-                _sSolutionContainer.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentA, 10));
+                system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentA, 10));
             }
         });
 
-        await Server.WaitAssertion(() =>
+        await server.WaitAssertion(() =>
         {
-            using (Assert.EnterMultipleScope())
+            Assert.Multiple(() =>
             {
                 Assert.That(
                     solution.ContainsReagent(SolutionRoundingTestReagentA, null),
@@ -120,13 +114,13 @@ public sealed class SolutionRoundingTest : GameTest
                     "Solution should not contain reagent B");
 
                 Assert.That(
-                    solution[new ReagentId(SolutionRoundingTestReagentC, null)].Quantity,
-                    Is.EqualTo((FixedPoint2)20));
+                    solution![new ReagentId(SolutionRoundingTestReagentC, null)].Quantity,
+                    Is.EqualTo((FixedPoint2) 20));
 
                 Assert.That(
-                    solution[new ReagentId(SolutionRoundingTestReagentD, null)].Quantity,
-                    Is.EqualTo((FixedPoint2)30));
-            }
+                    solution![new ReagentId(SolutionRoundingTestReagentD, null)].Quantity,
+                    Is.EqualTo((FixedPoint2) 30));
+            });
         });
     }
 }

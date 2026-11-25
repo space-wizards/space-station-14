@@ -28,7 +28,7 @@ public sealed class DestructibleOverkillTest : GameTest
     [Description("Test that an entity with consequences is destroyed cleanly when overkilled.")]
     public async Task EnsureOverkill()
     {
-        await CreateTestMap();
+        var testMap = await Pair.CreateTestMap();
 
         // Entity count prior to spawning and destroying
         var baseEntityCount = SEntMan.EntityCount;
@@ -38,7 +38,7 @@ public sealed class DestructibleOverkillTest : GameTest
         // Spawn our test entity and threshold listener
         await Server.WaitPost(() =>
         {
-            sDestructibleEntity = SSpawnAtPosition(DestructibleDestructionEntityId, TestMap.GridCoords);
+            sDestructibleEntity = SSpawnAtPosition(DestructibleDestructionEntityId, testMap.GridCoords);
             _sDestructibleListenerSystem.ThresholdsReached.Clear();
         });
 

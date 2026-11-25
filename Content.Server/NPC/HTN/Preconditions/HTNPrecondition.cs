@@ -9,9 +9,10 @@ public abstract partial class HTNPrecondition
     /// <summary>
     /// Handles one-time initialization of this precondition.
     /// </summary>
-    public virtual void Initialize(IDependencyCollection deps)
+    /// <param name="sysManager"></param>
+    public virtual void Initialize(IEntitySystemManager sysManager)
     {
-        deps.InjectDependencies(this);
+        IoCManager.InjectDependencies(this);
     }
 
     /// <summary>

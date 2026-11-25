@@ -10,17 +10,8 @@
     layers:
     - map: [ "enum.DisposalUnitVisualLayers.Base" ]
       state: disposal
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
-      state: disposal-flush
-      visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
       state: dispover-ready
-      shader: unshaded
-    - map: [ "stash" ]
-      state: disposal-open
-      visible: false
-    - map: [ "seat" ]
-      state: disposal-down
   - type: GenericVisualizer
     visuals:
       enum.DisposalUnitVisuals.IsReady:
@@ -41,17 +32,13 @@
         enum.DisposalUnitVisualLayers.OverlayCharging:
           False: { visible: false }
       enum.ToiletVisuals.SeatVisualState:
-        seat:
+        SeatVisualState.SeatUp:
           SeatUp: { state: disposal-up }
           SeatDown: { state: disposal-down }
       enum.ToolOpenableVisuals.ToolOpenableVisualState:
-        stash:
-          Open: { visible: true }
-          Closed: { visible: false }
-      enum.DisposalUnitVisuals.IsFlushing:
-        enum.DisposalUnitVisualLayers.OverlayFlushing:
-          True: { visible: true }
-          False: { visible: false }
+        ToolOpenableVisualState.StashOpen:
+          Open: { state: disposal-open }
+          Closed: { state: disposal-closed }
   - type: Rotatable
   - type: Transform
     noRot: false
@@ -97,7 +84,6 @@
   - type: Appearance
   - type: SecretStash
     secretStashName: secret-stash-toilet
-    maxItemSize: Small
   - type: ToolOpenable
     openToolQualityNeeded: Prying
     closeToolQualityNeeded: Prying
@@ -241,8 +227,7 @@
   suffix: Dirty Water, StealTarget
   components:
   - type: StealTarget
-    stealGroup:
-    - ToiletGoldenDirtyWater
+    stealGroup: ToiletGoldenDirtyWater
   - type: Solution
     solution:
         reagents:

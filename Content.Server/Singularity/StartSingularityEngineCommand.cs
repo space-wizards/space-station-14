@@ -4,11 +4,9 @@ using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
-using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Machines.Components;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Console;
 
 namespace Content.Server.Singularity
@@ -16,7 +14,7 @@ namespace Content.Server.Singularity
     [AdminCommand(AdminFlags.Admin)]
     public sealed partial class StartSingularityEngineCommand : LocalizedEntityCommands
     {
-        [Dependency] private ServerNetworkPoweredAmmoProviderSystem _ammoProvider = default!;
+        [Dependency] private EmitterSystem _emitterSystem = default!;
         [Dependency] private MultipartMachineSystem _multipartSystem = default!;
         [Dependency] private ParticleAcceleratorSystem  _paSystem = default!;
         [Dependency] private RadiationCollectorSystem _radCollectorSystem = default!;
@@ -33,10 +31,10 @@ namespace Content.Server.Singularity
 
             // Turn on emitters
             var emitterQuery = EntityManager.EntityQueryEnumerator<EmitterComponent>();
-            while (emitterQuery.MoveNext(out var uid, out _))
+            while (emitterQuery.MoveNext(out var uid, out var emitterComponent))
             {
                 //FIXME: This turns on ALL emitters, including APEs. It should only turn on the containment field emitters.
-                _ammoProvider.SwitchOn(uid);
+                _emitterSystem.SwitchOn(uid, emitterComponent);
             }
 
             // Turn on radiation collectors

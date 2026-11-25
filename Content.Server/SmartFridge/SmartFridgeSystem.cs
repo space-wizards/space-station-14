@@ -1,4 +1,4 @@
-using Content.Shared.SmartFridge;
+﻿using Content.Shared.SmartFridge;
 
 namespace Content.Server.SmartFridge;
 

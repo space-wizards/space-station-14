@@ -88,8 +88,7 @@
     - AME
     - Power
   - type: StealTarget
-    stealGroup:
-    - AmePartFlatpack
+    stealGroup: AmePartFlatpack
 
 - type: entity
   parent: BaseFlatpack
@@ -279,7 +278,7 @@
   description: A flatpack used for constructing a hydroponics tray.
   components:
   - type: Flatpack
-    entity: HydroponicsTray
+    entity: hydroponicsTray
   - type: Sprite
     layers:
     - state: hydroponics-tray

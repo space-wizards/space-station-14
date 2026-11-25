@@ -6,8 +6,8 @@ namespace Content.Shared.DeviceNetwork.Components;
 /// <summary>
 /// Allow entities to jam DeviceNetwork packets.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(DeviceNetworkJammerSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedDeviceNetworkJammerSystem))]
 public sealed partial class DeviceNetworkJammerComponent : Component
 {
     /// <summary>
@@ -21,11 +21,12 @@ public sealed partial class DeviceNetworkJammerComponent : Component
     /// Network ids are not guaranteed to be limited to DeviceNetIdDefaults.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<int> JammableNetworks = [];
+    public HashSet<string> JammableNetworks = [];
 
     /// <summary>
     /// Device networks frequencies that wont be jammed.
     /// </summary>
     [DataField]
-    public HashSet<DeviceFrequency> FrequenciesExcluded = [];
+    public HashSet<uint> FrequenciesExcluded = [];
+
 }

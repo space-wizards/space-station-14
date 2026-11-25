@@ -1,4 +1,4 @@
-- type: soundCollection
+﻿- type: soundCollection
   id: NukeMusic
   files:
     - /Audio/StationEvents/running_out.ogg

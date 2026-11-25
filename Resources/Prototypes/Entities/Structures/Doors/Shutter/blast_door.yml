@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: [ BaseShutter, StructureHealthDoorStrong ]
   id: BlastDoor
   name: blast door
@@ -34,7 +34,7 @@
   - type: RadiationBlocker
     resistance: 8
   - type: Damageable
-    damageModifierSet: PlasteelStaticMod
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -60,7 +60,8 @@
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: IconSmooth
-    key: doors
+    key: walls
+    mode: NoSprite
   - type: PlacementReplacement
     key: blastdoors
 
@@ -91,7 +92,7 @@
     state: assembly
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: PlasteelStaticMod
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:

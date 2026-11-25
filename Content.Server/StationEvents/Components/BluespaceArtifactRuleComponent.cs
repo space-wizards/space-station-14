@@ -1,5 +1,4 @@
 using Content.Server.StationEvents.Events;
-using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Components;
@@ -29,10 +28,4 @@ public sealed partial class BluespaceArtifactRuleComponent : Component
         "bluespace-artifact-sighting-6",
         "bluespace-artifact-sighting-7"
     };
-
-    /// <summary>
-    /// How many artifacts should be spawned?
-    /// </summary>
-    [DataField]
-    public MinMax AmountToSpawn = new MinMax(1, 1);
 }

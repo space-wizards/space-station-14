@@ -1,31 +1,30 @@
-#nullable enable
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Utility;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reaction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
+[TestFixture]
 [TestOf(typeof(ReactionPrototype))]
 public sealed class TryAllReactionsTest : GameTest
 {
     [TestPrototypes]
-    private const string Prototypes = $@"
+    private const string Prototypes = @"
 - type: entity
-  id: {TestSolutionContainer}
+  id: TestSolutionContainer
   components:
   - type: Solution
-    id: {SolutionId}
+    id: beaker
     solution:
       maxVol: 120";
 
-    private const string TestSolutionContainer = "TestSolutionContainer";
-    private const string SolutionId = "beaker";
     private static readonly string[] Reactions = GameDataScrounger.PrototypesOfKind<ReactionPrototype>();
 
     [SidedDependency(Side.Server)] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -35,8 +34,8 @@ public sealed class TryAllReactionsTest : GameTest
     [Description("Tries an individual reaction to see if it succeeds.")]
     public async Task TryReaction()
     {
-        await CreateTestMap();
-        var coordinates = TestMap.GridCoords;
+        var testMap = await Pair.CreateTestMap();
+        var coordinates = testMap.GridCoords;
 
         // they call me a bird the way i be nesting
         try
@@ -46,16 +45,15 @@ public sealed class TryAllReactionsTest : GameTest
                 var reactionPrototype = SProtoMan.Index<ReactionPrototype>(reaction);
 
                 EntityUid beaker = default;
-                Solution? solution = null;
+                Solution solution = null;
 
                 try
                 {
-                    await Server.WaitAssertion(() =>
+                    await Pair.Server.WaitAssertion(() =>
                     {
-                        beaker = SSpawnAtPosition(TestSolutionContainer, coordinates);
+                        beaker = SEntMan.SpawnEntity("TestSolutionContainer", coordinates);
                         Assert.That(_solutionContainerSystem
-                            .TryGetSolution(beaker, SolutionId, out var solutionEnt, out solution));
-                        Assert.That(solution, Is.Not.Null);
+                            .TryGetSolution(beaker, "beaker", out var solutionEnt, out solution));
                         _solutionContainerSystem.SetCanReact(solutionEnt!.Value, false);
                         foreach (var (id, reactant) in reactionPrototype.Reactants)
                         {
@@ -105,16 +103,16 @@ public sealed class TryAllReactionsTest : GameTest
 
                         if (reactionPrototype.MixingCategories != null)
                         {
-                            var dummyEntity = SSpawn(null);
+                            var dummyEntity = SEntMan.SpawnEntity(null, MapCoordinates.Nullspace);
                             var mixerComponent = SEntMan.AddComponent<ReactionMixerComponent>(dummyEntity);
                             mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
                             _solutionContainerSystem.UpdateChemicals(solutionEnt.Value, true, mixerComponent);
                         }
                     });
 
-                    await Server.WaitIdleAsync();
+                    await Pair.Server.WaitIdleAsync();
 
-                    await Server.WaitAssertion(() =>
+                    await Pair.Server.WaitAssertion(() =>
                     {
                         //you just got linq'd fool
                         //(i'm sorry)
@@ -125,7 +123,7 @@ public sealed class TryAllReactionsTest : GameTest
                             )
                             .ToDictionary(x => x, _ => false);
 
-                        foreach (var (reagent, quantity) in solution!.Contents)
+                        foreach (var (reagent, quantity) in solution.Contents)
                         {
                             Assert.That(foundProductsMap.TryFirstOrNull(
                                 x => x.Key.Key == reagent.Prototype && x.Key.Value == quantity,
@@ -138,13 +136,13 @@ public sealed class TryAllReactionsTest : GameTest
                 }
                 finally
                 {
-                    await Server.WaitPost(() => SDeleteNow(beaker));
+                    await Server.WaitPost(() => SEntMan.DeleteEntity(beaker));
                 }
             }
         }
         finally
         {
-            await Server.WaitPost(() => SDeleteNow(TestMap.MapUid));
+            await Server.WaitPost(() => SEntMan.DeleteEntity(testMap.MapUid));
         }
     }
 }

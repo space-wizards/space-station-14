@@ -163,7 +163,7 @@ public abstract partial class SharedGunSystem
 
             if (slots != null)
             {
-                _slots.SetLock((uid, slots), ChamberSlot, true);
+                _slots.SetLock(uid, ChamberSlot, true, slots);
             }
 
             Audio.PlayPredicted(component.BoltClosedSound, uid, user);
@@ -193,7 +193,7 @@ public abstract partial class SharedGunSystem
 
             if (slots != null)
             {
-                _slots.SetLock((uid, slots), ChamberSlot, false);
+                _slots.SetLock(uid, ChamberSlot, false, slots);
             }
 
             Audio.PlayPredicted(component.BoltOpenedSound, uid, user);

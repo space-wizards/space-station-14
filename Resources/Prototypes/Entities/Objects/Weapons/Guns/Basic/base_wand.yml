@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: WeaponWandBase
   abstract: true
   parent: [ BaseItem, BaseMagicalContraband ]

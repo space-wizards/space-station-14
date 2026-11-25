@@ -189,30 +189,31 @@
   components:
   - type: WizardClothes
 
+# Is this wizard wearing a fanny pack???
 - type: entity
   parent: ClothingOuterWizardBase
-  id: ClothingOuterWizardAbyss
-  name: abyss wizard robes
-  description: A robe with a fashionable leather vest, it is crackling with runic energy.
+  id: ClothingOuterWizardViolet
+  name: violet wizard robes
+  description: A bizarre gem-encrusted violet robe that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/wizard_abyss.rsi
+    sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/wizard_abyss.rsi
+    sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
   - type: Tag
     tags:
     - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWizardBase
-  id: ClothingOuterWizardBlue
-  name: blue wizard robes
+  id: ClothingOuterWizard
+  name: wizard robes
   description: A bizarre gem-encrusted blue robe that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/wizard_blue.rsi
+    sprite: Clothing/OuterClothing/Misc/wizard.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/wizard_blue.rsi
+    sprite: Clothing/OuterClothing/Misc/wizard.rsi
   - type: Tag
     tags:
     - CorgiWearable
@@ -225,9 +226,9 @@
   description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/wizard_red.rsi
+    sprite: Clothing/OuterClothing/Misc/redwizard.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/wizard_red.rsi
+    sprite: Clothing/OuterClothing/Misc/redwizard.rsi
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -242,21 +243,6 @@
     sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
-
-# Is this wizard wearing a fanny pack???
-- type: entity
-  parent: ClothingOuterWizardBase
-  id: ClothingOuterWizardViolet
-  name: violet wizard robes
-  description: A bizarre gem-encrusted violet robe that radiates magical energies.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/wizard_violet.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/wizard_violet.rsi
-  - type: Tag
-    tags:
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBase

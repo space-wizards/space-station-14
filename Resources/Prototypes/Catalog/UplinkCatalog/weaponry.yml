@@ -70,11 +70,17 @@
   id: UplinkEnergyCrossbow
   name: uplink-energycrossbow-name
   description: uplink-energycrossbow-desc
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
   productEntity: WeaponEnergyCrossbow
   cost:
     Telecrystal: 5
   categories:
   - UplinkWeaponry
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 - type: listing
   id: UplinkThrowingKnivesKit
@@ -137,7 +143,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: UplinkRiggedBoxingGloves
+  id: uplinkRiggedBoxingGloves
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
   icon: { sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi, state: icon }

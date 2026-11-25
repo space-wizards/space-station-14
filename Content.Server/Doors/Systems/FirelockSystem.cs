@@ -67,6 +67,7 @@ namespace Content.Server.Doors.Systems
 
                 // only bother to check pressure on doors that are some variation of closed.
                 if (door.State != DoorState.Closed
+                    && door.State != DoorState.Welded
                     && door.State != DoorState.Denying)
                 {
                     continue;

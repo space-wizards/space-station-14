@@ -1,4 +1,3 @@
-using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 
@@ -17,11 +16,7 @@ public abstract partial class InteractionTest
     protected const string PlatingSnow = "PlatingSnow";
 
     // Structures
-    protected static readonly EntProtoId Airlock = "Airlock";
-    protected static readonly EntProtoId Girder = "Girder";
-    protected static readonly EntProtoId WallSolid = "WallSolid";
-    protected static readonly EntProtoId ReinforcedWindow = "ReinforcedWindow";
-    protected static readonly ProtoId<ConstructionPrototype> Wall = "Wall";
+    protected const string Airlock = "Airlock";
 
     // Tools/steps
     protected const string Wrench = "Wrench";

@@ -1,4 +1,4 @@
-using Content.Shared.Hands.EntitySystems;
+using Content.Server.Hands.Systems;
 using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Server.NPC.HTN.Preconditions;
@@ -10,7 +10,6 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class ItemTogglePrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private SharedHandsSystem _handsSystem = default!;
 
     /// <summary>
     /// The activation state to check for.
@@ -25,7 +24,8 @@ public sealed partial class ItemTogglePrecondition : HTNPrecondition
         if (!blackboard.TryGetValue<string>(NPCBlackboard.ActiveHand, out var activeHand, _entManager))
             return false;
 
-        if (!_handsSystem.TryGetHeldItem(owner, activeHand, out var heldEntity))
+        var handsSystem = _entManager.System<HandsSystem>();
+        if (!handsSystem.TryGetHeldItem(owner, activeHand, out var heldEntity))
             return false;
 
         if (!_entManager.TryGetComponent<ItemToggleComponent>(heldEntity, out var itemToggle))

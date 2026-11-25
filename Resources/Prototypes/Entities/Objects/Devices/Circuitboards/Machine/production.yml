@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -124,8 +124,7 @@
           amount: 2
           defaultPrototype: Beaker
     - type: StealTarget
-      stealGroup:
-      - MedicalTechFabCircuitboard
+      stealGroup: MedicalTechFabCircuitboard
 
 - type: entity
   id: CircuitImprinterMachineCircuitboard
@@ -565,7 +564,7 @@
       stackRequirements:
         Manipulator: 1
         Glass: 1
-        Plastic: 3
+        Steel: 3
       tagRequirements:
         GlassBeaker:
           amount: 2
@@ -697,7 +696,7 @@
       prototype: PowerCageRecharger
       stackRequirements:
         Manipulator: 4
-        Plasteel: 5
+        Steel: 5
         Cable: 10
     - type: PhysicalComposition
       materialComposition:
@@ -857,7 +856,7 @@
     prototype: Thruster
     stackRequirements:
       Manipulator: 4
-      Plasteel: 5
+      Steel: 5
 
 - type: entity
   id: GyroscopeMachineCircuitboard
@@ -1119,7 +1118,6 @@
         Manipulator: 2
         CableHV: 5
         Glass: 2
-        Plasteel: 2
 
 - type: entity
   id: SurveillanceCameraRouterCircuitboard
@@ -1216,7 +1214,7 @@
     - type: MachineBoard
       prototype: BoozeDispenserEmpty
       stackRequirements:
-        Plastic: 5
+        Steel: 5
       tagRequirements:
           GlassBeaker:
             amount: 1
@@ -1248,7 +1246,7 @@
     prototype: CargoMailTeleporter
     stackRequirements:
       Manipulator: 2
-      Plasteel: 5
+      Steel: 5
 
 - type: entity
   id: SodaDispenserMachineCircuitboard
@@ -1261,7 +1259,7 @@
     - type: MachineBoard
       prototype: SodaDispenserEmpty
       stackRequirements:
-        Plastic: 5
+        Steel: 5
       tagRequirements:
           GlassBeaker:
             amount: 1
@@ -1323,7 +1321,7 @@
     prototype: StationAnchor
     stackRequirements:
       Manipulator: 7
-      Plasteel: 10
+      Steel: 10
       Glass: 5
       CableHV: 8
       Uranium: 2

@@ -1,6 +1,5 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
@@ -17,18 +16,12 @@ public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityE
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        _plantHolder.AdjustsMutationLevel(entity.Owner, args.Effect.MutationTable, args.Effect.Amount);
+        _plantHolder.AdjustsMutationLevel(entity.Owner, args.Effect.Amount);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class PlantAdjustMutationLevel : BasePlantAdjustAttribute<PlantAdjustMutationLevel>
 {
-    /// <summary>
-    /// The mutation table whose level is adjusted.
-    /// </summary>
-    [DataField(required: true)]
-    public ProtoId<RandomPlantMutationListPrototype> MutationTable;
-
     public override string GuidebookAttributeName { get; set; } = "plant-attribute-mutation-level";
 }

@@ -3,7 +3,6 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Dataset;
-using Content.Shared.GameTicking;
 using Content.Shared.Tips;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -19,7 +18,7 @@ public sealed partial class TipsSystem : SharedTipsSystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private ServerGameTicker _ticker = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     private bool _tipsEnabled;
     private float _tipTimeOutOfRound;

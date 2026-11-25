@@ -1,5 +1,5 @@
-using Content.Shared.GameTicking;
-using Content.Shared.GameTicking.Events;
+﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
 
 namespace Content.Server.Administration.Logs;
 

@@ -204,7 +204,7 @@
   - type: Produce
     plantId: TowercapPlants
   - type: ToolRefinable
-    qualityNeeded: Slicing
+    qualityNeeded: Sawing
     refineResult:
     - id: MaterialWoodPlank1
       amount: 2
@@ -226,7 +226,7 @@
   - type: Produce
     plantId: SteelcapPlants
   - type: ToolRefinable
-    qualityNeeded: Slicing
+    qualityNeeded: Sawing
     refineResult:
     - id: SheetSteel1
 
@@ -340,7 +340,8 @@
     trash:
     - TrashBananaPeel
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: TrashBananaPeel
   - type: Solution
     solution:
       reagents:
@@ -384,7 +385,8 @@
     trash:
     - TrashMimanaPeel
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: TrashMimanaPeel
   - type: Solution
     solution:
       reagents:
@@ -945,7 +947,7 @@
   - type: FoodSequenceElement
     entries:
       Skewer: TomatoSkewer
-      Burger: TomatoBurger
+      Burger: Tomato
       Taco: Tomato
 
 - type: entity
@@ -994,7 +996,7 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      Burger: BlueTomatoBurger
+      Burger: BlueTomato
       Taco: BlueTomato
 
 - type: entity
@@ -1042,7 +1044,7 @@
   - type: FoodSequenceElement
     entries:
       Skewer: TomatoSkewer
-      Burger: BloodTomatoBurger
+      Burger: BloodTomato
       Taco: BloodTomato
 
 - type: entity
@@ -1186,7 +1188,8 @@
     trash:
     - FoodCornTrash
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
   - type: Solution
     solution:
       reagents:
@@ -1323,10 +1326,6 @@
     tags:
     - Vegetable
     - Mushroom
-  - type: FoodSequenceElement
-    entries:
-      Burger: ChanterelleBurger
-      Taco: Chanterelle
 
 # Slices
 
@@ -1464,7 +1463,7 @@
   - type: FoodSequenceElement
     entries:
       Taco: ChiliPepper
-      Burger: ChiliPepperBurger
+      Burger: ChiliPepper
       Skewer: ChiliPepperSkewer
 
 - type: entity
@@ -1495,7 +1494,7 @@
   - type: FoodSequenceElement
     entries:
       Taco: ChillyPepper
-      Burger: ChillyPepperBurger
+      Burger: ChillyPepper
       Skewer: ChillyPepperSkewer
 
 - type: entity
@@ -1529,79 +1528,6 @@
     entries:
       Taco: Aloe
       Burger: Aloe
-
-- type: entity
-  parent: FoodProduceBase
-  id: FoodAloeIgnis
-  name: aloe ignis leaf
-  description: A jagged leaf. It's uncomfortably warm to the touch and smells like ozone and spice.
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
-  - type: Item
-    size: Small
-    sprite: Objects/Specific/Hydroponics/aloe_ignis.rsi
-    heldPrefix: produce
-  - type: Produce
-    plantId: AloeIgnisPlants
-  - type: Tag
-    tags:
-    - Fruit
-  - type: FlavorProfile
-    flavors:
-    - spicy
-    - medicine
-  - type: Solution
-    solution:
-      maxVol: 15
-      reagents:
-      - ReagentId: Ignisol
-        Quantity: 8
-      - ReagentId: Carbon
-        Quantity: 4
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Biological
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:SpillBehavior
-        solution: food
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: FoodSequenceElement
-    entries:
-      Taco: AloeIgnis
-      Burger: AloeIgnisBurger
-
-- type: entity
-  parent: [ ProduceBase, BaseSlicingRefinable ]
-  id: FoodDragonTail
-  name: dragon's tail stalk
-  description: A long, spiraling stalk that glows with a soft emerald light. It can be processed into useful compress to sooth burns.
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
-    state: produce
-  - type: Item
-    size: Small
-    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
-    heldPrefix: produce
-  - type: Produce
-    plantId: DragonTailPlants
-  - type: Solution
-    solution:
-      maxVol: 20
-      reagents:
-      - ReagentId: Ignisol
-        Quantity: 10
-  - type: ToolRefinable
-    qualityNeeded: Slicing
-    refineResult:
-    - id: DragonTailCompress
 
 - type: entity
   name: poppy
@@ -1754,7 +1680,7 @@
   - type: Solution
     solution:
       reagents:
-      - ReagentId: ApotheosoticEnzymes
+      - ReagentId: Omnizine
         Quantity: 3
       - ReagentId: SpaceDrugs
         Quantity: 10
@@ -1805,7 +1731,7 @@
   - type: Tag
     tags:
     - Galaxythistle
-    - Flower
+    - Fruit # Probably?
   - type: FoodSequenceElement
     entries:
       Taco: Galaxythistle
@@ -1939,7 +1865,8 @@
     trash:
     - WeaponRevolverPython
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: WeaponRevolverPython
   - type: Tag
     tags:
     - Fruit # It's in the name
@@ -1976,7 +1903,8 @@
     trash:
     - RevolverCapGun
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: RevolverCapGun
   - type: Tag
     tags:
     - Fruit
@@ -1997,7 +1925,8 @@
     trash:
     - RevolverCapGunFake
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: RevolverCapGunFake
 
 - type: entity
   name: rice bushel
@@ -2406,7 +2335,8 @@
     trash:
     - FoodBungoPit
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: FoodBungoPit
   - type: Solution
     solution:
       reagents:
@@ -2666,9 +2596,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
-  - type: IgnitionSource
-    ignited: true
-    temperature: 400
   - type: FlavorProfile
     flavors:
       - pyrotton
@@ -2712,7 +2639,8 @@
     trash:
     - TrashCherryPit
   - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
+    refineResult:
+    - id: TrashCherryPit
   - type: Solution
     solution:
       maxVol: 15
@@ -2768,7 +2696,7 @@
   - type: BadFood
 
 - type: entity
-  parent: [SolutionNormal, FoodProduceBase, BaseSlicingRefinable] # Anomalously large
+  parent: [SolutionNormal, FoodProduceBase] # Anomalously large
   id: FoodAnomalyBerry
   name: anomaly berry
   description: A strange blue fruit. Something about it doesn't seem right.
@@ -2786,8 +2714,6 @@
   - type: Edible
     trash:
     - EffectAnomalyFloraBulb # Random loot
-  - type: ToolRefinable
-    refineResult: [] # Spawns trash on refine
   - type: Solution
     solution:
       reagents:

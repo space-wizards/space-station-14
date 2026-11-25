@@ -299,12 +299,6 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
     [DataField]
     public Dictionary<string, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>> CostModifiersBySourceId = new();
 
-    /// <summary>
-    /// If true, then this entry was locked.
-    /// </summary>
-    [DataField]
-    public bool Locked = false;
-
     /// <inheritdoc />
     public ListingDataWithCostModifiers(ListingData listingData)
         : base(

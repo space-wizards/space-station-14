@@ -75,13 +75,13 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
 
         var numberOfPipeLayers = GetNumberOfPipeLayers(uid, out var atmosPipeLayers);
 
-        if (!args.TryGetData<int>(PipeVisuals.VisualState, out var worldConnectedDirections))
+        if (!_appearance.TryGetData<int>(uid, PipeVisuals.VisualState, out var worldConnectedDirections, args.Component))
         {
             HideAllPipeConnection((uid, args.Sprite), atmosPipeLayers, numberOfPipeLayers);
             return;
         }
 
-        if (!args.TryGetData<Color>(PipeColorVisuals.Color, out var color))
+        if (!_appearance.TryGetData<Color>(uid, PipeColorVisuals.Color, out var color, args.Component))
             color = Color.White;
 
         for (byte i = 0; i < numberOfPipeLayers; i++)

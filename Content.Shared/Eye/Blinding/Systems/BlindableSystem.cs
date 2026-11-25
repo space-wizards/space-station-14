@@ -9,27 +9,34 @@ namespace Content.Shared.Eye.Blinding.Systems;
 public sealed partial class BlindableSystem : EntitySystem
 {
     [Dependency] private BlurryVisionSystem _blurriness = default!;
+    [Dependency] private EyeClosingSystem _eyelids = default!;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<BlindableComponent, EyeDamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<BlindableComponent, GetEyePvsScaleAttemptEvent>(OnGetEyePvsScaleAttemptEvent);
+        SubscribeLocalEvent<BlindableComponent, GetEyeOffsetAttemptEvent>(OnGetEyeOffsetAttemptEvent);
+    }
+
     private void OnRejuvenate(Entity<BlindableComponent> ent, ref RejuvenateEvent args)
     {
         AdjustEyeDamage((ent.Owner, ent.Comp), -ent.Comp.EyeDamage);
     }
 
-    [SubscribeLocalEvent]
     private void OnDamageChanged(Entity<BlindableComponent> ent, ref EyeDamageChangedEvent args)
     {
         _blurriness.UpdateBlurMagnitude((ent.Owner, ent.Comp));
+        _eyelids.UpdateEyesClosable((ent.Owner, ent.Comp));
     }
 
-    [SubscribeLocalEvent]
     private void OnGetEyePvsScaleAttemptEvent(Entity<BlindableComponent> ent, ref GetEyePvsScaleAttemptEvent args)
     {
         if (ent.Comp.IsBlind)
             args.Cancelled = true;
     }
 
-    [SubscribeLocalEvent]
     private void OnGetEyeOffsetAttemptEvent(Entity<BlindableComponent> ent, ref GetEyeOffsetAttemptEvent args)
     {
         if (ent.Comp.IsBlind)
@@ -69,7 +76,7 @@ public sealed partial class BlindableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adjust eye damage and updates the relevant subcomponents.
+    /// Adjust eye damage and updates the relevant sub components.
     /// </summary>
     /// <param name="blindable">Entity to adjust for.</param>
     /// <param name="amount">How much to change the eye damage. Can be positive and negative.</param>
@@ -100,7 +107,7 @@ public sealed partial class BlindableSystem : EntitySystem
 
     /// <summary>
     /// Sets the minimum damage to an eye.
-    /// Also updates subcomponents.
+    /// Updates also sub components.
     /// </summary>
     /// <param name="blindable">The entity to update.</param>
     /// <param name="amount">The minimum amount the entity can be blinded.</param>
@@ -115,19 +122,19 @@ public sealed partial class BlindableSystem : EntitySystem
 }
 
 /// <summary>
-/// This event is raised when an entity's blindness changes
+///     This event is raised when an entity's blindness changes
 /// </summary>
 [ByRefEvent]
 public record struct BlindnessChangedEvent(bool Blind);
 
 /// <summary>
-/// This event is raised when an entity's eye damage changes
+///     This event is raised when an entity's eye damage changes
 /// </summary>
 [ByRefEvent]
 public record struct EyeDamageChangedEvent(int Damage);
 
 /// <summary>
-/// Raised directed at an entity to see whether the entity is currently blind or not.
+///     Raised directed at an entity to see whether the entity is currently blind or not.
 /// </summary>
 public sealed class CanSeeAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
@@ -138,7 +145,7 @@ public sealed class CanSeeAttemptEvent : CancellableEntityEventArgs, IInventoryR
 public sealed class GetEyeProtectionEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
-    /// Time to subtract from any temporary blindness sources.
+    ///     Time to subtract from any temporary blindness sources.
     /// </summary>
     public TimeSpan Protection;
 

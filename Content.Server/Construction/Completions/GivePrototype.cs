@@ -2,6 +2,7 @@ using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -23,10 +24,7 @@ public sealed partial class GivePrototype : IGraphAction
         if (string.IsNullOrEmpty(Prototype))
             return;
 
-        // TODO: pass PrototypeManager into IGraphAction
-        var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
-        if (protoMan.TryIndex(Prototype, out var entProto) && entProto.HasComp<StackComponent>(entityManager.ComponentFactory))
+        if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
         {
             var stackSystem = entityManager.EntitySysManager.GetEntitySystem<StackSystem>();
             var stacks = stackSystem.SpawnMultipleNextToOrDrop(Prototype, Amount, userUid ?? uid);

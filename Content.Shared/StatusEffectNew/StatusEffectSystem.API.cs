@@ -156,7 +156,7 @@ public sealed partial class StatusEffectsSystem
             if (!_effectQuery.HasComp(effect))
                 return false;
 
-            QueueDel(effect);
+            PredictedQueueDel(effect);
             return true;
         }
 

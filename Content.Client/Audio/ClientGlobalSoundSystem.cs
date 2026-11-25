@@ -1,4 +1,4 @@
-using Content.Shared.Audio;
+﻿using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
@@ -8,8 +8,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Audio;
 
-/// <inheritdoc/>
-public sealed partial class ClientGlobalSoundSystem : GlobalSoundSystem
+public sealed partial class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private SharedAudioSystem _audio = default!;

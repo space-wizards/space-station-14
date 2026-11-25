@@ -1,6 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       SetSize="650 330"
                       Resizable="False">
     <BoxContainer Orientation="Vertical">
@@ -20,7 +21,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-in'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:SwitchButton Name="InBreaker" Margin="5" />
+                                <controls:OnOffButton Name="InBreaker" />
                             </BoxContainer>
                             <Label Name="InValue" />
                         </BoxContainer>
@@ -50,7 +51,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-out'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:SwitchButton Name="OutBreaker" Margin="5" />
+                                <controls:OnOffButton Name="OutBreaker" />
                             </BoxContainer>
                             <Label Name="OutValue" />
                         </BoxContainer>
@@ -132,7 +133,7 @@
 
         <!-- Footer -->
         <BoxContainer Name="Footer" Orientation="Vertical">
-            <controls:Separator StyleClasses="LowDivider"/>
+            <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'battery-menu-footer-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'battery-menu-footer-right'}" StyleClasses="WindowFooterText"

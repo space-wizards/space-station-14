@@ -1,25 +1,25 @@
-- type: constructionGraph
-  id: OrnateStatueClown
+﻿- type: constructionGraph
+  id: BananiumStatueClown
   start: start
   graph:
     - node: start
       edges:
-        - to: ornateStatueClown
+        - to: bananiumStatue
           completed:
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: Gold
+            - material: Bananium
               amount: 8
               doAfter: 10
 
-    - node: ornateStatueClown
-      entity: StatueOrnateClown
+    - node: bananiumStatue
+      entity: StatueBananiumClown
       edges:
         - to: start
           completed:
           - !type:SpawnPrototype
-                prototype: IngotGold1
+                prototype: MaterialBananium1
                 amount: 8
           - !type:DeleteEntity {}
           steps:

@@ -38,7 +38,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.25, -0.25, 0.25, 0.25"
         layer:
           - SlipLayer
         mask:
@@ -61,10 +61,9 @@
     - !type:Extinguish
   - type: IconSmooth
     key: water
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ water, walls ]
-      base: water
+    base: water
+    additionalKeys:
+    - walls
   - type: PlacementReplacement
     key: tileOverlay
 
@@ -79,19 +78,3 @@
     sprite: Tiles/TileEntities/swimming-pool.rsi
   - type: IconSmooth
     key: pool
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ pool ]
-      base: water
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        layer:
-        - SlipLayer
-        mask:
-        - ItemMask
-        density: 1000
-        hard: false

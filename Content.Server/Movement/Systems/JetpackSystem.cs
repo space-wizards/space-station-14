@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Movement.Components;
@@ -12,41 +13,46 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
     [Dependency] private GasTankSystem _gasTank = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    protected override bool CanEnable(Entity<JetpackComponent> ent)
+    protected override bool CanEnable(EntityUid uid, JetpackComponent component)
     {
-        return base.CanEnable(ent) &&
-               TryComp<GasTankComponent>(ent.Owner, out var gasTank) &&
-               !(gasTank.Air.TotalMoles < ent.Comp.MoleUsage);
+        return base.CanEnable(uid, component) &&
+               TryComp<GasTankComponent>(uid, out var gasTank) &&
+               !(gasTank.Air.TotalMoles < component.MoleUsage);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var toDisable = new ValueList<Entity<JetpackComponent>>();
+        var toDisable = new ValueList<(EntityUid Uid, JetpackComponent Component)>();
         var query = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, GasTankComponent>();
 
         while (query.MoveNext(out var uid, out var active, out var comp, out var gasTankComp))
         {
-            if (_timing.CurTime < active.NextGasUsage)
+            if (_timing.CurTime < active.TargetTime)
                 continue;
 
             var gasTank = (uid, gasTankComp);
-            active.NextGasUsage = _timing.CurTime + TimeSpan.FromSeconds(comp.GasUsageInterval);
+            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
             var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 
+            if (usedAir == null)
+                continue;
+
             var usedEnoughAir =
-                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage / 100);
+                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage/100);
 
             if (!usedEnoughAir)
+            {
                 toDisable.Add((uid, comp));
+            }
 
             _gasTank.UpdateUserInterface(gasTank);
         }
 
-        foreach (var ent in toDisable)
+        foreach (var (uid, comp) in toDisable)
         {
-            SetEnabled(ent.AsNullable(), false);
+            SetEnabled(uid, comp, false);
         }
     }
 }

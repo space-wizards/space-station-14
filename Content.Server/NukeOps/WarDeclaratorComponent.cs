@@ -1,5 +1,4 @@
-using Content.Server.GameTicking.Rules;
-using Content.Shared.Audio;
+﻿using Content.Server.GameTicking.Rules;
 using Content.Shared.NukeOps;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -10,7 +9,7 @@ namespace Content.Server.NukeOps;
 /// Used with NukeOps game rule to send war declaration announcement
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(WarDeclaratorSystem), typeof(ServerNukeopsRuleSystem))]
+[Access(typeof(WarDeclaratorSystem), typeof(NukeopsRuleSystem))]
 public sealed partial class WarDeclaratorComponent : Component
 {
     /// <summary>
@@ -38,7 +37,6 @@ public sealed partial class WarDeclaratorComponent : Component
     /// War declaration sound file path
     /// </summary>
     [DataField]
-    [AllowStereo]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Announcements/war.ogg");
 
     /// <summary>

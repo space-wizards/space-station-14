@@ -1,14 +1,10 @@
-using Content.Shared.Administration.Managers;
-using Content.Shared.Chat;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
-using Content.Shared.Follower;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -20,11 +16,8 @@ namespace Content.Shared.Ghost.Systems;
 /// </summary>
 public abstract partial class SharedGhostSystem : EntitySystem
 {
-    [Dependency] protected IGameTiming GameTiming = default!;
-    [Dependency] private ISharedAdminManager _admin = default!;
-    [Dependency] private FollowerSystem _follower = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
-    [Dependency] private TagSystem _tag = default!;
+    [Dependency] protected IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -39,7 +32,7 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
     private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
     {
-        var timeSinceDeath = GameTiming.RealTime.Subtract(component.TimeOfDeath);
+        var timeSinceDeath = _gameTiming.RealTime.Subtract(component.TimeOfDeath);
         var deathTimeInfo = timeSinceDeath.Minutes > 0
             ? Loc.GetString("comp-ghost-examine-time-minutes", ("minutes", timeSinceDeath.Minutes))
             : Loc.GetString("comp-ghost-examine-time-seconds", ("seconds", timeSinceDeath.Seconds));
@@ -121,19 +114,6 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
         entity.Comp.CanGhostInteract = value;
         Dirty(entity);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnGhostClickMessageSenderAttempt(Entity<GhostComponent> ent, ref ClickEntityLinkEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (_admin.IsAdmin(ent) || !_tag.HasTag(args.Target, FollowerSystem.PreventGhostnadoWarpTag)) //tag is used on any ghost that shouldn't be teleported to
-            args.Handled = true;
-
-        if (!args.Pure)
-            _follower.StartFollowingEntity(ent, args.Target);
     }
 }
 

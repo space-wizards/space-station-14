@@ -1,4 +1,3 @@
-#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
 using Robust.Shared.Prototypes;
 

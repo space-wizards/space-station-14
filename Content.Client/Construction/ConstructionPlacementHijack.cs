@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Placement;
@@ -10,12 +11,8 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
 {
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private IPrototypeManager _protoMan = default!;
-
-    private EntityQuery<ConstructionGhostComponent> _constructionGhostQuery;
-    private EntityQuery<SpriteComponent> _spriteQuery;
-
-    private readonly AppearanceSystem _appearanceSystem;
     private readonly ConstructionSystem _constructionSystem;
+    private readonly SpriteSystem _spriteSystem;
 
     private readonly ConstructionPrototype? _prototype;
 
@@ -27,10 +24,8 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
     {
         IoCManager.InjectDependencies(this);
 
-        _appearanceSystem = _entMan.System<AppearanceSystem>();
         _constructionSystem = _entMan.System<ConstructionSystem>();
-        _constructionGhostQuery = _entMan.GetEntityQuery<ConstructionGhostComponent>();
-        _spriteQuery = _entMan.GetEntityQuery<SpriteComponent>();
+        _spriteSystem = _entMan.System<SpriteSystem>();
         _prototype = prototype;
         CanRotate = prototype?.CanRotate ?? true;
     }
@@ -49,7 +44,7 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
     /// <inheritdoc />
     public override bool HijackDeletion(EntityUid entity)
     {
-        if (_constructionGhostQuery.HasComp(entity))
+        if (_entMan.HasComponent<ConstructionGhostComponent>(entity))
             _constructionSystem.ClearGhost(entity.GetHashCode());
         return true;
     }
@@ -62,21 +57,9 @@ public sealed partial class ConstructionPlacementHijack : PlacementHijack
         if (_prototype is null || !_constructionSystem.TryGetRecipePrototype(_prototype.ID, out var targetProtoId))
             return;
 
-        if (!_protoMan.HasIndex(targetProtoId))
+        if (!_protoMan.TryIndex(targetProtoId, out var proto))
             return;
 
-        // Set up our placement sprite from a test entity (deleted afterwards)
-        var targetUid = _entMan.Spawn(targetProtoId);
-        try
-        {
-            var sprite = _spriteQuery.Comp(targetUid);
-
-            _appearanceSystem.OnChangeData(targetUid, sprite);
-            manager.PreparePlacementSprite((targetUid, sprite));
-        }
-        finally
-        {
-            _entMan.DeleteEntity(targetUid);
-        }
+        manager.CurrentTextures = _spriteSystem.GetPrototypeTextures(proto).ToList();
     }
 }

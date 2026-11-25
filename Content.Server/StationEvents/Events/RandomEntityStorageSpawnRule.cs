@@ -7,29 +7,30 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-/// <summary>
-/// Handler for events that spawn an entity inside of another random entity with <see cref="EntityStorageComponent"/>.
-/// </summary>
-/// <seealso cref="RandomEntityStorageSpawnRuleComponent"/>
 public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<RandomEntityStorageSpawnRuleComponent>
 {
     [Dependency] private EntityStorageSystem _entityStorage = default!;
 
-    protected override void Started(Entity<RandomEntityStorageSpawnRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid, RandomEntityStorageSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
-        base.Started(ent, ref args);
+        base.Started(uid, comp, gameRule, args);
 
-        var spawnRule = ent.Comp1;
+        if (!TryGetRandomStation(out var station))
+            return;
 
-        var validLockers = new List<Entity<EntityStorageComponent>>();
-        var spawn = Spawn(spawnRule.Prototype, MapCoordinates.Nullspace);
+        var validLockers = new List<(EntityUid, EntityStorageComponent)>();
+        var spawn = Spawn(comp.Prototype, MapCoordinates.Nullspace);
 
-        foreach (var storageEnt in Station.GetEntitiesWithComponentOnStation<EntityStorageComponent>(false))
+        var query = EntityQueryEnumerator<EntityStorageComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var storage, out var xform))
         {
-            if (!_entityStorage.CanInsert(spawn, storageEnt, storageEnt.Comp))
+            if (StationSystem.GetOwningStation(ent, xform) != station)
                 continue;
 
-            validLockers.Add(storageEnt);
+            if (!_entityStorage.CanInsert(spawn, ent, storage))
+                continue;
+
+            validLockers.Add((ent, storage));
         }
 
         if (validLockers.Count == 0)
@@ -38,8 +39,10 @@ public sealed partial class RandomEntityStorageSpawnRule : StationEventSystem<Ra
             return;
         }
 
-        var locker = RobustRandom.Pick(validLockers);
-        if (!_entityStorage.Insert(spawn, locker, locker.Comp))
+        var (locker, storageComp) = RobustRandom.Pick(validLockers);
+        if (!_entityStorage.Insert(spawn, locker, storageComp))
+        {
             Del(spawn);
+        }
     }
 }

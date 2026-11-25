@@ -11,17 +11,20 @@ namespace Content.Shared.Mobs.Components;
 [Access(typeof(MobThresholdSystem))]
 public sealed partial class MobThresholdsComponent : Component
 {
-    [DataField(required: true)]
+    [DataField("thresholds", required: true)]
     public SortedDictionary<FixedPoint2, MobState> Thresholds = new();
 
-    [DataField]
+    [DataField("triggersAlerts")]
     public bool TriggersAlerts = true;
+
+    [DataField("currentThresholdState")]
+    public MobState CurrentThresholdState;
 
     /// <summary>
     /// The health alert that should be displayed for player controlled entities.
     /// Used for alternate health alerts (silicons, for example)
     /// </summary>
-    [DataField]
+    [DataField("stateAlertDict")]
     public Dictionary<MobState, ProtoId<AlertPrototype>> StateAlertDict = new()
     {
         {MobState.Alive, "HumanHealth"},
@@ -35,13 +38,13 @@ public sealed partial class MobThresholdsComponent : Component
     /// <summary>
     /// Whether or not this entity should display damage overlays (robots don't feel pain, black out etc.)
     /// </summary>
-    [DataField]
+    [DataField("showOverlays")]
     public bool ShowOverlays = true;
 
     /// <summary>
     /// Whether or not this entity can be revived out of a dead state.
     /// </summary>
-    [DataField]
+    [DataField("allowRevives")]
     public bool AllowRevives;
 }
 
@@ -62,6 +65,7 @@ public sealed class MobThresholdsComponentState : ComponentState
 
     public MobThresholdsComponentState(Dictionary<FixedPoint2, MobState> unsortedThresholds,
         bool triggersAlerts,
+        MobState currentThresholdState,
         Dictionary<MobState,
         ProtoId<AlertPrototype>> stateAlertDict,
         bool showOverlays,
@@ -69,6 +73,7 @@ public sealed class MobThresholdsComponentState : ComponentState
     {
         UnsortedThresholds = unsortedThresholds;
         TriggersAlerts = triggersAlerts;
+        CurrentThresholdState = currentThresholdState;
         StateAlertDict = stateAlertDict;
         ShowOverlays = showOverlays;
         AllowRevives = allowRevives;

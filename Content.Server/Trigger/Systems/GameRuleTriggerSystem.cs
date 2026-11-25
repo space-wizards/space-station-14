@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Shared.Database;
-using Content.Shared.GameTicking;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 
@@ -12,7 +11,7 @@ namespace Content.Server.Trigger.Systems;
 /// </summary>
 public sealed partial class GameRuleTriggerSystem : EntitySystem
 {
-    [Dependency] private ServerGameTicker _ticker = default!;
+    [Dependency] private GameTicker _ticker = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
     /// <inheritdoc/>
@@ -28,8 +27,7 @@ public sealed partial class GameRuleTriggerSystem : EntitySystem
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
-        if (_ticker.AddGameRule(ent.Comp.GameRule) is not { } rule)
-            return;
+        var rule = _ticker.AddGameRule(ent.Comp.GameRule);
 
         _adminLogger.Add(LogType.EventStarted,
             $"{ToPrettyString(args.User):entity} added a game rule [{ent.Comp.GameRule}]" +
@@ -37,7 +35,7 @@ public sealed partial class GameRuleTriggerSystem : EntitySystem
 
         if (ent.Comp.StartRule && _ticker.RunLevel == GameRunLevel.InRound)
         {
-            _ticker.StartGameRule(rule.AsNullable());
+            _ticker.StartGameRule(rule);
             _adminLogger.Add(LogType.EventStarted, $"{ToPrettyString(args.User):entity} started game rule [{ent.Comp.GameRule}].");
         }
 

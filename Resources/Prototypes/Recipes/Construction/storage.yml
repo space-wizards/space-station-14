@@ -22,7 +22,7 @@
   parent: BaseStorageStructure
   id: FilingCabinet
   graph: FilingCabinet
-  targetNode: FilingCabinet
+  targetNode: filingCabinet
 
 - type: construction
   parent: FilingCabinet

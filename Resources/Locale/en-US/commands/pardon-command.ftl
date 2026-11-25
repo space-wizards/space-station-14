@@ -1,4 +1,4 @@
-cmd-pardon-desc = Pardon somebody's ban.
+﻿cmd-pardon-desc = Pardon somebody's ban.
 cmd-pardon-help = Usage: pardon <ban id>
 cmd-pardon-unable-to-parse = Unable to parse {$id} as a ban id integer.
                              {$help}

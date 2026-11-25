@@ -1,6 +1,7 @@
 using Content.Server.Antag.Components;
-using Content.Shared.Antag;
+using Content.Server.Objectives;
 using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
 
 namespace Content.Server.Antag;
 

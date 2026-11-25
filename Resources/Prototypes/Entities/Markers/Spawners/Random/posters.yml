@@ -123,8 +123,6 @@
     - id: PosterLegitTyrone
     - id: PosterLegitHelio
     - id: PosterLegitBotanyFear
-    - id: PosterLegitRaptor
-    - id: PosterLegitVulture
 
 - type: entity
   parent: MarkerBase

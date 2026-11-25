@@ -1,18 +1,18 @@
 # Abilities
 
 - type: listing
-  id: ChangelingArmblade
+  id: ChangelingArmBlade
   name: changeling-catalog-arm-blade-name
   description: changeling-catalog-arm-blade-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 20
+    ChangelingDNA: 30
   categories:
   - ChangelingStoreCombat
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  productAction: ActionRetractableItemArmblade
+  productAction: ActionRetractableItemArmBlade
 
 - type: listing
   id: ChangelingFleshClothing
@@ -20,7 +20,7 @@
   description: changeling-catalog-flesh-clothing-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 20
   categories:
   - ChangelingStoreStealth
   conditions:
@@ -78,7 +78,7 @@
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: blind_sting }
   applyToMob: true
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 15
   categories:
   - ChangelingStoreCombat
   conditions:
@@ -117,25 +117,10 @@
   productAction: ActionChangelingStingLead
 
 - type: listing
-  id: ChangelingStingMute
-  name: changeling-catalog-mute-sting-name
-  description: changeling-catalog-mute-sting-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mute_sting }
-  applyToMob: true
-  cost:
-    ChangelingDNA: 15
-  categories:
-  - ChangelingStoreStealth
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  productAction: ActionChangelingStingMute
-
-- type: listing
-  id: ChangelingStingArmblade
-  name: changeling-catalog-armblade-sting-name
-  description: changeling-catalog-armblade-sting-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: armblade_sting }
+  id: ChangelingStingHallucinogenic
+  name: changeling-catalog-hallucinogenic-sting-name
+  description: changeling-catalog-hallucinogenic-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: hallucination_sting }
   applyToMob: true
   cost:
     ChangelingDNA: 10
@@ -144,22 +129,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  productAction: ActionChangelingStingArmblade
-
-- type: listing
-  id: ChangelingStingHemotoxin
-  name: changeling-catalog-hemotoxin-sting-name
-  description: changeling-catalog-hemotoxin-sting-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: hemotoxin_sting }
-  applyToMob: true
-  cost:
-    ChangelingDNA: 15
-  categories:
-  - ChangelingStoreCombat
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  productAction: ActionChangelingStingHemotoxin
+  productAction: ActionChangelingStingHallucinogenic
 
 - type: listing
   id: ChangelingLastResort
@@ -173,10 +143,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  - !type:BuyerChangelingIdentityCountCondition
-    requireDevour: true
-    count: 1
-    lock: true
   productAction: ActionChangelingLastResort
 
 - type: listing
@@ -195,24 +161,19 @@
   productComponents: ChangelingNightVisionDummy
 
 - type: listing
-  id: ChangelingHorrorForm
-  name: changeling-catalog-horror-form-name
-  description: changeling-catalog-horror-form-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: horror_shop }
+  id: ChangelingScreech
+  name: changeling-catalog-screech-name
+  description: changeling-catalog-screech-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: screech }
   applyToMob: true
   cost:
-    ChangelingDNA: 20 # kinda cheap because it burns thru DNA
+    ChangelingDNA: 20
   categories:
   - ChangelingStoreCombat
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  - !type:BuyerChangelingIdentityCountCondition
-    requireDevour: true
-    count: 3
-    lock: true
-  productEvent: !type:ChangelingUnlockHorrorEvent
-  raiseProductEventOnUser: true
+  productAction: ActionChangelingScreech
 
 - type: listing
   id: ChangelingFakeMindshield
@@ -227,17 +188,3 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productComponents: ChangelingFakeMindshieldDummy
-
-- type: listing
-  id: ChangelingFleshtomb
-  name: changeling-catalog-fleshtomb-name
-  description: changeling-catalog-fleshtomb-desc
-  applyToMob: true
-  cost:
-    ChangelingDNA: 5
-  categories:
-  - ChangelingStoreUtility
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  productAction: ActionChangelingFleshtomb

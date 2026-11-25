@@ -7,6 +7,8 @@ namespace Content.Client.Delivery;
 
 public sealed partial class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponent>
 {
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+
     private static readonly ProtoId<JobIconPrototype> UnknownIcon = "JobIconUnknown";
 
     protected override void OnAppearanceChange(EntityUid uid, DeliveryComponent component, ref AppearanceChangeEvent args)
@@ -14,7 +16,7 @@ public sealed partial class DeliveryVisualizerSystem : VisualizerSystem<Delivery
         if (args.Sprite == null)
             return;
 
-        args.TryGetData<string>(DeliveryVisuals.JobIcon, out var job);
+        _appearance.TryGetData(uid, DeliveryVisuals.JobIcon, out string job, args.Component);
 
         if (string.IsNullOrEmpty(job))
             job = UnknownIcon;

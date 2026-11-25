@@ -1,4 +1,4 @@
-using Content.Shared.Emag.Systems;
+﻿using Content.Shared.Emag.Systems;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
@@ -9,13 +9,19 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class IsEmaggedPrecondition : HTNPrecondition
 {
-    [Dependency] private EmagSystem _emag = default!;
+    private EmagSystem _emag;
 
     /// <summary>
     /// The type of emagging to check for.
     /// </summary>
     [DataField]
     public EmagType EmagType = EmagType.Interaction;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _emag = sysManager.GetEntitySystem<EmagSystem>();
+    }
 
     public override bool IsMet(NPCBlackboard blackboard)
     {

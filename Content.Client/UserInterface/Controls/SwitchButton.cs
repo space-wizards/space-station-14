@@ -146,11 +146,14 @@ namespace Content.Client.UserInterface.Controls
 
             if (relevantChangeMade)
             {
-                foreach (var c in Children)
-                {
-                    c.AddStyleClass("dummy");
-                    c.RemoveStyleClass("dummy");
-                }
+                Label.RemoveStyleClass("dummy");
+                TrackFill.RemoveStyleClass("dummy");
+                TrackOutline.RemoveStyleClass("dummy");
+                ThumbFill.RemoveStyleClass("dummy");
+                ThumbOutline.RemoveStyleClass("dummy");
+                Symbol.RemoveStyleClass("dummy");
+                OffStateLabel.RemoveStyleClass("dummy");
+                OnStateLabel.RemoveStyleClass("dummy");
             }
 
             // no base.DrawModeChanged() call - ContainerButton's pseudoclass handling

@@ -1,7 +1,7 @@
 # Generic Markings
 - type: marking
   id: GauzeLefteyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -14,7 +14,7 @@
 
 - type: marking
   id: GauzeLefteyePad
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin]
   coloring:
     default:
@@ -27,7 +27,7 @@
 
 - type: marking
   id: GauzeRighteyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -40,7 +40,7 @@
 
 - type: marking
   id: GauzeRighteyePad
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin]
   coloring:
     default:
@@ -53,7 +53,7 @@
 
 - type: marking
   id: GauzeBlindfold
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -223,7 +223,7 @@
 # Lizard Specific Markings
 - type: marking
   id: GauzeLizardLefteyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -236,7 +236,7 @@
 
 - type: marking
   id: GauzeLizardRighteyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -275,7 +275,7 @@
 
 - type: marking
   id: GauzeLizardBlindfold
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -289,7 +289,7 @@
 # Moth Specific Markings
 - type: marking
   id: GauzeMothBlindfold
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -328,7 +328,7 @@
 
 - type: marking
   id: GauzeMothLeftEyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -341,7 +341,7 @@
 
 - type: marking
   id: GauzeMothLeftEyePad
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -354,7 +354,7 @@
 
 - type: marking
   id: GauzeMothRightEyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -367,7 +367,7 @@
 
 - type: marking
   id: GauzeMothRightEyePad
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -472,7 +472,7 @@
 
 - type: marking
   id: GauzeVulpBlindfold
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -537,7 +537,7 @@
 
 - type: marking
   id: GauzeVulpLefteyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -589,7 +589,7 @@
 
 - type: marking
   id: GauzeVulpRighteyePatch
-  bodyPart: OverEyes
+  bodyPart: Eyes
   groupWhitelist: [Vulpkanin]
   coloring:
     default:

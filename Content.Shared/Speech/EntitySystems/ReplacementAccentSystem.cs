@@ -19,11 +19,6 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    /// <summary>
-    /// Matches between 1 and 3 .?! punctuation marks at the end of a string.
-    /// </summary>
-    private static readonly Regex PunctuationRegex = new("[!?.]{1,3}$", RegexOptions.Compiled);
-
     private readonly Dictionary<ProtoId<ReplacementAccentPrototype>, (Regex regex, string replacement)[]>
         _cachedReplacements = new();
 
@@ -79,17 +74,7 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
         // ideally both aren't used at the same time (but we don't have a way to enforce that in serialization yet)
         if (prototype.FullReplacements != null)
         {
-            if (prototype.FullReplacements.Length == 0)
-                return "";
-
-            var replacement = Loc.GetString(random.Pick(prototype.FullReplacements));
-            var punctuation = PunctuationRegex.Match(message).Value;
-
-            // no special punctuation
-            if (string.IsNullOrEmpty(punctuation) || punctuation == ".")
-                return replacement + prototype.DefaultPunctuation;
-
-            return replacement + punctuation;
+            return prototype.FullReplacements.Length != 0 ? Loc.GetString(random.Pick(prototype.FullReplacements)) : "";
         }
 
         // Prohibition of repeated word replacements.

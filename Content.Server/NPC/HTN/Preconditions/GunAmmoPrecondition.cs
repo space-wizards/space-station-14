@@ -1,5 +1,5 @@
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Ranged.Events;
-using Content.Shared.Weapons.Ranged.Systems;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
@@ -9,7 +9,6 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class GunAmmoPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private SharedGunSystem _gunSystem = default!;
 
     [DataField]
     public float MinPercent = 0f;
@@ -20,8 +19,9 @@ public sealed partial class GunAmmoPrecondition : HTNPrecondition
     public override bool IsMet(NPCBlackboard blackboard)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+        var gunSystem = _entManager.System<GunSystem>();
 
-        if (!_gunSystem.TryGetGun(owner, out var gun))
+        if (!gunSystem.TryGetGun(owner, out var gun))
         {
             return false;
         }

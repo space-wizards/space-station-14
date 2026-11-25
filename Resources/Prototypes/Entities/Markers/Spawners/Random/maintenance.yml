@@ -88,8 +88,7 @@
       - id: ClothingShoesLeather
       - id: ClothingShoesBootsSalvage
       - id: ClothingShoesBootsWork
-      - id: ClothingShoesSandalsBlack
-      - id: ClothingShoesSandalsBrown
+      - id: ClothingShoesTourist
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
     # Uncommon Group
@@ -266,7 +265,7 @@
       - id: ClothingBeltUtility
       - id: ToolboxArtisticFilled
       - id: GeigerCounter
-      - id: TRayScanner
+      - id: trayScanner
       - id: HandheldGPSBasic
       - id: HandLabeler
       - id: GlowstickGreen

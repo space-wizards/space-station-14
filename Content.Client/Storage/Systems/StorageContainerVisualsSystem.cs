@@ -1,4 +1,4 @@
-using Content.Client.Storage.Components;
+﻿using Content.Client.Storage.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;
@@ -13,10 +13,10 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         if (args.Sprite == null)
             return;
 
-        if (!args.TryGetData<int>(StorageVisuals.StorageUsed, out var used))
+        if (!AppearanceSystem.TryGetData<int>(uid, StorageVisuals.StorageUsed, out var used, args.Component))
             return;
 
-        if (!args.TryGetData<int>(StorageVisuals.Capacity, out var capacity))
+        if (!AppearanceSystem.TryGetData<int>(uid, StorageVisuals.Capacity, out var capacity, args.Component))
             return;
 
         var fraction = used / (float)capacity;

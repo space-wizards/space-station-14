@@ -10,7 +10,6 @@
   startingGear: ChemistGear
   icon: "JobIconChemist"
   supervisors: job-supervisors-cmo
-  guides: [ Chemist ]
   access:
   - Medical
   - Chemistry

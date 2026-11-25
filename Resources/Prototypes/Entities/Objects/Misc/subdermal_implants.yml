@@ -88,8 +88,7 @@
       deviceNetId: Wireless
       transmitFrequencyId: SuitSensor
     - type: StationLimitedNetwork
-    - type: StationTracker
-    - type: WirelessNetwork
+    - type: WirelessNetworkConnection
       range: 500
 
 #Traitor implants

@@ -6,7 +6,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Maps;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Station.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
@@ -15,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Station;
 
 [TestFixture]
-[TestOf(typeof(ServerStationJobsSystem))]
+[TestOf(typeof(StationJobsSystem))]
 public sealed class StationJobsTest : GameTest
 {
     private const string StationMapId = "FooStation";
@@ -138,8 +137,8 @@ public sealed class StationJobsTest : GameTest
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var barStationProto = prototypeManager.Index<GameMapPrototype>(SecondStationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
-        var stationJobs = entSysMan.GetEntitySystem<ServerStationJobsSystem>();
-        var stationSystem = entSysMan.GetEntitySystem<ServerStationSystem>();
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
 
         var firstStation = EntityUid.Invalid;
         var secondStation = EntityUid.Invalid;
@@ -199,8 +198,8 @@ public sealed class StationJobsTest : GameTest
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var barStationProto = prototypeManager.Index<GameMapPrototype>(SecondStationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
-        var stationJobs = entSysMan.GetEntitySystem<ServerStationJobsSystem>();
-        var stationSystem = entSysMan.GetEntitySystem<ServerStationSystem>();
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
         var station = EntityUid.Invalid;
 
         await server.WaitPost(() =>
@@ -265,8 +264,8 @@ public sealed class StationJobsTest : GameTest
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
-        var stationJobs = entSysMan.GetEntitySystem<ServerStationJobsSystem>();
-        var stationSystem = entSysMan.GetEntitySystem<ServerStationSystem>();
+        var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
+        var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
 
         var station = EntityUid.Invalid;
         await server.WaitPost(() =>

@@ -106,8 +106,7 @@
     containers:
       Nuke: !type:ContainerSlot
   - type: StealTarget
-    stealGroup:
-    - NuclearBomb
+    stealGroup: NuclearBomb
   - type: WarpPoint
     follow: true
     location: location-nuclear-bomb

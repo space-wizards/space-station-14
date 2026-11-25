@@ -59,8 +59,7 @@
     tags:
     - Book
   - type: StealTarget
-    stealGroup:
-    - Bible
+    stealGroup: Bible
 
 - type: entity
   parent: [Bible, BaseSyndicateContraband]

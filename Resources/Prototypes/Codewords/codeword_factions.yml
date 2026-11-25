@@ -1,3 +1,3 @@
-- type: codewordFaction
+﻿- type: codewordFaction
   id: Traitor
   generator: TraitorCodewordGenerator

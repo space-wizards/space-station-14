@@ -70,7 +70,7 @@
 
 - type: entity
   name: syndicate jaws of death
-  parent: [ JawsOfLife, BaseSyndicateContraband ]
+  parent: [JawsOfLife, BaseSyndicateContraband]
   id: SyndicateJawsOfLife
   description: Useful for breaking into secure areas and other nefarious activities.
   components:
@@ -145,27 +145,15 @@
       sprite:
         sprite: Objects/Tools/jaws_of_life.rsi
         state: xorg_jaws_pry
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/jaws_pry.ogg
-        params:
-          volume: -2
-      changeSound: !type:SoundPathSpecifier
-        path: /Audio/Items/change_jaws.ogg
-        params:
-          volume: -5
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
     - behavior: [ Cutting ]
       sprite:
         sprite: Objects/Tools/jaws_of_life.rsi
         state: xorg_jaws_cutter
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/jaws_cut.ogg
-        params:
-          volume: -4
-      changeSound: !type:SoundPathSpecifier
-        path: /Audio/Items/change_jaws.ogg
-        params:
-          volume: -5
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 12
+        Blunt: 14

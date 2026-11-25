@@ -1,4 +1,4 @@
-using Content.Shared.Hands.EntitySystems;
+using Content.Server.Hands.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.Preconditions;
@@ -9,7 +9,6 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class ActiveHandComponentPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private SharedHandsSystem _handsSystem = default!;
 
     [DataField("invert")]
     public bool Invert;
@@ -25,7 +24,7 @@ public sealed partial class ActiveHandComponentPrecondition : HTNPrecondition
             return Invert;
         }
 
-        if (!_handsSystem.TryGetHeldItem(owner, hand, out var entity))
+        if (!_entManager.System<HandsSystem>().TryGetHeldItem(owner, hand, out var entity))
             return Invert;
 
         foreach (var comp in Components)

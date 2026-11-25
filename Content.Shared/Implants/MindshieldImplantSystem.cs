@@ -30,7 +30,7 @@ public sealed partial class MindshieldImplantSystem : EntitySystem
         if (HasComp<HeadRevolutionaryComponent>(uid))
         {
             _popup.PopupEntity(Loc.GetString("head-rev-break-mindshield"), uid);
-            QueueDel(args.Implant);
+            PredictedQueueDel(args.Implant);
             return;
         }
 

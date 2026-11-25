@@ -29,8 +29,8 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
 
     private void OnComponentShutdown(Entity<CreamPiedComponent> ent, ref ComponentShutdown args)
     {
-        _displacement.EnsureDisplacementIsNotOnSprite((ent, Comp<SpriteComponent>(ent)), CreamPiedVisualLayer.Key);
         _sprite.RemoveLayer(ent.Owner, CreamPiedVisualLayer.Key);
+        _displacement.EnsureDisplacementIsNotOnSprite((ent, Comp<SpriteComponent>(ent)), CreamPiedVisualLayer.Key);
     }
 
     private void OnAppearanceChange(Entity<CreamPiedComponent> ent, ref AppearanceChangeEvent args)
@@ -54,6 +54,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         var appearance = ent.Comp3;
 
         // If there is no sprite to use, remove the layer. Otherwise ensure that it exists and set the visuals accordingly.
+        int index;
         if (creamPied.Sprite == null)
         {
             _sprite.RemoveLayer((ent.Owner, sprite), CreamPiedVisualLayer.Key);
@@ -61,7 +62,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
             return;
         }
 
-        int index = _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
+        index = _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
 
         _appearance.TryGetData<bool>(ent.Owner, CreamPiedVisuals.Creamed, out var isCreamPied, appearance);
         _sprite.LayerSetSprite((ent.Owner, sprite), index, creamPied.Sprite);
@@ -70,10 +71,6 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         if (ProtoMan.Resolve(ent.Comp1.Displacement, out var displacementProto))
         {
             _displacement.TryAddDisplacement(displacementProto.Displacement, (ent.Owner, sprite), index, CreamPiedVisualLayer.Key, out _);
-        }
-        else
-        {
-            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key);
         }
     }
 }

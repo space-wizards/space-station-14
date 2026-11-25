@@ -169,15 +169,15 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             };
         }
 
-        public void FromAirAlarmData(GasVentPumpData dataPayload)
+        public void FromAirAlarmData(GasVentPumpData data)
         {
-            Enabled = dataPayload.Enabled;
-            IsDirty = dataPayload.Dirty;
-            PumpDirection = dataPayload.PumpDirection;
-            PressureChecks = dataPayload.PressureChecks;
-            ExternalPressureBound = dataPayload.ExternalPressureBound;
-            InternalPressureBound = dataPayload.InternalPressureBound;
-            PressureLockoutOverride = dataPayload.PressureLockoutOverride;
+            Enabled = data.Enabled;
+            IsDirty = data.Dirty;
+            PumpDirection = data.PumpDirection;
+            PressureChecks = data.PressureChecks;
+            ExternalPressureBound = data.ExternalPressureBound;
+            InternalPressureBound = data.InternalPressureBound;
+            PressureLockoutOverride = data.PressureLockoutOverride;
         }
 
         #region GuidebookData

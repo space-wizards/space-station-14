@@ -118,7 +118,7 @@ public sealed partial class AudioTab : Control
     {
         const string openAlSoftPrefix = "OpenAL Soft on ";
         if (device.StartsWith(openAlSoftPrefix, StringComparison.Ordinal))
-            return IAudioManager.ConvertAudioDeviceNameForDisplay(device);
+            return device[openAlSoftPrefix.Length..];
 
         return device;
     }

@@ -1,6 +1,5 @@
 using Content.Shared.Mech.Equipment.Components;
-using Content.Shared.Timing.Components;
-using Content.Shared.Timing.Systems;
+using Content.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -52,7 +51,8 @@ public sealed partial class MechSoundboardSystem : EntitySystem
         if (msg.Sound >= comp.Sounds.Count)
             return;
 
-        if (!_useDelay.TryResetDelay(uid, true))
+        if (TryComp(uid, out UseDelayComponent? useDelay)
+            && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         // honk!!!!!

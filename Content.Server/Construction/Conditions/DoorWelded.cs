@@ -1,7 +1,6 @@
 using Content.Shared.Construction;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
-using Content.Shared.Tools.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Conditions
@@ -15,10 +14,10 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!(entityManager.HasComponent<DoorComponent>(uid) && entityManager.TryGetComponent<WeldableComponent>(uid, out var weldComp)))
+            if (!entityManager.TryGetComponent(uid, out DoorComponent? doorComponent))
                 return false;
 
-            return weldComp.IsWelded;
+            return doorComponent.State == DoorState.Welded;
         }
 
         public bool DoExamine(ExaminedEvent args)
@@ -27,10 +26,9 @@ namespace Content.Server.Construction.Conditions
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.TryGetComponent<WeldableComponent>(entity, out var weld))
-                return false;
+            if (!entMan.TryGetComponent(entity, out DoorComponent? door)) return false;
 
-            var isWelded = weld.IsWelded;
+            var isWelded = door.State == DoorState.Welded;
             if (isWelded != Welded)
             {
                 if (Welded)

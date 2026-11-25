@@ -1,7 +1,9 @@
 using Content.Client.Clothing.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Tag;
+using Content.Shared.Prototypes;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -52,8 +54,7 @@ public sealed partial class ChameleonBoundUserInterface : BoundUserInterface
                 newTargets.Add(target);
             }
             _menu?.UpdateState(newTargets, st.SelectedId);
-        }
-        else
+        } else
         {
             _menu?.UpdateState(targets, st.SelectedId);
         }

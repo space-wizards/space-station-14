@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid;
 using Robust.Shared.Containers;
@@ -31,9 +30,8 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
 
     private List<Marking> ResolveMarkings(List<Marking> markings, Color? skinColor, Color? eyeColor, Dictionary<Enum, MarkingsAppearance> appearances)
     {
-        var resolved = new List<Marking>();
+        var ret = new List<Marking>();
         var forcedColors = new List<(Marking, MarkingPrototype)>();
-        var forcedLayers = new List<(Marking, MarkingPrototype)>();
 
         // This method uses two loops since some marking with constrained colors care about the colors of previous markings.
         // As such we want to ensure we can apply the markings they rely on first.
@@ -42,12 +40,10 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
             if (!_marking.TryGetMarking(marking, out var proto))
                 continue;
 
-            if (proto.ForcedColoring || appearances.GetValueOrDefault(proto.BodyPart)?.MatchSkin == true)
-                forcedColors.Add((marking, proto));
-            else if (proto.HasForcedColorLayer())
-                forcedLayers.Add((marking, proto));
+            if (!proto.ForcedColoring && appearances.GetValueOrDefault(proto.BodyPart)?.MatchSkin != true)
+                ret.Add(marking);
             else
-                resolved.Add(marking);
+                forcedColors.Add((marking, proto));
         }
 
         foreach (var (marking, prototype) in forcedColors)
@@ -56,44 +52,20 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
                 prototype,
                 skinColor,
                 eyeColor,
-                resolved);
+                ret);
 
             var markingWithColor = new Marking(marking.MarkingId, colors)
             {
                 Forced = marking.Forced,
             };
-
             if (appearances.GetValueOrDefault(prototype.BodyPart) is { MatchSkin: true } appearance && skinColor is { } color)
             {
                 markingWithColor = markingWithColor.WithColor(color.WithAlpha(appearance.LayerAlpha));
             }
-
-            resolved.Add(markingWithColor);
+            ret.Add(markingWithColor);
         }
 
-        // Correct markings with forced per-layer coloring.
-        foreach (var (marking, prototype) in forcedLayers)
-        {
-            var colors = MarkingColoring.GetMarkingLayerColors(
-                prototype,
-                skinColor,
-                eyeColor,
-                resolved);
-
-            var newColors = new List<Color>(marking.MarkingColors);
-            DebugTools.Assert(prototype.GetColorCount() == prototype.Sprites.Count);
-            for (var i = 0; i < prototype.GetColorCount(); i++)
-            {
-                var layer = prototype.Sprites[i];
-                if (layer.ForcedColoring)
-                    newColors[i] = colors[i];
-            }
-
-            var markingWithColors = new Marking(marking.MarkingId, newColors);
-            resolved.Add(markingWithColors);
-        }
-
-        return resolved;
+        return ret;
     }
 
     protected virtual void SetOrganColor(Entity<VisualOrganComponent> ent, Color color)
@@ -102,23 +74,15 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         Dirty(ent);
     }
 
-    protected virtual void SetOrganAppearance(Entity<VisualOrganComponent> ent, PrototypeLayerData data, ProtoId<DisplacementDataPrototype>? displacement)
+    protected virtual void SetOrganAppearance(Entity<VisualOrganComponent> ent, PrototypeLayerData data)
     {
         ent.Comp.Data = data;
-        ent.Comp.Displacement = displacement;
         Dirty(ent);
     }
 
-    protected virtual void SetOrganMarkings(Entity<VisualOrganMarkingsComponent> ent, Dictionary<HumanoidVisualLayers, List<Marking>> markings, Dictionary<HumanoidVisualLayers, DisplacementData> displacement)
-    {
-        SetOrganMarkings(ent, markings, displacement, ent.Comp.HideableLayers);
-    }
-
-    protected virtual void SetOrganMarkings(Entity<VisualOrganMarkingsComponent> ent, Dictionary<HumanoidVisualLayers, List<Marking>> markings, Dictionary<HumanoidVisualLayers, DisplacementData> displacement, HashSet<Enum> hideability)
+    protected virtual void SetOrganMarkings(Entity<VisualOrganMarkingsComponent> ent, Dictionary<HumanoidVisualLayers, List<Marking>> markings)
     {
         ent.Comp.Markings = markings;
-        ent.Comp.MarkingsDisplacement = displacement.ShallowClone();
-        ent.Comp.HideableLayers = hideability;
         Dirty(ent);
     }
 
@@ -130,7 +94,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         if (!other.Layer.Equals(ent.Comp.Layer))
             return;
 
-        SetOrganAppearance(ent, other.Data, other.Displacement);
+        SetOrganAppearance(ent, other.Data);
     }
 
     private void OnMarkingsOrganCopyAppearance(Entity<VisualOrganMarkingsComponent> ent, ref BodyRelayedEvent<OrganCopyAppearanceEvent> args)
@@ -141,7 +105,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         if (!other.MarkingData.Layers.SetEquals(ent.Comp.MarkingData.Layers))
             return;
 
-        SetOrganMarkings(ent, other.Markings, other.MarkingsDisplacement, other.HideableLayers);
+        SetOrganMarkings(ent, other.Markings);
     }
 
     private void OnVisualOrganApplyProfile(Entity<VisualOrganComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
@@ -166,7 +130,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
         if (ent.Comp.SexStateOverrides is { } overrides && overrides.TryGetValue(data.Sex, out var state))
         {
             ent.Comp.Data.State = state;
-            SetOrganAppearance(ent, ent.Comp.Data, ent.Comp.Displacement);
+            SetOrganAppearance(ent, ent.Comp.Data);
         }
     }
 
@@ -204,7 +168,7 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
             kvp => kvp.Key,
             kvp => ResolveMarkings(kvp.Value, profile.SkinColor, profile.EyeColor, groupProto.Appearances));
 
-        SetOrganMarkings(ent, resolved, ent.Comp.MarkingsDisplacement);
+        SetOrganMarkings(ent, resolved);
     }
 }
 

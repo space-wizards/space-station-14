@@ -13,8 +13,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell;
-using Content.Shared.Timing.Components;
-using Content.Shared.Timing.Systems;
+using Content.Shared.Timing;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -47,7 +46,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<DefibrillatorComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || args.Target is not { } target || !args.CanReach)
+        if (args.Handled || args.Target is not { } target)
             return;
 
         args.Handled = TryStartZap(ent.AsNullable(), target, args.User);
@@ -190,14 +189,13 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     private bool TryRevive(Entity<DefibrillatorComponent> ent, EntityUid user, EntityUid target, bool isOriginal)
     {
         bool failedRevive = true;
-        string? message = null;
         if (_rotting.IsRotten(target))
         {
-            message = Loc.GetString("defibrillator-rotten");
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-rotten"), InGameICChatType.Speak, true);
         }
-        else if (TryComp<UnrevivableComponent>(target, out var unrevivable) && _mobState.IsDead(target))
+        else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
         {
-            message = Loc.GetString(unrevivable.ReasonMessage);
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(unrevivable.ReasonMessage), InGameICChatType.Speak, true);
         }
         else
         {
@@ -224,16 +222,11 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             else
             {
                 if (HasComp<MindContainerComponent>(target))
-                    message = Loc.GetString("defibrillator-no-mind"); //target can host a mind but doesn't
+                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"), InGameICChatType.Speak, true); //target can host a mind but doesn't
                 else
-                    message = Loc.GetString("defibrillator-not-living"); //target couldn't have hosted a mind
+                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-not-living"), InGameICChatType.Speak, true); //target couldn't have hosted a mind
             }
         }
-
-        // Only report on the entity the pads were actually placed on. Everything else caught in the chain
-        // (the bed the patient is strapped to, whoever is pulling them) still gets zapped, just silently.
-        if (isOriginal && message != null)
-            _chat.TrySendInGameICMessage(ent.Owner, message, InGameICChatType.Speak, true);
 
         _electrocution.TryDoElectrocution(
             target,

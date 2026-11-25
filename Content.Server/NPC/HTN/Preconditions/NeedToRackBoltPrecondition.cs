@@ -1,4 +1,4 @@
-using Content.Shared.Hands.EntitySystems;
+using Content.Server.Hands.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 
@@ -11,8 +11,6 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class NeedToRackBoltPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private SharedHandsSystem _handsSystem = default!;
-    [Dependency] private SharedGunSystem _gunSystem = default!;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -21,7 +19,8 @@ public sealed partial class NeedToRackBoltPrecondition : HTNPrecondition
         if (!blackboard.TryGetValue<string>(NPCBlackboard.ActiveHand, out var activeHand, _entManager))
             return false;
 
-        if (!_handsSystem.TryGetHeldItem(owner, activeHand, out var heldEntity))
+        var handsSystem = _entManager.System<HandsSystem>();
+        if (!handsSystem.TryGetHeldItem(owner, activeHand, out var heldEntity))
             return false;
 
         if (!_entManager.TryGetComponent<ChamberMagazineAmmoProviderComponent>(heldEntity, out var chamberMagazine))
@@ -30,7 +29,8 @@ public sealed partial class NeedToRackBoltPrecondition : HTNPrecondition
         if (!chamberMagazine.CanRack)
             return false;
 
-        var chamberEntity = _gunSystem.GetChamberEntity(heldEntity.Value);
+        var gunSystem = _entManager.System<SharedGunSystem>();
+        var chamberEntity = gunSystem.GetChamberEntity(heldEntity.Value);
         bool hasRoundInChamber = chamberEntity is not null;
 
         return chamberMagazine.BoltClosed == false || !hasRoundInChamber;

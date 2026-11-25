@@ -52,7 +52,7 @@
       node: LeverNode
     - type: DeviceNetwork
       deviceNetId: Wireless
-    - type: WirelessNetwork
+    - type: WirelessNetworkConnection
       range: 200
     - type: DeviceLinkSource
       ports:

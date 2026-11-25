@@ -1,16 +1,15 @@
-using Content.Client.Pinpointer.UI;
-using Content.Client.Resources;
-using Content.Shared.DeviceNetwork;
-using Content.Shared.SurveillanceCamera;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
+using Content.Client.Pinpointer.UI;
+using Content.Client.Resources;
+using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
 public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
 {
+    [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
 
     private static readonly Color CameraActiveColor = Color.FromHex("#FF00FF");
@@ -23,10 +22,9 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     private readonly Texture _selectedTexture;
     private readonly Texture _invalidTexture;
 
-    private DeviceAddress _activeCameraAddress = DeviceAddress.Invalid;
-    private HashSet<ProtoId<DeviceFrequencyPrototype>> _availableSubnets = [];
-    private Dictionary<NetEntity, CameraMarker> _markers = [];
-    private bool _mapDirty = true;
+    private string _activeCameraAddress = string.Empty;
+    private HashSet<string> _availableSubnets = [];
+    private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -49,80 +47,47 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
         };
     }
 
-    public void SetActiveCameraAddress(DeviceAddress address)
+    public void SetActiveCameraAddress(string address)
     {
         if (_activeCameraAddress == address)
             return;
 
         _activeCameraAddress = address;
-        _mapDirty = true;
         ForceNavMapUpdate();
     }
 
-    public void SetAvailableSubnets(HashSet<ProtoId<DeviceFrequencyPrototype>> subnets)
+    public void SetAvailableSubnets(HashSet<string> subnets)
     {
         if (_availableSubnets.SetEquals(subnets))
             return;
 
         _availableSubnets = subnets;
-        _mapDirty = true;
         ForceNavMapUpdate();
-    }
-
-    /// <summary>
-    /// Sets the camera markers for the camera map.
-    /// </summary>
-    public void SetCameraMarkers(Dictionary<NetEntity, CameraMarker> markers)
-    {
-        _markers = markers;
-        _mapDirty = true;
-        ForceNavMapUpdate();
-    }
-
-    /// <summary>
-    /// Sets the map for the camera map.
-    /// </summary>
-    public void SetMap(EntityUid? mapUid)
-    {
-        if (mapUid is { Valid: false })
-            mapUid = null;
-
-        if (MapUid == mapUid)
-            return;
-
-        MapUid = mapUid;
-        _mapDirty = true;
-        ForceNavMapUpdate();
-    }
-
-    /// <summary>
-    /// Attempts to get the marker for the given camera.
-    /// </summary>
-    public bool TryGetMarker(NetEntity entity, out CameraMarker marker)
-    {
-        return _markers.TryGetValue(entity, out marker);
     }
 
     protected override void UpdateNavMap()
     {
         base.UpdateNavMap();
 
-        if (!_mapDirty)
+        if (MapUid is null || !_entityManager.TryGetComponent<SurveillanceCameraMapComponent>(MapUid, out var mapComp))
             return;
 
-        UpdateCameraMarkers();
+        var currentState = (mapComp.Cameras, _activeCameraAddress, _availableSubnets);
+        if (_lastState.Equals(currentState))
+            return;
+
+        _lastState = currentState;
+        UpdateCameraMarkers(mapComp);
     }
 
-    private void UpdateCameraMarkers()
+    private void UpdateCameraMarkers(SurveillanceCameraMapComponent mapComp)
     {
         TrackedEntities.Clear();
 
         if (MapUid is null)
             return;
 
-        _mapDirty = false;
-
-        foreach (var (netEntity, marker) in _markers)
+        foreach (var (netEntity, marker) in mapComp.Cameras)
         {
             if (!marker.Visible || !_availableSubnets.Contains(marker.Subnet))
                 continue;
@@ -132,7 +97,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
             Texture texture;
             Color color;
 
-            if (marker.Address == DeviceAddress.Invalid)
+            if (string.IsNullOrEmpty(marker.Address))
             {
                 color = CameraInvalidColor;
                 texture = _invalidTexture;

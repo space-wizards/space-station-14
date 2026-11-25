@@ -1,4 +1,5 @@
-using Content.Server.EntityEffects.Effects.Smite;
+
+using Content.Server.Administration.Systems;
 using Content.Server.Physics.Controllers;
 using Content.Server.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;
@@ -9,7 +10,7 @@ namespace Content.Server.Physics.Components;
 /// <summary>
 /// A component which makes its entity chasing entity with selected component.
 /// </summary>
-[RegisterComponent, Access(typeof(ChasingWalkSystem), typeof(HomingRodEntityEffectSystem), typeof(GunSystem)), AutoGenerateComponentPause]
+[RegisterComponent, Access(typeof(ChasingWalkSystem), typeof(AdminVerbSystem), typeof(GunSystem)), AutoGenerateComponentPause]
 public sealed partial class ChasingWalkComponent : Component
 {
     /// <summary>

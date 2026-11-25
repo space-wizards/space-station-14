@@ -23,5 +23,5 @@ public sealed partial class ShowHealthBarsComponent : Component
     };
 
     [DataField]
-    public ProtoId<StatusIconPrototype>? HealthStatusIcon = "HealthIconFine";
+    public ProtoId<HealthIconPrototype>? HealthStatusIcon = "HealthIconFine";
 }

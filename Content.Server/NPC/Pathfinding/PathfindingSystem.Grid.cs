@@ -51,9 +51,6 @@ public sealed partial class PathfindingSystem
 
     private void OnTileChange(ref TileChangedEvent ev)
     {
-        if (!_enabled)
-            return;
-
         foreach (var change in ev.Changes)
         {
             if (change.OldTile.IsEmpty == change.NewTile.IsEmpty)
@@ -81,7 +78,7 @@ public sealed partial class PathfindingSystem
 
     private void UpdateGrid(ParallelOptions options)
     {
-        if (!_enabled || PauseUpdating)
+        if (PauseUpdating)
             return;
 
         var curTime = _timing.CurTime;
@@ -241,9 +238,6 @@ public sealed partial class PathfindingSystem
 
     private void OnCollisionChange(ref CollisionChangeEvent ev)
     {
-        if (!_enabled)
-            return;
-
         var xform = Transform(ev.BodyUid);
 
         if (xform.GridUid == null)
@@ -256,9 +250,6 @@ public sealed partial class PathfindingSystem
 
     private void OnCollisionLayerChange(ref CollisionLayerChangeEvent ev)
     {
-        if (!_enabled)
-            return;
-
         var xform = Transform(ev.Body);
 
         if (xform.GridUid == null)
@@ -270,9 +261,6 @@ public sealed partial class PathfindingSystem
 
     private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        if (!_enabled)
-            return;
-
         if (TryComp(ev.Entity, out TransformComponent? xform) &&
             xform.GridUid != null)
         {
@@ -283,9 +271,6 @@ public sealed partial class PathfindingSystem
 
     private void OnMoveEvent(ref MoveEvent ev)
     {
-        if (!_enabled)
-            return;
-
         if (!_fixturesQuery.TryGetComponent(ev.Sender, out var fixtures) ||
             !IsBodyRelevant(fixtures) ||
             _mapGridQuery.HasComponent(ev.Sender))
@@ -313,21 +298,16 @@ public sealed partial class PathfindingSystem
 
     private void OnGridInit(GridInitializeEvent ev)
     {
-        if (!_enabled)
-            return;
+        EnsureComp<GridPathfindingComponent>(ev.EntityUid);
 
-        EnsureGridPathfinding(ev.EntityUid, Comp<MapGridComponent>(ev.EntityUid));
-    }
-
-    private void EnsureGridPathfinding(EntityUid uid, MapGridComponent mapGrid)
-    {
-        EnsureComp<GridPathfindingComponent>(uid);
         // Pathfinder refactor
+        var mapGrid = Comp<MapGridComponent>(ev.EntityUid);
+
         for (var x = Math.Floor(mapGrid.LocalAABB.Left); x <= Math.Ceiling(mapGrid.LocalAABB.Right + ChunkSize); x += ChunkSize)
         {
             for (var y = Math.Floor(mapGrid.LocalAABB.Bottom); y <= Math.Ceiling(mapGrid.LocalAABB.Top + ChunkSize); y += ChunkSize)
             {
-                DirtyChunk(uid, _maps.GridTileToLocal(uid, mapGrid, new Vector2i((int)x, (int)y)));
+                DirtyChunk(ev.EntityUid, _maps.GridTileToLocal(ev.EntityUid, mapGrid, new Vector2i((int)x, (int)y)));
             }
         }
     }
@@ -342,9 +322,6 @@ public sealed partial class PathfindingSystem
     /// </summary>
     private void DirtyChunk(EntityUid gridUid, EntityCoordinates coordinates)
     {
-        if (!_enabled)
-            return;
-
         if (!TryComp<GridPathfindingComponent>(gridUid, out var comp))
             return;
 
@@ -360,9 +337,6 @@ public sealed partial class PathfindingSystem
 
     private void DirtyChunkArea(EntityUid gridUid, Box2 aabb)
     {
-        if (!_enabled)
-            return;
-
         if (!TryComp<GridPathfindingComponent>(gridUid, out var comp))
             return;
 

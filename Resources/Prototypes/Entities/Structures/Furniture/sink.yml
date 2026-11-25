@@ -36,11 +36,6 @@
     autoDrain: false
   - type: DumpableSolution
     solution: drainBuffer
-  - type: Edible
-    edible: Drink
-    solution: tank
-    destroyOnEmpty: false
-    utensil: Spoon
   - type: Damageable
     damageModifierSet: RockMod
   - type: Destructible

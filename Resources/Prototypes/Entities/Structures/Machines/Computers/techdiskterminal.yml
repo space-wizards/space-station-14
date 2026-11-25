@@ -7,12 +7,11 @@
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/tech_disk_printer.rsi
-  - type: ComputerVisuals
-    stateFrame: icon
-    stateKeyboard: null
-    stateScreen: unshaded
-    stateKeys: null
-    statePanel: panel
+    layers:
+    - map: ["computerLayerBody"]
+      state: icon
+    - map: ["computerLayerScreen"]
+      state: unshaded
   - type: DiskConsole
   - type: ResearchClient
   - type: ActivatableUI

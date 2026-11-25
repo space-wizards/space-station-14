@@ -13,7 +13,7 @@ public sealed partial class ParticleAcceleratorPartVisualizerSystem : Visualizer
         if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), ParticleAcceleratorVisualLayers.Unlit, out var index, false))
             return;
 
-        if (!args.TryGetData<ParticleAcceleratorVisualState>(ParticleAcceleratorVisuals.VisualState, out var state))
+        if (!AppearanceSystem.TryGetData<ParticleAcceleratorVisualState>(uid, ParticleAcceleratorVisuals.VisualState, out var state, args.Component))
         {
             state = ParticleAcceleratorVisualState.Unpowered;
         }

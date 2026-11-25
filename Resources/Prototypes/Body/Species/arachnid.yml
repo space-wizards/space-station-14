@@ -105,13 +105,7 @@
       - !type:SpawnEntityInInventory
         slot: head
         entity: WaterDropletHat
-    - reagents: [ Holywater ]
-      methods: [ Touch ]
-      effects:
-      - !type:SpawnEntityInInventory
-        slot: head
-        entity: HolywaterDropletHat
-    - reagents: [ Water, Holywater, SpaceCleaner ]
+    - reagents: [Water, SpaceCleaner]
       methods: [Touch]
       effects:
       - !type:WashCreamPie
@@ -234,10 +228,6 @@
 - type: entity
   parent: [ OrganArachnidVisual, OrganBaseEyes, OrganArachnidInternal ]
   id: OrganArachnidEyes
-  components:
-  - type: Appearance
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Arachnid/parts.rsi
 
 - type: entity
   parent: [ OrganBaseTongue, OrganArachnidInternal ]

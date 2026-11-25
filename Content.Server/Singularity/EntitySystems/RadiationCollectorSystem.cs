@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -11,7 +12,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Timing.Systems;
+using Content.Shared.Timing;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -70,7 +71,7 @@ public sealed partial class RadiationCollectorSystem : EntitySystem
         if (!args.Complex)
             return;
 
-        if (!_useDelay.TryResetDelay(uid, true))
+        if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         ToggleCollector(uid, args.User, component);

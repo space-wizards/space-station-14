@@ -176,7 +176,7 @@ public sealed partial class DrainSystem : EntitySystem
                     // but queuedelete should be pretty safe.
                     if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, puddle.Comp.SolutionName, ref puddle.Comp.Solution, out var puddleSolution))
                     {
-                        QueueDel(puddle);
+                        PredictedQueueDel(puddle);
                         continue;
                     }
 
@@ -190,7 +190,7 @@ public sealed partial class DrainSystem : EntitySystem
                     drainSolution.AddSolution(transferSolution, ProtoMan);
 
                     if (puddleSolution.Volume <= 0)
-                        QueueDel(puddle);
+                        PredictedQueueDel(puddle);
                 }
             }
 

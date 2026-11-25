@@ -24,7 +24,7 @@ public sealed partial class GravitySystem : SharedGravitySystem
         if (args.Sprite == null)
             return;
 
-        if (args.TryGetData<PowerChargeStatus>(PowerChargeVisuals.State, out var state))
+        if (_appearanceSystem.TryGetData<PowerChargeStatus>(uid, PowerChargeVisuals.State, out var state, args.Component))
         {
             if (comp.SpriteMap.TryGetValue(state, out var spriteState))
             {
@@ -33,7 +33,7 @@ public sealed partial class GravitySystem : SharedGravitySystem
             }
         }
 
-        if (args.TryGetData<float>(PowerChargeVisuals.Charge, out var charge))
+        if (_appearanceSystem.TryGetData<float>(uid, PowerChargeVisuals.Charge, out var charge, args.Component))
         {
             var layer = _sprite.LayerMapGet((uid, args.Sprite), GravityGeneratorVisualLayers.Core);
             switch (charge)

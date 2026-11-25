@@ -1,12 +1,5 @@
 - type: entity
   abstract: true
-  parent: BaseSpeciesMobNoCrawl
-  id: BaseSpeciesMob
-  components:
-  - type: Crawler
-
-- type: entity
-  abstract: true
   parent:
   - BaseMob
   - MobCombat
@@ -14,7 +7,7 @@
   - MobPolymorphable
   - StripableInventoryBase
   - BaseSpeciesAppearance
-  id: BaseSpeciesMobNoCrawl
+  id: BaseSpeciesMob
   save: false
   components:
   - type: DamageVisuals
@@ -72,7 +65,7 @@
       Extinguish: [ Touch ]
       Acidic: [Touch, Ingestion]
     reactions:
-    - reagents: [ Water, Holywater, SpaceCleaner ]
+    - reagents: [Water, SpaceCleaner]
       methods: [Touch]
       effects:
       - !type:WashCreamPie
@@ -107,6 +100,7 @@
   - type: SleepEmitSound
   - type: SSDIndicator
   - type: StandingState
+  - type: Crawler
   - type: Dna
   - type: MindContainer
   - type: MindExaminable
@@ -165,10 +159,11 @@
   - MobRespirator
   - MobAtmosStandard
   - MobFlammable
-  - BaseSpeciesMobNoCrawl
+  - BaseSpeciesMob
   - BaseMobDestructible
-  - BaseHungerThirstSlowdown
-  id: BaseSpeciesMobOrganicNoCrawl
+  - BaseHungerSlowdown
+  - BaseThirstSlowdown
+  id: BaseSpeciesMobOrganic
   save: false
   components:
   - type: Satiation
@@ -183,7 +178,6 @@
         Blunt: 0.50
         Heat: 0.1
   - type: PassiveDamage
-    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:
@@ -196,7 +190,7 @@
   - type: Blindable
   - type: Temperature
   - type: TemperatureDamage
-    heatDamageThreshold: 316.15
+    heatDamageThreshold: 325
     coldDamageThreshold: 273.15
     coldDamage:
       types:
@@ -232,12 +226,3 @@
   - type: FireVisuals
     alternateState: Standing
   - type: StunVisuals
-
-- type: entity
-  abstract: true
-  parent:
-  - BaseSpeciesMobOrganicNoCrawl
-  id: BaseSpeciesMobOrganic
-  save: false
-  components:
-  - type: Crawler

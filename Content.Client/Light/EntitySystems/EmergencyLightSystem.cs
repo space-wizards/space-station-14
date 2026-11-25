@@ -11,13 +11,13 @@ public sealed partial class EmergencyLightSystem : VisualizerSystem<EmergencyLig
         if (args.Sprite == null)
             return;
 
-        if (!args.TryGetData<bool>(EmergencyLightVisuals.On, out var on))
+        if (!AppearanceSystem.TryGetData<bool>(uid, EmergencyLightVisuals.On, out var on, args.Component))
             on = false;
 
         SpriteSystem.LayerSetVisible((uid, args.Sprite), EmergencyLightVisualLayers.LightOff, !on);
         SpriteSystem.LayerSetVisible((uid, args.Sprite), EmergencyLightVisualLayers.LightOn, on);
 
-        if (args.TryGetData<Color>(EmergencyLightVisuals.Color, out var color))
+        if (AppearanceSystem.TryGetData<Color>(uid, EmergencyLightVisuals.Color, out var color, args.Component))
         {
             SpriteSystem.LayerSetColor((uid, args.Sprite), EmergencyLightVisualLayers.LightOn, color);
             SpriteSystem.LayerSetColor((uid, args.Sprite), EmergencyLightVisualLayers.LightOff, color);

@@ -145,9 +145,7 @@
       weight: 0.03
     - id: ClothingUnderSocksCoder
       weight: 0.03
-    - id: ClothingShoesSandalsBlack
-      weight: 0.03
-    - id: ClothingShoesSandalsBrown
+    - id: ClothingShoesWizard
       weight: 0.03
     - id: ClothingShoesBootsWork
       weight: 0.03

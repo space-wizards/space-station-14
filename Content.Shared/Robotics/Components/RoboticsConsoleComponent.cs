@@ -1,5 +1,5 @@
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Radio;
+using Content.Shared.Robotics;
 using Content.Shared.Robotics.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -15,16 +15,10 @@ namespace Content.Shared.Robotics.Components;
 public sealed partial class RoboticsConsoleComponent : Component
 {
     /// <summary>
-    /// EntityUid and data of each cyborg.
+    /// Address and data of each cyborg.
     /// </summary>
     [DataField]
-    public Dictionary<EntityUid, CyborgControlData> Cyborgs = new();
-
-    /// <summary>
-    /// Address and Uid of each cyborg.
-    /// </summary>
-    [DataField]
-    public Dictionary<DeviceAddress, EntityUid> CyborgsAddresses = new();
+    public Dictionary<string, CyborgControlData> Cyborgs = new();
 
     /// <summary>
     /// After not responding for this length of time borgs are removed from the console.

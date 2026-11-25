@@ -157,8 +157,7 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
         else
         {
             // Open at parent position if it's open.
-            if (_storage.TryGetContainingStorage(sBui.Owner, out var parentStorage) &&
-                _ui.TryGetOpenUi<StorageBoundUserInterface>(parentStorage.Value.Owner,
+            if (_ui.TryGetOpenUi<StorageBoundUserInterface>(EntityManager.GetComponent<TransformComponent>(sBui.Owner).ParentUid,
                     StorageComponent.StorageUiKey.Key, out var bui) && bui.Position != null)
             {
                 window.Open(bui.Position.Value);
@@ -287,7 +286,7 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
         }
         else if (args.Function == ContentKeyFunctions.Point)
         {
-            _pointing.TryPointAtEntity(control.Entity);
+            _pointing.TryPointAtEntity(EntityManager.GetNetEntity(control.Entity));
             args.Handle();
         }
 
@@ -409,8 +408,8 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
 
         // If the attached storage is closed then stop dragging
         if (player == null ||
-            !_storage.TryGetContainingStorage(DraggingGhost.Entity, out var storage) ||
-            !_ui.IsUiOpen(storage.Value.Owner, StorageComponent.StorageUiKey.Key, player.Value))
+            !_storage.TryGetStorageLocation(DraggingGhost.Entity, out var container, out _, out _) ||
+            !_ui.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, player.Value))
         {
             DraggingGhost.Orphan();
             return false;

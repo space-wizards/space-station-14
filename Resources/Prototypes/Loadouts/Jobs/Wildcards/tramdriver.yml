@@ -4,11 +4,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitTramDriver
 
-- type: loadout
-  id: TramDriverJumpskirt
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtTramDriver
-
 # Outer clothing
 - type: loadout
   id: TramDriverSuit

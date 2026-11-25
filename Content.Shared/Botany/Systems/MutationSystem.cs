@@ -1,15 +1,14 @@
+using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Botany.Components;
-using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
-using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -19,6 +18,9 @@ namespace Content.Shared.Botany.Systems;
 /// </summary>
 public sealed partial class PlantMutationSystem : EntitySystem
 {
+    private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
+    private RandomPlantMutationListPrototype _randomMutations = default!;
+
     [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private BotanySystem _botany = default!;
@@ -27,41 +29,35 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
-    [Dependency] private EntityQuery<PlantChemicalsComponent> _chemicalsQuery;
-    [Dependency] private EntityQuery<PlantComponent> _plantQuery;
+    [Dependency] private EntityQuery<PlantChemicalsComponent> _chemicalsQuery = default!;
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
+
+    public override void Initialize()
+    {
+        _randomMutations = ProtoMan.Index(RandomPlantMutations);
+    }
 
     /// <summary>
-    /// For each mutation table, go through each mutation.
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
     [PublicAPI]
-    public void CheckRandomMutations(Entity<PlantComponent?> ent, ProtoId<RandomPlantMutationListPrototype> mutationTableId, float severity)
+    public void CheckRandomMutations(Entity<PlantComponent?> ent, float severity)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        var mutationTable = ProtoMan.Index(mutationTableId);
-        foreach (var mutation in mutationTable.Mutations)
+        foreach (var mutation in _randomMutations.Mutations)
         {
-            var triggers = 0;
-            while (mutation.BaseOdds * severity > triggers) // If the odds are greater than one, potentially trigger the mutation multiple times
+            if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
             {
-                var odds = mutation.BaseOdds * severity - triggers;
-                triggers++;
-                if (Random(Math.Min(odds, 1.0f)))
-                {
-                    if (mutation.AppliesToPlant)
-                        _entityEffects.TryApplyEffect(ent, mutation.Effect);
+                if (mutation.AppliesToPlant)
+                    _entityEffects.TryApplyEffect(ent, mutation.Effect);
 
-                    // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                    if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                        ent.Comp.Mutations.Add(mutation);
-                }
+                // Stat adjustments do not persist by being an attached effect, they just change the stat.
+                if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
+                    ent.Comp.Mutations.Add(mutation);
             }
         }
-
-        var ev = new PlantMutationsChangedEvent(ent.Owner);
-        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -90,7 +86,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
         _botany.DeletePlantSnapshot(snapshot);
 
         ChemicalsSpeciesChange(newPlantUid, newPlantProto);
-        PlantSpeciesChange(newPlantUid, newPlantProto);
 
         if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
             _plantTray.PlantingPlantInTray(trayEnt.AsNullable(), newPlantUid);
@@ -98,8 +93,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
             _plant.PlantingPlant(newPlantUid);
 
         _plant.ForceUpdate(newPlantUid);
-        var ev = new PlantSpeciesChangedEvent(oldPlant.Owner, newPlantUid, newPlantProto);
-        RaiseLocalEvent(ref ev);
         QueueDel(oldPlant);
     }
 
@@ -129,23 +122,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Copies information from the PlantComponent on a prototype over to a given plant.
-    /// </summary>
-    /// <remarks>
-    /// <see cref="PlantComponent.GrowthStages"/> must stay true for the given plant.
-    /// TODO: better support excluding fields depending on clone context.
-    /// </remarks>
-    private void PlantSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
-    {
-        if (!_botany.TryGetPlantComponent<PlantComponent>(null, plantProto, out var newSpecies)
-            || !_plantQuery.TryComp(plantUid, out var plant))
-            return;
-
-        plant.GrowthStages = newSpecies.GrowthStages;
-        DirtyField(plantUid, plant, nameof(PlantComponent.GrowthStages));
-    }
-
-    /// <summary>
     /// Combines mutations from the pollen and target plants.
     /// </summary>
     [PublicAPI]
@@ -159,6 +135,15 @@ public sealed partial class PlantMutationSystem : EntitySystem
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
         // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
         targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
+
+        // Hybrids have a high chance of being seedless. Balances very
+        // effective hybrid crossings.
+        if (pollenProtoId != null
+            && pollenProtoId != MetaData(targetPlant).EntityPrototype?.ID
+            && Random(0.7f))
+        {
+            EnsureComp<PlantTraitSeedlessComponent>(targetPlant);
+        }
     }
 
     /// <summary>
@@ -272,21 +257,9 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [PublicAPI]
     public void CrossTrait(EntityUid val, EntityUid pollenData)
     {
-        foreach (var component in AllComps<PlantTraitsComponent>(val))
+        foreach (var component in AllComps(pollenData))
         {
-            if (component.PollinationProtected)
-                continue;
-
-            if (HasComp(pollenData, component.GetType()))
-                continue;
-
-            if (Random(0.5f))
-                RemComp(val, component);
-        }
-
-        foreach (var component in AllComps<PlantTraitsComponent>(pollenData))
-        {
-            if (component.PollinationProtected)
+            if (component is not PlantTraitsComponent)
                 continue;
 
             if (HasComp(val, component.GetType()))

@@ -27,18 +27,18 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private (ButtonPosition position, string id, int index)? _selectedButton;
 
-    private List<DeviceLink>? _defaults;
+    private List<(string left, string right)>? _defaults;
 
     public event Action? OnClearLinks;
-    public event Action<DeviceLink>? OnToggleLink;
-    public event Action<List<DeviceLink>>? OnLinkDefaults;
+    public event Action<string, string>? OnToggleLink;
+    public event Action<List<(string left, string right)>>? OnLinkDefaults;
 
     public NetworkConfiguratorLinkMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var footerStyleBox = new StyleBoxFlat
+        var footerStyleBox = new StyleBoxFlat()
         {
             BorderThickness = new Thickness(0, 2, 0, 0),
             BorderColor = Color.FromHex("#5A5A5A")
@@ -59,35 +59,13 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         ButtonClear.OnPressed += _ => OnClearLinks?.Invoke();
     }
 
-    public void UpdateState(
-        ProtoId<SourcePortPrototype>[] sources,
-        ProtoId<SinkPortPrototype>[] sinks,
-        HashSet<DeviceLink> links,
-        DeviceAddress sourceAddressId,
-        DeviceAddress sinkAddressId,
-        string sourceAddress,
-        string sinkAddress,
-        List<DeviceLink>? defaults = null)
+    public void UpdateState(DeviceLinkUserInterfaceState linkState)
     {
-        _links.Links.Clear();
-        _links.Links.AddRange(links);
-        _defaults = defaults;
-
-        ButtonLinkDefault.Disabled = _defaults == null;
-        FromAddressLabel.Text = sourceAddress;
-        ToAddressLabel.Text = sinkAddress;
-
-        // Keep selection and layout intact during prediction refreshes.
-        if (_sources.Select(port => port.ID).SequenceEqual(sources.Select(port => port.Id))
-            && _sinks.Select(port => port.ID).SequenceEqual(sinks.Select(port => port.Id)))
-            return;
-
-        _selectedButton = null;
         ButtonContainerLeft.RemoveAllChildren();
         ButtonContainerRight.RemoveAllChildren();
 
         _sources.Clear();
-        _sources.AddRange(sources.Select(s => _prototypeManager.Index(s)));
+        _sources.AddRange(linkState.Sources.Select(s => _prototypeManager.Index(s)));
         _links.SourceButtons.Clear();
         var i = 0;
         foreach (var source in _sources)
@@ -99,7 +77,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         }
 
         _sinks.Clear();
-        _sinks.AddRange(sinks.Select(s => _prototypeManager.Index(s)));
+        _sinks.AddRange(linkState.Sinks.Select(s => _prototypeManager.Index(s)));
         _links.SinkButtons.Clear();
         i = 0;
         foreach (var sink in _sinks)
@@ -109,11 +87,19 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
             _links.SinkButtons.Add(sink.ID, button);
             i++;
         }
+
+        _links.Links.Clear();
+        _links.Links.AddRange(linkState.Links);
+        _defaults = linkState.Defaults;
+
+        ButtonLinkDefault.Disabled = _defaults == default;
+        FromAddressLabel.Text = linkState.SourceAddress;
+        ToAddressLabel.Text = linkState.SinkAddress;
     }
 
     private void LinkDefaults()
     {
-        if (_defaults == null)
+        if (_defaults == default)
             return;
 
         OnLinkDefaults?.Invoke(_defaults);
@@ -156,7 +142,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         var left = _selectedButton.Value.position == ButtonPosition.Left ? _selectedButton.Value.id : id;
         var right = _selectedButton.Value.position == ButtonPosition.Left ? id : _selectedButton.Value.id;
 
-        OnToggleLink?.Invoke(new DeviceLink(left, right));
+        OnToggleLink?.Invoke(left, right);
 
         args.Button.Pressed = false;
 
@@ -174,15 +160,22 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
     }
 
     /// <summary>
-    /// Draws lines between linked ports using bezier curve calculated with polynomial coefficients
-    /// See: https://youtu.be/jvPPXbo87ds?t=351
+    ///  Draws lines between linked ports using bezier curve calculated with polynomial coefficients
+    ///  See: https://youtu.be/jvPPXbo87ds?t=351
     /// </summary>
-    private sealed class LinksRender(BoxContainer leftButtonContainer, BoxContainer rightButtonContainer)
-        : Control
+    private sealed class LinksRender : Control
     {
-        public readonly List<DeviceLink> Links = new();
+        public readonly List<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)> Links = new();
         public readonly Dictionary<string, Button> SourceButtons = new();
         public readonly Dictionary<string, Button> SinkButtons = new();
+        private readonly BoxContainer _leftButtonContainer;
+        private readonly BoxContainer _rightButtonContainer;
+
+        public LinksRender(BoxContainer leftButtonContainer, BoxContainer rightButtonContainer)
+        {
+            _leftButtonContainer = leftButtonContainer;
+            _rightButtonContainer = rightButtonContainer;
+        }
 
         protected override void Draw(DrawingHandleScreen handle)
         {
@@ -191,8 +184,8 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
                 if (!SourceButtons.TryGetValue(left, out var leftChild) || !SinkButtons.TryGetValue(right, out var rightChild))
                     continue;
 
-                var leftOffset = leftButtonContainer.PixelPosition.Y;
-                var rightOffset = rightButtonContainer.PixelPosition.Y;
+                var leftOffset = _leftButtonContainer.PixelPosition.Y;
+                var rightOffset = _rightButtonContainer.PixelPosition.Y;
 
                 var y1 = leftChild.PixelPosition.Y + leftChild.PixelHeight / 2 + leftOffset;
                 var y2 = rightChild.PixelPosition.Y + rightChild.PixelHeight / 2 + rightOffset;

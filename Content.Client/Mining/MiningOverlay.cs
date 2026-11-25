@@ -91,5 +91,6 @@ public sealed partial class MiningOverlay : Overlay
             handle.DrawTexture(texture, -(Vector2)texture.Size / 2f / EyeManager.PixelsPerMeter, layer.Rotation, modulate: color);
 
         }
+        handle.SetTransform(Matrix3x2.Identity);
     }
 }

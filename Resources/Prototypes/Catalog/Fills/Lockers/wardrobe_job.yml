@@ -52,7 +52,7 @@
       - id: Flare
       - id: BarberScissors
       - id: FlippoLighter
-      - id: TRayScanner
+      - id: trayScanner
       - id: Wristwatch
       - id: ClothingNeckBling
       - id: ClothingMultipleHeadphones

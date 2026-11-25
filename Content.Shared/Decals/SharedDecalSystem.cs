@@ -20,6 +20,7 @@ namespace Content.Shared.Decals
         {
             base.Initialize();
 
+            SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<DecalChunkComponent, ComponentStartup>(OnChunkStartup);
             SubscribeAllEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeAllEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
@@ -34,28 +35,26 @@ namespace Content.Shared.Decals
             RebuildFreeDecalIds(ent.Comp);
         }
 
-        [SubscribeLocalEvent]
-        [Obsolete("Uses obsolete DecalGridComponent.")]
-        private void OnGetState(Entity<DecalGridComponent> ent, ref ComponentGetState args)
+        private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
         {
             if (PvsEnabled && !args.ReplayState)
                 return;
 
             // Should this be a full component state or a delta-state?
-            if (args.FromTick <= ent.Comp.CreationTick || args.FromTick <= ent.Comp.ForceTick)
+            if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
             {
-                args.State = new DecalGridState(ent.Comp.ChunkCollection.ChunkCollection);
+                args.State = new DecalGridState(component.ChunkCollection.ChunkCollection);
                 return;
             }
 
             var data = new Dictionary<Vector2i, DecalGridComponent.DecalChunk>();
-            foreach (var (index, chunk) in ent.Comp.ChunkCollection.ChunkCollection)
+            foreach (var (index, chunk) in component.ChunkCollection.ChunkCollection)
             {
                 if (chunk.LastModified >= args.FromTick)
                     data[index] = chunk;
             }
 
-            args.State = new DecalGridDeltaState(data, new(ent.Comp.ChunkCollection.ChunkCollection.Keys));
+            args.State = new DecalGridDeltaState(data, new(component.ChunkCollection.ChunkCollection.Keys));
         }
 
         public HashSet<(DecalIndex Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)

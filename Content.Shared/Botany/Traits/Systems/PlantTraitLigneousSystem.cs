@@ -16,7 +16,7 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
 
-    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<PlantTraitLigneousComponent> ent, ref InteractUsingEvent args)
@@ -27,25 +27,31 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
         if (!_holderQuery.TryComp(ent.Owner, out var holder))
             return;
 
-        if (!holder.ReadyForHarvest || _plantHolder.IsDead(ent.Owner))
+        if (!holder.ReadyForHarvest)
             return;
+
+        if (_plantHolder.IsDead(ent.Owner))
+        {
+            _popup.PopupCursor(Loc.GetString("plant-component-dead-plant-message"), args.User);
+            return;
+        }
 
         // Ligneous requires sharp tool.
-        if (!_tool.HasQuality(args.Used, ent.Comp.HarvestToolQuality))
+        var harvestToolQuality = ent.Comp.HarvestToolQuality;
+        if (harvestToolQuality.HasValue && !_tool.HasQuality(args.Used, harvestToolQuality.Value))
+        {
+            _popup.PopupCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
             return;
+        }
 
-        _plantHarvest.TryHandleHarvest(ent.Owner, args.User, args.Used);
+        _plantHarvest.TryHandleHarvest(ent.Owner, args.User);
         args.Handled = true;
     }
 
     [SubscribeLocalEvent(before: [typeof(PlantHarvestSystem)])]
-    private void OnHarvestAttempt(Entity<PlantTraitLigneousComponent> ent, ref PlantHarvestAttemptEvent args)
+    private void OnDoHarvest(Entity<PlantTraitLigneousComponent> ent, ref DoHarvestEvent args)
     {
-        if (args.Used is { } used
-            && _tool.HasQuality(used, ent.Comp.HarvestToolQuality))
-            return;
-
         _popup.PopupCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
-        args.Cancelled = true;
+        args.Cancel();
     }
 }

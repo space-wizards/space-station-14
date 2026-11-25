@@ -8,17 +8,23 @@ public sealed partial class ScaleVisualsSystem : SharedScaleVisualsSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ScaleVisualsComponent, AppearanceChangeEvent>(OnChangeData);
+    }
+
     private void OnChangeData(Entity<ScaleVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null
-            || !args.TryGetData<Vector2>(ScaleVisuals.Scale, out var scale))
-            return;
+        if (!args.AppearanceData.TryGetValue(ScaleVisuals.Scale, out var scale) ||
+            args.Sprite == null) return;
 
         // save the original scale
         ent.Comp.OriginalScale ??= args.Sprite.Scale;
 
-        _sprite.SetScale((ent.Owner, args.Sprite), scale);
+        var vecScale = (Vector2)scale;
+        _sprite.SetScale((ent.Owner, args.Sprite), vecScale);
     }
 
     // revert to the original scale

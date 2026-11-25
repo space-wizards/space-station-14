@@ -306,13 +306,12 @@ namespace Content.Shared.Movement.Systems
         private void HandleDirChange(Entity<InputMoverComponent?> entity, Direction dir, ushort subTick, bool state)
         {
             // Relayed movement just uses the same keybinds given we're moving the relayed entity
-            // the same as us. InputMoverComponent may not exist for entities which can't move
-            // (e.g. a brain in an mmi), so early-out and don't generate a missing log.
-            if (!MoverQuery.Resolve(entity, ref entity.Comp, logMissing: false))
+            // the same as us.
+            if (!MoverQuery.Resolve(entity, ref entity.Comp))
                 return;
 
             // TODO: Should move this into HandleMobMovement itself.
-            if (entity.Comp.CanMove && RelayQuery.TryComp(entity, out var relayMover) && relayMover.Running)
+            if (entity.Comp.CanMove && RelayQuery.TryComp(entity, out var relayMover))
             {
                 DebugTools.Assert(relayMover.RelayEntity != entity.Owner);
                 DebugTools.AssertNotNull(relayMover.RelayEntity);

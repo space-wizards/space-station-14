@@ -78,7 +78,7 @@ public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
             return true;
 
         Metamorf(start, _random.Pick(availableRecipes)); //In general, if there's more than one recipe, the yml-guys screwed up. Maybe some kind of unit test is needed.
-        QueueDel(start.Owner);
+        PredictedQueueDel(start.Owner);
         return true;
     }
 
@@ -160,7 +160,7 @@ public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
         var ev = new FoodSequenceIngredientAddedEvent(start, element, elementProto, user);
         RaiseLocalEvent(start, ev);
 
-        QueueDel(element.Owner);
+        PredictedQueueDel(element.Owner);
         return true;
     }
 

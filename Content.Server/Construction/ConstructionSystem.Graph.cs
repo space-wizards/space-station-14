@@ -362,13 +362,10 @@ namespace Content.Server.Construction
 
             // Transform transferring.
             var newTransform = Transform(newUid);
-
-            TransformSystem.SetLocalRotationNoLerp(newUid, transform.LocalRotation);
-
-            // Prefer anchoring directly. If anchoring fails, attach to the grid or map only as a fallback.
-            // This avoids doing AttachToGridOrMap followed by TryAnchor, which can raise two transform updates.
-            if (!transform.Anchored || !TransformSystem.AnchorEntity((newUid, newTransform, null)))
-                TransformSystem.AttachToGridOrMap(newUid, newTransform);
+            TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
+#pragma warning disable CS0618 // Setting anchored state directly, AnchorEntity/Unanchor requires an initialized entity.
+            newTransform.Anchored = transform.Anchored;
+#pragma warning restore CS0618
 
             // Container transferring.
             if (containerManager != null)

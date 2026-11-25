@@ -32,30 +32,7 @@
             min: 1
             max: 2
   - type: IconSmooth
-    key: windows-reinf
-    states:
-    - !type:CardinalCornerSpriteSmoothing
-      mask: [ windows-reinf ]
-      altMask:
-      - windows
-      - windows-tinted
-      - windows-plasma
-      - windows-plasma-reinf
-      - windows-uranium
-      - windows-uranium-reinf
-      - windows-exo
-      - windows-shuttle
-      - windows-plastitanium
-      - windows-regal
-      - walls-exo
-      - walls-shuttle
-      - walls-plastitanium
-      - walls-material
-      - walls-marble
-      - walls
-      - grilles
-      - doors
-      base: window
+    base: rwindow
   - type: Construction
     graph: Window
     node: reinforcedWindow
@@ -153,20 +130,15 @@
   components:
   - type: Sprite
     sprite: Structures/Windows/window-base-diagonal-reinf.rsi
+    state: state0
   - type: Tag
     tags:
     - Diagonal
     - Window
   - type: IconSmooth
-    states:
-    - !type:DiagonalSpriteSmoothing
-      mask:
-      - walls
-      - windows
-      - grilles
-      - marble
-      - doors
-      base: state
+    mode: Diagonal
+    key: walls
+    base: state
   - type: Icon
     sprite: Structures/Windows/window-base-diagonal-reinf.rsi
     state: state0

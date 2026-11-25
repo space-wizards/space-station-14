@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: BaseRune
   name: "rune"
   abstract: true

@@ -12,6 +12,7 @@
   - type: Rotatable
   - type: Physics
     canCollide: false
+  - type: Fixtures
   - type: Clickable
   - type: WallMount
   - type: InteractionOutline
@@ -22,16 +23,6 @@
     - Structure
   - type: Sprite
     drawdepth: WallMountedItems
-  - type: Pullable
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 5
-        mask:
-        - FullTileMask
 
 - type: entity
   abstract: true

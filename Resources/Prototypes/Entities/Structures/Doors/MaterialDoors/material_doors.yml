@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   abstract: true
   parent: BaseStructure
   id: BaseMaterialDoor
@@ -51,11 +51,10 @@
   - type: Occluder
   - type: BlockWeather
   - type: IconSmooth
-    key: doors
+    key: walls
+    mode: NoSprite
   - type: PlacementReplacement
     key: walls
-  - type: StructureAligner
-  - type: StructureAlignerPylon
 
 - type: entity
   abstract: true
@@ -218,7 +217,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 80
       behaviors:
       - *SoundWoodDestroy
       - !type:SpawnEntitiesBehavior
@@ -261,5 +260,3 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard: *BaseDoorSpawn
-  - type: IconSmooth
-    key: cards

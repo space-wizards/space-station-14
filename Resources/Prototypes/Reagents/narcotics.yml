@@ -122,24 +122,6 @@
           min: 15
 
 - type: reagent
-  id: Pax
-  name: reagent-name-pax
-  group: Narcotics
-  desc: reagent-desc-pax
-  physicalDesc: reagent-physical-desc-soothing
-  allowedDepartments:
-  - Security
-  - Medical
-  color: "#AAAAAA"
-  metabolisms:
-    Bloodstream:
-      effects:
-      - !type:GenericStatusEffect
-        key: Pacified
-        component: Pacified
-        time: 4
-
-- type: reagent
   id: Stimulants
   name: reagent-name-stimulants
   group: Narcotics
@@ -480,7 +462,6 @@
   group: Narcotics
   desc: reagent-desc-StrawberryIce
   physicalDesc: reagent-physical-desc-fizzy
-  contrabandSeverity: Minor
   flavor: fizzy
   color: "#FF36AE"
   metabolisms:
@@ -575,10 +556,7 @@
           max: 0.1
         type: Local
         visualType: MediumCaution
-        messages:
-        - hydroxysomnolene-effect-flavor
-        - hydroxysomnolene-effect-another-hit
-        - hydroxysomnolene-effect-sluggish
+        messages: [ "You feel a need for fizzy pink flavor" ]
         probability: 0.15
 
 - type: reagent
@@ -594,7 +572,7 @@
       effects:
       - !type:Emote
         emote: Laugh
-        showInChat: false
+        showInChat: true
         probability: 0.1
         conditions:
         - !type:ReagentCondition
@@ -602,7 +580,7 @@
           max: 20
       - !type:Emote
         emote: Whistle
-        showInChat: false
+        showInChat: true
         probability: 0.1
         conditions:
         - !type:ReagentCondition
@@ -610,7 +588,7 @@
           max: 20
       - !type:Emote
         emote: Crying
-        showInChat: false
+        showInChat: true
         probability: 0.1
         conditions:
         - !type:ReagentCondition
@@ -632,24 +610,3 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-
-- type: reagent
-  id: Nyctalon
-  name: reagent-name-nyctalon
-  group: Narcotics
-  desc: reagent-desc-nyctalon
-  physicalDesc: reagent-physical-desc-translucent
-  flavor: bitter
-  color: "#1A0A2E"
-  metabolisms:
-    Bloodstream:
-      metabolismRate: 0.2
-      effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectNightVision
-        time: 2
-        type: Add
-      - !type:HealthChange
-        damage:
-          types:
-           Radiation: 0.5

@@ -1,4 +1,4 @@
-- type: reaction
+﻿- type: reaction
   id: CarbonDioxideBreakdown
   source: true
   requiredMixerCategories:

@@ -9,8 +9,5 @@ namespace Content.Shared.Botany.Traits.Components;
 public sealed partial class PlantTraitSeedlessComponent : PlantTraitsComponent
 {
     /// <inheritdoc/>
-    public override LocId? TraitState { get; set; } = "mutation-plant-description-seedless";
-    /// <inheritdoc/>
-    public override LocId? TraitName { get; set; } = "mutation-plant-noun-seedless";
-
+    public override LocId? TraitState { get; set; } = "mutation-plant-seedless";
 }

@@ -1,4 +1,4 @@
-using Content.Client.Atmos.Components;
+﻿using Content.Client.Atmos.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Rounding;
@@ -14,7 +14,13 @@ public sealed partial class MaxPressureVisualsSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
-    [SubscribeLocalEvent]
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<MaxPressureVisualsComponent, ComponentInit>(OnMaxPressureInit);
+        SubscribeLocalEvent<MaxPressureVisualsComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
     private void OnMaxPressureInit(Entity<MaxPressureVisualsComponent> entity, ref ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(entity, out var sprite))
@@ -22,27 +28,28 @@ public sealed partial class MaxPressureVisualsSystem : EntitySystem
 
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(entity.Comp.IntegritySteps);
 
-        if (_sprite.LayerMapTryGet((entity, sprite), MaxPressureVisualLayers.Base, out var layerIndex, false))
+        if (_sprite.LayerMapTryGet((entity, sprite), MaxPressureVisualLayers.Base, out _, false))
         {
-            _sprite.LayerSetRsiState((entity, sprite), layerIndex, $"{entity.Comp.IntegrityMask}");
-            _sprite.LayerSetVisible((entity, sprite), layerIndex, false);
+            _sprite.LayerSetRsiState((entity, sprite), MaxPressureVisualLayers.Base, $"{entity.Comp.IntegrityMask}");
+            _sprite.LayerSetVisible((entity, sprite), MaxPressureVisualLayers.Base, false);
         }
 
-        if (_sprite.LayerMapTryGet((entity, sprite), MaxPressureVisualLayers.BaseUnshaded, out layerIndex, false))
+        if (_sprite.LayerMapTryGet((entity, sprite), MaxPressureVisualLayers.BaseUnshaded, out _, false))
         {
-            _sprite.LayerSetRsiState((entity, sprite), layerIndex, $"{entity.Comp.IntegrityState}-unshaded-0");
-            _sprite.LayerSetVisible((entity, sprite), layerIndex, false);
+            _sprite.LayerSetRsiState((entity, sprite), MaxPressureVisualLayers.BaseUnshaded, $"{entity.Comp.IntegrityState}-unshaded-0");
+            _sprite.LayerSetVisible((entity, sprite), MaxPressureVisualLayers.BaseUnshaded, false);
         }
     }
 
-    [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<MaxPressureVisualsComponent> entity, ref AppearanceChangeEvent args)
     {
         if (args.Sprite is not { } sprite)
             return;
 
-        if (!args.TryGetData<float>(GasIntegrity.Integrity, out var integrity)
-            || !args.TryGetData<float>(GasIntegrity.MaxIntegrity, out var maxIntegrity))
+        if (!args.AppearanceData.TryGetValue(GasIntegrity.Integrity, out var obj) || obj is not float integrity)
+            return;
+
+        if (!args.AppearanceData.TryGetValue(GasIntegrity.MaxIntegrity, out obj) || obj is not float maxIntegrity)
             return;
 
         // We don't want visuals at max integrity, so we return if we're at max.

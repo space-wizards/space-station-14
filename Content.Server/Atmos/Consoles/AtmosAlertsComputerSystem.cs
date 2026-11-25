@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Monitor.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
@@ -12,10 +13,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.DeviceConfigurator.Components;
-using Content.Shared.DeviceConfigurator.Systems;
-using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -29,8 +26,6 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
     [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private NavMapSystem _navMapSystem = default!;
     [Dependency] private DeviceListSystem _deviceListSystem = default!;
-
-    private readonly List<OptionDeviceAddress> _deviceCache = new();
 
     private const float UpdateTime = 1.0f;
 
@@ -258,46 +253,40 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
             // Create entry
             var netEnt = GetNetEntity(ent);
 
-            var entry = new AtmosAlertsComputerEntry(
-                netEnt,
+            var entry = new AtmosAlertsComputerEntry
+                (netEnt,
                 GetNetCoordinates(entXform.Coordinates),
                 entDevice.Group,
                 alarmState,
                 MetaData(ent).EntityName,
-                DeviceLocalizationHelpers.GetAddressFromId(entDeviceNetwork));
+                entDeviceNetwork.Address);
 
             // Get the list of sensors attached to the alarm
-            if (TryComp<DeviceListComponent>(ent, out var entDeviceList))
+            var sensorList = TryComp<DeviceListComponent>(ent, out var entDeviceList) ? _deviceListSystem.GetDeviceList(ent, entDeviceList) : null;
+
+            if (sensorList?.Any() == true)
             {
-                _deviceCache.Clear();
-                _deviceListSystem.GetDeviceList((ent, entDeviceList), _deviceCache);
                 var alarmRegionSeeds = new HashSet<Vector2i>();
 
                 // If valid and anchored, use the position of sensors as seeds for the region
-                foreach (var option in _deviceCache)
+                foreach (var (address, sensorEnt) in sensorList)
                 {
-                    if (!option.Uid.IsValid() || !HasComp<AtmosMonitorComponent>(option.Uid))
+                    if (!sensorEnt.IsValid() || !HasComp<AtmosMonitorComponent>(sensorEnt))
                         continue;
 
-                    var sensorXform = Transform(option.Uid);
+                    var sensorXform = Transform(sensorEnt);
 
                     if (sensorXform.Anchored && sensorXform.GridUid == entXform.GridUid)
-                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(entXform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(option.Uid, sensorXform)));
+                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(entXform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(sensorEnt, sensorXform)));
                 }
 
-                if (alarmRegionSeeds.Count > 0)
-                {
-                    var regionProperties = new NavMapSystem.NavMapRegionProperties(netEnt, AtmosAlertsComputerUiKey.Key, alarmRegionSeeds);
-                    _navMapSystem.AddOrUpdateNavMapRegion(gridUid, navMap, netEnt, regionProperties);
-                }
-                else
-                {
-                    _navMapSystem.RemoveNavMapRegion(gridUid, navMap, netEnt);
-                }
+                var regionProperties = new SharedNavMapSystem.NavMapRegionProperties(netEnt, AtmosAlertsComputerUiKey.Key, alarmRegionSeeds);
+                _navMapSystem.AddOrUpdateNavMapRegion(gridUid, navMap, netEnt, regionProperties);
             }
+
             else
             {
-                _navMapSystem.RemoveNavMapRegion(gridUid, navMap, netEnt);
+                _navMapSystem.RemoveNavMapRegion(entXform.GridUid.Value, navMap, netEnt);
             }
 
             alarmStateData.Add(entry);

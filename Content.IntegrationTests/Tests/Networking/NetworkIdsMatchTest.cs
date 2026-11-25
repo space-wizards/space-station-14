@@ -1,34 +1,44 @@
-#nullable enable
-using System.Linq;
 using Content.IntegrationTests.Fixtures;
+using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests.Networking;
-
-public sealed class NetworkIdsMatchTest : GameTest
+namespace Content.IntegrationTests.Tests.Networking
 {
-    [Test]
-    [Description("Checks that Server and Client have the same networked components registered.")]
-    public async Task TestConnect()
+    [TestFixture]
+    public sealed class NetworkIdsMatchTest : GameTest
     {
-        var clientNetComps = CEntMan.ComponentFactory.NetworkedComponents;
-        var serverNetComps = SEntMan.ComponentFactory.NetworkedComponents;
-
-        using (Assert.EnterMultipleScope())
+        [Test]
+        public async Task TestConnect()
         {
-            Assert.That(clientNetComps, Is.Not.Null);
-            Assert.That(serverNetComps, Is.Not.Null);
+            var pair = Pair;
+            var server = pair.Server;
+            var client = pair.Client;
+
+            var clientCompFactory = client.ResolveDependency<IComponentFactory>();
+            var serverCompFactory = server.ResolveDependency<IComponentFactory>();
+
+            var clientNetComps = clientCompFactory.NetworkedComponents;
+            var serverNetComps = serverCompFactory.NetworkedComponents;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(clientNetComps, Is.Not.Null);
+                Assert.That(serverNetComps, Is.Not.Null);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(clientNetComps, Has.Count.EqualTo(serverNetComps.Count));
+
+                // Checks that at least Metadata and Transform are registered.
+                Assert.That(clientNetComps, Has.Count.GreaterThanOrEqualTo(2));
+            });
+
+            Assert.Multiple(() =>
+            {
+                for (var netId = 0; netId < clientNetComps.Count; netId++)
+                {
+                    Assert.That(clientNetComps[netId].Name, Is.EqualTo(serverNetComps[netId].Name));
+                }
+            });
         }
-
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(clientNetComps, Has.Count.EqualTo(serverNetComps.Count));
-
-            // Checks that at least Metadata and Transform are registered.
-            Assert.That(clientNetComps, Has.Count.GreaterThanOrEqualTo(2));
-        }
-
-        var clientNames = clientNetComps.Select(reg => reg.Name);
-        var serverNames = serverNetComps.Select(reg => reg.Name);
-        Assert.That(clientNames, Is.EqualTo(serverNames));
     }
 }

@@ -1,7 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Shared.DeviceNetwork.Systems;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -9,6 +9,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
@@ -30,6 +31,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Fax;
 
@@ -39,7 +41,7 @@ public sealed partial class FaxSystem : EntitySystem
     [Dependency] private IAdminManager _adminManager = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private SharedGameTicker _gameTicker = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private PaperSystem _paperSystem = default!;
@@ -69,6 +71,7 @@ public sealed partial class FaxSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
         // Interaction
         SubscribeLocalEvent<FaxMachineComponent, InteractUsingEvent>(OnInteractUsing);
@@ -258,32 +261,56 @@ public sealed partial class FaxSystem : EntitySystem
         args.Handled = true;
     }
 
-    [SubscribeLocalEvent]
-    private void OnPingPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPingPayload> args)
+    private void OnPacketReceived(EntityUid uid, FaxMachineComponent component, DeviceNetworkPacketEvent args)
     {
-        var isForSyndie = _emag.CheckFlag(ent.Owner, EmagType.Interaction) && args.Data.IsSyndicate;
-        if (!isForSyndie && !ent.Comp.ResponsePings)
+        if (!HasComp<DeviceNetworkComponent>(uid) || string.IsNullOrEmpty(args.SenderAddress))
             return;
 
-        var pong = new FaxPongPayload
+        if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
         {
-            FaxName = ent.Comp.FaxName,
-        };
+            switch (command)
+            {
+                case FaxConstants.FaxPingCommand:
+                    var isForSyndie = _emag.CheckFlag(uid, EmagType.Interaction) &&
+                                      args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
+                    if (!isForSyndie && !component.ResponsePings)
+                        return;
 
-        _deviceNetworkSystem.SendPacket(ent.Owner, args.SenderAddress, ref pong);
-    }
+                    var payload = new NetworkPayload()
+                    {
+                        { DeviceNetworkConstants.Command, FaxConstants.FaxPongCommand },
+                        { FaxConstants.FaxNameData, component.FaxName }
+                    };
+                    _deviceNetworkSystem.QueuePacket(uid, args.SenderAddress, payload);
 
-    [SubscribeLocalEvent]
-    private void OnPongPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPongPayload> args)
-    {
-        ent.Comp.KnownFaxes[args.SenderAddress] = args.Data.FaxName;
-        UpdateUserInterface(ent.Owner, ent.Comp);
-    }
+                    break;
+                case FaxConstants.FaxPongCommand:
+                    if (!args.Data.TryGetValue(FaxConstants.FaxNameData, out string? faxName))
+                        return;
 
-    [SubscribeLocalEvent]
-    private void OnPrintPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPrintPayload> args)
-    {
-        Receive(ent, args.Data.Data, args.SenderAddress);
+                    component.KnownFaxes[args.SenderAddress] = faxName;
+
+                    UpdateUserInterface(uid, component);
+
+                    break;
+                case FaxConstants.FaxPrintCommand:
+                    if (!args.Data.TryGetValue(FaxConstants.FaxPaperNameData, out string? name) ||
+                        !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
+                        return;
+
+                    args.Data.TryGetValue(FaxConstants.FaxPaperLabelData, out string? label);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperLockedData, out bool? locked);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperSenderFaxNameData, out string? senderFaxName);
+
+                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false, senderFaxName);
+                    Receive(uid, printout, args.SenderAddress);
+
+                    break;
+            }
+        }
     }
 
     private void OnToggleInterface(EntityUid uid, FaxMachineComponent component, AfterActivatableUIOpenEvent args)
@@ -363,7 +390,7 @@ public sealed partial class FaxSystem : EntitySystem
     /// <summary>
     ///     Set fax destination address not checking if he knows it exists
     /// </summary>
-    public void SetDestination(EntityUid uid, DeviceAddress destAddress, FaxMachineComponent? component = null)
+    public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -386,12 +413,15 @@ public sealed partial class FaxSystem : EntitySystem
         component.DestinationFaxAddress = null;
         component.KnownFaxes.Clear();
 
-        var payload = new FaxPingPayload
+        var payload = new NetworkPayload()
         {
-            IsSyndicate = _emag.CheckFlag(uid, EmagType.Interaction),
+            { DeviceNetworkConstants.Command, FaxConstants.FaxPingCommand }
         };
 
-        _deviceNetworkSystem.SendPacket(uid, null, ref payload);
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            payload.Add(FaxConstants.FaxSyndicateData, true);
+
+        _deviceNetworkSystem.QueuePacket(uid, null, payload);
     }
 
     /// <summary>
@@ -485,14 +515,11 @@ public sealed partial class FaxSystem : EntitySystem
         if (component.DestinationFaxAddress == null)
             return;
 
-        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress.Value, out var faxName))
+        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
             return;
 
         if (!TryComp(sendEntity, out MetaDataComponent? metadata) ||
            !TryComp<PaperComponent>(sendEntity, out var paper))
-            return;
-
-        if (metadata.EntityPrototype == null)
             return;
 
         TryComp<NameModifierComponent>(sendEntity, out var nameMod);
@@ -503,9 +530,9 @@ public sealed partial class FaxSystem : EntitySystem
 
         if (component.AddSenderInfo)
         {
-            var faxMachineAddress = _deviceNetworkSystem.GetAddress(uid);
-            if (string.IsNullOrEmpty(faxMachineAddress))
-                faxMachineAddress = Loc.GetString("device-address-unknown");
+            var faxMachineAddress = TryComp<DeviceNetworkComponent>(uid, out var deviceNetworkComponent)
+            ? deviceNetworkComponent.Address
+            : Loc.GetString("device-address-unknown");
 
             var time = _gameTicker.RoundDuration();
             var timeString = TimeSpan.FromSeconds(Math.Truncate(time.TotalSeconds)).ToString();
@@ -520,20 +547,32 @@ public sealed partial class FaxSystem : EntitySystem
             );
         }
 
-        var payload = new FaxPrintPayload
+        var payload = new NetworkPayload()
         {
-            Data = new FaxPrintout(
-                    content,
-                    nameMod?.BaseName ?? metadata.EntityName,
-                    labelComponent?.CurrentLabel,
-                    metadata.EntityPrototype.ID,
-                    paper.StampState,
-                    paper.StampedBy,
-                    paper.EditingDisabled,
-                    component.FaxName),
+            { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
+            { FaxConstants.FaxPaperNameData, nameMod?.BaseName ?? metadata.EntityName },
+            { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
+            { FaxConstants.FaxPaperContentData, content },
+            { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
+            { FaxConstants.FaxPaperSenderFaxNameData, component.FaxName ?? Loc.GetString("fax-machine-popup-source-unknown") }
         };
 
-        _deviceNetworkSystem.SendPacket(uid, component.DestinationFaxAddress, ref payload);
+        if (metadata.EntityPrototype != null)
+        {
+            // TODO: Ideally, we could just make a copy of the whole entity when it's
+            // faxed, in order to preserve visuals, etc.. This functionality isn't
+            // available yet, so we'll pass along the originating prototypeId and fall
+            // back to component.PrintPaperId in SpawnPaperFromQueue if we can't find one here.
+            payload[FaxConstants.FaxPaperPrototypeData] = metadata.EntityPrototype.ID;
+        }
+
+        if (paper.StampState != null)
+        {
+            payload[FaxConstants.FaxPaperStampStateData] = paper.StampState;
+            payload[FaxConstants.FaxPaperStampedByData] = paper.StampedBy;
+        }
+
+        _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
@@ -553,7 +592,7 @@ public sealed partial class FaxSystem : EntitySystem
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
-    public void Receive(EntityUid uid, FaxPrintout printout, DeviceAddress? fromAddress = null, FaxMachineComponent? component = null)
+    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress = null, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -576,7 +615,7 @@ public sealed partial class FaxSystem : EntitySystem
 
         var printout = component.PrintingQueue.Dequeue();
 
-        var entityToSpawn = ProtoMan.HasIndex(printout.PrototypeId) ? printout.PrototypeId : component.PrintPaperId;
+        var entityToSpawn = component.PrintPaperId;
         var printed = Spawn(entityToSpawn, Transform(uid).Coordinates);
 
         if (TryComp<PaperComponent>(printed, out var paper))

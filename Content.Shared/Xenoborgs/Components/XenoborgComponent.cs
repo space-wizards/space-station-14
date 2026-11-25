@@ -1,4 +1,3 @@
-using Content.Shared.Audio;
 using Content.Shared.Roles.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -28,6 +27,6 @@ public sealed partial class XenoborgComponent : Component
     /// <summary>
     /// Briefing sound when you become a xenoborg
     /// </summary>
-    [DataField, AllowStereo]
+    [DataField]
     public SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg");
 }

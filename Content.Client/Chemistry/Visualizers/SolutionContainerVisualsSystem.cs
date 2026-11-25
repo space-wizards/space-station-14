@@ -35,11 +35,14 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
         // Check if the solution that was updated is the one set as represented
         if (!string.IsNullOrEmpty(component.SolutionName)
-            && args.TryGetData<string>(SolutionContainerVisuals.SolutionName, out var name)
+            && AppearanceSystem.TryGetData(uid, SolutionContainerVisuals.SolutionName, out string name, args.Component)
             && name != component.SolutionName)
             return;
 
-        if (!args.TryGetData<float>(SolutionContainerVisuals.FillFraction, out var fraction))
+        if (!AppearanceSystem.TryGetData(uid,
+                SolutionContainerVisuals.FillFraction,
+                out float fraction,
+                args.Component))
             return;
 
         // C# moment; setting it as nullable (even though it's not) avoids a
@@ -97,7 +100,8 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
             SpriteSystem.LayerSetRsiState(ent, fillLayer, fillBaseName + closestFillSprite);
 
-            if (changeColor && args.TryGetData<Color>(SolutionContainerVisuals.Color, out var color))
+            if (changeColor
+                && AppearanceSystem.TryGetData(uid, SolutionContainerVisuals.Color, out Color color, args.Component))
                 SpriteSystem.LayerSetColor(ent, fillLayer, color);
             else
                 SpriteSystem.LayerSetColor(ent, fillLayer, Color.White);
@@ -123,7 +127,10 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
         Entity<SpriteComponent?> ent,
         int fillLayer)
     {
-        if (!args.TryGetData<string>(SolutionContainerVisuals.BaseOverride, out var baseOverride))
+        if (!AppearanceSystem.TryGetData(uid,
+                SolutionContainerVisuals.BaseOverride,
+                out string baseOverride,
+                args.Component))
             return null;
 
         var reagentProto = ProtoMan.Index<ReagentPrototype>(baseOverride);
@@ -171,7 +178,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
         var equippedPrefix = clothing.EquippedPrefix == null
             ? $"equipped-{args.Slot}"
-            : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
+            : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
         var layerKeyPrefix = equippedPrefix + ent.Comp.EquippedFillBaseName;
 
         if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.EquippedMaxFillLevels) is { } layer)

@@ -6,5 +6,8 @@ namespace Content.Shared.Pinpointer;
 /// This is used for objects which appear as doors on the navmap.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(NavMapSystem))]
-public sealed partial class NavMapDoorComponent : Component;
+[Access(typeof(SharedNavMapSystem))]
+public sealed partial class NavMapDoorComponent : Component
+{
+
+}

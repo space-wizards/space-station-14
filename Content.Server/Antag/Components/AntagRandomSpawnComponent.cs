@@ -1,4 +1,3 @@
-using Content.Shared.Antag.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Antag.Components;

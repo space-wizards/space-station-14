@@ -1,3 +1,4 @@
+using Content.Shared.HijackBeacon;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Cargo.Components;

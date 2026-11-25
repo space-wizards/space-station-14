@@ -6,7 +6,7 @@
       actions:
         - !type:DestroyEntity {}
       edges:
-        - to: FilingCabinet
+        - to: filingCabinet
           steps:
             - material: Steel
               amount: 4
@@ -22,8 +22,8 @@
               amount: 3
               doAfter: 3
 
-    - node: FilingCabinet
-      entity: FilingCabinet
+    - node: filingCabinet
+      entity: filingCabinet
       edges:
         - to: start
           completed:
@@ -34,7 +34,7 @@
             - tool: Screwing
               doAfter: 4
     - node: tallCabinet
-      entity: FilingCabinetTall
+      entity: filingCabinetTall
       edges:
         - to: start
           completed:
@@ -45,7 +45,7 @@
             - tool: Screwing
               doAfter: 4
     - node: chestDrawer
-      entity: FilingCabinetDrawer
+      entity: filingCabinetDrawer
       edges:
         - to: start
           completed:

@@ -1,4 +1,3 @@
-using Content.Client.UserInterface.Controls;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Resources;
@@ -58,7 +57,7 @@ public sealed partial class ChangelogTab : Control
             else if (day == today.AddDays(-1))
                 dayNice = Loc.GetString("changelog-yesterday");
             else
-                dayNice = day.Date.ToString("yyyy-MM-dd");
+                dayNice = day.ToShortDateString();
 
             ChangelogBody.AddChild(new Label
             {
@@ -122,7 +121,7 @@ public sealed partial class ChangelogTab : Control
                     };
 
                     readDivider.AddChild(hBox);
-                    readDivider.AddChild(new Separator { StyleClasses = { StyleClass.LowDivider } });
+                    readDivider.AddChild(new PanelContainer { StyleClasses = { StyleClass.LowDivider } });
                     ChangelogBody.AddChild(readDivider);
 
                     if (first)

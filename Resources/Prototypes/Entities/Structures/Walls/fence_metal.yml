@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: [ BaseStructure, StructureHealthBarrier ]
   id: BaseFenceMetal
   name: chain link fence
@@ -18,7 +18,7 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: RodMetalMod
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger: &DamageBarrierNormal

@@ -6,6 +6,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Armor;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
@@ -136,15 +137,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     }
 
     /// <inheritdoc/>
-    public override void TriggerExplosive(
-        EntityUid uid,
-        ExplosiveComponent? explosive = null,
-        bool delete = true,
-        float? totalIntensity = null,
-        float? maxIntensity = null,
-        float? radius = null,
-        EntityUid? user = null
-    )
+    public override void TriggerExplosive(EntityUid uid, ExplosiveComponent? explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null, EntityUid? user = null)
     {
         // log missing: false, because some entities (e.g. liquid tanks) attempt to trigger explosions when damaged,
         // but may not actually be explosive.
@@ -158,17 +151,15 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         explosive.Exploded = !explosive.Repeatable;
 
         // Override the explosion intensity if optional arguments were provided.
-        maxIntensity ??= explosive.MaxIntensity;
         if (radius != null)
-            totalIntensity ??= RadiusToIntensity((float)radius, explosive.IntensitySlope, maxIntensity.Value);
-
+            totalIntensity ??= RadiusToIntensity((float)radius, explosive.IntensitySlope, explosive.MaxIntensity);
         totalIntensity ??= explosive.TotalIntensity;
 
         QueueExplosion(uid,
             explosive.ExplosionType,
-            totalIntensity.Value,
+            (float)totalIntensity,
             explosive.IntensitySlope,
-            maxIntensity.Value,
+            explosive.MaxIntensity,
             explosive.TileBreakScale,
             explosive.MaxTileBreak,
             explosive.CanCreateVacuum,

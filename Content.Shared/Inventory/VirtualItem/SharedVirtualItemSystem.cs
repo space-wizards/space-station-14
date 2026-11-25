@@ -300,6 +300,6 @@ public abstract partial class SharedVirtualItemSystem : EntitySystem
         if (TerminatingOrDeleted(item))
             return;
 
-        QueueDel(item.Owner);
+        PredictedQueueDel(item.Owner);
     }
 }

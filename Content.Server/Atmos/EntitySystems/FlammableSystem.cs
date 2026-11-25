@@ -18,10 +18,10 @@ using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
+using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.FixedPoint;
-using Content.Shared.Timing.Systems;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
@@ -58,8 +58,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
 
-        private const int FirestackEnergy = 37500; // joules release when on fire
-
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(AtmosphereSystem));
@@ -71,7 +69,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<FlammableComponent, ResistFireAlertEvent>(OnResistFireAlert);
-            SubscribeLocalEvent<FlammableComponent, AttackedEvent>(OnAttacked);
             Subs.SubscribeWithRelay<FlammableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
@@ -154,7 +151,14 @@ namespace Content.Server.Atmos.EntitySystems
             if (args.Handled)
                 return;
 
-            args.Handled = TryIgniteFromHotSource((uid, flammable), args.Used, args.User);
+            var isHotEvent = new IsHotEvent();
+            RaiseLocalEvent(args.Used, isHotEvent);
+
+            if (!isHotEvent.IsHot)
+                return;
+
+            Ignite(uid, args.Used, flammable, args.User);
+            args.Handled = true;
         }
 
         private void OnExtinguishActivateInWorld(EntityUid uid, ExtinguishOnInteractComponent component, ActivateInWorldEvent args)
@@ -170,7 +174,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             args.Handled = true;
 
-            if (!_useDelay.TryResetDelay(uid, true))
+            if (!TryComp(uid, out UseDelayComponent? useDelay) || !_useDelay.TryResetDelay((uid, useDelay), true))
                 return;
 
             _audio.PlayPvs(component.ExtinguishAttemptSound, uid);
@@ -255,11 +259,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             Resist(ent, ent);
             args.Handled = true;
-        }
-
-        private void OnAttacked(Entity<FlammableComponent> ent, ref AttackedEvent args)
-        {
-            TryIgniteFromHotSource(ent, args.Used, args.User);
         }
 
         public void UpdateAppearance(EntityUid uid, FlammableComponent? flammable = null, AppearanceComponent? appearance = null)
@@ -401,18 +400,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         }
 
-        private bool TryIgniteFromHotSource(Entity<FlammableComponent> ent, EntityUid hotSource, EntityUid user)
-        {
-            var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(hotSource, isHotEvent);
-
-            if (!isHotEvent.IsHot)
-                return false;
-
-            Ignite(ent.Owner, hotSource, ent.Comp, user);
-            return true;
-        }
-
         public void Resist(EntityUid uid,
             FlammableComponent? flammable = null)
         {
@@ -488,7 +475,7 @@ namespace Content.Server.Atmos.EntitySystems
                     var source = EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
-                    _temperatureSystem.ChangeHeat(uid, FirestackEnergy * flammable.FireStacks, false);
+                    _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false);
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it
@@ -506,27 +493,6 @@ namespace Content.Server.Atmos.EntitySystems
                     TryExtinguish((uid, flammable));
                 }
             }
-        }
-
-        public void CopyComponent(Entity<FlammableComponent?> entity, EntityUid clone)
-        {
-            if (!Resolve(entity, ref entity.Comp, false))
-                return;
-
-            // Don't clone being on fire here.
-            var cloneComp = EnsureComp<FlammableComponent>(clone);
-            cloneComp.Displacement = entity.Comp.Displacement;
-            cloneComp.AlwaysCombustible = entity.Comp.AlwaysCombustible;
-            cloneComp.CanExtinguish = entity.Comp.CanExtinguish;
-            cloneComp.Damage = entity.Comp.Damage.Clone();
-            cloneComp.FirestackFade = entity.Comp.FirestackFade;
-            cloneComp.FirestacksOnIgnite = entity.Comp.FirestacksOnIgnite;
-            cloneComp.MaximumFireStacks = entity.Comp.MaximumFireStacks;
-            cloneComp.MinimumFireStacks = entity.Comp.MinimumFireStacks;
-            cloneComp.ResistTime = entity.Comp.ResistTime;
-            Dirty(clone, cloneComp);
-
-            UpdateAppearance(clone, cloneComp);
         }
     }
 }

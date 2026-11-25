@@ -71,7 +71,6 @@
     slots:
     - item
   - type: ItemSlots
-    allowSmartEquip: true
     slots:
       item:
         name: CaneBlade

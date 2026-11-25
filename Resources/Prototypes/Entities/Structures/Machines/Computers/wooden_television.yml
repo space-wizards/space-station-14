@@ -7,12 +7,11 @@
   - type: Sprite
     noRot: true
     drawdepth: SmallObjects
-  - type: ComputerVisuals
-    stateFrame: television
-    stateKeyboard: null
-    stateScreen: detective_television
-    stateKeys: null
-    statePanel: television_panel
+    layers:
+    - map: ["computerLayerBody"]
+      state: television
+    - map: ["computerLayerScreen"]
+      state: detective_television
   - type: Computer
     board: ComputerTelevisionCircuitboard
   - type: PointLight

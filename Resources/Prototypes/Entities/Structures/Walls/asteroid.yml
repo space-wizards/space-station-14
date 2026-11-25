@@ -13,11 +13,10 @@
     noRot: true
   - type: IconSmooth
     key: stone
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ stone, doors ]
-      base: stone
-      index: 0
+    additionalKeys:
+    - doors
+    index: 0
+    base: stone
   - type: Icon
     state: full
   - type: Sprite
@@ -455,7 +454,7 @@
   id: IronRockArtifactFragment
 
 - type: entity
-  parent: [ BaseRockGibtonite, BaseIronRockVisuals, BaseAsteroidRock ]
+  parent: [ BaseRockGibtonite, BaseIronRockVisuals, IronRock ]
   id: IronRockGibtonite
 
 - type: entity
@@ -490,11 +489,8 @@
       - *SoundStoneBreak
   - type: IconSmooth
     key: stone
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ stone, doors ]
-      base: stone
-      index: 0
+    index: 0
+    base: stone
   - type: Icon
     sprite: Structures/Walls/stone-dirt.rsi
     state: full

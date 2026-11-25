@@ -48,9 +48,6 @@
   - type: PhysicalComposition
     materialComposition:
       Meaterial: 300
-  - type: Tag
-    tags:
-    - Meat
 
 - type: entity
   parent: FoodMeatBase
@@ -59,8 +56,8 @@
   components:
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Perishable
     # raw meat rots in 5 minutes, get it into the freezer fast
     rotAfter: 300
@@ -132,8 +129,8 @@
       - fishy
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: fish
   - type: Solution
@@ -167,8 +164,8 @@
   components:
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: bacon
   - type: Solution
@@ -297,9 +294,9 @@
   components:
   - type: Tag
     tags:
+    - Raw
     - HighRiskItem
     - Meat
-    - Raw
   - type: Sprite
     state: corgi
   - type: Solution
@@ -312,8 +309,7 @@
   - type: StaticPrice
     price: 750
   - type: StealTarget
-    stealGroup:
-    - FoodMeatCorgi
+    stealGroup: FoodMeatCorgi
   - type: Item
     inhandVisuals:
       left:
@@ -367,8 +363,8 @@
   components:
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     layers:
     - state: dragon
@@ -558,10 +554,6 @@
       right:
       - state: generic-pink-inhand-right
         color: "#934C64"
-  - type: Tag
-    tags:
-    - Meat
-    - Raw
 
 - type: entity
   parent: [SolutionTiny, FoodMeatBase]
@@ -571,8 +563,8 @@
   components:
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: snake
   - type: Solution
@@ -605,8 +597,8 @@
       - acid
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: xeno
   - type: Solution
@@ -642,8 +634,8 @@
     - lostfriendship
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: rouny
   - type: Solution
@@ -683,11 +675,6 @@
       - state: tomato-inhand-left
       right:
       - state: tomato-inhand-right
-  - type: Tag
-    tags:
-    - Ingredient
-    - Meat
-    - Raw
 
 - type: entity
   parent: [FoodMeatBase, BaseSlicingRefinableFood]
@@ -699,8 +686,8 @@
     storedOffset: 0,1
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     sprite: Objects/Consumable/Food/salami.rsi
     state: salami
@@ -732,8 +719,8 @@
       - funny
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: clown
   - type: ToolRefinable
@@ -761,8 +748,8 @@
         Quantity: 3
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: meatball
   - type: Construction
@@ -779,8 +766,8 @@
   components:
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Sprite
     state: raw_patty
   - type: Construction
@@ -812,8 +799,8 @@
       - slimy
   - type: Tag
     tags:
-    - Meat
     - Raw
+    - Meat
   - type: Extractable
     juiceSolution:
       reagents:
@@ -858,7 +845,6 @@
   - type: Tag
     tags:
     - Meat
-    - Raw
   - type: Item
     size: Normal
     shape:
@@ -897,11 +883,10 @@
       - ReagentId: Iron
         Quantity: 10
   - type: StaticPrice
-    price: 3000 #It has so much Omnizine in it
+    price: 3000 #It has so much Omnizin in it
   - type: Tag
     tags:
     - Meat
-    - Raw
 
 - type: entity
   abstract: true
@@ -1759,7 +1744,7 @@
     node: cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: MeatCutletBurger
+      Burger: MeatCutlet
       Taco: MeatCutlet
   - type: Item
     storedOffset: -1,1
@@ -1839,7 +1824,7 @@
     node: chicken cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: ChickenCutletBurger
+      Burger: ChickenCutlet
       Taco: ChickenCutlet
   - type: Item
     storedOffset: -1,1
@@ -1865,7 +1850,7 @@
     node: duck cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: DuckCutletBurger
+      Burger: DuckCutlet
       Taco: DuckCutlet
   - type: Item
     storedOffset: -1,1
@@ -1942,7 +1927,7 @@
     node: xeno cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: XenoCutletBurger
+      Burger: XenoCutlet
       Taco: XenoCutlet
   - type: Item
     storedOffset: -1,1
@@ -1976,7 +1961,7 @@
     node: dragon cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: DragonCutletBurger
+      Burger: DragonCutlet
       Taco: DragonCutlet
   - type: Item
     storedOffset: -1,1

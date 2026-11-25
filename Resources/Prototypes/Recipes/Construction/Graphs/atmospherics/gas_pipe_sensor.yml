@@ -1,6 +1,5 @@
 - type: constructionGraph
-  id: !type:CreateVariants
-    values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+  id: GasPipeSensor
   start: start
   graph:
   - node: start
@@ -11,9 +10,20 @@
         amount: 2
         doAfter: 1
 
+    - to: sensorAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: sensorAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
   - node: sensor
-    entity: !type:CreateVariants
-      values: [ GasPipeSensor, GasPipeSensorAlt1, GasPipeSensorAlt2 ]
+    entity: GasPipeSensor
     actions:
     - !type:SetAnchor
     edges:
@@ -29,3 +39,39 @@
       steps:
       - tool: Welding
         doAfter: 1
+
+  - node: sensorAlt1
+    entity: GasPipeSensorAlt1
+    actions:
+      - !type:SetAnchor
+    edges:
+      - to: start
+        completed:
+          - !type:SpawnPrototype
+            prototype: SheetSteel1
+            amount: 2
+          - !type:DeleteEntity
+        conditions:
+          - !type:EntityAnchored
+            anchored: false
+        steps:
+          - tool: Welding
+            doAfter: 1
+
+  - node: sensorAlt2
+    entity: GasPipeSensorAlt2
+    actions:
+      - !type:SetAnchor
+    edges:
+      - to: start
+        completed:
+          - !type:SpawnPrototype
+            prototype: SheetSteel1
+            amount: 2
+          - !type:DeleteEntity
+        conditions:
+          - !type:EntityAnchored
+            anchored: false
+        steps:
+          - tool: Welding
+            doAfter: 1

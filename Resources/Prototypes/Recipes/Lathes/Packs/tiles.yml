@@ -20,7 +20,6 @@
   - FloorTileItemSteelMini
   - FloorTileItemSteelVerticalSlatsBordered
   - FloorTileItemSteelHorizontalSlatsBordered
-  - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
   - FloorTileItemSteelCheckerDark
@@ -95,9 +94,6 @@
   - FloorTileItemLino
   - FloorTileItemBoxing
   - FloorTileItemGym
-  - FloorTileItemPlastic
-  - FloorTileItemDarkPlastic
-  - FloorTileItemWhitePlastic
 
 - type: latheRecipePack
   id: CarpetTilesStatic

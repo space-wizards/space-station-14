@@ -1,7 +1,7 @@
-namespace Content.Shared.Chemistry.Components.SolutionManager;
+﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
-/// Denotes the solution that can be removed with syringes.
+///     Denotes the solution that can removed  be with syringes.
 /// </summary>
 [RegisterComponent]
 public sealed partial class DrawableSolutionComponent : Component
@@ -9,6 +9,6 @@ public sealed partial class DrawableSolutionComponent : Component
     /// <summary>
     /// Solution name that can be removed with syringes.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Solution = "default";
 }

@@ -1,6 +1,5 @@
-using Content.Shared.Actions.Events;
+﻿using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
-using Content.Shared.IdentityManagement;
 
 namespace Content.Shared.Actions;
 
@@ -19,13 +18,11 @@ public abstract partial class SharedActionsSystem
 
         var delay = ent.Comp.Delay;
 
-        // If there is a target to the action, they are they target of the doafter. Otherwise it is the performer.
-        var target = GetEntity(input.EntityTarget) ?? performer;
         var netEnt = GetNetEntity(performer);
 
         var actionDoAfterEvent = new ActionDoAfterEvent(netEnt, originalUseDelay, input);
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, performer, delay, actionDoAfterEvent, ent.Owner, target)
+        var doAfterArgs = new DoAfterArgs(EntityManager, performer, delay, actionDoAfterEvent, ent.Owner, performer)
         {
             AttemptFrequency = ent.Comp.AttemptFrequency,
             Broadcast = ent.Comp.Broadcast,
@@ -39,8 +36,7 @@ public abstract partial class SharedActionsSystem
             DistanceThreshold = ent.Comp.DistanceThreshold,
             BreakOnDamage = ent.Comp.BreakOnDamage,
             DamageThreshold = ent.Comp.DamageThreshold,
-            RequireCanInteract = ent.Comp.RequireCanInteract,
-            ExamineText = ent.Comp.ExamineText == null ? null : Loc.GetString(ent.Comp.ExamineText, ("user", Identity.Entity(performer, EntityManager)), ("target", Identity.Entity(target, EntityManager)), ("action", ent)),
+            RequireCanInteract = ent.Comp.RequireCanInteract
         };
 
         return _doAfter.TryStartDoAfter(doAfterArgs, performer);

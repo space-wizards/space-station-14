@@ -98,12 +98,12 @@ public sealed partial class DockingSystem : SharedDockingSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDockingMove(Entity<DockingComponent> entity, ref MoveEvent args)
+    private void OnDockingReAnchor(Entity<DockingComponent> entity, ref ReAnchorEvent args)
     {
         var uid = entity.Owner;
         var component = entity.Comp;
 
-        if (!component.Docked || args.OnlyRotation)
+        if (!component.Docked)
             return;
 
         var otherDock = component.DockedWith;
@@ -305,13 +305,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
 
         if (TryComp(dockAUid, out DoorComponent? doorA))
         {
-            var opened = true;
-            if (!Paused(dockAUid))
-                opened = _doorSystem.TryOpen(dockAUid, doorA);
-            else
-                _doorSystem.StartOpening(dockAUid, doorA);
-
-            if (opened)
+            if (_doorSystem.TryOpen(dockAUid, doorA))
             {
                 if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                 {
@@ -323,13 +317,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
 
         if (TryComp(dockBUid, out DoorComponent? doorB))
         {
-            var opened = true;
-            if (!Paused(dockBUid))
-                opened = _doorSystem.TryOpen(dockBUid, doorB);
-            else
-                _doorSystem.StartOpening(dockBUid, doorB);
-
-            if (opened)
+            if (_doorSystem.TryOpen(dockBUid, doorB))
             {
                 if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                 {
@@ -376,7 +364,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
             return;
 
         if (TryComp<DoorBoltComponent>(dockUid, out var airlock))
-            _doorSystem.TrySetBoltDown((dockUid, airlock), false);
+            _doorSystem.SetBoltsDown((dockUid, airlock), false);
 
         if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
             door.ChangeAirtight = true;
@@ -401,7 +389,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
         foreach (var entity in _dockingBoltSet)
         {
             _doorSystem.TryClose(entity);
-            _doorSystem.TrySetBoltDown((entity.Owner, entity.Comp2), enabled);
+            _doorSystem.SetBoltsDown((entity.Owner, entity.Comp2), enabled);
         }
     }
 
@@ -429,9 +417,6 @@ public sealed partial class DockingSystem : SharedDockingSystem
 
         var xformA = Transform(dockA);
         var xformB = Transform(dockB);
-
-        if (xformA.GridUid == xformB.GridUid)
-            return false;
 
         if (!xformA.Anchored || !xformB.Anchored)
             return false;

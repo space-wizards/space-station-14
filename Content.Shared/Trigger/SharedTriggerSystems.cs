@@ -1,4 +1,4 @@
-using Content.Shared.Trigger.Components.Effects;
+﻿using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Systems;
 
 namespace Content.Shared.Trigger;

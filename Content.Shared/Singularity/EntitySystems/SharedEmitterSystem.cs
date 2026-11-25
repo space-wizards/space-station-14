@@ -1,27 +1,34 @@
-using Content.Shared.Database;
+﻿using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
 public abstract partial class SharedEmitterSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private LockSystem _lock = default!;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+    }
+
     private void OnGetVerb(Entity<EmitterComponent> ent, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null)
             return;
 
-        if (_lock.IsLocked(ent.Owner))
+        if (TryComp<LockComponent>(ent.Owner, out var lockComp) && lockComp.Locked)
             return;
 
-        if (ent.Comp.SelectableTypes.Count < 2 || !TryComp<NetworkPoweredAmmoProviderComponent>(ent, out var ammoProvider))
+        if (ent.Comp.SelectableTypes.Count < 2)
             return;
 
         foreach (var type in ent.Comp.SelectableTypes)
@@ -33,17 +40,26 @@ public abstract partial class SharedEmitterSystem : EntitySystem
                 Priority = 1,
                 Category = VerbCategory.SelectType,
                 Text = proto.Name,
-                Disabled = type == ammoProvider.Prototype,
+                Disabled = type == ent.Comp.BoltType,
                 Impact = LogImpact.Medium,
                 DoContactInteraction = true,
                 Act = () =>
                 {
-                    ammoProvider.Prototype = type;
-                    Dirty(ent, ammoProvider);
+                    ent.Comp.BoltType = type;
+                    Dirty(ent);
                     _popup.PopupEntity(Loc.GetString("emitter-component-type-set", ("type", proto.Name)), ent.Owner, ent.Owner);
                 },
             };
             args.Verbs.Add(v);
         }
+    }
+
+    private void OnExamined(Entity<EmitterComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.SelectableTypes.Count < 2)
+            return;
+
+        var proto = ProtoMan.Index(ent.Comp.BoltType);
+        args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
     }
 }

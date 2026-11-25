@@ -98,7 +98,7 @@
 - type: entity
   name: filing cabinet
   parent: BaseFilingCabinet
-  id: FilingCabinet
+  id: filingCabinet
   components:
   - type: Sprite
     state: filingcabinet
@@ -107,12 +107,12 @@
     - state: filingcabinet-open
       map: ["openLayer"]
   - type: Construction
-    node: FilingCabinet
+    node: filingCabinet
 
 - type: entity
   name: tall cabinet
   parent: BaseFilingCabinet
-  id: FilingCabinetTall
+  id: filingCabinetTall
   components:
   - type: Sprite
     state: tallcabinet
@@ -126,7 +126,7 @@
 - type: entity
   name: chest drawer
   parent: BaseFilingCabinet
-  id: FilingCabinetDrawer
+  id: filingCabinetDrawer
   description: A small drawer for all your filing needs, Now with wheels!
   components:
   - type: Sprite
@@ -161,13 +161,13 @@
         tableId: FilingCabinetFillTable
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, FilingCabinet]
-  id: FilingCabinetRandom
+  parent: [BaseBureaucraticStorageFill, filingCabinet]
+  id: filingCabinetRandom
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, FilingCabinetTall]
-  id: FilingCabinetTallRandom
+  parent: [BaseBureaucraticStorageFill, filingCabinetTall]
+  id: filingCabinetTallRandom
 
 - type: entity
-  parent: [BaseBureaucraticStorageFill, FilingCabinetDrawer]
-  id: FilingCabinetDrawerRandom
+  parent: [BaseBureaucraticStorageFill, filingCabinetDrawer]
+  id: filingCabinetDrawerRandom

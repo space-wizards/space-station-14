@@ -1,7 +1,6 @@
-<ui:SprayPainterDecals
+<controls:SprayPainterDecals
     xmlns="https://spacestation14.io"
-    xmlns:ui="clr-namespace:Content.Client.SprayPainter.UI"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    xmlns:controls="clr-namespace:Content.Client.SprayPainter.UI">
     <BoxContainer Orientation="Vertical">
         <BoxContainer>
             <Label Text="{Loc 'spray-painter-selected-decals'}" />
@@ -13,7 +12,7 @@
             </GridContainer>
         </ScrollContainer>
 
-        <controls:Separator StyleClasses="LowDivider"/>
+        <PanelContainer StyleClasses="LowDivider" />
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorSelector" IsAlphaVisible="True">
                 <BoxContainer HorizontalAlignment="Right" VerticalAlignment="Top" SetHeight="29">
@@ -39,4 +38,4 @@
             </Button>
         </BoxContainer>
     </BoxContainer>
-</ui:SprayPainterDecals>
+</controls:SprayPainterDecals>

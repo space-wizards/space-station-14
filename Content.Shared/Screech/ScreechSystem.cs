@@ -62,12 +62,11 @@ public sealed partial class ScreechSystem : EntitySystem
     /// <summary>
     /// Makes the entity "source" screech, applying the "effects" to every entity in "range" that does not have screech protection.
     /// </summary>
-    public EntityUid? Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, List<EntityEffect>? effects = null)
+    public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, List<EntityEffect>? effects = null)
     {
-        EntityUid? spawnedEnt = null;
         // first, we spawn the vfx attached to the source
         if (vfx.HasValue)
-            spawnedEnt = PredictedSpawnAttachedTo(vfx.Value, new EntityCoordinates(source, 0f, 0f));
+            PredictedSpawnAttachedTo(vfx.Value, new EntityCoordinates(source, 0f, 0f));
 
         // then, we do the screech per-se
         var transform = Transform(source);
@@ -87,7 +86,6 @@ public sealed partial class ScreechSystem : EntitySystem
         }
 
         _audio.PlayPredicted(screechSound, source, source);
-        return spawnedEnt;
     }
 
     /// <summary>

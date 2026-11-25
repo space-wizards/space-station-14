@@ -1,5 +1,4 @@
 using Content.Server.Chat.Systems;
-using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Maths;
 
@@ -27,7 +26,6 @@ public sealed partial class AnnounceOnSpawnComponent : Component
     /// Sound override for the announcement.
     /// </summary>
     [DataField]
-    [AllowStereo]
     public SoundSpecifier? Sound;
 
     /// <summary>

@@ -1,5 +1,3 @@
-#nullable enable
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Containers;
 using Robust.Shared.Containers;
@@ -25,8 +23,6 @@ public sealed class DisposalUnitInteractionTest : InteractionTest
     probability: 1
 ";
 
-    [SidedDependency(Side.Server)] private SharedContainerSystem _sContainerSystem = default!;
-
     /// <summary>
     /// Spawns a disposal unit, gives the player a trash item, and makes the
     /// player throw the item at the disposal unit.
@@ -36,6 +32,8 @@ public sealed class DisposalUnitInteractionTest : InteractionTest
     [Test]
     public async Task ThrowItemIntoDisposalUnitTest()
     {
+        var containerSys = Server.System<SharedContainerSystem>();
+
         // Spawn the target disposal unit
         var disposalUnit = await SpawnTarget(TestDisposalUnitId);
 
@@ -50,7 +48,7 @@ public sealed class DisposalUnitInteractionTest : InteractionTest
 
         // Make sure the trash is in the disposal unit
         var throwInsertComp = Comp<ThrowInsertContainerComponent>();
-        var container = _sContainerSystem.GetContainer(ToServer(disposalUnit), throwInsertComp.ContainerId);
+        var container = containerSys.GetContainer(ToServer(disposalUnit), throwInsertComp.ContainerId);
         Assert.That(container.ContainedEntities, Contains.Item(ToServer(trash)));
     }
 }

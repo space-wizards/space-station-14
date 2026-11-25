@@ -2,14 +2,12 @@ using Content.Server.DeviceLinking.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
-using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
-using Content.Shared.Timing.Components;
-using Content.Shared.Timing.Systems;
+using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
@@ -69,7 +67,8 @@ public sealed partial class PowerSensorSystem : EntitySystem
             return;
 
         // no sound spamming
-        if (!_useDelay.TryResetDelay(uid, true))
+        if (TryComp<UseDelayComponent>(uid, out var useDelay)
+            && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
         // switch between input and output mode.

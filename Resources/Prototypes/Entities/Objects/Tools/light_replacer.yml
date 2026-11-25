@@ -10,47 +10,26 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
   - type: LightReplacer
-  - type: EntityProvider
-    canEject: false # Light Replacers have their own, more sophisticated UI.
-    whitelist:
-      components:
-      - LightBulb
-  - type: ContainerContainer
-    containers:
-      entity-provider: !type:Container
+    contents:
+    - id: LightTube
+      amount: 8
+    - id: LightBulb
+      amount: 5
   - type: StaticPrice
     price: 100
-  - type: UserInterface
-    interfaces:
-      enum.LightReplacerUiKey.Key:
-        type: LightReplacerMenuBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      light_replacer_storage: !type:Container
   - type: Tag
     tags:
     - LightReplacer
 
 - type: entity
   parent: LightReplacer
-  id: LightReplacerFilled
-  suffix: Filled
+  id: LightReplacerEmpty
+  suffix: Empty
   components:
-  - type: EntityProvider
-    entityCounter:
-      LightTube: 8
-      LightBulb: 5
-
-# The following entities are solely used for sprites in the radial menu.
-- type: entity
-  id: EjectTubes
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/light_replacer.rsi
-    state: eject-tubes
-
-- type: entity
-  id: EjectBulbs
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/light_replacer.rsi
-    state: eject-bulbs
+  - type: LightReplacer
+    contents:
+    - id: LightTube
+      amount: 0
