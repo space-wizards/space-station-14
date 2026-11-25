@@ -21,7 +21,7 @@ public sealed partial class ResearchSystem
         Dirty(uid, component);
     }
 
-    private void OnServerShutdown(EntityUid uid, ResearchServerComponent component, ComponentShutdown args)
+    private void OnServerShutdown(EntityUid uid, ResearchServerComponent component, ref ComponentShutdown args)
     {
         foreach (var client in new List<EntityUid>(component.Clients))
         {

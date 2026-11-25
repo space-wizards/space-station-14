@@ -179,8 +179,9 @@
     Ethanol:
       amount: 5
   effects:
-    - !type:SpawnEntity
-      entity: ShardCrystalRandom
+  - !type:SpawnEntityTable
+    table: !type:NestedSelector
+      tableId: RandomCrystalShardTable
 
 - type: reaction
   id: Gunpowder

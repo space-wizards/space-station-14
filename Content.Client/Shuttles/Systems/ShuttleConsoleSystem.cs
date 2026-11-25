@@ -32,9 +32,9 @@ namespace Content.Client.Shuttles.Systems
             _input.Contexts.Remove("shuttle");
         }
 
-        protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
+        protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ref ComponentShutdown args)
         {
-            base.HandlePilotShutdown(uid, component, args);
+            base.HandlePilotShutdown(uid, component, ref args);
             if (_playerManager.LocalEntity != uid) return;
 
             _input.Contexts.SetActiveContext("human");

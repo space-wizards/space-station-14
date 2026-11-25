@@ -5,6 +5,7 @@
   recipes:
   - Bucket
   - Ashtray
+  - DrinkBottlePlasticSmall
   - DrinkMug
   - DrinkMugMetal
   - DrinkGlass

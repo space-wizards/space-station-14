@@ -152,6 +152,10 @@
       state: golem
   - type: ChangelingMostIdentitiesCondition
     requireDevour: true
+  - type: MultipleAntagsRequirement
+    antags:
+    - Changeling
+    - SpaceChangeling
 
 - type: entity
   parent: BaseChangelingObjective
@@ -165,3 +169,7 @@
       sprite: Mobs/Aliens/flesh.rsi
       state: golem
   - type: ChangelingMostIdentitiesCondition
+  - type: MultipleAntagsRequirement
+    antags:
+    - Changeling
+    - SpaceChangeling

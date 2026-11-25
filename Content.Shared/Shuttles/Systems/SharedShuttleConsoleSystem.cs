@@ -29,7 +29,7 @@ namespace Content.Shared.Shuttles.Systems
             }
         }
 
-        protected virtual void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
+        protected virtual void HandlePilotShutdown(EntityUid uid, PilotComponent component, ref ComponentShutdown args)
         {
             ActionBlockerSystem.UpdateCanMove(uid);
         }

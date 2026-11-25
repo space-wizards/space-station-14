@@ -40,7 +40,7 @@ public sealed partial class BlurryVisionSystem : EntitySystem
             _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnBlurryShutdown(EntityUid uid, BlurryVisionComponent component, ComponentShutdown args)
+    private void OnBlurryShutdown(EntityUid uid, BlurryVisionComponent component, ref ComponentShutdown args)
     {
         if (_player.LocalEntity == uid)
         {

@@ -168,11 +168,12 @@ public abstract partial class SharedStationTeleporterSystem : EntitySystem
         else
         {
             // We look for a portal from our “memory” and see if it's connected to anything. If not, we connect to it ourselves.
+            // Checks power on the remote portal to ensure it is a valid target.
             if (ent.Comp.LastLink is not null)
             {
                 if (_link.GetLink(ent.Comp.LastLink.Value, out _))
                     ent.Comp.LastLink = null;
-                else
+                else if (_power.IsPowered(ent.Comp.LastLink.Value))
                     _link.TryLink(ent, ent.Comp.LastLink.Value);
             }
         }

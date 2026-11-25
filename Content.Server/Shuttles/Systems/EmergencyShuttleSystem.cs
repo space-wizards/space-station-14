@@ -108,7 +108,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         _roundEndCancelToken = null;
     }
 
-    private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)
+    private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ref ComponentShutdown args)
     {
         ClearCentcomm(component);
     }
