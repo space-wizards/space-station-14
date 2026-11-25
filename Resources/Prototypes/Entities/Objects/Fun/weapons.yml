@@ -200,9 +200,11 @@
     size: Small
     sprite: Objects/Weapons/Melee/armblade.rsi
 
+# we need those to override the foamblade's icon and make it look like a regular armblade
 - type: entity
   parent: WeaponArcSlash
   id: WeaponArcSlashFoamblade
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/armblade.rsi
@@ -211,6 +213,7 @@
 - type: entity
   parent: WeaponArcThrust
   id: WeaponArcThrustFoamblade
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/armblade.rsi
