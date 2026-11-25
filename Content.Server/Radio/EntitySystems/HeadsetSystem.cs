@@ -49,12 +49,14 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
     {
-        if (args.Channel is null
-            || !TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            || !keys.Channels.Contains(args.Channel.ID))
-        {
+        if (args.Channel is null)
             return;
-        }
+
+        if (!TryComp(component.Headset, out EncryptionKeyHolderComponent? keys))
+            return;
+
+        if (!keys.Channels.Contains(args.Channel.ID))
+            return;
 
         if (args.Channel.ID == SharedChatSystem.CommonChannel
             && !_configurationManager.GetCVar(CCVars.ChatCommonRadioChannelAllowHeadset))
