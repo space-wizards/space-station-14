@@ -126,12 +126,12 @@ public sealed partial class MeleeWeaponComponent : Component
     public bool SwingBeverage = true;
 
     /// <summary>
-    /// Flips the sprite on the X axis if `SwingLeft` is true and `SwingFlip` is true.
+    /// Flips the sprite on the X axis if `SwingLeft` is true and `SwingFlipY` is true.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool SwingFlipX = false;
     /// <summary>
-    /// Flips the sprite on the Y axis if `SwingLeft` is true and `SwingFlip` is true.
+    /// Flips the sprite on the Y axis if `SwingLeft` is true and `SwingFlipY` is true.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool SwingFlipY = false;

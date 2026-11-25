@@ -189,9 +189,28 @@
     wideAnimationRotation: 90
     attackRate: 1
     swingFlipY: true
+    wideAnimation: WeaponArcSlashFoamblade
+    animation: WeaponArcThrustFoamblade
+    forceAnimationSprite: true
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/armblade.rsi
+
+- type: entity
+  parent: WeaponArcSlash
+  id: WeaponArcSlashFoamblade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/armblade.rsi
+    state: icon
+
+- type: entity
+  parent: WeaponArcThrust
+  id: WeaponArcThrustFoamblade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/armblade.rsi
+    state: icon
 
 - type: entity
   parent: [ BaseItem, BaseToySword ]
