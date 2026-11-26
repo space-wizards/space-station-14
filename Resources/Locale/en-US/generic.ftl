@@ -6,6 +6,7 @@ generic-article-an = an
 
 generic-and = and
 generic-or = or
+generic-and-or = and/or
 
 generic-unknown = unknown
 generic-unknown-title = Unknown

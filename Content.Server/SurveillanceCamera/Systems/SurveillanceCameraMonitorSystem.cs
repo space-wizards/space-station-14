@@ -185,7 +185,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnShutdown(EntityUid uid, SurveillanceCameraMonitorComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, SurveillanceCameraMonitorComponent component, ref ComponentShutdown args)
     {
         RemoveActiveCamera(uid, component);
     }

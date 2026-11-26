@@ -15,14 +15,14 @@ stack-reinforced-plasma-glass = reinforced plasma glass
 stack-reinforced-uranium-glass = reinforced uranium glass
 stack-gunpowder = gunpowder
 stack-cardboard = cardboard
+stack-cloth = cloth
+stack-silk = silk
+stack-cotton = cotton
+stack-durathread = durathread
 
 stack-bones = {$amount ->
     [1] bone
     *[other] bones
-}
-stack-cloth = {$amount ->
-    [1] cloth
-    *[other] cloths
 }
 stack-lv-cable = {$amount ->
     [1] lv cable
@@ -44,10 +44,6 @@ stack-wood-plank = {$amount ->
     [1] wood plank
     *[other] wood planks
 }
-stack-durathread = {$amount ->
-    [1] durathread
-    *[other] durathreads
-}
 stack-rods = {$amount ->
     [1] rod
     *[other] rods
@@ -67,14 +63,6 @@ stack-paper = {$amount ->
 stack-diamond = {$amount ->
     [1] diamond
     *[other] diamonds
-}
-stack-silk = {$amount ->
-    [1] silk
-    *[other] silks
-}
-stack-cotton = {$amount ->
-    [1] cotton
-    *[other] cottons
 }
 stack-artifact-fragment = artifact {$amount ->
     [1] fragment

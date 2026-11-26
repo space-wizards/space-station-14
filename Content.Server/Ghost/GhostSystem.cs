@@ -184,7 +184,7 @@ namespace Content.Server.Ghost
             Dirty(uid, component);
         }
 
-        private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
+        private void OnGhostShutdown(EntityUid uid, GhostComponent component, ref ComponentShutdown args)
         {
             // Perf: If the entity is deleting itself, no reason to change these back.
             if (Terminating(uid))

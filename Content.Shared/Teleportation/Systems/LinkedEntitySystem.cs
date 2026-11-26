@@ -21,7 +21,7 @@ public sealed partial class LinkedEntitySystem : EntitySystem
         SubscribeLocalEvent<LinkedEntityComponent, ComponentShutdown>(OnLinkShutdown);
     }
 
-    private void OnLinkShutdown(EntityUid uid, LinkedEntityComponent component, ComponentShutdown args)
+    private void OnLinkShutdown(EntityUid uid, LinkedEntityComponent component, ref ComponentShutdown args)
     {
         // Remove any links to this entity when deleted.
         foreach (var ent in component.LinkedEntities.ToArray())
