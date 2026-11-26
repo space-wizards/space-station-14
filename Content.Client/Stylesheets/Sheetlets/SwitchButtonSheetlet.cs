@@ -31,6 +31,13 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
                 .Prop(TextureRect.StylePropertyTexture, trackFillTex)
                 .Modulate(sheet.SecondaryPalette.BackgroundDark),
 
+            // The "on" fill is revealed by a clip as the thumb slides, so it's always coloured as on.
+            E<SwitchButton>()
+                .ParentOf(E<ClipControl>().Class(SwitchButton.StyleClassTrackFillOnClip))
+                .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassTrackFillOn))
+                .Prop(TextureRect.StylePropertyTexture, trackFillTex)
+                .Modulate(sheet.PositivePalette.Text),
+
             E<SwitchButton>()
                 .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassTrackOutline))
                 .Prop(TextureRect.StylePropertyTexture, trackOutlineTex)
@@ -56,11 +63,6 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
             // Pressed styles
             E<SwitchButton>()
                 .PseudoPressed()
-                .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassTrackFill))
-                .Modulate(sheet.PositivePalette.Text),
-
-            E<SwitchButton>()
-                .PseudoPressed()
                 .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassSymbol))
                 .Prop(TextureRect.StylePropertyTexture, symbolOnTex)
                 .Modulate(Color.White), // Same color as text, not yet in any of the palettes
@@ -80,6 +82,12 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
                 .PseudoDisabled()
                 .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassTrackFill))
                 .Modulate(sheet.SecondaryPalette.DisabledElement),
+
+            E<SwitchButton>()
+                .PseudoDisabled()
+                .ParentOf(E<ClipControl>().Class(SwitchButton.StyleClassTrackFillOnClip))
+                .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassTrackFillOn))
+                .Modulate(sheet.PositivePalette.DisabledElement),
 
             E<SwitchButton>()
                 .PseudoDisabled()
@@ -109,12 +117,6 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
             // Both pressed & disabled styles
             // Note that some of the pressed-only and disabled-only styles do not conflict
             // and will also be used
-            E<SwitchButton>()
-                .PseudoPressed()
-                .PseudoDisabled()
-                .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassTrackFill))
-                .Modulate(sheet.PositivePalette.DisabledElement),
-
             E<SwitchButton>()
                 .PseudoPressed()
                 .PseudoDisabled()
