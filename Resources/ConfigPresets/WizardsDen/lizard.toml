@@ -2,7 +2,7 @@
 
 [game]
 hostname = "[EN][LRP][Nightly] Wizard's Den Lizard [NA West]"
-desc = "Official English server for Space Station 14. Low roleplay ruleset. This server runs a nightly build of the game containing the newest changes; these changes may be experimental or unstable, and may be reverted before the next stable release. Please report bugs on our GitHub, forum, or community Discord."
+desc = "Vanilla English server for Space Station 14. Low roleplay ruleset. This server runs a nightly build of the game containing the newest changes; these changes may be experimental or unstable, and may be reverted before the next stable release. Please report bugs on our GitHub, forum, or community Discord."
 panic_bunker.enabled = false
 panic_bunker.disable_with_admins = false
 panic_bunker.enable_without_admins = false

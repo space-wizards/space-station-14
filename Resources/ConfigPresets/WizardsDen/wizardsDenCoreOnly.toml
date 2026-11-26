@@ -7,7 +7,7 @@
 [game]
 soft_max_players = 50
 hostname = "[EN] Wizard's Den Red Firefly [US East]"
-desc = "Official English Space Station 14 servers. Vanilla, core ruleset."
+desc = "Vanilla English server for Space Station 14. Core ruleset only."
 panic_bunker.min_overall_minutes = 15
 
 [server]
