@@ -153,6 +153,7 @@ figurines-security-9 = Whenever I get bored I use the clown as target practice.
 figurines-security-10 = Yes, I shot the clown. No, I don't regret it.
 figurines-security-11 = You have two rights: to remain silent and to cry about it.
 figurines-security-12 = You have violated article 1984.
+figurines-security-13 = WARDLOOSE!!
 
 figurines-warden-1 = Brig is my home. My home is brig. My brig is home. Stop, what?
 figurines-warden-2 = Brig is spaced!

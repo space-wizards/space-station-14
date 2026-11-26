@@ -74,7 +74,7 @@
   id: FigurinesSecurity
   values:
     prefix: figurines-security-
-    count: 12
+    count: 13
 
 - type: localizedDataset
   id: FigurinesLawyer
