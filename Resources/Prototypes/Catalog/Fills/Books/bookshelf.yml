@@ -62,6 +62,7 @@
     - id: BookTruth
     - id: BookWatched
     - id: BookWorld
+    - id: BookCommunistManifesto
 
 - type: entityTable
   id: RandomGuidebookTable

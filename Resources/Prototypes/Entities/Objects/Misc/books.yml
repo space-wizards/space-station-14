@@ -513,3 +513,18 @@
       color: gold
   - type: Paper
     content: book-text-atmos-vents
+
+- type: entity
+  id: BookCommunistManifesto
+  name: communist manifesto
+  parent: [BookBase, BaseMajorContraband] # it is contra because NT is an evil capitalist company
+  description: "Remove the mask of humanity from Capital."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
+  - type: Paper
+    content: book-text-communist-manifesto
