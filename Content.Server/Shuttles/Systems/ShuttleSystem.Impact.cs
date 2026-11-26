@@ -148,7 +148,7 @@ public sealed partial class ShuttleSystem
             var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(volume);
             _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
 
-            // if we're not enabled or both grids are immune to damageing collisions, stop after playing sound
+            // if we're not enabled or both grids are immune to damaging collisions, stop after playing sound
             if (!_enabled || selfImmune && otherImmune)
                 continue;
 
