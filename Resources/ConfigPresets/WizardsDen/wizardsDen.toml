@@ -61,3 +61,6 @@ privacy_policy_version = "2025-01-19"
 
 [feedback]
 valid_origins = "wizden"
+
+[res]
+validate_prototype_upload = false

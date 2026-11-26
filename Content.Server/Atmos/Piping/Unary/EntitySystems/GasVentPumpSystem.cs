@@ -2,8 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.DeviceLinking.Systems;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.EntitySystems;
@@ -18,6 +17,7 @@ using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
@@ -378,7 +378,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGetVerbs(Entity<GasVentPumpComponent> ent, ref GetVerbsEvent<Verb> args)
         {
-            if (ent.Comp.UnderPressureLockout == false || !Transform(ent).Anchored)
+            if (ent.Comp.UnderPressureLockout == false || !Transform(ent).Anchored || args.Hands == null)
                 return;
 
             var user = args.User;

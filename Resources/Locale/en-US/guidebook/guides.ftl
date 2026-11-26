@@ -42,6 +42,7 @@ guide-entry-deltapressure = Delta Pressure
 guide-entry-atmostools = Atmos Tools
 guide-entry-gasses = Gasses
 guide-entry-botany = Botany
+guide-entry-plants = Plants
 guide-entry-shuttle-craft = Shuttle-craft
 guide-entry-networking = Networking
 guide-entry-access-configurator = Access Configurator
@@ -93,6 +94,7 @@ guide-entry-defusal = Large Bomb Defusal
 guide-entry-criminal-records = Criminal Records
 guide-entry-command = Command
 guide-entry-service = Service
+guide-entry-civilian = Civilian
 
 guide-entry-newplayer = New? Start here!
 guide-entry-charactercreation = Creating Characters

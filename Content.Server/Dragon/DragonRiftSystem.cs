@@ -2,11 +2,11 @@ using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.NPC;
 using Content.Server.NPC.Systems;
-using Content.Server.Pinpointer;
 using Content.Shared.Damage.Components;
 using Content.Shared.Dragon;
 using Content.Shared.EntityTable;
 using Content.Shared.Examine;
+using Content.Shared.Pinpointer;
 using Content.Shared.Sprite;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
@@ -123,7 +123,7 @@ public sealed partial class DragonRiftSystem : EntitySystem
         }
     }
 
-    private void OnShutdown(EntityUid uid, DragonRiftComponent comp, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, DragonRiftComponent comp, ref ComponentShutdown args)
     {
         if (!TryComp<DragonComponent>(comp.Dragon, out var dragon) || dragon.Weakened)
             return;

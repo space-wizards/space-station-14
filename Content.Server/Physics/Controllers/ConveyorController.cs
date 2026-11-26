@@ -1,8 +1,8 @@
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
 using Content.Shared.Conveyor;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Destructible;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
@@ -50,7 +50,7 @@ public sealed partial class ConveyorController : SharedConveyorController
         }
     }
 
-    private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
+    private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ref ComponentShutdown args)
     {
         if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;

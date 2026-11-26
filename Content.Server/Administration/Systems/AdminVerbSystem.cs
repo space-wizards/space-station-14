@@ -54,7 +54,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private EuiManager _euiManager = default!;
         [Dependency] private GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private PrayerSystem _prayerSystem = default!;
+        [Dependency] private ServerPrayerSystem _prayerSystem = default!;
         [Dependency] private MindSystem _mindSystem = default!;
         [Dependency] private ToolshedManager _toolshed = default!;
         [Dependency] private RejuvenateSystem _rejuvenate = default!;

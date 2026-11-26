@@ -18,6 +18,7 @@
     # ^ should probably add better validation that the clicked location is on the users screen somewhere,
     repeat: false
     checkCanAccess: false
+    checkCanSee: true
   - type: WorldTargetAction
     event: !type:TeleportActionEvent
 

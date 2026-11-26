@@ -4,7 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.Power;
 using Content.Shared.Station.Components;
 using Robust.Shared.Random;

@@ -43,10 +43,10 @@
     - Hypospray
     - BeakerSmallBruiz
     - BeakerSmallLace
-    - JugPunctTranex
-    - JugPyraDerma
-    - JugDexPlusSaline # End of first line
-    - JugTrico
+    - BluespaceBeakerPunctTranex
+    - BluespaceBeakerPyraDerma
+    - BluespaceBeakerDexPlusSaline # End of first line
+    - BluespaceBeakerTrico
     - BeakerSmallArith
     - BeakerSmallDiph
     - BeakerSmallSigy
@@ -69,16 +69,15 @@
   storage:
     back:
     - Hypospray
-    - JugPunctTranex
-    - JugPyraDerma
-    - JugDexPlusSaline
-    - JugTrico # End of first line
+    - BluespaceBeakerPunctTranex
+    - BluespaceBeakerPyraDerma
+    - BluespaceBeakerDexPlusSaline
+    - BluespaceBeakerTrico # End of first line
     - BeakerSmallArith
     - DefibrillatorCompact
     - MedkitCombatFilled
     - ClothingEyesGlassesChemical
     - ChemistryBottleOmnizine
-    - Truncheon
     belt:
     - Zipties
     - CrowbarRed
@@ -86,6 +85,7 @@
     - MagazineRifle
     - MagazineRifleIncendiary
     - MagazineRifleUranium # End of first line
+    - Stunbaton
     - Zipties
 
 - type: chameleonOutfit

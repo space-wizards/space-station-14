@@ -73,7 +73,7 @@ namespace Content.Server.NPC.Systems
             WakeNPC(uid, component);
         }
 
-        public void OnNPCShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
+        public void OnNPCShutdown(EntityUid uid, HTNComponent component, ref ComponentShutdown args)
         {
             SleepNPC(uid, component);
         }

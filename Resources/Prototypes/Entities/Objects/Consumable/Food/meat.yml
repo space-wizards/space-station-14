@@ -1759,7 +1759,7 @@
     node: cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: MeatCutlet
+      Burger: MeatCutletBurger
       Taco: MeatCutlet
   - type: Item
     storedOffset: -1,1
@@ -1839,7 +1839,7 @@
     node: chicken cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: ChickenCutlet
+      Burger: ChickenCutletBurger
       Taco: ChickenCutlet
   - type: Item
     storedOffset: -1,1
@@ -1865,7 +1865,7 @@
     node: duck cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: DuckCutlet
+      Burger: DuckCutletBurger
       Taco: DuckCutlet
   - type: Item
     storedOffset: -1,1
@@ -1942,7 +1942,7 @@
     node: xeno cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: XenoCutlet
+      Burger: XenoCutletBurger
       Taco: XenoCutlet
   - type: Item
     storedOffset: -1,1
@@ -1976,7 +1976,7 @@
     node: dragon cutlet
   - type: FoodSequenceElement
     entries:
-      Burger: DragonCutlet
+      Burger: DragonCutletBurger
       Taco: DragonCutlet
   - type: Item
     storedOffset: -1,1

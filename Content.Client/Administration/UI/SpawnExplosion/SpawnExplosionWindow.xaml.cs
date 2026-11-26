@@ -69,6 +69,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
 
     protected override void EnteredTree()
     {
+        base.EnteredTree();
         SetLocation();
         UpdateExplosionTypeOptions();
     }

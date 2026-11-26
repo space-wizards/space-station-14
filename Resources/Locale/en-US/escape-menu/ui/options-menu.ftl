@@ -89,6 +89,7 @@ ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
 ui-options-hud-theme-minimalist = Minimalist
 ui-options-hud-theme-ashen = Ashen
+ui-options-hud-theme-trasen = Trasen-Knox
 ui-options-hud-layout-default = Default
 ui-options-hud-layout-separated = Separated
 ui-options-vp-stretch = Stretch viewport to fit game window
@@ -403,6 +404,9 @@ ui-options-chat-window-opacity = Chat window opacity
 ui-options-speech-bubble-text-opacity = Speech bubble text opacity
 ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
 ui-options-speech-bubble-background-opacity = Speech bubble background opacity
+ui-options-chat-preview = Show chat preview bubbles when typing
+ui-options-preview-bubble-background-opacity = Preview bubble background opacity
+ui-options-vacuum-overlay-intensity = Vacuum overlay intensity
 
 ui-options-censor-nudity = Censor character nudity
 

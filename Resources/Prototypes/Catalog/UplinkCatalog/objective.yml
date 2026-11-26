@@ -1,7 +1,7 @@
 # Objective
 
 - type: listing
-  id: uplinkHijackBeacon
+  id: UplinkHijackBeacon
   name: uplink-hijack-beacon-name
   description: uplink-hijack-beacon-desc
   productEntity: HijackBeacon

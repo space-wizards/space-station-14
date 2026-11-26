@@ -17,10 +17,10 @@
     program: 66
   - type: SwappableInstrument
     instrumentList:
-      "Soprano": {64: 0}
-      "Alto": {65: 0}
-      "Tenor": {66: 0}
-      "Baritone": {67: 0}
+      swappable-instrument-style-soprano: {64: 0}
+      swappable-instrument-style-alto: {65: 0}
+      swappable-instrument-style-tenor: {66: 0}
+      swappable-instrument-style-baritone: {67: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
   - type: Extractable

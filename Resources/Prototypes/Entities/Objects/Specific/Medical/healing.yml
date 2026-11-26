@@ -359,6 +359,45 @@
 
 - type: entity
   parent: BaseHealingItem
+  id: DragonTailCompress
+  name: dragon's tail compress
+  description: A soothing salve extracted from dragon's tail plants. Used to treat heat and cold burns.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+    state: cream
+  - type: Item
+    storedRotation: 90
+    storedOffset: 4, 0
+    storedSprite:
+      sprite: Objects/Specific/Hydroponics/dragon_tail.rsi
+      state: cream
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      types:
+        Heat: -10
+        Cold: -10
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+  - type: Stack
+    stackType: DragonTailCompress
+    count: 10
+
+- type: entity
+  parent: BaseHealingItem
   id: HealingToolbox
   name: healing toolbox
   description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
