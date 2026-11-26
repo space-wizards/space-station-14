@@ -6,7 +6,7 @@ namespace Content.Shared.Botany.Events;
 /// Event of plant growing ticking.
 /// </summary>
 [ByRefEvent]
-public readonly record struct PlantGrowEvent(EntityUid Tray);
+public readonly record struct PlantGrowEvent(EntityUid Tray, bool ForceUpdate);
 
 /// <summary>
 /// Event raised when a harvest is attempted. Cancel to prevent the harvest.
