@@ -10,6 +10,19 @@
     - state: ratKingArmy
   - type: Action
     useDelay: 4
+  - type: ActionRequirements
+    failPopup: rat-king-too-hungry
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        min: 25
+        minInclusive: true
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Hunger
+        factor: -25
   - type: InstantAction
     event: !type:RatKingRaiseArmyActionEvent
 
@@ -25,6 +38,19 @@
     - state: ratKingDomain
   - type: Action
     useDelay: 6
+  - type: ActionRequirements
+    failPopup: rat-king-too-hungry
+    conditions:
+      Performer:
+      - !type:SatiationCondition
+        satiationType: Hunger
+        min: 50
+        minInclusive: true
+    effects:
+      Performer:
+      - !type:Satiate
+        satiationType: Hunger
+        factor: -50
   - type: InstantAction
     event: !type:RatKingDomainActionEvent
 
@@ -43,6 +69,7 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
     useDelay: 1
     priority: 5
   - type: InstantAction
@@ -64,6 +91,8 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
+    toggled: true
     useDelay: 1
     priority: 6
   - type: InstantAction
@@ -85,6 +114,7 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
     useDelay: 1
     priority: 7
   - type: InstantAction
@@ -106,9 +136,9 @@
       map: [ "enum.ActionVisuals.IconToggled" ]
       visible: false
   - type: Action
+    startDelay: true
     useDelay: 1
     priority: 8
   - type: InstantAction
-    event:
-      !type:RatKingOrderActionEvent
+    event: !type:RatKingOrderActionEvent
       type: Loose

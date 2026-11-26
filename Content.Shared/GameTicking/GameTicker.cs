@@ -216,6 +216,9 @@ public sealed partial class RoundEndMessageEvent : EntityEventArgs
         [DataField]
         public bool Observer;
 
+        [DataField]
+        public bool Familiar;
+
         public bool Connected;
     }
 

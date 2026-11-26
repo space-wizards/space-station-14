@@ -26,6 +26,8 @@
     solution: tank
   - type: ExaminableSolution
     solution: tank
+  - type: DrawableSolution
+    solution: tank
   - type: ItemMapper
     mapLayers:
       mopbucket_shark_blue:
@@ -274,6 +276,8 @@
   - type: RefillableSolution
     solution: tank
   - type: ExaminableSolution
+    solution: tank
+  - type: DrawableSolution
     solution: tank
   - type: Damageable
     damageModifierSet: PlasticMod

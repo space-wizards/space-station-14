@@ -9,13 +9,26 @@
     - id: CrystalCyan
     - id: CrystalYellow
     - id: CrystalBlack
-    - id: CrystalGrey
+    - id: CrystalGrey # Red crystal :o)
+
+- type: entityTable
+  id: RandomCrystalShardTable
+  table: !type:GroupSelector
+    children:
+    - id: ShardCrystalCyan
+    - id: ShardCrystalBlue
+    - id: ShardCrystalYellow
+    - id: ShardCrystalOrange
+    - id: ShardCrystalBlack
+    - id: ShardCrystalPink
+    - id: ShardCrystalGreen
+    - id: ShardCrystalRed
 
 - type: entity
+  parent: MarkerBase
+  id: CrystalSpawner
   name: Crystal Spawner
   suffix: 70%
-  id: CrystalSpawner
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
@@ -26,3 +39,18 @@
     table: !type:NestedSelector
       tableId: RandomCrystalTable
       prob: 0.7
+
+- type: entity
+  parent: MarkerBase
+  id: CrystalShardSpawner
+  name: Crystal Spawner
+  suffix: 100%
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Materials/Shards/crystal-shard.rsi
+      state: shard3
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomCrystalShardTable

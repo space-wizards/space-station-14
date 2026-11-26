@@ -1,20 +1,26 @@
+#nullable enable
 using System.Linq;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Shared.DoAfter;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class CraftingTests : InteractionTest
 {
-    public const string ShardGlass = "ShardGlass";
-    public const string Spear = "Spear";
+    private static readonly EntProtoId ShardGlass = "ShardGlass";
+    private static readonly EntProtoId Spear = "Spear";
+    private static readonly EntProtoId ModularGrenade = "ModularGrenade";
+    private static readonly ProtoId<ConstructionPrototype> ModularGrenadeRecipe = "ModularGrenadeRecipe";
 
     /// <summary>
     /// Craft a simple instant recipe
     /// </summary>
     [Test]
+    [Description("Tries to craft metal rods - a simple, instant recipe.")]
     public async Task CraftRods()
     {
         await PlaceInHands(Steel);
@@ -26,17 +32,19 @@ public sealed class CraftingTests : InteractionTest
     /// Craft a simple recipe with a DoAfter
     /// </summary>
     [Test]
+    [Description("Tries to craft a grenade - a simple recipe with a doafter.")]
     public async Task CraftGrenade()
     {
         await PlaceInHands(Steel, 5);
-        await CraftItem("ModularGrenadeRecipe");
-        await FindEntity("ModularGrenade");
+        await CraftItem(ModularGrenadeRecipe);
+        await FindEntity(ModularGrenade);
     }
 
     /// <summary>
     /// Craft a complex recipe (more than one ingredient).
     /// </summary>
     [Test]
+    [Description("Tries to craft a spear - a recipe with multiple ingredients.")]
     public async Task CraftSpear()
     {
         // Spawn a full tack of rods in the user's hands.
@@ -66,6 +74,7 @@ public sealed class CraftingTests : InteractionTest
     /// Cancel crafting a complex recipe.
     /// </summary>
     [Test]
+    [Description("Tests cancelling a complex recipe.")]
     public async Task CancelCraft()
     {
         var serverTargetCoords = SEntMan.GetCoordinates(TargetCoords);
@@ -73,17 +82,17 @@ public sealed class CraftingTests : InteractionTest
         var wires = await SpawnEntity((Cable, 10), serverTargetCoords);
         var shard = await SpawnEntity(ShardGlass, serverTargetCoords);
 
-        var rodStack = SEntMan.GetComponent<StackComponent>(rods);
-        var wireStack = SEntMan.GetComponent<StackComponent>(wires);
+        var rodStack = SComp<StackComponent>(rods);
+        var wireStack = SComp<StackComponent>(wires);
 
         await RunTicks(5);
         var sys = SEntMan.System<SharedContainerSystem>();
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(sys.IsEntityInContainer(rods), Is.False);
             Assert.That(sys.IsEntityInContainer(wires), Is.False);
             Assert.That(sys.IsEntityInContainer(shard), Is.False);
-        });
+        }
 
 #pragma warning disable CS4014 // Legacy construction code uses DoAfterAwait. If we await it we will be waiting forever.
         await Server.WaitPost(() => SConstruction.TryStartItemConstruction(Spear, SEntMan.GetEntity(Player)));
@@ -126,6 +135,6 @@ public sealed class CraftingTests : InteractionTest
         await FindEntity(Spear);
         Assert.That(sys.IsEntityInContainer(rods), Is.False);
         Assert.That(sys.IsEntityInContainer(wires), Is.False);
-        Assert.That(SEntMan.Deleted(shard));
+        Assert.That(shard, Is.Deleted(Server));
     }
 }
