@@ -1,36 +1,21 @@
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
-using Content.Shared.Access.Systems;
-using Content.Shared.Administration.Logs;
 using Content.Shared.APC;
-using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
-using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems;
 
-/// <summary>
-/// A system for interactions with APCs.
-/// APCs are wall-mounted battery banks and breakers for stepping down MV to LV power.
-/// </summary>
-/// <seealso cref="ApcComponent"/>
-public sealed partial class ApcSystem : EntitySystem
+/// <inheritdoc/>
+public sealed partial class ServerApcSystem : ApcSystem
 {
-    [Dependency] private AccessReaderSystem _accessReader = default!;
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private EmagSystem _emag = default!;
-    [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
     /// <inheritdoc />
@@ -66,7 +51,7 @@ public sealed partial class ApcSystem : EntitySystem
                 else if (curTime - apc.TripStartTime > apc.TripTime)
                 {
                     apc.TripFlag = true;
-                    ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
+                    ApcToggleBreaker((uid, apc)); // off, we already checked MainBreakerEnabled above
                     apc.NeedStateUpdate = true; // Force an update.
                     tripped = true;
                 }
@@ -114,29 +99,6 @@ public sealed partial class ApcSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnToggleMainBreaker(Entity<ApcComponent> ent, ref ApcToggleMainBreakerMessage args)
-    {
-        var attemptEv = new ApcToggleMainBreakerAttemptEvent();
-        RaiseLocalEvent(ent, ref attemptEv);
-        if (attemptEv.Cancelled)
-        {
-            _popup.PopupCursor(Loc.GetString("apc-component-on-toggle-cancel"),
-                args.Actor, PopupType.Medium);
-            return;
-        }
-
-        if (_accessReader.IsAllowed(args.Actor, ent))
-        {
-            ApcToggleBreaker(ent, ent.Comp, user: args.Actor);
-        }
-        else
-        {
-            _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                args.Actor, PopupType.Medium);
-        }
-    }
-
-    [SubscribeLocalEvent]
     private void OnEmagged(Entity<ApcComponent> ent, ref GotEmaggedEvent args)
     {
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
@@ -148,8 +110,7 @@ public sealed partial class ApcSystem : EntitySystem
         args.Handled = true;
     }
 
-    // TODO: This subscription should be in shared.
-    // But I am not moving ApcComponent to shared, this PR already got soaped enough and that component uses several layers of OOP.
+    // TODO: This subscription should be in shared now that ApcComponent is.
     // At least the EMP visuals won't mispredict, since all APCs also have the BatteryComponent, which also has a EMP effect and is in shared.
     [SubscribeLocalEvent]
     private void OnEmpPulse(Entity<ApcComponent> ent, ref EmpPulseEvent args)
@@ -158,42 +119,26 @@ public sealed partial class ApcSystem : EntitySystem
         {
             args.Affected = true;
             args.Disabled = true;
-            ApcToggleBreaker(ent, ent.Comp);
+            ApcToggleBreaker(ent.AsNullable());
         }
     }
     #endregion Event Handlers
 
     #region Public API
-    /// <summary>
-    /// Toggles the enabled state of the APC's main breaker.
-    /// </summary>
-    public void ApcToggleBreaker(
-        EntityUid uid,
-        ApcComponent? apc = null,
-        PowerNetworkBatteryComponent? battery = null,
-        EntityUid? user = null)
+    protected override void BreakerToggled(Entity<ApcComponent> ent)
     {
-        if (!Resolve(uid, ref apc, ref battery))
+        if (!TryComp(ent, out PowerNetworkBatteryComponent? battery))
             return;
 
-        apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
-        battery.CanDischarge = apc.MainBreakerEnabled;
+        battery.CanDischarge = ent.Comp.MainBreakerEnabled;
 
-        if (apc.MainBreakerEnabled)
-            apc.TripFlag = false;
+        UpdateApcState(ent, ent.Comp, battery);
+        UpdateUIState(ent, ent.Comp, battery);
+    }
 
-        UpdateApcState(uid, apc, battery);
-        UpdateUIState(uid, apc);
-
-        var audioParams = (apc.OnReceiveMessageSound?.Params ?? AudioParams.Default).AddVolume(-2f);
-        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, audioParams);
-
-        if (user != null)
-        {
-            var humanReadableState = apc.MainBreakerEnabled ? "Enabled" : "Disabled";
-            _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium,
-                $"{ToPrettyString(user):user} set the main breaker state of {ToPrettyString(uid):entity} to {humanReadableState:state}.");
-        }
+    protected override void UpdateUI(Entity<ApcComponent> ent)
+    {
+        UpdateUIState(ent, ent.Comp);
     }
 
     /// <summary>
@@ -254,8 +199,8 @@ public sealed partial class ApcSystem : EntitySystem
         // TODO: Fix ContentHelpers or make a new one coz this is cooked.
         var charge = ContentHelpers.RoundToNearestLevels(battery.CurrentStorage / battery.Capacity, 1.0, 100 / chargeAccuracy) / 100f * chargeAccuracy;
 
-        var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled,
-            (int)MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
+        var state = new ApcBoundInterfaceState((int)MathF.Ceiling(battery.CurrentSupply),
+            apc.LastExternalState,
             charge,
             apc.MaxLoad,
             apc.TripFlag);
@@ -310,9 +255,3 @@ public sealed partial class ApcSystem : EntitySystem
     }
     #endregion Internal
 }
-
-/// <summary>
-/// A cancellable event raised to check if the main breaker of an APC can be toggled.
-/// </summary>
-[ByRefEvent]
-public record struct ApcToggleMainBreakerAttemptEvent(bool Cancelled);

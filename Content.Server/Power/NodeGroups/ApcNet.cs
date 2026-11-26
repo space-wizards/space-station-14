@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.APC;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using JetBrains.Annotations;
@@ -11,10 +13,6 @@ namespace Content.Server.Power.NodeGroups
 {
     public interface IApcNet : IBasePowerNet
     {
-        void AddApc(EntityUid uid, ApcComponent apc);
-
-        void RemoveApc(EntityUid uid, ApcComponent apc);
-
         void AddPowerProvider(ApcPowerProviderComponent provider);
 
         void RemovePowerProvider(ApcPowerProviderComponent provider);
@@ -26,8 +24,13 @@ namespace Content.Server.Power.NodeGroups
     [UsedImplicitly]
     public sealed partial class ApcNet : BasePowerNet<IApcNet>, IApcNet
     {
-        [ViewVariables] public readonly List<ApcComponent> Apcs = new();
         [ViewVariables] public readonly List<ApcPowerProviderComponent> Providers = new();
+
+        /// <summary>
+        /// Batteries of the APCs on this net. APCs discharge into the net through their power provider,
+        /// so these are cached when that provider joins or leaves.
+        /// </summary>
+        [ViewVariables] public readonly List<PowerNetworkBatteryComponent> Apcs = new();
 
         //Debug property
         [ViewVariables] private int TotalReceivers => Providers.Sum(provider => provider.LinkedReceivers.Count);
@@ -49,27 +52,15 @@ namespace Content.Server.Power.NodeGroups
             PowerNetSystem?.DestroyApcNet(this);
         }
 
-        public void AddApc(EntityUid uid, ApcComponent apc)
-        {
-            if (EntMan.TryGetComponent(uid, out PowerNetworkBatteryComponent? netBattery))
-                netBattery.NetworkBattery.LinkedNetworkDischarging = default;
-
-            QueueNetworkReconnect();
-            Apcs.Add(apc);
-        }
-
-        public void RemoveApc(EntityUid uid, ApcComponent apc)
-        {
-            if (EntMan.TryGetComponent(uid, out PowerNetworkBatteryComponent? netBattery))
-                netBattery.NetworkBattery.LinkedNetworkDischarging = default;
-
-            QueueNetworkReconnect();
-            Apcs.Remove(apc);
-        }
-
         public void AddPowerProvider(ApcPowerProviderComponent provider)
         {
             Providers.Add(provider);
+
+            if (TryGetApcBattery(provider.Owner, out var netBattery))
+            {
+                netBattery.NetworkBattery.LinkedNetworkDischarging = default;
+                Apcs.Add(netBattery);
+            }
 
             QueueNetworkReconnect();
         }
@@ -78,7 +69,19 @@ namespace Content.Server.Power.NodeGroups
         {
             Providers.Remove(provider);
 
+            if (TryGetApcBattery(provider.Owner, out var netBattery))
+            {
+                netBattery.NetworkBattery.LinkedNetworkDischarging = default;
+                Apcs.Remove(netBattery);
+            }
+
             QueueNetworkReconnect();
+        }
+
+        private bool TryGetApcBattery(EntityUid uid, [NotNullWhen(true)] out PowerNetworkBatteryComponent? netBattery)
+        {
+            netBattery = null;
+            return EntMan.HasComponent<ApcComponent>(uid) && EntMan.TryGetComponent(uid, out netBattery);
         }
 
         public override void QueueNetworkReconnect()

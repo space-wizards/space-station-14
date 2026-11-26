@@ -6,6 +6,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.APC;
 using Content.Shared.Maps;
 using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
