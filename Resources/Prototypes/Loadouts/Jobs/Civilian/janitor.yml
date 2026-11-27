@@ -1,12 +1,3 @@
-- type: loadoutEffectGroup
-  id: SeniorJanitorial
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobJanitor
-      time: 52h # 1 hour per week for 1 year
-
 # Head
 - type: loadout
   id: JanitorHead
@@ -45,3 +36,13 @@
   id: JanitorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterJani
+
+# Job trinkets
+- type: loadout
+  id: JanitorGoldenPlunger
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: JanitorCapstone
+  storage:
+    back:
+    - GoldenPlunger
