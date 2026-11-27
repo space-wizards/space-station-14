@@ -1,0 +1,170 @@
+- type: roleLoadout
+  id: JobBartender
+  groups:
+  - GroupTankHarness
+  - BartenderHead
+  - CommonEyewear
+  - CommonBackpack
+  - BartenderJumpsuit
+  - BartenderOuterClothing
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  - BartenderJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobBotanist
+  groups:
+  - GroupTankHarness
+  - BotanistHead
+  - CommonEyewear
+  - BotanistBackpack
+  - BotanistJumpsuit
+  - BotanistOuterClothing
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- BotanistJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobChaplain
+  canCustomizeName: true
+  groups:
+  - GroupTankHarness
+  - ChaplainHead
+  - CommonEyewear
+  - ChaplainMask
+  - CommonBackpack
+  - ChaplainJumpsuit
+  - ChaplainOuterClothing
+  - ChaplainNeck
+  - ChaplainShoes
+  - ChaplainBible
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- ChaplainJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobChef
+  groups:
+  - GroupTankHarness
+  - ChefHead
+  - CommonEyewear
+  - ChefMask
+  - CommonBackpack
+  - ChefJumpsuit
+  - ChefOuterClothing
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- ChefJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobClown
+  canCustomizeName: true
+  groups:
+  - GroupTankHarness
+  - ClownHead
+  - CommonEyewear
+  - ClownBackpack
+  - ClownJumpsuit
+  - ClownOuterClothing
+  - ClownShoes
+  - CommonAssistiveItems
+  - SurvivalClown
+  - CommonTrinkets
+  - ClownJobTrinkets
+
+- type: roleLoadout
+  id: JobJanitor
+  groups:
+  - GroupTankHarness
+  - JanitorHead
+  - CommonEyewear
+  - CommonBackpack
+  - JanitorJumpsuit
+  - JanitorOuterClothing
+  - JanitorGloves
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  - JanitorJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobLawyer
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - CommonBackpack
+  - LawyerJumpsuit
+  - LawyerNeck
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- LawyerJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobLibrarian
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - CommonBackpack
+  - LibrarianJumpsuit
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- LibrarianJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobMime
+  canCustomizeName: true
+  groups:
+  - GroupTankHarness
+  - MimeHead
+  - CommonEyewear
+  - MimeMask
+  - MimeBackpack
+  - MimeBelt
+  - MimeJumpsuit
+  - MimeOuterClothing
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- MimeJobTrinkets
+
+- type: roleLoadout
+  id: JobMusician
+  canCustomizeName: true
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - CommonBackpack
+  - MusicianJumpsuit
+  - MusicianOuterClothing
+  - MusicianInstruments
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- MusicianJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobServiceWorker
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - CommonBackpack
+  - BartenderJumpsuit # currently lacks a unique uniform
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- ServiceWorkerJobTrinkets
+  - GroupSpeciesBreathTool

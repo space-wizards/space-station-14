@@ -1,0 +1,88 @@
+# Captain
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: CaptainHead
+  loadouts:
+  - CaptainHead
+  - CaptainCap
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: CaptainBackpack
+  loadouts:
+  - CaptainBackpack
+  - CaptainSatchel
+  - CaptainDuffel
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: CaptainJumpsuit
+  loadouts:
+  - CaptainJumpsuit
+  - CaptainJumpskirt
+  - CaptainFormalSuit
+  - CaptainFormalSkirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: CaptainOuterClothing
+  minLimit: 1
+  loadouts:
+  - CaptainOuterClothing
+  - CaptainWintercoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: CaptainNeck
+  loadouts:
+  - CaptainCloak
+  - CaptainCloakFormal
+  - CaptainMantle
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: CaptainJobTrinkets
+#  loadouts: []
+
+# Head of Personnel
+
+- type: loadoutGroup
+  parent: BaseHead
+  id: HoPHead
+  loadouts:
+  - HoPHead
+
+- type: loadoutGroup
+  parent: BaseBackpack
+  id: HoPBackpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - HoPBackpackIan
+
+- type: loadoutGroup
+  parent: BaseJumpsuit
+  id: HoPJumpsuit
+  loadouts:
+  - HoPJumpsuit
+  - HoPJumpskirt
+
+- type: loadoutGroup
+  parent: BaseOuterClothing
+  id: HoPOuterClothing
+  loadouts:
+  - HoPWintercoat
+
+- type: loadoutGroup
+  parent: BaseNeck
+  id: HoPNeck
+  loadouts:
+  - HoPCloak
+  - HoPMantle
+
+#- type: loadoutGroup
+#  parent: BaseJobTrinkets
+#  id: HoPJobTrinkets
+#  loadouts: []

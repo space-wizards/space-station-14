@@ -1,0 +1,47 @@
+- type: roleLoadout
+  id: JobQuartermaster
+  groups:
+  - GroupTankHarness
+  - QuartermasterHead
+  - CommonEyewear
+  - CargoBackpack
+  - QuartermasterJumpsuit
+  - QuartermasterOuterClothing
+  - QuartermasterNeck
+  - QuartermasterShoes
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- QuartermasterJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobCargoTechnician
+  groups:
+  - GroupTankHarness
+  - CargoTechnicianHead
+  - CommonEyewear
+  - CargoBackpack
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
+  - CargoTechnicianPDA
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- CargoTechnicianJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobSalvageSpecialist
+  groups:
+  - GroupTankHarness
+  - CommonEyewear
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistOuterClothing
+  - SalvageSpecialistShoes
+  - CommonAssistiveItems
+  - Survival
+  - CommonTrinkets
+  #- SalvageSpecialistJobTrinkets
+  - GroupSpeciesBreathTool

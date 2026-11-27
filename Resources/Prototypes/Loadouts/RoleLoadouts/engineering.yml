@@ -1,0 +1,57 @@
+- type: roleLoadout
+  id: JobChiefEngineer
+  groups:
+  - GroupTankHarness
+  - ChiefEngineerHead
+  - EngineeringBackpack
+  - ChiefEngineerJumpsuit
+  - ChiefEngineerOuterClothing
+  - ChiefEngineerNeck
+  - ChiefEngineerShoes
+  - CommonAssistiveItems
+  - SurvivalExtended
+  - CommonTrinkets
+  #- ChiefEngineerJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobAtmosphericTechnician
+  groups:
+  - GroupTankHarness
+  - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianOuterClothing
+  - AtmosphericTechnicianShoes
+  - CommonAssistiveItems
+  - SurvivalExtended
+  - CommonTrinkets
+  #- AtmosphericTechnicianJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobStationEngineer
+  groups:
+  - GroupTankHarness
+  - StationEngineerHead
+  - EngineeringBackpack
+  - StationEngineerJumpsuit
+  - StationEngineerOuterClothing
+  - StationEngineerShoes
+  - StationEngineerPDA
+  - CommonAssistiveItems
+  - SurvivalExtended
+  - CommonTrinkets
+  #- StationEngineerJobTrinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobTechnicalAssistant
+  groups:
+  - GroupTankHarness
+  - EngineeringBackpack
+  - TechnicalAssistantJumpsuit
+  - CommonAssistiveItems
+  - SurvivalExtended
+  - CommonTrinkets
+  #- TechnicalAssistantJobTrinkets
+  - GroupSpeciesBreathTool
