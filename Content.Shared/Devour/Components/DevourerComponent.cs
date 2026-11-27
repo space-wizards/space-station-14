@@ -64,8 +64,8 @@ public sealed partial class DevourerComponent : Component
     /// <summary>
     /// The container to store the eaten entities in.
     /// </summary>
-    [ViewVariables]
-    public static string StomachContainerId = "stomach";
+    [DataField]
+    public string StomachContainerId = "stomach";
 
     /// <summary>
     /// Where the entities go when it devours them, empties when it is butchered.
@@ -84,6 +84,12 @@ public sealed partial class DevourerComponent : Component
             "MobState",
         }
     };
+
+    /// <summary>
+    /// Entities which can't be devoured.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// Determines what things end up in the dragon's stomach if they eat it.
