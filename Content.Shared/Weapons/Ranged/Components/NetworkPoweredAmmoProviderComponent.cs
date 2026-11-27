@@ -1,7 +1,6 @@
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Power.Components;
-using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -14,7 +13,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Power consumption is stable and does not spike at moment of projectile creation.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(NetworkPoweredAmmoProviderSystem), typeof(BatteryWeaponFireModesSystem), typeof(SharedEmitterSystem))]
+[Access(typeof(NetworkPoweredAmmoProviderSystem), typeof(BatteryWeaponFireModesSystem))]
 public sealed partial class NetworkPoweredAmmoProviderComponent : AmmoProviderComponent
 {
     /// <summary>
