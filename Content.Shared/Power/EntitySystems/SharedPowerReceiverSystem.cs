@@ -114,6 +114,17 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
         return entity.Comp.Powered;
     }
 
+    /// <summary>
+    /// Checks if entity is APC-powered device, and if it is disabled.
+    /// </summary>
+    public bool IsPowerDisabled(Entity<SharedApcPowerReceiverComponent?> entity)
+    {
+        if (!ResolveApc(entity.Owner, ref entity.Comp))
+            return true;
+
+        return entity.Comp.PowerDisabled;
+    }
+
     protected string GetExamineText(bool powered)
     {
         return Loc.GetString("power-receiver-component-on-examine-main",
