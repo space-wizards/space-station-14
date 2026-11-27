@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -19,6 +20,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private INetManager _net = default!;
 
     [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery;
     [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery;
@@ -88,6 +90,10 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSourceStartup(Entity<DeviceLinkSourceComponent> source, ref ComponentStartup args)
     {
+        // Client can't verify that the links are correct because of PVS.
+        if (_net.IsClient)
+            return;
+
         ValueList<EntityUid> invalidSinks = new(source.Comp.LinkedPorts.Count);
         ValueList<DeviceLink> invalidLinks = new(source.Comp.LinkedPorts.Count);
         foreach (var (sink, links)  in source.Comp.LinkedPorts)

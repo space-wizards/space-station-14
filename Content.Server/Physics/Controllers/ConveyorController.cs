@@ -2,6 +2,7 @@ using Content.Server.Materials;
 using Content.Shared.Conveyor;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Destructible;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -92,6 +93,13 @@ public sealed partial class ConveyorController : SharedConveyorController
         {
             SetState(uid, ConveyorState.Reverse, component);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<ConveyorComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent.Owner, ent.Comp, ref ev);
     }
 
     private void SetState(EntityUid uid, ConveyorState state, ConveyorComponent? component = null)

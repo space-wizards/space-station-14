@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Payloads;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 
@@ -39,5 +40,12 @@ public sealed partial class GunSignalControlSystem : EntitySystem
 
         if (args.Port == gunControl.Comp.OffPort)
             _gun.SetEnabled((gunControl, autoShoot), false);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnLogicSignalReceived(Entity<GunSignalControlComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        SignalReceivedEvent ev = args;
+        OnSignalReceived(ent, ref ev);
     }
 }
