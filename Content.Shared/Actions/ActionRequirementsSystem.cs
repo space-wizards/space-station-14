@@ -4,6 +4,7 @@ using Content.Shared.Actions.Events;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityEffects;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Actions;
 
@@ -24,17 +25,27 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
         // Its just popup stuff anyway.
         var target = args.Target ?? args.User;
 
-        if (!_conditions.TryConditions(args.User, performerConditions))
+        foreach (var condition in performerConditions)
         {
-            DoCancel(ent, target, user, ref args);
-            return;
+            if (!_conditions.TryCondition(args.User, condition.Condition))
+            {
+                DoCancel(ent, target, user, ref args, failPopup: condition.FailPopup, failPopupType: condition.FailPopupType);
+                return;
+            }
         }
 
-        var targetConditions =  GetConditions(ent, ActionRequirementTarget.Target);
+        var targetConditions = GetConditions(ent, ActionRequirementTarget.Target);
 
-        if (args.Target != null && !_conditions.TryConditions(args.Target.Value, targetConditions))
+        if (args.Target == null)
+            return;
+
+        foreach (var condition in targetConditions)
         {
-            DoCancel(ent, target, user, ref args);
+            if (!_conditions.TryCondition(args.User, condition.Condition))
+            {
+                DoCancel(ent, target, user, ref args, failPopup: condition.FailPopup, failPopupType: condition.FailPopupType);
+                return;
+            }
         }
     }
 
@@ -56,13 +67,18 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
         _effects.TryApplyEffects(target.Value, targetEffects, user: user);
     }
 
-    private EntityCondition[] GetConditions(Entity<ActionRequirementsComponent> ent, ActionRequirementTarget target)
+    private ActionRequirementCondition[] GetConditions(Entity<ActionRequirementsComponent> ent, ActionRequirementTarget target)
     {
         var conditions = ent.Comp.Conditions
             .Where(x => x.Key.HasFlag(target))
+            .SelectMany(x => x.Value)
+            .Select(x => new ActionRequirementCondition { Condition = x });
+
+        var requirements = ent.Comp.Requirements
+            .Where(x => x.Key.HasFlag(target))
             .SelectMany(x => x.Value);
 
-        return conditions.ToArray();
+        return conditions.Concat(requirements).ToArray();
     }
 
     private EntityEffect[] GetEffects(Entity<ActionRequirementsComponent> ent, ActionRequirementTarget target)
@@ -74,19 +90,21 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
         return conditions.ToArray();
     }
 
-    private void DoCancel(Entity<ActionRequirementsComponent> ent, EntityUid target, EntityUid user, ref ActionAttemptEvent args)
+    private void DoCancel(Entity<ActionRequirementsComponent> ent, EntityUid target, EntityUid user, ref ActionAttemptEvent args, LocId? failPopup = null, PopupType? failPopupType = null)
     {
-        if (ent.Comp.FailPopup != null)
+        failPopup = failPopup ?? ent.Comp.FailPopup;
+        failPopupType = failPopupType ?? ent.Comp.FailPopupType;
+        if (failPopup != null)
         {
             args.Reason = Loc.GetString(
-                ent.Comp.FailPopup,
+                failPopup,
                 ("target", Identity.Name(target, EntityManager)),
                 ("performer", Identity.Name(user, EntityManager)),
                 ("action", ent)
             );
         }
 
-        args.Type = ent.Comp.FailPopupType;
+        args.Type = failPopupType.Value;
         args.Cancelled = true;
     }
 }
