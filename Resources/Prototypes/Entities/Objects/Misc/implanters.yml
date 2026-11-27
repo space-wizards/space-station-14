@@ -29,25 +29,8 @@
         - SubdermalImplant
     allowDeimplantAll: false
     deimplantWhitelist:
-    - SadTromboneImplant
-    - LightImplant
-    - BikeHornImplant
-    - TrackingImplant
-    - StorageImplant
-    - FreedomImplant
-    - UplinkImplant
-    - EmpImplant
-    - ScramImplant
-    - DnaScramblerImplant
-    - MicroBombImplant
-    - MacroBombImplant
-    - DeathAcidifierImplant
-    - DeathRattleImplant
-    - MindShieldImplant
-    - FakeMindShieldImplant
-    - RadioImplant
-    - ChameleonControllerImplant
-    - VoiceMaskImplant
+      tags:
+      - Deimplantable
     deimplantFailureDamage:
       types:
         Cellular: 50
