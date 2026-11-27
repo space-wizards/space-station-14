@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.Sprite;
 using Robust.Client.GameObjects;
@@ -80,7 +79,7 @@ public sealed partial class SpriteFadeSystem : EntitySystem
             foreach (var (mapPos, excludeBB) in _points)
             {
 
-                var clickable = state.GetClickableEntities(mapPos, excludeFaded: false).ToList();
+                var clickable = state.GetClickableEntities(mapPos, excludeFaded: false);
 
                 // Also want to handle large entities even if they may not be clickable.
                 // We need to know if we're at the end of the list or not.

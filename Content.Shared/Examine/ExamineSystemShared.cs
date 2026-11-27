@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Interaction;
@@ -22,10 +23,6 @@ namespace Content.Shared.Examine
         [Dependency] protected MobStateSystem MobStateSystem = default!;
 
         [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
-        [Dependency] private EntityQuery<OccluderComponent> _occluderQuery = default!;
-        [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
-
-        private readonly List<RayCastResults> _occluderRaycastResults = new();
 
         public const float MaxRaycastRange = 100;
 
@@ -102,10 +99,13 @@ namespace Content.Shared.Examine
             if (IsClientSide(examined))
                 return true;
 
-            return !Deleted(examined) && CanExamine(examiner,
+            if (Deleted(examined) || !TryComp(examiner, out TransformComponent? xform))
+                return false;
+
+            return CanExamine(
+                new Entity<ExaminerComponent?, TransformComponent?>(examiner, null, xform),
                 _transform.GetMapCoordinates(examined),
-                entity => entity == examiner || entity == examined,
-                examined);
+                examined: examined);
         }
 
         /// <summary>
@@ -115,20 +115,25 @@ namespace Content.Shared.Examine
         /// <param name="target">Coordinates of the examination.</param>
         /// <param name="predicate">Predicate to ignore entities blocking examining.</param>
         /// <param name="examined">The entity being examined, if any.</param>
-        /// <param name="examinerComp">Examiner component for the examining entity.</param>
+        /// <param name="examinerCoordinates">Cached map coordinates for the examining entity.</param>
         /// <returns></returns>
         [Pure]
-        public virtual bool CanExamine(EntityUid examiner,
+        public virtual bool CanExamine(Entity<ExaminerComponent?, TransformComponent?> examiner,
             MapCoordinates target,
             Ignored? predicate = null,
             EntityUid? examined = null,
-            ExaminerComponent? examinerComp = null)
+            MapCoordinates? examinerCoordinates = null)
         {
             // TODO occluded container checks
             // also requires checking if the examiner has either a storage or stripping UI open, as the item may be accessible via that UI
 
-            if (!Resolve(examiner, ref examinerComp, false))
+            if (!Resolve(examiner, ref examiner.Comp1, false))
                 return false;
+
+            if (!Resolve(examiner, ref examiner.Comp2, false))
+                return false;
+
+            var examinerComp = examiner.Comp1;
 
             // Ghosts and admins skip examine checks.
             if (examinerComp.SkipChecks)
@@ -137,7 +142,7 @@ namespace Content.Shared.Examine
             if (examined != null)
             {
                 var ev = new ExamineAttemptEvent(examiner);
-                RaiseLocalEvent(examined.Value, ev);
+                RaiseLocalEvent(examined.Value, ref ev);
                 if (ev.Cancelled)
                     return false;
             }
@@ -145,27 +150,32 @@ namespace Content.Shared.Examine
             if (!examinerComp.CheckInRangeUnOccluded)
                 return true;
 
-            if (Comp<TransformComponent>(examiner).MapID != target.MapId)
+            if (examiner.Comp2.MapID != target.MapId)
                 return false;
+
+            var origin = examinerCoordinates ?? _transform.GetMapCoordinates(examiner.Comp2);
+            var range = GetExaminerRange(examiner);
 
             // Do target InRangeUnoccluded which has different checks.
             if (examined != null)
             {
-                return InRangeUnOccluded(
-                    examiner,
-                    examined.Value,
-                    GetExaminerRange(examiner),
-                    predicate: predicate);
+                var rangeEv = new InRangeOverrideEvent(examiner, examined.Value);
+                RaiseLocalEvent(examiner, ref rangeEv);
+                if (rangeEv.Handled)
+                    return rangeEv.InRange;
+
+                if (predicate == null)
+                {
+                    var ignored = new OcclusionIgnoreState(examiner, examined.Value);
+                    return InRangeUnOccluded(origin, target, range, ignored, static (entity, state) =>
+                        entity == state.Examiner || entity == state.Examined);
+                }
             }
-            else
-            {
-                return InRangeUnOccluded(
-                    examiner,
-                    target,
-                    GetExaminerRange(examiner),
-                    predicate: predicate);
-            }
+
+            return InRangeUnOccluded(origin, target, range, predicate);
         }
+
+        private readonly record struct OcclusionIgnoreState(EntityUid Examiner, EntityUid Examined);
 
         /// <summary>
         ///     Check if a given examiner is incapacitated. If yes, return a reduced examine range. Otherwise, return the deault range.
@@ -254,34 +264,38 @@ namespace Content.Shared.Examine
             }
 
             var ray = new Ray(origin.Position, dir.Normalized());
-            var rayResults = _occluderRaycastResults;
-            _occluder.IntersectRay(rayResults, origin.MapId, ray, length);
+            var raycastState = new OcclusionRaycastState<TState>(
+                origin.Position,
+                other.Position,
+                state,
+                predicate,
+                _occluder);
 
-            if (rayResults.Count == 0)
+            return _occluder.IntersectRay(
+                origin.MapId,
+                ray,
+                length,
+                raycastState,
+                static (entity, state) => IgnoreOcclusionRaycastHit(entity, state)) == null;
+        }
+
+        private static bool IgnoreOcclusionRaycastHit<TState>(
+            Entity<OccluderComponent, TransformComponent> entity,
+            OcclusionRaycastState<TState> state)
+        {
+            if (state.Predicate(entity.Owner, state.PredicateState))
                 return true;
 
-            foreach (var result in rayResults)
-            {
-                if (predicate(result.HitEntity, state))
-                    continue;
-
-                if (!_occluderQuery.TryComp(result.HitEntity, out var occluder) ||
-                    !_xformQuery.TryComp(result.HitEntity, out var xform))
-                {
-                    return false;
-                }
-
-                if (_occluder.ContainsPoint(occluder, xform, origin.Position) ||
-                    _occluder.ContainsPoint(occluder, xform, other.Position))
-                {
-                    continue;
-                }
-
-                return false;
-            }
-
-            return true;
+            return state.Occluder.ContainsPoint(entity.Comp1, entity.Comp2, state.Origin)
+                   || state.Occluder.ContainsPoint(entity.Comp1, entity.Comp2, state.Other);
         }
+
+        private readonly record struct OcclusionRaycastState<TState>(
+            Vector2 Origin,
+            Vector2 Other,
+            TState PredicateState,
+            Func<EntityUid, TState, bool> Predicate,
+            OccluderSystem Occluder);
 
         /// <summary>
         /// Checks if there is clear line of sight between to entities.
@@ -636,13 +650,10 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     Event raised directed at an entity that someone is attempting to examine
     /// </summary>
-    public sealed class ExamineAttemptEvent : CancellableEntityEventArgs
+    [ByRefEvent]
+    public record struct ExamineAttemptEvent(EntityUid Examiner)
     {
-        public readonly EntityUid Examiner;
-
-        public ExamineAttemptEvent(EntityUid examiner)
-        {
-            Examiner = examiner;
-        }
+        public readonly EntityUid Examiner = Examiner;
+        public bool Cancelled;
     }
 }
