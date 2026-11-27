@@ -1,0 +1,27 @@
+<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True" MinHeight="36">
+    <PanelContainer Name="Background" HorizontalExpand="True">
+        <BoxContainer Margin="6 2" Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="6">
+            <TextureRect Name="Icon"
+                         MinSize="32 32"
+                         Stretch="KeepAspectCentered"
+                         VerticalAlignment="Center"
+                         RectClipContent="True" />
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="6">
+                    <Label Name="ProductName" ClipText="True" HorizontalExpand="True" />
+                    <RichTextLabel Name="AccountCode" VerticalAlignment="Center"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="6">
+                    <Label Name="Requester" ClipText="True" HorizontalExpand="True" StyleClasses="LabelSubText" />
+                    <Label Name="Reason" StyleClasses="LabelSubText" Align="Right" />
+                </BoxContainer>
+            </BoxContainer>
+
+            <Label Name="PointCost"
+                   MinWidth="64"
+                   Align="Right"
+                   VerticalAlignment="Center" />
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

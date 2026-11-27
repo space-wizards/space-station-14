@@ -1,0 +1,37 @@
+﻿<cartridges:OrderLogUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                               xmlns:ui="clr-namespace:Content.Client.Cargo.UI"
+                               xmlns="https://spacestation14.io"
+                               Orientation="Vertical"
+                               HorizontalExpand="True"
+                               VerticalExpand="True"
+                               Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <!-- Header -->
+            <BoxContainer Orientation="Horizontal" Margin="6 4">
+                <Label Text="{Loc 'order-log-header-order'}" HorizontalExpand="True" StyleClasses="LabelSubText" />
+                <Label Text="{Loc 'order-log-header-cost'}" Align="Right" MinWidth="64" StyleClasses="LabelSubText" />
+            </BoxContainer>
+
+            <Label Name="EmptyLabel"
+                   Text="{Loc 'order-log-no-orders'}"
+                   Visible="False"
+                   HorizontalAlignment="Center"
+                   Margin="0 12"
+                   StyleClasses="LabelSubText" />
+
+            <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
+                <ui:OrderLogListing Name="OrderLogListing"
+                                    Orientation="Vertical"
+                                    HorizontalExpand="True" />
+            </ScrollContainer>
+
+            <!-- Footer -->
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5">
+                <Button Name="NotificationSwitch"
+                        MinWidth="20"
+                        ToolTip="{Loc 'order-log-notification-tooltip'}" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</cartridges:OrderLogUiFragment>

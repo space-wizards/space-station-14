@@ -174,3 +174,20 @@
         sprite: Objects/Devices/gps.rsi
         state: icon
     - type: AstroNavCartridge
+
+- type: entity
+  parent: BasePDACartridge
+  id: OrderLogCartridge
+  name: order log cartridge
+  description: A log of unapproved orders
+  components:
+    - type: Sprite
+      state: cart-sup
+    - type: UIFragment
+      ui: !type:OrderLogUi
+    - type: Cartridge
+      programName: order-log-program-name
+      icon:
+        sprite: Interface/Misc/job_icons.rsi
+        state: CargoTechnician
+    - type: OrderLogCartridge

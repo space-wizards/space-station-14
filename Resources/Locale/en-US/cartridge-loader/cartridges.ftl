@@ -101,3 +101,19 @@ wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
 wanted-list-history-table-time-col = Time
 wanted-list-history-table-reason-col = Crime
 wanted-list-history-table-initiator-col = Initiator
+
+order-log-notification-header = New Order Requested
+order-log-notification-message = {$requester} ordered {$product}.
+order-log-header-order = Order
+order-log-header-cost = Cost
+order-log-no-orders = No orders.
+order-log-reason =
+    { $hasReason ->
+        [true] Reason: { $reason }
+       *[false] { "" }
+    }
+order-log-program-name = Order Log
+
+order-log-notification-off =  ̶♫̶
+order-log-notification-on = ♫
+order-log-notification-tooltip = Mute notifications
