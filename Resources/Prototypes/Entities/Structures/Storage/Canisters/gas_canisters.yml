@@ -89,7 +89,7 @@
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 190
         mask:
-        - SmallMobMask
+        - MachineMask
         layer:
         - MachineLayer
   - type: AtmosDevice
@@ -136,6 +136,7 @@
     - GasCanisters
   - type: Paintable
     group: Canisters
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: GasCanister
@@ -664,6 +665,7 @@
         Plasteel: 200
     - type: StaticPrice
       price: 125
+    - type: RequireProjectileTarget
 
 - type: entity
   parent: GasCanisterBrokenBase
