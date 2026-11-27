@@ -44,9 +44,6 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
 
     private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
     {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
         var isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
 
         if (args.Handled
@@ -64,6 +61,11 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
         }
 
         args.Handled = true;
+
+        if (!Timing.IsFirstTimePredicted)
+        {
+            return;
+        }
 
         if (!_powerReceiver.IsPowered(args.Target.Value))
         {
