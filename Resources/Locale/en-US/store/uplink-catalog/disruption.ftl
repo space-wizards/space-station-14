@@ -53,3 +53,6 @@ uplink-singularity-beacon-desc = A device that attracts singularities. Has to be
 
 uplink-cameraBug-name = Camera bug
 uplink-cameraBug-desc = A portable device that allows you to view the station through the lens of the station's camera systems.
+
+uplink-artifact-bundle-name = Artifact Crate
+uplink-artifact-bundle-desc = A box of artifacts with a large variety of equipment for all your mad science needs.
