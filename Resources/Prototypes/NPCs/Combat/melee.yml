@@ -46,6 +46,9 @@
                   types:
                     Blunt: 0
             invert: true
+        - !type:HasStatusEffectPrecondition # zombies should not attempt to pick up melee weapons
+            statusEffect: StatusEffectClumsyZombie
+            invert: true
       tasks:
         - !type:HTNCompoundTask
           task: PickupMeleeCompound
