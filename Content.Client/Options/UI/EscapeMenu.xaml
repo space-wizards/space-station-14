@@ -3,10 +3,14 @@
                 xmlns:changelog="clr-namespace:Content.Client.Changelog"
                 xmlns:ui="clr-namespace:Content.Client.Voting.UI"
                 xmlns:ui1="clr-namespace:Content.Client.Options.UI"
+                xmlns:info="clr-namespace:Content.Client.Info"
                 Title="{Loc 'ui-escape-title'}"
                 Resizable="False">
 
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <PanelContainer StyleClasses="PanelInsetDark">
+            <info:RoundInfo Access="Public" Name="RoundInfo" />
+        </PanelContainer>
         <ui:VoteCallMenuButton />
         <controls:Separator StyleClasses="LowDivider" Margin="0 2.5 0 2.5"/>
         <Button Access="Public" Name="RulesButton" Text="{Loc 'ui-escape-rules'}" StyleClasses="OpenLeft" />

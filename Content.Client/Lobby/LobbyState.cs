@@ -195,10 +195,16 @@ namespace Content.Client.Lobby
                 Lobby!.ObserveButton.Disabled = true;
             }
 
-            if (_gameTicker.ServerInfoBlob != null)
-            {
-                Lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
-            }
+            Lobby!.ServerInfo.SetInfoBlob(Loc.GetString(
+                _gameTicker.IsGameStarted
+                    ? "game-ticker-get-info-text"
+                    : "game-ticker-get-info-preround-text",
+                ("roundId", _gameTicker.RoundId),
+                ("playerCount", _gameTicker.PlayerCount),
+                ("readyCount", _gameTicker.ReadyCount),
+                ("mapName", _gameTicker.MapName),
+                ("gmTitle", _gameTicker.GamemodeTitle),
+                ("desc", _gameTicker.Desc)));
 
             var minutesToday = _playtimeTracking.PlaytimeMinutesToday;
             if (minutesToday > 60)
