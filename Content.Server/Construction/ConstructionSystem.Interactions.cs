@@ -270,16 +270,36 @@ namespace Content.Server.Construction
 
                     user = interactUsing.User;
 
-                    var insert = interactUsing.Used;
+                    var insertList = new List<EntityUid> { interactUsing.Used };
 
                     // Since many things inherit this step, we delegate the "is this entity valid?" logic to them.
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
-                    if(!insertStep.EntityValid(insert, EntityManager, Factory))
+                    if(!insertStep.EntityValid(insertList[0], EntityManager, Factory))
                         return HandleResult.False;
 
                     // Unremovable items can't be inserted
-                    if(HasComp<UnremoveableComponent>(insert))
+                    if(HasComp<UnremoveableComponent>(insertList[0]))
                         return HandleResult.False;
+
+                    // If we need more than one entity we'll need to find them nearby
+                    if (insertStep.Amount > 1
+                        && insertStep is not MaterialConstructionGraphStep) // Material step has its own terrible way of doing it
+                    {
+                        foreach (var nearby in EnumerateNearby(user.Value))
+                        {
+                            if (!insertStep.EntityValid(nearby, EntityManager, Factory)
+                                || insertList.Contains(nearby))
+                                continue;
+
+                            insertList.Add(nearby);
+                            if (insertList.Count == insertStep.Amount)
+                                break;
+                        }
+
+                        // We didn't find enough additional targets
+                        if (insertList.Count != insertStep.Amount)
+                            return HandleResult.False;
+                    }
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.
                     if (validation)
@@ -316,10 +336,10 @@ namespace Content.Server.Construction
                     // we split the stack in two and insert the split stack.
                     if (insertStep is MaterialConstructionGraphStep materialInsertStep)
                     {
-                        if (_stackSystem.Split(insert, materialInsertStep.Amount, Transform(interactUsing.User).Coordinates) is not {} stack)
+                        if (_stackSystem.Split(insertList[0], materialInsertStep.Amount, Transform(interactUsing.User).Coordinates) is not {} stack)
                             return HandleResult.False;
 
-                        insert = stack;
+                        insertList[0] = stack;
                     }
 
                     // Container-storage handling.
@@ -331,14 +351,21 @@ namespace Content.Server.Construction
                         // Add this container to the collection of "construction-owned" containers.
                         // Containers in that set will be transferred to new entities in the case of a prototype change.
                         construction.Containers.Add(store);
-
                         // The container doesn't necessarily need to exist, so we ensure it.
-                        _container.Insert(insert, _container.EnsureContainer<Container>(uid, store));
+                        var container = _container.EnsureContainer<Container>(uid, store);
+
+                        foreach (var insert in insertList)
+                        {
+                            _container.Insert(insert, container);
+                        }
                     }
                     else
                     {
                         // If we don't store the item in a container on the entity, we just delete it right away.
-                        Del(insert);
+                        foreach (var insert in insertList)
+                        {
+                            Del(insert);
+                        }
                     }
 
                     // Step has been handled correctly, so we signal this.
