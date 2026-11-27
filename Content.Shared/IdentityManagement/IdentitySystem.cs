@@ -275,8 +275,8 @@ public sealed partial class IdentitySystem : EntitySystem
         // Get their name and job from their ID for their presumed name.
         if (_idCard.TryFindIdCard(target, out var id))
         {
-            presumedName = string.IsNullOrWhiteSpace(id.Comp.FullName) ? null : id.Comp.FullName;
-            presumedJob = id.Comp.LocalizedJobTitle?.ToLowerInvariant();
+            presumedName = string.IsNullOrWhiteSpace(id.Value.Comp.FullName) ? null : id.Value.Comp.FullName;
+            presumedJob = id.Value.Comp.LocalizedJobTitle?.ToLowerInvariant();
         }
 
         // If it didn't find a job, that's fine.
