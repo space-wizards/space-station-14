@@ -1,3 +1,4 @@
+using Content.Shared.Wires;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
