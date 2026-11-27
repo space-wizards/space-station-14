@@ -74,6 +74,10 @@
   id: MobArachnid
   name: Urist McWebs
   components:
+  - type: FootstepTrack
+    footprints:
+    - BloodClawprint1
+    - BloodClawprint2
   - type: Respirator
     damage:
       types:
