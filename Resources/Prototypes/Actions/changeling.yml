@@ -510,16 +510,17 @@
   - type: TargetAction
     interactOnMiss: false
   - type: ActionRequirements
-    failPopup: changeling-action-fail-generic # Currently no way to tell which condition failed
     failPopupType: SmallCaution
-    conditions:
+    requirements:
       Performer:
-      - !type:SatiationCondition
-        satiationType: Chemicals
-        min: 35
+      - condition: !type:SatiationCondition
+          satiationType: Chemicals
+          min: 35
+        failPopup: changeling-not-enough-chemicals
       Target:
-      - !type:MobStateCondition
-        mobstate: Dead
+      - condition: !type:MobStateCondition
+          mobstate: Dead
+        failPopup: changeling-action-fail-generic
     effects:
       Performer:
       - !type:Satiate
