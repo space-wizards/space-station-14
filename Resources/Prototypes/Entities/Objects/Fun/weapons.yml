@@ -184,15 +184,40 @@
     sprite: Objects/Fun/Foam/foam_blade.rsi
     state: icon
   - type: MeleeWeapon
-    attackRate: 1.5
-    angle: 0
-    animation: WeaponArcThrust
-    wideAnimationRotation: 90
     soundHit:
       collection: AlienClaw
+    wideAnimationRotation: 90
+    attackRate: 1
+    swingFlipY: true
+    wideAnimation: WeaponArcSlashFoamblade
+    animation: WeaponArcThrustFoamblade
+    forceAnimationSprite: true
+  - type: EmitSoundOnPickup
+    soundCooldown: 1.5
+    sound:
+      collection: gib # Placeholder, change whenever changeling.yml armblade sfx changes
   - type: Item
     size: Small
-    sprite: Objects/Fun/Foam/foam_blade.rsi
+    sprite: Objects/Weapons/Melee/armblade.rsi
+
+# we need those to override the foamblade's icon and make it look like a regular armblade
+- type: entity
+  parent: WeaponArcSlash
+  id: WeaponArcSlashFoamblade
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/armblade.rsi
+    state: icon
+
+- type: entity
+  parent: WeaponArcThrust
+  id: WeaponArcThrustFoamblade
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/armblade.rsi
+    state: icon
 
 - type: entity
   parent: [ BaseItem, BaseToySword ]

@@ -126,7 +126,12 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, GotEquippedHandEvent args)
     {
+        if (component.NextSound > Timing.CurTime)
+            return;
+
         TryEmitSound(uid, component, args.User);
+        component.NextSound = Timing.CurTime + component.SoundCooldown;
+        Dirty(uid, component);
     }
 
     private void OnEmitSoundOnDrop(EntityUid uid, EmitSoundOnDropComponent component, DroppedEvent args)
