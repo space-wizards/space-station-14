@@ -1,6 +1,7 @@
 using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -56,7 +57,8 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         var user = args.User;
 
-        if (TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover)
+        if (TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover
+            && (!TryComp<GhostComponent>(user, out var ghost) || !ghost.CanGhostInteract))
         {
             var v = new Verb
             {
