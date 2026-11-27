@@ -1182,3 +1182,9 @@ PlushieArachind: PlushieArachnid
 
 # 2026-11-19
 ShardCrystalRandom: CrystalShardSpawner
+
+# 2026-11-26
+ClothingHeadsetQM: ClothingHeadsetAltCargo
+ClothingHeadsetCE: ClothingHeadsetAltEngineering
+ClothingHeadsetCMO: ClothingHeadsetAltMedical
+ClothingHeadsetRD: ClothingHeadsetAltScience

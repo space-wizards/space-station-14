@@ -38,7 +38,7 @@
   id: CMOGear
   equipment:
     id: CMOPDA
-    ears: ClothingHeadsetCMO
+    ears: ClothingHeadsetAltMedical
   storage:
     back:
     - Flash
