@@ -46,6 +46,29 @@
     Telecrystal: 2
   categories:
   - UplinkWearables
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkClothingNoSlipsShoesNukies
+  name: uplink-clothing-no-slips-shoes-nukies-name
+  description: uplink-clothing-no-slips-shoes-nukies-desc
+  productEntity: ClothingShoesChameleonNoSlipsNukies
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWearables
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkClothingOuterVestWeb
