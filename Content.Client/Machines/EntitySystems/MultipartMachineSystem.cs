@@ -5,7 +5,6 @@ using Content.Shared.Machines.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
 
 namespace Content.Client.Machines.EntitySystems;
@@ -17,21 +16,14 @@ namespace Content.Client.Machines.EntitySystems;
 /// </summary>
 public sealed partial class MultipartMachineSystem : SharedMultipartMachineSystem
 {
-    private readonly EntProtoId _ghostPrototype = "MultipartMachineGhost";
-    private readonly Color _partiallyTransparent = new Color(255, 255, 255, 180);
-
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private ISerializationManager _serialization = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+    [Dependency] private EntityQuery<MultipartMachineGhostComponent> _ghostQuery;
+    [Dependency] private EntityQuery<MultipartMachineComponent> _machineQuery;
 
-        SubscribeLocalEvent<MultipartMachineComponent, ClientExaminedEvent>(OnMachineExamined);
-        SubscribeLocalEvent<MultipartMachineComponent, AfterAutoHandleStateEvent>(OnHandleState);
-        SubscribeLocalEvent<MultipartMachineGhostComponent, TimedDespawnEvent>(OnGhostDespawned);
-    }
+    private static readonly EntProtoId GhostPrototype = "MultipartMachineGhost";
 
     /// <summary>
     /// Handles spawning several ghost sprites to show where the different parts of the machine
@@ -39,8 +31,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     /// Can only show one set of ghost parts at a time and their location depends on the current map/grid
     /// location of the origin machine.
     /// </summary>
-    /// <param name="ent">Entity/Component that has been inspected.</param>
-    /// <param name="args">Args for the event.</param>
+    [SubscribeLocalEvent]
     private void OnMachineExamined(Entity<MultipartMachineComponent> ent, ref ClientExaminedEvent args)
     {
         if (ent.Comp.Ghosts.Count != 0)
@@ -54,30 +45,34 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
             if (part.Entity.HasValue)
                 continue;
 
-            var entityCoords = new EntityCoordinates(ent.Owner, part.Offset);
-            var ghostEnt = SpawnAttachedTo(_ghostPrototype, entityCoords, rotation: part.Rotation);
-
-            Comp<MultipartMachineGhostComponent>(ghostEnt).LinkedMachine = ent;
-
-            ent.Comp.Ghosts.Add(ghostEnt);
-
             if (part.GhostProto == null)
                 continue;
 
+            var entityCoords = new EntityCoordinates(ent.Owner, part.Offset);
+            var ghostEnt = SpawnAttachedTo(GhostPrototype, entityCoords, rotation: part.Rotation);
+            var protoEnt = Spawn(part.GhostProto.Value);
+
+            if (_ghostQuery.TryComp(ghostEnt, out var ghostComp))
+                ghostComp.LinkedMachine = ent;
+
+            ent.Comp.Ghosts.Add(ghostEnt);
+
             var entProto = ProtoMan.Index(part.GhostProto.Value);
-            if (!entProto.Components.TryGetComponent("Sprite", out var s) || s is not SpriteComponent protoSprite)
-                return;
 
-            var ghostSprite = EnsureComp<SpriteComponent>(ghostEnt);
-            _serialization.CopyTo(protoSprite, ref ghostSprite, notNullableOverride: true);
+            if (!_spriteQuery.TryComp(ghostEnt, out var ghostSprite)
+                || !_spriteQuery.TryComp(protoEnt, out var protoSprite))
+                continue;
 
-            _sprite.SetColor((ghostEnt, ghostSprite), _partiallyTransparent);
+            _sprite.CopySprite((protoEnt, protoSprite), (ghostEnt, ghostSprite));
+            _sprite.SetColor((ghostEnt, ghostSprite), protoSprite.Color.WithAlpha(part.GhostTransparency));
 
             _metaData.SetEntityName(ghostEnt, entProto.Name);
             _metaData.SetEntityDescription(ghostEnt, entProto.Description);
+            QueueDel(protoEnt);
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnHandleState(Entity<MultipartMachineComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         foreach (var part in ent.Comp.Parts.Values)
@@ -93,9 +88,10 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     /// </summary>
     /// <param name="ent">Ghost entity that has been despawned.</param>
     /// <param name="args">Args for the event.</param>
+    [SubscribeLocalEvent]
     private void OnGhostDespawned(Entity<MultipartMachineGhostComponent> ent, ref TimedDespawnEvent args)
     {
-        if (!TryComp<MultipartMachineComponent>(ent.Comp.LinkedMachine, out var machine))
+        if (!_machineQuery.TryComp(ent.Comp.LinkedMachine, out var machine))
             return;
 
         machine.Ghosts.Remove(ent);

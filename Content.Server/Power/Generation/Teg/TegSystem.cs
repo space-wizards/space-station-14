@@ -1,18 +1,20 @@
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Audio;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
+using Content.Shared.Machines.Components;
+using Content.Shared.Machines.EntitySystems;
+using Content.Shared.Machines.Events;
 using Content.Shared.NodeContainer;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -25,7 +27,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// The gas flows through a "circulator" entity on each side, which have both an inlet and an outlet port.
 /// </para>
 /// <remarks>
-/// Connecting the TEG core to its circulators is implemented via a node group. See <see cref="TegNodeGroup"/>.
+/// Connecting the TEG core to its circulators is implemented via <see cref="MultipartMachineComponent"/>.
 /// </remarks>
 /// <para>
 /// The TEG center does HV power output, and must also be connected to an LV wire for the TEG to function.
@@ -41,15 +43,9 @@ namespace Content.Server.Power.Generation.Teg;
 /// </remarks>
 /// <seealso cref="TegGeneratorComponent"/>
 /// <seealso cref="TegCirculatorComponent"/>
-/// <seealso cref="TegNodeGroup"/>
 /// <seealso cref="TegSensorPayload"/>
 public sealed partial class TegSystem : EntitySystem
 {
-    /// <summary>
-    /// Node name for the TEG part connection nodes (<see cref="TegNodeGroup"/>).
-    /// </summary>
-    private const string NodeNameTeg = "teg";
-
     /// <summary>
     /// Node name for the inlet pipe of a circulator.
     /// </summary>
@@ -60,27 +56,21 @@ public sealed partial class TegSystem : EntitySystem
     /// </summary>
     private const string NodeNameOutlet = "outlet";
 
-    [Dependency] private AmbientSoundSystem _ambientSound = default!;
-    [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private PointLightSystem _pointLight = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private SharedAtmosphereSystem _atmosphere = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
+    [Dependency] private SharedMultipartMachineSystem _multipart = default!;
 
-    public override void Initialize()
+    [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
+    [Dependency] private EntityQuery<MultipartMachineComponent> _multipartQuery;
+
+    [SubscribeLocalEvent]
+    private void GeneratorExamined(EntityUid uid, TegGeneratorComponent component, ref ExaminedEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<TegGeneratorComponent, AtmosDeviceUpdateEvent>(GeneratorUpdate);
-        SubscribeLocalEvent<TegGeneratorComponent, PowerChangedEvent>(GeneratorPowerChange);
-
-        SubscribeLocalEvent<TegGeneratorComponent, ExaminedEvent>(GeneratorExamined);
-    }
-
-    private void GeneratorExamined(EntityUid uid, TegGeneratorComponent component, ExaminedEvent args)
-    {
-        if (GetNodeGroup(uid) is not { IsFullyBuilt: true })
+        if (!_multipart.IsAssembled(uid))
         {
             args.PushMarkup(Loc.GetString("teg-generator-examine-connection"));
         }
@@ -96,6 +86,7 @@ public sealed partial class TegSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, ref AtmosDeviceUpdateEvent args)
     {
         var supplier = Comp<PowerSupplierComponent>(uid);
@@ -106,15 +97,16 @@ public sealed partial class TegSystem : EntitySystem
             return;
         }
 
-        var tegGroup = GetNodeGroup(uid);
-        if (tegGroup is not { IsFullyBuilt: true })
+        if (!_multipartQuery.TryComp(uid, out var multipartComp)
+            || !_multipart.IsAssembled((uid, multipartComp)))
             return;
 
-        var circA = tegGroup.CirculatorA!.Owner;
-        var circB = tegGroup.CirculatorB!.Owner;
+        if (!_multipart.TryGetPartEntity((uid, multipartComp), TegParts.CirculatorA, out var circA)
+            || !_multipart.TryGetPartEntity((uid, multipartComp), TegParts.CirculatorB, out var circB))
+            return;
 
-        var (inletA, outletA) = GetPipes(circA);
-        var (inletB, outletB) = GetPipes(circB);
+        var (inletA, outletA) = GetPipes(circA.Value);
+        var (inletB, outletB) = GetPipes(circB.Value);
 
         var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
         var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
@@ -184,8 +176,8 @@ public sealed partial class TegSystem : EntitySystem
         supplier.MaxSupply = component.PowerSmoothingFactor * (power * component.RampFactor) +
                              (1 - component.PowerSmoothingFactor) * supplier.MaxSupply;
 
-        var circAComp = Comp<TegCirculatorComponent>(circA);
-        var circBComp = Comp<TegCirculatorComponent>(circB);
+        var circAComp = Comp<TegCirculatorComponent>(circA.Value);
+        var circBComp = Comp<TegCirculatorComponent>(circB.Value);
 
         circAComp.LastPressureDelta = δpA;
         circAComp.LastMolesTransferred = airA.TotalMoles;
@@ -195,14 +187,45 @@ public sealed partial class TegSystem : EntitySystem
         _atmosphere.Merge(outletA.Air, airA);
         _atmosphere.Merge(outletB.Air, airB);
 
-        UpdateAppearance(uid, component, powerReceiver, tegGroup);
+        UpdateAppearance(uid, component, powerReceiver);
+    }
+
+    [SubscribeLocalEvent(before: [typeof(SharedMultipartMachineSystem)])]
+    private void OnTegStartup(Entity<TegGeneratorComponent> ent, ref ComponentStartup args)
+    {
+        _receiver.SetPowerDisabled(ent.Owner, true);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMultipartChanged(Entity<TegGeneratorComponent> ent, ref MultipartMachineAssemblyStateChanged args)
+    {
+        var powerReceiver = Comp<ApcPowerReceiverComponent>(ent.Owner);
+        _receiver.SetPowerDisabled(ent.Owner, !args.IsAssembled, powerReceiver);
+        UpdateAppearance(ent.Owner, ent.Comp, powerReceiver);
+
+        if (!_multipartQuery.TryComp(ent.Owner, out var multipart))
+            return;
+
+        // Updates added & already existing parts
+        foreach (var part in multipart.Parts.Values)
+        {
+            if (part.Entity == null)
+                continue;
+
+            UpdateCirculatorAppearance(part.Entity.Value, args.IsAssembled);
+        }
+
+        // Updates removed parts
+        foreach (var part in args.PartsRemoved.Values)
+        {
+            UpdateCirculatorAppearance(part, args.IsAssembled);
+        }
     }
 
     private void UpdateAppearance(
         EntityUid uid,
         TegGeneratorComponent component,
-        ApcPowerReceiverComponent powerReceiver,
-        TegNodeGroup nodeGroup)
+        ApcPowerReceiverComponent powerReceiver)
     {
         int powerLevel;
         if (powerReceiver.Powered)
@@ -223,43 +246,14 @@ public sealed partial class TegSystem : EntitySystem
 
         _appearance.SetData(uid, TegVisuals.PowerOutput, powerLevel);
 
-        if (nodeGroup.IsFullyBuilt)
-        {
-            UpdateCirculatorAppearance(nodeGroup.CirculatorA!.Owner, powerReceiver.Powered);
-            UpdateCirculatorAppearance(nodeGroup.CirculatorB!.Owner, powerReceiver.Powered);
-        }
-    }
-
-    [Access(typeof(TegNodeGroup))]
-    public void UpdateGeneratorConnectivity(
-        EntityUid uid,
-        TegNodeGroup group,
-        TegGeneratorComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
+        if (!_multipartQuery.TryComp(uid, out var multipartComp)
+            || !_multipart.IsAssembled((uid, multipartComp)))
             return;
 
-        var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
-
-        _receiver.SetPowerDisabled(uid, !group.IsFullyBuilt, powerReceiver);
-        UpdateAppearance(uid, component, powerReceiver, group);
-    }
-
-    [Access(typeof(TegNodeGroup))]
-    public void UpdateCirculatorConnectivity(
-        EntityUid uid,
-        TegNodeGroup group,
-        TegCirculatorComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        // If the group IS fully built, the generator will update its circulators.
-        // Otherwise, make sure circulator is set to nothing.
-        if (!group.IsFullyBuilt)
-        {
-            UpdateCirculatorAppearance((uid, component), false);
-        }
+        if (_multipart.TryGetPartEntity((uid, multipartComp), TegParts.CirculatorA, out var circA))
+            UpdateCirculatorAppearance(circA.Value, powerReceiver.Powered);
+        if (_multipart.TryGetPartEntity((uid, multipartComp), TegParts.CirculatorB, out var circB))
+            UpdateCirculatorAppearance(circB.Value, powerReceiver.Powered);
     }
 
     private void UpdateCirculatorAppearance(Entity<TegCirculatorComponent?> ent, bool powered)
@@ -292,33 +286,14 @@ public sealed partial class TegSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void GeneratorPowerChange(EntityUid uid, TegGeneratorComponent component, ref PowerChangedEvent args)
     {
         // TODO: I wish power events didn't go out on shutdown.
         if (TerminatingOrDeleted(uid))
             return;
 
-        var nodeGroup = GetNodeGroup(uid);
-        if (nodeGroup == null)
-            return;
-
-        UpdateAppearance(uid, component, Comp<ApcPowerReceiverComponent>(uid), nodeGroup);
-    }
-
-    /// <returns>Null if the node group is not yet available. This can happen during initialization.</returns>
-    private TegNodeGroup? GetNodeGroup(EntityUid uidGenerator)
-    {
-        NodeContainerComponent? nodeContainer = null;
-        if (!_nodeContainerQuery.Resolve(uidGenerator, ref nodeContainer))
-            return null;
-
-        if (!nodeContainer.Nodes.TryGetValue(NodeNameTeg, out var tegNode))
-            return null;
-
-        if (tegNode.NodeGroup is not TegNodeGroup tegGroup)
-            return null;
-
-        return tegGroup;
+        UpdateAppearance(uid, component, Comp<ApcPowerReceiverComponent>(uid));
     }
 
     private static (GasMixture, float δp) GetCirculatorAirTransfer(GasMixture airInlet, GasMixture airOutlet)
@@ -357,16 +332,16 @@ public sealed partial class TegSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSyncPayload(Entity<TegGeneratorComponent> ent, ref DeviceNetworkPacketEvent<TegSensorSyncPayload> args)
     {
-        var group = GetNodeGroup(ent.Owner);
-        if (group is not { IsFullyBuilt: true })
+        if (!_multipartQuery.TryComp(ent.Owner, out var multipartComp)
+            || !_multipart.IsAssembled((ent.Owner, multipartComp)))
             return;
 
         var supplier = Comp<PowerSupplierComponent>(ent);
 
         var dataPayload = new TegSensorPayload
         {
-            CirculatorA = GetCirculatorSensorData(group.CirculatorA!.Owner),
-            CirculatorB = GetCirculatorSensorData(group.CirculatorB!.Owner),
+            CirculatorA = GetCirculatorSensorData(_multipart.GetPartEntity((ent.Owner, multipartComp), TegParts.CirculatorA)!.Value),
+            CirculatorB = GetCirculatorSensorData(_multipart.GetPartEntity((ent.Owner, multipartComp), TegParts.CirculatorB)!.Value),
             LastGeneration = ent.Comp.LastGeneration,
             PowerOutput = supplier.CurrentSupply,
             RampPosition = ent.Comp.RampPosition,
