@@ -98,6 +98,18 @@ public sealed partial class AlertPrototype : IPrototype, IInheritingPrototype
     [DataField]
     public BaseAlertEvent? ClickEvent;
 
+    /// <summary>
+    /// If the click event should be blocked if the user cannot currently interact
+    /// </summary>
+    [DataField]
+    public bool CheckCanInteract = true;
+
+    /// <summary>
+    /// If the click event should be blocked if the user is currently unconscious
+    /// </summary>
+    [DataField]
+    public bool CheckConsciousness = true;
+
     /// <param name="severity">severity level, if supported by this alert</param>
     /// <returns>the icon path to the texture for the provided severity level</returns>
     public SpriteSpecifier GetIcon(short? severity = null)
