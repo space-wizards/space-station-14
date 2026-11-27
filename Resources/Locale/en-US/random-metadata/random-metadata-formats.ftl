@@ -16,6 +16,10 @@ name-format-nukie-agent = Corpsman {$part0}
 name-format-nukie-commander = Commander {$part0}
 name-format-nukie-operator = Operator {$part0}
 
+name-format-cburn = Specialist {$part0}
+
+name-format-deathsquad = Colonel {$part0}
+
 name-format-ert = {$part0} {$part1}
 name-format-ert-leader = Sergeant {$part0}
 name-format-ert-specialist = Specialist {$part0}
