@@ -35,7 +35,6 @@ namespace Content.IntegrationTests.Tests
         public override PoolSettings PoolSettings => new PoolSettings()
         {
             Connected = true,
-            Dirty = true,
         };
 
         private const bool SkipTestMaps = true;
