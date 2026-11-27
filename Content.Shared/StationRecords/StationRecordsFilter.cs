@@ -40,7 +40,10 @@ public enum StationRecordFilterType : byte
 {
     Name,
     Job,
+    Age,
     Species,
+    Gender,
+    Sex,
     Prints,
     DNA,
 }
