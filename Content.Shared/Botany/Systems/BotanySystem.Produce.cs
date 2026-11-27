@@ -1,12 +1,14 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Items.Components;
+using Content.Shared.Botany.Traits;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Botany.Systems;
@@ -14,6 +16,27 @@ namespace Content.Shared.Botany.Systems;
 public sealed partial class BotanySystem
 {
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+
+    /// <summary>
+    /// True while <see cref="SpawnProduce"/> is spawning produce,
+    /// so that harvested produce gets the traits of its plant instead of the defaults of its species.
+    /// </summary>
+    private bool _spawningProduce;
+
+    [SubscribeLocalEvent]
+    private void OnProduceMapInit(Entity<ProduceComponent> ent, ref MapInitEvent args)
+    {
+        // Harvested produce gets its traits from the harvested plant in ProduceGrown.
+        // It has plant data by the time map init runs late, such as on a map that is not initialized yet.
+        if (_spawningProduce || ent.Comp.PlantData != null)
+            return;
+
+        // Produce that did not come from a harvest (maps, crates, spawn menu...) gets the default traits of its species.
+        if (!TryGetPlantComponent<PlantComponent>(null, ent.Comp.PlantProtoId, out var species))
+            return;
+
+        ApplyProduceTraits(ent.Owner, species.Traits);
+    }
 
     [SubscribeLocalEvent]
     private void OnProduceExamined(Entity<ProduceComponent> ent, ref ExaminedEvent args)
@@ -23,14 +46,9 @@ public sealed partial class BotanySystem
 
         using (args.PushGroup(nameof(ProduceComponent)))
         {
-            foreach (var m in plant.Mutations)
+            foreach (var description in _plant.GetPlantTraitDescriptions(plant))
             {
-                // Don't show mutations that have no effect on produce (sentience)
-                if (!m.AppliesToProduce)
-                    continue;
-
-                if (m.Description != null)
-                    args.PushMarkup(Loc.GetString(m.Description));
+                args.PushMarkup(Loc.GetString(description));
             }
         }
     }
@@ -41,11 +59,7 @@ public sealed partial class BotanySystem
             || !TryGetPlantComponent<PlantChemicalsComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var chems))
             return;
 
-        foreach (var mutation in plant.Mutations)
-        {
-            if (mutation.AppliesToProduce)
-                _entityEffects.TryApplyEffect(ent.Owner, mutation.Effect);
-        }
+        ApplyProduceTraits(ent.Owner, plant.Traits);
 
         _solutionContainer.EnsureSolution(ent.Owner, ent.Comp.TargetSolution, out var solution);
         solution.Comp.Solution.RemoveAllSolution();
@@ -58,6 +72,23 @@ public sealed partial class BotanySystem
             amount = FixedPoint2.Clamp(amount, quantity.Min, quantity.Max);
             solution.Comp.Solution.MaxVolume += amount;
             solution.Comp.Solution.AddReagent(chem, amount);
+        }
+    }
+
+    /// <summary>
+    /// Applies the produce effects of each trait to a produce entity.
+    /// </summary>
+    private void ApplyProduceTraits(EntityUid produce, List<ProtoId<PlantTraitPrototype>> traits)
+    {
+        foreach (var traitId in traits)
+        {
+            if (!ProtoMan.TryIndex(traitId, out var trait))
+                continue;
+
+            foreach (var effect in trait.ProduceEffects)
+            {
+                _entityEffects.TryApplyEffect(produce, effect);
+            }
         }
     }
 
@@ -77,7 +108,19 @@ public sealed partial class BotanySystem
         for (var i = 0; i < amount; i++)
         {
             var product = random.Pick(ent.Comp2.ProductPrototypes);
-            var entity = PredictedSpawnAtPosition(product, position);
+
+            EntityUid entity;
+            var wasSpawningProduce = _spawningProduce;
+            _spawningProduce = true;
+            try
+            {
+                entity = PredictedSpawnAtPosition(product, position);
+            }
+            finally
+            {
+                _spawningProduce = wasSpawningProduce;
+            }
+
             _randomHelper.RandomOffset(entity, 0.25f, random);
 
             var produce = EnsureComp<ProduceComponent>(entity);

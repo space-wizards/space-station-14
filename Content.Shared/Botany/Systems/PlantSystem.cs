@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
+using Content.Shared.Botany.Traits;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -115,6 +116,11 @@ public sealed partial class PlantSystem : EntitySystem
             foreach (var mutation in GetPlantMutationDescriptions(ent.Owner))
             {
                 args.PushMarkup(Loc.GetString(mutation));
+            }
+
+            foreach (var trait in GetPlantTraitDescriptions(ent.Comp))
+            {
+                args.PushMarkup(Loc.GetString(trait));
             }
         }
     }
@@ -416,6 +422,17 @@ public sealed partial class PlantSystem : EntitySystem
         return AllComps<PlantTraitsComponent>(uid)
             .OrderBy(trait => trait.GetType().FullName)
             .Select(trait => trait.TraitState)
+            .OfType<LocId>();
+    }
+
+    /// <summary>
+    /// Gets the descriptions of a plant's <see cref="PlantTraitPrototype"/> traits.
+    /// </summary>
+    [PublicAPI]
+    public IEnumerable<LocId> GetPlantTraitDescriptions(PlantComponent plant)
+    {
+        return plant.Traits
+            .Select(traitId => ProtoMan.TryIndex(traitId, out var trait) ? trait.Description : null)
             .OfType<LocId>();
     }
 

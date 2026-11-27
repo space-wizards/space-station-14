@@ -3,29 +3,21 @@
   ignoreMutationMod: false
   mutations:
     - name: Sentient
-      description: mutation-plant-sentient
       baseOdds: 0.0072
-      appliesToProduce: false
-      persists: false
       effect: !type:MakeSentient # existing effect.
     - name: Slippery
-      description: mutation-plant-slippery
       baseOdds: 0.036
-      appliesToPlant: false
-      effect: !type:Slipify
+      effect: !type:PlantAddTrait
+        trait: Slippery
     - name: ChangeSpecies
       baseOdds: 0.036
-      appliesToProduce: false
       effect: !type:PlantMutateSpeciesChange
-      persists: false
     - name: Unviable
       baseOdds: 0.109
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitUnviable
     - name: ChangeWaterConsumption
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantGrowth
         targetDataField: WaterConsumption
@@ -38,7 +30,6 @@
           amount: -0.1
     - name: ChangeNutrientConsumption
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantGrowth
         targetDataField: NutrientConsumption
@@ -51,7 +42,6 @@
           amount: -0.25
     - name: ChangeToxinsTolerance
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantToxins
         targetDataField: ToxinsTolerance
@@ -64,7 +54,6 @@
           amount: -2
     - name: ChangeLowPressureTolerance
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantAtmospheric
         targetDataField: LowPressureTolerance
@@ -77,7 +66,6 @@
           amount: -10
     - name: ChangeHighPressureTolerance
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantAtmospheric
         targetDataField: HighPressureTolerance
@@ -90,7 +78,6 @@
           amount: -10
     - name: ChangeLowHeatTolerance
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantAtmospheric
         targetDataField: LowHeatTolerance
@@ -103,7 +90,6 @@
           amount: -5
     - name: ChangeHighHeatTolerance
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantAtmospheric
         targetDataField: HighHeatTolerance
@@ -116,7 +102,6 @@
           amount: -5
     - name: ChangePestTolerance
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantWeedPest
         targetDataField: PestTolerance
@@ -129,7 +114,6 @@
           amount: -3
     - name: ChangeWeedTolerance
       baseOdds: 0.018
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantWeedPest
         targetDataField: WeedTolerance
@@ -142,7 +126,6 @@
           amount: -3
     - name: ChangeEndurance
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Endurance
@@ -155,7 +138,6 @@
           amount: -20
     - name: ChangeYield
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Yield
@@ -168,7 +150,6 @@
           amount: -1
     - name: ChangeLifespan
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Lifespan
@@ -181,7 +162,6 @@
           amount: -15
     - name: ChangeMaturation
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Maturation
@@ -194,7 +174,6 @@
           amount: -1
     - name: ChangeProduction
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Production
@@ -207,7 +186,6 @@
           amount: -2
     - name: ChangePotency
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Potency
@@ -220,42 +198,34 @@
           amount: -15
     - name: ChangeSeedless
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitSeedless
     - name: Lignification
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitLigneous
     - name: Kudzufication
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitKudzu
     - name: ChangeScreaming
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitScream
     - name: ChangeChemicals
       baseOdds: 0.072
-      persists: false
       effect: !type:PlantMutateChemicals
         randomChemTables:
         - RandomPickBotanyGeneralReagent
         - RandomPickBotanyFarmingReagent
     - name: ChangeExudeGasses
       baseOdds: 0.0145
-      persists: false
       effect: !type:PlantMutateExudeGases
     - name: ChangeConsumeGasses
       baseOdds: 0.0036
-      persists: false
       effect: !type:PlantMutateConsumeGases
     - name: ChangeHarvest
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantMutateHarvest
 
 - type: randomPlantMutationList
@@ -264,22 +234,18 @@
   mutations:
     - name: MutateFarmingChemicals
       baseOdds: 0.15
-      persists: false
       effect: !type:PlantMutateChemicals
         randomChemTables:
         - RandomPickBotanyFarmingReagent
     - name: ChangeHarvest
       baseOdds: 0.01
-      persists: false
       effect: !type:PlantMutateHarvest
     - name: ChangeSeedless
       baseOdds: 0.01
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitSeedless
     - name: ChangePotency
       baseOdds: 0.15 # higher chance relatively, but lower adjustment amount
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Potency
@@ -292,7 +258,6 @@
           amount: -5
     - name: ChangeYield
       baseOdds: 0.02
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Yield
@@ -305,7 +270,6 @@
           amount: -1
     - name: ChangeWaterConsumption
       baseOdds: 0.01
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantGrowth
         targetDataField: WaterConsumption
@@ -318,7 +282,6 @@
           amount: -0.1
     - name: ChangeNutrientConsumption
       baseOdds: 0.01
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: PlantGrowth
         targetDataField: NutrientConsumption
@@ -331,7 +294,6 @@
           amount: -0.25
     - name: ChangeLifespan
       baseOdds: 0.03
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Lifespan
@@ -344,7 +306,6 @@
           amount: -15
     - name: ChangeMaturation
       baseOdds: 0.03
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Maturation
@@ -357,7 +318,6 @@
           amount: -1
     - name: ChangeProduction
       baseOdds: 0.03
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Production
@@ -370,7 +330,6 @@
           amount: -1
     - name: ChangeEndurance
       baseOdds: 0.05
-      persists: false
       effect: !type:PlantChangeStat
         targetComponent: Plant
         targetDataField: Endurance
@@ -383,24 +342,20 @@
           amount: -5
     - name: Lignification
       baseOdds: 0.05
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitLigneous
     - name: Kudzufication
       baseOdds: 0.03
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitKudzu
     - name: ChangeScreaming
       baseOdds: 0.1
-      persists: false
       effect: !type:PlantChangeTraits
         trait: PlantTraitScream
     - name: Slippery
-      description: mutation-plant-slippery
       baseOdds: 0.01
-      appliesToPlant: false
-      effect: !type:Slipify
+      effect: !type:PlantAddTrait
+        trait: Slippery
 
 - type: randomPlantMutationList
   id: EvilPlantMutations
@@ -408,7 +363,6 @@
   mutations:
   - name: MutateEvilChemicals
     baseOdds: 1
-    persists: false
     effect: !type:PlantMutateChemicals
       randomChemTables:
       - EvilRandomFillSolution
