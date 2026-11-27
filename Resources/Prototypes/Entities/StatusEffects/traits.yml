@@ -30,5 +30,12 @@
   - type: BlinkDyspraxiaStatusEffect
 
 - type: entity
+  parent: [MobStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase] # TODO: Here we need to add a check to see if the entity has eyes that have a blinking component, or entity has blinking component.
+  id: TraitStatusEffectUnblinking
+  name: unblinking
+  components:
+  - type: UnblinkingStatusEffect
+
+- type: entity
   parent: [ MutedStatusEffectBase, TraitStatusEffectBase, ChangelingStatusEffectBase ]
   id: TraitStatusEffectMuted
