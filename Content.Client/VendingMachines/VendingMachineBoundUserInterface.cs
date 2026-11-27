@@ -6,6 +6,10 @@ using Robust.Shared.Input;
 
 namespace Content.Client.VendingMachines;
 
+/// <summary>
+/// A BUI for a vending machine. Wraps <see cref="VendingMachineMenu"/>.
+/// </summary>
+/// <seealso cref="VendingMachineComponent"/>
 public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
@@ -46,19 +50,5 @@ public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey
             return;
 
         SendPredictedMessage(new VendingMachineEjectMessage(type, id));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        if (_menu == null)
-            return;
-
-        _menu.OnItemSelected -= OnItemSelected;
-        _menu.OnClose -= Close;
-        _menu.Dispose();
     }
 }

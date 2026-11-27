@@ -5,17 +5,21 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Prototypes;
+using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Cargo.BUI
 {
+    /// <summary>
+    /// A BUI for the cargo request computer, wraps a <see cref="CargoConsoleMenu"/>.
+    /// </summary>
+    /// <seealso cref="CargoOrderConsoleComponent"/>
     public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
-        [Dependency] private SharedCargoSystem _cargoSystem = default!;
+        [Dependency] private IPlayerManager _playerMan = default!;
         [Dependency] private IdentitySystem _identity = default!;
+        [Dependency] private SharedCargoSystem _cargoSystem = default!;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;
@@ -48,19 +52,18 @@ namespace Content.Client.Cargo.BUI
         {
             base.Open();
 
-            var spriteSystem = EntMan.System<SpriteSystem>();
-            var dependencies = IoCManager.Instance!;
-            _menu = new CargoConsoleMenu(Owner, EntMan, dependencies.Resolve<IPrototypeManager>(), spriteSystem);
-            var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
+            _menu = this.CreateWindow<CargoConsoleMenu>();
+            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            _menu.SetConsole(Owner);
+
+            var localPlayer = _playerMan.LocalEntity;
             var description = new FormattedMessage();
 
             var orderRequester = Loc.GetString("cargo-console-paper-approver-default");
             if (EntMan.EntityExists(localPlayer))
                 orderRequester = _identity.GetIdentityShortInfo(localPlayer.Value, Owner) ?? orderRequester;
 
-            _orderMenu = new CargoConsoleOrderMenu();
-
-            _menu.OnClose += Close;
+            _orderMenu = this.CreateDisposableControl<CargoConsoleOrderMenu>();
 
             _menu.OnItemSelected += (row) =>
             {
@@ -102,8 +105,6 @@ namespace Content.Client.Cargo.BUI
             {
                 SendMessage(new CargoConsoleToggleLimitMessage());
             };
-
-            _menu.OpenCentered();
         }
 
         private void Populate(List<CargoOrderData> orders)
@@ -143,17 +144,6 @@ namespace Content.Client.Cargo.BUI
 
             _menu?.UpdateStation(station);
             Populate(cState.Orders);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (!disposing)
-                return;
-
-            _menu?.Dispose();
-            _orderMenu?.Dispose();
         }
 
         private bool AddOrder()
