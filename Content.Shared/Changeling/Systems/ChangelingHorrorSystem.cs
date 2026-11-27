@@ -344,7 +344,7 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
             if (k < 0f)
                 return;
 
-            args.Cancelled = true;
+            args.Cancel();
             ent.Comp.EndTime += DNAToTime(k, ent.Comp.SecondPerDNA.TotalSeconds, 0d);
             Dirty(ent);
         }

@@ -219,7 +219,6 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         if (willGrantDna && TryComp<StoreComponent>(ent, out var store))
             _store.TryAddCurrency(ent.Comp.DevourDnaReward, ent.Owner, store);
 
-        RaiseLocalEvent(ent.Owner, new ChangelingEntityDevouredEvent() { Entity = target });
     }
 
     /// <summary>
