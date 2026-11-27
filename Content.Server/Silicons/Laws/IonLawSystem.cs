@@ -23,6 +23,10 @@ public sealed partial class IonLawSystem : EntitySystem
     private readonly Dictionary<string, List<IonLawSelector>> _selectors = new();
     private IonLawPrototype? _ionLaw;
 
+    /// <summary>
+    /// Used to limit recursive selector lookup in GetSelectorValue
+    /// </summary>
+    private const int MaxDepth = 2;
     public override void Initialize()
     {
         base.Initialize();
@@ -196,7 +200,7 @@ public sealed partial class IonLawSystem : EntitySystem
             if (selector == null)
                 break;
 
-            var newValue = GetSelectorValue(selector);
+            var newValue = GetSelectorValue(selector, 0);
             if (newValue is string s && string.IsNullOrWhiteSpace(s))
             {
                 availableSelectors.Remove(selector);
@@ -249,8 +253,14 @@ public sealed partial class IonLawSystem : EntitySystem
         return weightedSelectors.Last().Item1;
     }
 
-    private object GetSelectorValue(IonLawSelector selector)
+    private object GetSelectorValue(IonLawSelector selector, int depth)
     {
+        if (depth > MaxDepth)
+        {
+            _sawmill.Error("A selector ending in " + selector + " went over the recursion limit");
+            return Loc.GetString("ion-law-error-max-recursion");
+        }
+
         switch (selector)
         {
             case DatasetFill datasetFill:
@@ -260,6 +270,7 @@ public sealed partial class IonLawSystem : EntitySystem
                 }
                 _sawmill.Error("Selected DataSet (" + selector + ") was empty or not found");
                 return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
+
             case RandomManifestFill randomManifestFill:
                 var stations = _stationSystem.GetStations();
                 if (stations.Count > 0)
@@ -280,11 +291,54 @@ public sealed partial class IonLawSystem : EntitySystem
                 }
                 _sawmill.Error("Fallback DataSet (" + selector + ") was empty or not found");
                 return Loc.GetString("ion-law-error-fallback-dataset-empty-or-not-found");
+
             case ConstantFill constantFill:
                 if (constantFill.BoolValue.HasValue)
                     return constantFill.BoolValue.Value;
+
+                if (!string.IsNullOrEmpty(constantFill.Value))
+                    return constantFill.Value;
+
                 _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill);
                 return Loc.GetString("ion-law-error-no-bool-value");
+
+            case JoinedDatasetFill joinedDatasetFill:
+                if (joinedDatasetFill.Selectors.Count == 0)
+                {
+                    _sawmill.Error(selector.ToString() + " had no datasets to join together");
+                    return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
+                }
+
+                var s = string.Empty;
+
+                foreach (var val in joinedDatasetFill.Selectors)
+                {
+                    s += GetSelectorValue(val, depth + 1).ToString() + joinedDatasetFill.Separator;
+                }
+
+                return s[..(s.Length - joinedDatasetFill.Separator.Length)];
+
+            case TranslateFill translateFill:
+                if (string.IsNullOrEmpty(translateFill.Key))
+                {
+                    _sawmill.Error(selector.ToString() + " has no defined translation string");
+                    return Loc.GetString("ion-law-error-no-protos");
+                }
+
+                if (translateFill.Args.Count == 0)
+                    return Loc.GetString(translateFill.Key);
+
+                var args = new (string, object)[translateFill.Args.Count];
+                var idx = 0;
+
+                foreach (var val in translateFill.Args)
+                {
+                    args[idx] = (val.Key, GetSelectorValue(val.Value, depth + 1));
+                    idx += 1;
+                }
+
+                return Loc.GetString(translateFill.Key, args);
+
             default:
                 _sawmill.Error("Selected DataSet (" + selector + ") was not selected");
                 return Loc.GetString("ion-law-error-no-selector-selected");
