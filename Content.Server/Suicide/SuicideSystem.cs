@@ -35,8 +35,7 @@ public sealed partial class SuicideSystem : SharedSuicideSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DamageableComponent, SuicideEvent>(OnDamageableSuicide);
-        SubscribeLocalEvent<MobStateComponent, SuicideEvent>(OnEnvironmentalSuicide);
+        SubscribeLocalEvent<MobStateComponent, SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<MindContainerComponent, SuicideGhostEvent>(OnSuicideGhost);
     }
 
@@ -108,6 +107,15 @@ public sealed partial class SuicideSystem : SharedSuicideSystem
 
         if (_ghostSystem.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
             args.Handled = true;
+    }
+
+    private void OnSuicide(Entity<MobStateComponent> victim, ref SuicideEvent args)
+    {
+        // Previously we subbed to damageable but it always required mobstate anyway and this removes the ordered event bug too.
+        OnEnvironmentalSuicide(victim, ref args);
+
+        if (!args.Handled && TryComp<DamageableComponent>(victim, out var damageable))
+            OnDamageableSuicide((victim, damageable), ref args);
     }
 
     /// <summary>
