@@ -41,7 +41,7 @@ public sealed partial class ActionRequirementsSystem : EntitySystem
 
         foreach (var condition in targetConditions)
         {
-            if (!_conditions.TryCondition(args.User, condition.Condition))
+            if (!_conditions.TryCondition(args.Target.Value, condition.Condition))
             {
                 DoCancel(ent, target, user, ref args, failPopup: condition.FailPopup, failPopupType: condition.FailPopupType);
                 return;
