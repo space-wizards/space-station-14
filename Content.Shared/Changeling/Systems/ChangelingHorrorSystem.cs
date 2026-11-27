@@ -40,6 +40,7 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
 
     // constants
     /// <summary>
@@ -50,6 +51,11 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     /// The horror form's prototype
     /// </summary>
     private readonly EntProtoId _protoId = "MobHorror";
+
+    /// <summary>
+    /// The container that items go in/out
+    /// </summary>
+    private readonly string _containerId = "HorrorItemStorage";
     #region transformation
 
     [SubscribeLocalEvent]
@@ -144,63 +150,40 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
 
         // VERY CURSED CODE AREA: MOVING THE HORROR'S INVENTORY INTO LINGSPACE
         // i have become death, destroyer of decent code
-        // we first drop items that are in slots that depend upon other slots
-        var itemsDeps = _inventory.GetHandOrInventoryEntities(ent.Owner).Where((k) =>
+        // we first drop items that are in slots that depend upon other slots, then remove dependency-less items
+        List<(EntityUid item, string slot)> items = new();
+
+        // slots that depend on something
+        foreach (var item in _inventory.GetHandOrInventoryEntities(ent.Owner))
         {
-            var s = _inventory.TryGetContainingSlot(k, out var slot);
-            return s;
-        }).Select((item) =>
-        {
-            var s = _inventory.TryGetContainingSlot(item, out var slotNullable);
-            var slot = slotNullable ?? throw new Exception("we literally checked if it was null 6 lines before");
+            if (!_inventory.TryGetContainingSlot(item, out var slot))
+                continue;
 
             // drop only if it depends on something
             var success = slot.DependsOn != null ? _inventory.TryUnequip(ent.Owner, slot.Name, silent: true, force: true) : false;
-            return (item, slot.Name, success);
+            if (success)
+                items.Add((item, slot.Name));
+        }
 
-        }).Where((tuple) =>
+        // slots that depend on nothing or that are left
+        foreach (var item in _inventory.GetHandOrInventoryEntities(ent.Owner))
         {
-            // todo: check if the entity was deleted, which can probably be the case for things such as hardsuit helmet etc
-            return tuple.success;
-        }).Select(
-                (tuple) => (tuple.item, tuple.Name)
-            ).ToList();
+            if (!_inventory.TryGetContainingSlot(item, out var slot))
+                continue;
 
-        var items = _inventory.GetHandOrInventoryEntities(ent.Owner).Where((k) =>
-        {
-            var s = _inventory.TryGetContainingSlot(k, out var slot);
-            return s;
-        }).Select((item) =>
-        {
-            var s = _inventory.TryGetContainingSlot(item, out var slotNullable);
-            var slot = slotNullable ?? throw new Exception("we literally checked if it was null 6 lines before");
-            // drop: in theory it should have no depends on but lets make sure, just in case...
-            var success = slot.DependsOn == null ? _inventory.TryUnequip(ent.Owner, slot.Name, silent: true, force: true) : false;
-            return (item, slot.Name, success);
-
-        }).Where((tuple) =>
-        {
-            // todo: check if the entity was deleted, which can probably be the case for things such as hardsuit helmet etc
-            return tuple.success;
-        }).Select(
-                (tuple) => (tuple.item, tuple.Name)
-            ).ToList();
+            if (_inventory.TryUnequip(ent.Owner, slot.Name, silent: true, force: true))
+                items.Add((item, slot.Name));
+        }
 
         if (items != null)
         {
-            // if they are after in the list their dependency should be present before them upon reequiping
-            if (itemsDeps != null)
-                items.AddRange(itemsDeps ?? throw new Exception("shouldnt be null"));
 
-            if (!_identitySystem.PausedMapId.HasValue)
-                return;
+            var container = _containers.EnsureContainer<Container>(ent.Owner, _containerId);
 
-            var mapCoords = new MapCoordinates(0, 0, _identitySystem.PausedMapId.Value);
-
-            // throw in nullspace
+            // throw in the storage
             foreach (var item in items)
             {
-                _transform.SetMapCoordinates(item.item, mapCoords);
+                _containers.Insert(item.item, container);
             }
 
             AddComp(ent.Owner, new ChangelingHorrorItemsComponent()
@@ -236,9 +219,13 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         if (!HasComp<ChangelingHorrorComponent>(ev.PreviousIdentity))
             return;
 
+        if (!_containers.TryGetContainer(ent.Owner, _containerId, out var container))
+            return;
+
         // some more cursed code for the inventory
         foreach (var item in ent.Comp.LingSpaceItems)
         {
+            _containers.Remove(item.item, container);
             _inventory.TryEquip(ent.Owner, item.item, item.slot, silent : true, force : true);
         }
         ent.Comp.LingSpaceItems.Clear();

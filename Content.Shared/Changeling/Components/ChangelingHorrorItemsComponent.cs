@@ -9,5 +9,5 @@ public sealed partial class ChangelingHorrorItemsComponent : Component
     /// <summary>
     /// The items themselves
     /// </summary>
-    public List<(EntityUid item, string slot)> LingSpaceItems;
+    public List<(EntityUid item, string slot)> LingSpaceItems = new();
 }
