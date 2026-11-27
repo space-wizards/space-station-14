@@ -2,6 +2,7 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.AlertLevel;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
+using Content.Shared.StationEvents.Events;
 
 namespace Content.Server.StationEvents.Events;
 

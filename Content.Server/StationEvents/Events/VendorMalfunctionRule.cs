@@ -4,6 +4,7 @@ using Content.Server.StationEvents.Components;
 using Content.Server.VendingMachines;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
+using Content.Shared.StationEvents.Events;
 using Content.Shared.VendingMachines.Components;
 using Content.Shared.Whitelist;
 

@@ -1,5 +1,6 @@
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.StationEvents.Components;
 
 
 namespace Content.Server.StationEvents.Components;

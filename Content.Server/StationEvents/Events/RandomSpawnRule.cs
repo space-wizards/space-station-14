@@ -1,5 +1,6 @@
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.StationEvents.Events;
 
 namespace Content.Server.StationEvents.Events;
 

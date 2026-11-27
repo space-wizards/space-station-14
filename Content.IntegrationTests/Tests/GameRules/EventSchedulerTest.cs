@@ -2,9 +2,9 @@
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Server.StationEvents;
-using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.StationEvents.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 

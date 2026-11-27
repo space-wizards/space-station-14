@@ -4,6 +4,8 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.StationEvents.Components;
+using Content.Shared.StationEvents.Events;
 using JetBrains.Annotations;
 
 namespace Content.Server.StationEvents.Events;

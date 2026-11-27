@@ -7,6 +7,8 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Lock;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
+using Content.Shared.StationEvents.Components;
+using Content.Shared.StationEvents.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 

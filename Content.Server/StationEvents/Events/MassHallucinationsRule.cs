@@ -3,6 +3,7 @@ using Content.Server.Traits.Assorted;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
+using Content.Shared.StationEvents.Events;
 using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.StationEvents.Events;

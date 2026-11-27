@@ -4,6 +4,7 @@ using Content.Server.StationEvents.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.StationEvents.Events;
 using Robust.Shared.Spawners;
 
 namespace Content.Server.StationEvents.Events;
