@@ -10,6 +10,7 @@ job-description-rd = Manage the resources and personnel of the Science departmen
 # Cargo
 job-description-cargotech = Deliver the mail, manage requisition orders, pilot the cargo shuttle to buy and sell goods, and ensure other departments have the supplies they need.
 job-description-salvagespec = Use the salvage magnet to draw in asteroids and debris, process ores and scrap into usable materials, find valuable loot, and fight off dangerous space fauna along the way.
+job-description-supply-assistant = Learn the basics of delivering mail and ordering supplies for the station.
 
 # Engineering
 job-description-atmostech = Ensure the station has breathable air, keep the thermo-electric generator running, and synthesize rare gases for the station.
