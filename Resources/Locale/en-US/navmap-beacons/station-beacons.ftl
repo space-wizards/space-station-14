@@ -14,6 +14,7 @@ station-beacon-warden = Warden
 station-beacon-hos = HOS
 station-beacon-armory = Armory
 station-beacon-perma-brig = Perma
+station-beacon-genpop = Genpop
 station-beacon-detective = Detective
 station-beacon-courtroom = Courtroom
 station-beacon-law = Law Office
@@ -28,6 +29,8 @@ station-beacon-morgue = Morgue
 station-beacon-surgery = Surgery
 station-beacon-psychology = Psychology
 station-beacon-clinic = Clinic
+station-beacon-cloning = Cloning
+station-beacon-virology = Virology
 
 station-beacon-science = Science
 station-beacon-research-and-development = Research
