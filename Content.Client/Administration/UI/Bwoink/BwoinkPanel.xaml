@@ -5,6 +5,21 @@
     HorizontalExpand="True">
     <OutputPanel Name="TextOutput" VerticalExpand="true" />
     <RichTextLabel Name="TypingIndicator" Access="Public" />
+    <BoxContainer Align="End" Orientation="Horizontal" SetHeight="30" >
+        <TextureButton Name="CopyLog"
+                       TexturePath="/Textures/Interface/Bwoink/clipboard.png"
+                       ToolTip="{Loc 'admin-ahelp-copy-buffer'}"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="2"
+                       Scale="0.75 0.75" />
+        <CheckBox Name="Anonymize"
+                  Access="Public"
+                  Text="{Loc 'admin-ahelp-anonymize'}"
+                  ToolTip="{Loc 'admin-ahelp-anonymize-tooltip'}"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center" />
+    </BoxContainer>
     <HistoryLineEdit Name="SenderLineEdit" />
     <RichTextLabel Name="RelayedToDiscordLabel" Access="Public" Visible="False" />
 </BoxContainer>
