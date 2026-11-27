@@ -24,6 +24,7 @@ public sealed partial class MovementModStatusSystem : EntitySystem
     public static readonly EntProtoId TaserSlowdown = "TaserSlowdownStatusEffect";
     public static readonly EntProtoId FlashSlowdown = "FlashSlowdownStatusEffect";
     public static readonly EntProtoId StatusEffectFriction = "StatusEffectFriction";
+    public static readonly EntProtoId StatusEffectWeakened = "StatusEffectWeakenedEffect";
 
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private StatusEffectsSystem _status = default!;

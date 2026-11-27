@@ -62,6 +62,11 @@
   components:
   - type: FrictionStatusEffect
 
+- type: entity
+  parent: StatusEffectSlowdown
+  id: StatusEffectWeakenedEffect
+  name: weakened
+
 # Stunnable Status Effect
 
 - type: entity

@@ -6,8 +6,10 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Dragon;
 using Content.Shared.EntityTable;
 using Content.Shared.Examine;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Pinpointer;
 using Content.Shared.Sprite;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -29,6 +31,7 @@ public sealed partial class DragonRiftSystem : EntitySystem
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
 
     public override void Initialize()
     {
@@ -125,7 +128,8 @@ public sealed partial class DragonRiftSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, DragonRiftComponent comp, ref ComponentShutdown args)
     {
-        if (!TryComp<DragonComponent>(comp.Dragon, out var dragon) || dragon.Weakened)
+        if (!TryComp<DragonComponent>(comp.Dragon, out var dragon)
+            || _status.HasStatusEffect(uid, MovementModStatusSystem.StatusEffectWeakened))
             return;
 
         _dragon.RiftDestroyed(comp.Dragon.Value, dragon);

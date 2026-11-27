@@ -12,6 +12,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC.Systems;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -23,7 +24,7 @@ public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private CarpRiftsConditionSystem _carpRifts = default!;
     [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private MovementModStatusSystem _movementMod = default!;
     [Dependency] private NpcFactionSystem _faction = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
@@ -34,6 +35,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SmokeSystem _smoke = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
 
     [Dependency] private EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
 
@@ -56,18 +58,6 @@ public sealed partial class DragonSystem : EntitySystem
         var query = EntityQueryEnumerator<DragonComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.WeakenedAccumulator > 0f)
-            {
-                comp.WeakenedAccumulator -= frameTime;
-
-                // No longer weakened.
-                if (comp.WeakenedAccumulator < 0f)
-                {
-                    comp.WeakenedAccumulator = 0f;
-                    _movement.RefreshMovementSpeedModifiers(uid);
-                }
-            }
-
             // At max rifts
             if (comp.Rifts.Count >= RiftsAllowed)
                 continue;
@@ -115,7 +105,7 @@ public sealed partial class DragonSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSpawnRift(EntityUid uid, DragonComponent component, DragonSpawnRiftActionEvent args)
     {
-        if (component.Weakened)
+        if (_status.HasStatusEffect(uid, MovementModStatusSystem.StatusEffectWeakened))
         {
             _popup.PopupEntity(Loc.GetString("carp-rift-weakened"), uid, uid);
             return;
@@ -168,16 +158,6 @@ public sealed partial class DragonSystem : EntitySystem
 
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
-    }
-
-    // TODO: just make this a move speed modifier component???
-    [SubscribeLocalEvent]
-    private void OnDragonMove(EntityUid uid, DragonComponent component, RefreshMovementSpeedModifiersEvent args)
-    {
-        if (component.Weakened)
-        {
-            args.ModifySpeed(0.5f, 0.5f);
-        }
     }
 
     [SubscribeLocalEvent]
@@ -273,9 +253,7 @@ public sealed partial class DragonSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return;
 
-        // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
-        comp.WeakenedAccumulator = comp.WeakenedDuration;
-        _movement.RefreshMovementSpeedModifiers(uid);
+        _movementMod.TryUpdateMovementSpeedModDuration(uid, MovementModStatusSystem.StatusEffectWeakened, TimeSpan.FromSeconds(comp.WeakenedDuration), comp.WeakenedSlowdown);
         _popup.PopupEntity(Loc.GetString("carp-rift-destroyed"), uid, uid);
     }
 }

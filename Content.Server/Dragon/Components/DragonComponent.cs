@@ -9,14 +9,11 @@ namespace Content.Server.Dragon
     [RegisterComponent]
     public sealed partial class DragonComponent : Component
     {
-
         /// <summary>
         /// If we have active rifts.
         /// </summary>
         [DataField]
         public List<EntityUid> Rifts = new();
-
-        public bool Weakened => WeakenedAccumulator > 0f;
 
         /// <summary>
         /// When any rift is destroyed how long is the dragon weakened for
@@ -25,10 +22,10 @@ namespace Content.Server.Dragon
         public float WeakenedDuration = 120f;
 
         /// <summary>
-        /// Has a rift been destroyed and the dragon in a temporary weakened state?
+        /// How much the dragons movement slows while weakened
         /// </summary>
         [DataField]
-        public float WeakenedAccumulator = 0f;
+        public float WeakenedSlowdown = 0.5f;
 
         [DataField]
         public float RiftAccumulator = 0f;
