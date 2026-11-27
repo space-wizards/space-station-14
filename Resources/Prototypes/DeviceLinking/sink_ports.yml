@@ -142,3 +142,13 @@
   id: SetParticleSigma
   name: signal-port-name-set-particle-sigma
   description: signal-port-description-set-particle-sigma
+
+- type: sinkPort
+  id: ToggleInput
+  name: signal-port-name-toggle-input
+  description: signal-port-description-toggle-input
+
+- type: sinkPort
+  id: ToggleOutput
+  name: signal-port-name-toggle-output
+  description: signal-port-description-toggle-output
