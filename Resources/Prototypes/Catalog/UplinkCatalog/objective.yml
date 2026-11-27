@@ -18,3 +18,25 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: uplinkCHIMP
+  name: uplink-CHIMP-name
+  description: uplink-CHIMP-desc
+  productEntity: ClothingBackpackDuffelSyndicateFilledCHIMP
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkObjective
+  conditions:
+  - !type:BuyerObjectiveWhitelistCondition
+    whitelist:
+      components:
+      - SupercriticalAnomaliesCondition
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
