@@ -711,6 +711,8 @@
       - *SpawnPlasteel
   - type: RadiationBlocker
     resistance: 5
+  - type: StaticPrice
+    price: 250
   - type: Construction
     graph: Girder
     node: diagonalReinforcedWall
@@ -886,7 +888,7 @@
   - type: RadiationBlocker
     resistance: 5
   - type: StaticPrice
-    price: 200
+    price: 300
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallStrong ]
