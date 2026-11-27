@@ -1,77 +1,152 @@
 ﻿<Document>
   # Space Law
-  On Space Station 14, stations operate under abbreviated space law. All crew, passengers, and visitors aboard the station are expected to follow these laws.
+  Space Station 14 operates under NanoTrasen Space Law. All sentient beings aboard the station are required to follow these laws.
 
-  Foreign invaders, such as nuclear operatives, ninjas, changelings, and pirates, are not protected under space law. Traitors are not foreign invaders, so they are usually protected by space law.
+  Foreign invaders, such as nuclear operatives, ninjas, changelings, and pirates, are not protected by the rights given by this Space Law. Corporate traitors are not foreign invaders, as they have a residency contract with NanoTrasen.
 
-  Space Law is not the server rules, but some rules reference Space Law and require it to be followed by certain people or to some degree.
+  Security and Command are expected to be the bastions of space law, and as such are held to much higher standards.
 
-  ## Treatment of Prisoners
-  Prisoners still have certain rights that must be upheld by law enforcement:
-  - Prisoners must be granted adequate medical care.
+  ## Legal Definitions
+  A person may be detained, arrested, or imprisoned.
+  - A [color=#a4885c]detainee[/color] is someone who has been cuffed, or similarly movement-restricted by Security, but has not necessarily committed a crime. An example of this is a person stopped for contraband search and/or removal.
+  - An [color=#a4885c]arrestee[/color] is a detainee who has been charged with a crime under Space Law, but has not yet been sentenced.
+  - A [color=#a4885c]prisoner[/color] is a person who has been sentenced with a crime and who is currently serving a brig stay as punishment for that crime.
+
+  The general legal process – presuming that the person is guilty of a confinement-carrying crime – follows these stages:
+  - [color=#a4885c]Detention[/color] or [color=#a4885c]arrest[/color], where the person is stopped by Security personnel and brought to Security.
+  - [color=#a4885c]Sentencing[/color], where the arrestee's charges are read in full, and the person may object or bring forward contrary evidence.
+  - [color=#a4885c]Brig processing[/color], where the belongings of the prisoner, who has now been convicted, are stored as appropriate, and they are brought to the brig.
+  - [color=#a4885c]Confinement[/color], where the prisoner serves their sentence in the brig.
+  These stages together are termed as "being in custody".
+
+  A "category of crime" is a collection of crimes that have similar motivations and means. Under Space Law, they are the following:
+  [color=#a4885c]E[/color] – crimes against the judicial system,
+  [color=#a4885c]H[/color] – crimes of theft,
+  [color=#a4885c]D[/color] – crimes against the physical structure of the station,
+  [color=#a4885c]T[/color] – crimes of trespass,
+  [color=#a4885c]V[/color] – violent, harming crimes,
+  and [color=#a4885c]R[/color] – Crimes against the peace of the station.
+
+  ## SolGov Bill of Rights Disclaimer
+  All sentient people, including those in Security custody, retain certain rights under the SolGov bill of rights:
+  - They have the right to as much medical care as is necessary to ensure that they will be restored to good health.
+  - They have the right to adequate clothing, food, and water.
+  - They have the right to life.
+  - They have the right to bodily integrity.
+  - They have the right to shelter and physical safety. If the station brig is no longer safe, confinement must be established in another location.
+
+  These rights are not inalienable and are subject to the balance of the rights of others. These rights are waived in the case of lawful Execution or DNR.
+
+  ## Treatment of Those in Custody
+  This Space Law provides additional rights to detainees, arrestees, and prisoners.
+  - Arrestees must be given access to legal counsel during sentencing if requested and available.
   - Prisoners must be allowed access to basic communications equipment (headsets or radios) so long as they are not abused.
-  - Prisoners must be granted clothing, food, water, shelter, and safety. If the brig is no longer safe, confinement must be established in another location.
-  - Prisoners must be given access to legal counsel during an interrogation if requested and available.
-  - Prisoners must be given their shift-mandated PDA after confinement has finished, unless there is solid proof of PDA tampering. In case of tampering, the PDA is to be secured and replaced with a new unit.
-  - Prisoners must be granted freedom of movement, and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for Permanent Confinement should be kept in the communal brig rather than in a solitary cell, unless they pose a risk to life and limb.
+  - Prisoners must be given freedom of movement during confinement and must not be restrained with handcuffs or other devices after sentencing, unless there is an undue risk to life and limb or if they are being transported.
+  - Any prisoners sentenced to permanent confinement must be kept in the communal brig rather than in a solitary cell, unless they pose a risk to life and limb.
+  - Those released from custody must be returned their shift-mandated PDA after their sentence has concluded, unless there is solid proof of PDA tampering. In case of tampering, the PDA is to be secured and replaced with a new unit.
 
-## Contraband
+  ## Contraband
+
   Contraband is a broad category of items that are illegal to possess or use without proper authorization. While there are no charges associated with carrying contraband, it is still prohibited. There are three general tiers of contraband, and they are governed by the following regulations:
 
-  - Minor Contraband: Any contraband which is restricted to a department other than Command or Security is minor contraband unless otherwise specified. The Captain or Head of Security may authorize individual use of minor contraband, and other department heads may authorize its use restricted to their assigned department.
-  - Major Contraband: Any contraband which is restricted to the Command or Security department is major unless otherwise specified. The Head of Security may authorize the use of contraband that is particularly restricted to Security; the Captain may authorize the use of any major contraband.
-  - Highly Illegal Contraband: Highly illegal contraband includes Syndicate contraband and magical contraband. Without explicit authorization from Central Command, highly illegal contraband may only be used in the event of dire, immediate emergencies, and only to prevent death or gross bodily harm. Once the emergency is dealt with, the contraband should be stored in a secure location.
+  - [color=#a4885c]Minor Contraband[/color]: Any object which is restricted to a department other than Command or Security is minor contraband when held by someone outside that department unless otherwise specified. The Captain or Head of Security may authorize use of minor contraband, and other department heads may authorize the use of restricted items of their department.
+  - [color=#a4885c]Major Contraband[/color]: Any object which is restricted to the Command or Security department is major contraband when held by someone outside that department unless otherwise specified. The Head of Security may authorize the use of restricted Security items; the Captain may authorize the use of any major contraband.
+  - [color=#a4885c]Highly Illegal Contraband[/color]: Highly illegal contraband includes Syndicate contraband and magical contraband, among other instances. Excepting explicit authorization from Central Command, highly illegal contraband may only be used in the event of dire, immediate emergencies, and only to prevent death or gross bodily harm. When an emergency is not being dealt with, the contraband must be stored in a secure location.
 
-  Security is obligated to seize contraband through routine searches or when processing criminals in the brig, but may prioritize other duties over confiscation if they see fit. With regards to contraband usage, Security is expected to follow the same regulations as everyone else. Confiscated contraband should be transferred to the Security department for secure storage or permanently disposed of. Collaborating with Cargo to sell confiscated contraband is highly encouraged, as it generally fetches a high value.
+  Security is obligated to seize contraband when processing prisoners in the brig. Otherwise, Security is expected to follow the same regulations as everyone else.
 
-  ## Search and Seizure
-  A personnel search is the inspection and seizure of a crewmember's possessions. If any contraband is found during a search, the officer should confiscate the restricted items. Non-restricted items may be seized by Security if they were used to facilitate a crime. After the search is conducted, all legal items are to be returned to the person. A crewmate may legally decline any search conducted without probable cause or a warrant while the alert level is green. Random searches without probable cause or a warrant are permitted at any other alert level.
+  Confiscated contraband should be transferred to the Security department for secure storage or be permanently disposed of. Collaborating with Cargo to sell confiscated contraband is highly encouraged, as it generally fetches a high value.
 
-  A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. These can only be done with permission or, ideally, a warrant signed by the department head or the highest-ranking member of the command staff, usually the Captain.
+  During a Blue alert or greater, Security is permitted and encouraged to perform routine searches to confiscate contraband among crew, unless other obligations present themselves.
 
-  ## Implantation
-  Any prisoner in custody can be subjected to implantation or implant extraction procedures, so long as it's within reason. The process of adding or removing an implant should not prolong the detainee's sentence; you cannot hold them longer to perform the procedure unless stated otherwise. A former inmate may be requested to undergo implantation/extraction at a later time; if the circumstances during their confinement warrant it, they must comply. The following have been listed out with special circumstances; anything not in this list can still be applied, given the proper legal context. A prisoner can still receive implantation/extraction procedures without meeting the circumstances if they give their clear consent.
+  ### Search and Seizure
+  Routine searches, also known as partial personnel searches, are the searching of a person's bag, belt, pockets, and coat. If any contraband is present within these, or any contraband is obviously visually present – such as a person wearing a syndicate jumpsuit – it must be confiscated by Security.
 
-  [color=#a4885c]Tracking Implants:[/color] Trackers can be applied to any suspect that has been convicted of a violent crime (the red crimes with a V suffix).
+  A full personnel search is search of all items on a person for contraband. These are conducted when there is high suspicion that a person possesses contraband, or during brig processing. If any contraband is found during this search, Security must confiscate the restricted items. Non-restricted items may be seized by Security if they were used to facilitate a crime. After the search is conducted, all other items must be returned to the person unless stated otherwise.
 
-  [color=#a4885c]Mind Shields:[/color] Mind Shields can be administered to any suspect charged with a crime if there is reasonable and articulable suspicion to believe they committed the crime while under mind control. If there is undeniable proof of ongoing mind control on the station, such as a successful deconversion, all the following statements apply:
+  A crewmember may legally decline any search conducted without probable cause or a warrant while the alert level is green.
 
-  - Crew can be required to be shielded and may be forcibly implanted if they refuse.
-  - If a suspect refuses to cooperate or the implant fails to function, they can be charged with Refusal of Mental Shielding.
-  - Unlike standard implantation, you may indefinitely extend the duration of a prisoner's sentence until you finish issuing Mind Shields, so long as active attempts are made to procure implants and complete the implantation procedure.
+  A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. These can only be done with the permission of or, ideally, a warrant signed by the department head or the Captain.
 
-  Usage of contraband implanters is a detainable offense, but it's not reasonable to detain someone solely for having an unidentified implant inside them.
+  ## Procedures
 
-  ## Implant Removal
-  Any prisoner in custody can be subjected to implant extraction for a specific implant if there is reasonable suspicion that they have it implanted. Detainees may not be forced or coerced into performing implant extraction on themselves against their will.
+  ### Chain of Authority
+
+  The chain of authority is represented, but not defined, by the following list of groups:
+  - Central Command (which has commanding authority over all other groups),
+  - The Captain,
+  - All department heads,
+  - Non-head staff,
+  - and non-staff crew (namely, Passengers and Visitors).
+
+  The Captain has commanding authority over all groups below them, but should concern themself with the department heads. The department heads each have commanding authority over the staff of their own departments. The Captain, all department heads, and Security staff have commanding authority over non-staff crew.
+
+  Commanding authority may not breach Space Law, and may not force a crewmember to take unreasonable actions or actions that do not further the general goals of Space Station 14. In case of conflicting orders, the highest group in the list takes precedent.
+
+  The Captain may promote any non-head staff member to the relevant department head, or any crewmember should the relevant department be completely unstaffed. Department heads may promote any crewmember to a position within their department. Staff may hold multi-departmental positions, such as Lawyer or Brig Medic.
+
+  Any authority to promote comes with the legal ability to demote should Failure to Comply be committed. Security is not required to preside over these cases unless other crimes have been committed.
+
+  ### Captaincy
+
+  If the Captain is dead, missing, or similarly absent, any department head(s) may assume the role of Acting Captain. This conveys the rights of the position – right to Captain-restricted items, right to Captain ID access, etc. – but none of the authority that has been given by Space Law to "the Captain".
+
+  The remaining non-department heads must call a binding majority vote as soon as is reasonably possible. If affirmed, the voted-upon Acting Captain becomes the new Captain. If negated, the Acting Captain must resume their previous department head role.
+
+  In the case of a complete lack of departmental heads, any crewmember may become Acting Captain, with the vote detailed above extending out to all non-absent crewmembers.
+
+  Demotion of the Captain requires one of the following:
+  - the conviction of a crime by the Captain (including in absentia) signed in writing by the Head of Security,
+  - or an attestation of unfit mental capacity of the Captain signed in writing by the Chief Medical Officer.
+  Once either document has been produced, the Captain is demoted if a binding strict majority vote among all department heads affirms the relevant document.
+
+  ### Implants
+  Security may submit any person to implant extraction procedures, as long as there is probable cause that they have implanted a specific illegal implant.
+  The time taken to process implantation/extraction counts for the purpose of a confinement sentence, but a person may be detained over their sentence for the purpose of implant implantation/extraction.
+
+  Security may only submit people to implantation under the following circumstances:
+
+  [color=#a4885c]Tracking Implants:[/color] Trackers may be applied to any suspect that has been convicted of a violent crime (the red crimes with a V category code).
+
+  [color=#a4885c]Mind Shields:[/color] Mindshields may be administered to any suspect convicted of a crime if there is reasonable and articulable suspicion to believe they committed the crime while under mind control.
+
+  If, and only if, there is undeniable proof of ongoing mind control on the station, such as due to successful deconversion, the two the following statements apply:
+
+  - Security may submit any person to mindshield implantation.
+  - If a person refuses to cooperate with the above or the implant fails to function, they should be charged with Refusal of Mental Shielding.
 
   ## Sentencing
-  From a server rules perspective, security officers are only responsible for ensuring that they place sentences over 15 minutes only where space law would allow Permanent Confinement. Informing the Warden is highly recommended, even for timed sentences. As long as those requirements are met, security officers not giving inappropriate sentence lengths is considered an in-character issue rather than a rule issue.
+  The Warden (or, if absent, the Head of Security) should be informed of all confinement sentences issued. The Captain, Head of Security, and Warden are responsible for ensuring that security officers issue appropriate sentences that comply with Space Law. If they are aware of an inappropriate sentence, including an excessively long one they must work to correct it.
 
-  The Captain, Head of Security, and Warden are responsible, within reason, for ensuring that security officers issue appropriate sentences that comply with Space Law. If they are aware of an inappropriate sentence, including an excessively long one, and there is no urgent threat or danger to prioritize, they must work to correct it. Unreasonable failures, as determined by game admins, of the Captain, HOS, or Warden to ensure space law is followed will be considered a rule issue, not an in-character issue.
+  The time described below for each confinement sentence is the maximum sentence, not a mandatory sentence. Prisoners cooperating with Security and on good behavior should have their sentences reduced. Severity of the crime committed should also factor into sentence reduction.
 
-  Use common sense and humanity when issuing punishments. You should not always seek the most severe punishment you can; you don't always have to give the maximum time or look to demote someone. Prisoners cooperating and on good behavior should have their sentences reduced. Always take severity into account and charge only what is needed for someone to learn their lesson.
+  If a prisoner's confinement sentence extends past the time in the shift when the evacuation shuttle departs, the prisoner must either be brought on board the evacuation shuttle to the on-board cells, or their sentence must be commuted.
 
-  [color=#a4885c]Maximum Allowable Sentences:[/color] When sentencing a criminal, only the most severe crime should be considered for their maximum allowable sentence. If you charge someone with two or more different crimes, you should pick the highest crime that matches the case and use that to determine the sentence. Note that repeat offenders can still be charged with the tacked-on repeated crime charge.
+  [color=#a4885c]Maximum Allowable Sentences:[/color] When sentencing a criminal, their maximum sentence is equal to the maximum sentence of the single highest-severity crime they have committed. Multiple disparate crimes do not stack up, only the single most severe is counted.
 
-  - Example: A suspect has committed a 2-01 (Grand Theft) and a 3-04 (Kidnapping). The maximum allowable sentence time would be 10 minutes because 3-04 is the more severe crime.
-  - Example 2: A suspect commits a 4-00 (Breach of Custody) and a 4-04 (Attempted Murder). Those crimes are equally severe; the maximum allowable sentence is 15 minutes.
-  - Example 3: A suspect committed a 4-04 (Attempted Murder) previously during the shift, and has done so again, committing a 2-03 (Secure Trespass) in the process. The maximum allowable sentence is 18 minutes. 15 base for the 4-04, and 3 additional for being a repeat offender.
+  For example, a person convicted of both 3-00 and 2-01 would only have the maximum sentence proscribed for the Obstruction of Justice charge – 10 minutes. The 2-01 charge does not add to the maximum sentence.
 
-  Remember, context matters greatly, and maximum sentences should be reserved for the worst offenders.
+  [color=#a4885c]Repeat Offenders:[/color] A repeated crime occurs when someone is released after committing a crime and then is convicted of the same charged crime during the same shift. Repeated crimes can be charged with tacked-on time: first repeat, 3 minutes; second repeat, 6 minutes; and third repeat, permanent confinement.
 
-  [color=#a4885c]Repeat Offenders:[/color] A repeated crime occurs when someone is released after committing a crime and then commits the same crime again during the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: Permanent Confinement. It should be noted that each tacked-on time is directly linked to one charge, and that in the instance of multiple crimes being committed, you should use the longer time for the maximum allowable sentence. For example, if someone does their second repeat of Assault and one count of Kidnapping, their maximum allowable sentence would be 11 minutes. 5 from the Moderate crime of Assault, plus 6 from the second repeat.
+  Breach of Custody (Crime 4-00) is an exception to the above. Its tacked-on time is the following: first repeat, no added time; second repeat, permanent confinement.
 
-  [color=#a4885c]Accessory, Attempting, and Intention:[/color] If someone intentionally, knowingly, and substantially assists someone in enacting a crime, they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. The same applies to a clear and substantial attempt to commit a crime, or a person who shows clear intent to act out a crime, such as a syndicate nuclear operative arming a nuke but getting arrested before it goes off, they can still be charged with station-wide destruction.
-  ## Normal Punishments
-  - [color=#a4885c]Warning:[/color] For minor crimes, fix the issue, then warn the person not to attempt the crime again. If they still proceed to do it at a later date, sentencing may be preferable.
-  - [color=#a4885c]Confinement:[/color] The typical punishment, being confined in a cell for a temporary amount of time according to the crimes.
-  - [color=#a4885c]Demotion:[/color] Entails removing all departmental gear they have on their person and revoking the involved department access from their ID. This requires the Captain's or the involved department head's approval. Demotions should only be issued if the person poses a threat to their own department or is in a position where they have/can abuse their job's gear to commit further crimes.
+  [color=#a4885c]Accessory, Attempt, and Intention:[/color] If a person intentionally, knowingly, and substantially assists someone in committing a crime, they may be charged with Accessory to that crime. For example, an engineer giving a person tools, where that person had communicated to that engineer that they planned to use those tools to commit a crime, would be an accessory to that crime. A person carrying out a clear and substantial attempt to commit a crime may be charged with Attempt of that crime. A person who shows clear intent to act out a crime, including actions taken to prepare for that crime, may be charged with Intention to Commit that crime.
 
-  ## Major Punishments
-  - [color=#a4885c]Permanent Confinement:[/color] Being held in the permanent brig for the entire duration of the shift. A person is eligible for Permanent Confinement if their timed sentence would exceed 15 minutes. Any person subject to this punishment is required to be transported in cuffs to CentComm at the end of the shift. A permanent prisoner cannot be deprived of anything covered by the section "Treatment of Prisoners".
-  - [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed. Common methods are firing line, lethal injection, exile, and high voltage electrocution. Another alternate method of "execution" is the process of placing a staff member's brain into a borg, which is allowed so long as it is lawful. Execution can only be issued with the Captain's or acting Captain's approval; if the HoS is acting Captain or there is no acting captain, all heads of staff are to hold a vote on the matter.
-  - [color=#a4885c]DNR:[/color] A DNR (do not resuscitate) order is an alternative to execution that may be placed on criminals subject to certain conditions. The criminal must be dead before the order is placed, and available Security and/or Medical resources (including personnel) must be in use for other purposes, such as a mass-casualty scenario. The criminal must be eligible for execution, and the DNR must be authorized following the same procedure as an execution.
+  Accessory, Attempt, and Intention to Commit are charged with equal sentencing as the relevant crime itself. The only exception to this is Murder, with which Attempt to Murder and Intention to Commit Murder are instead Attempted Murder offenses.
+
+  ### Standard Sentences
+  These are the sentences which may be applied to any non-Capital crime. In any place where a non-permanent confinement sentence is issued, a warning or demotion can be used instead.
+  - [color=#a4885c]Warning:[/color] A verbal or written warning by Security against committing that crime.
+  - [color=#a4885c]Demotion:[/color] The official demotion of a person within their department (e.g. Chemist to Medical Doctor) or to Passenger status. This entails removing all departmental gear they have on their person and revoking the department access from their ID. This requires the approval of the involved department head. Demotions should only be issued if the person poses a threat to their own department or is in a position where they have/can abuse their job's gear to commit further crimes.
+  - [color=#a4885c]Confinement:[/color] The typical punishment, being confined in a cell or "genpop" brig for a temporary amount of time according to the severity of the crime.
+
+  ### Capital Sentences
+  These are the sentences that may be applied to any Capital crime. If the crime committed was Accessory, Attempt, or Intention to Commit, a Standard sentence may be applied instead.
+  - [color=#a4885c]Permanent Confinement:[/color] Being permanently confined in the brig for the remaining duration of the shift. A prisoner is additionally eligible for permanent confinement if their confinement sentence would exceed 15 minutes.
+  - [color=#a4885c]Execution:[/color] Within reason, a prisoner who has been sentenced to execution may pick how they wish to be executed. Common, reasonable, methods include death by firing line, lethal injection, exile, and high voltage electrocution. Alternatively or including, the convict's brain may be placed inside a cyborg – but this option is not permitted without the convict's consent. Execution may only be issued with the Captain's direct written approval.
+  - [color=#a4885c]DNR:[/color] A DNR (do not resuscitate) order is an alternative to execution.  If a convict is dead, the Captain may issue a written, indefinite, DNR order. Once a DNR has been placed, it is illegal to revive a person (carrying a crime of Obstruction of Justice).
+
+  In order to facilitate DNRs, and other situations in which the revival of a person would be inappropriate, the Captain or any Security staff may issue a verbal "delay resuscitation" (DR). While a DR is placed on a person, it is illegal to revive a person (carrying the same offense as a DNR). A person must be kept in a rot-preventing state while a DR is issued, and a DR expires after 10 minutes (another may not be placed during the same period of death).
 
   ## Crime Listing
   - [textlink="Crime Listing" link="SpaceLawCrimeList"]
