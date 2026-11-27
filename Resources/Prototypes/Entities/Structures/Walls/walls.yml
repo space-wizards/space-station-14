@@ -711,6 +711,9 @@
       - *SpawnPlasteel
   - type: RadiationBlocker
     resistance: 5
+  - type: Construction
+    graph: Girder
+    node: diagonalReinforcedWall
 
 - type: entity
   parent: BaseWall
@@ -1037,6 +1040,9 @@
       - *ChangeNodeGirder
       - *SoundMetalSlam
       - *SpawnSteel
+  - type: Construction
+    graph: Girder
+    node: diagonalSolidWall
 
 - type: entity
   parent: WallSolid
