@@ -76,16 +76,34 @@ public sealed partial class DiscordChatLink : IPostInjectInit
         if (message.Author.IsBot)
             return;
 
-        var contents = message.Content.ReplaceLineEndings(" ");
+        _taskManager.RunOnMainThread(() => TryRelayToGame(message.ChannelId, message.Author.Username, message.Content));
+    }
 
-        if (message.ChannelId == _oocChannelId)
+    /// <summary>
+    /// Relays a message sent in a linked Discord channel to the game. This should be called on the main thread.
+    /// </summary>
+    /// <returns>True if the channel is linked to the game and the message was relayed.</returns>
+    public bool TryRelayToGame(ulong channelId, string author, string message)
+    {
+        var contents = message.ReplaceLineEndings(" ");
+
+        // Message contents are empty if the bot is not allowed to read them.
+        if (string.IsNullOrWhiteSpace(contents))
+            return false;
+
+        if (channelId == _oocChannelId)
         {
-            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Author.Username, contents));
+            _chatManager.SendHookOOC(author, contents);
+            return true;
         }
-        else if (message.ChannelId == _adminChannelId)
+
+        if (channelId == _adminChannelId)
         {
-            _taskManager.RunOnMainThread(() => _chatManager.SendHookAdmin(message.Author.Username, contents));
+            _chatManager.SendHookAdmin(author, contents);
+            return true;
         }
+
+        return false;
     }
 
     public async void SendMessage(string message, string author, ChatChannel channel)
