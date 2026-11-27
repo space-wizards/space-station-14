@@ -80,4 +80,7 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
 
     [DataField]
     public float Integrity { get; set; } = DefaultIntegrity;
+
+    [DataField]
+    public float? RelativeExplosiveIntensity { get; set; } = null;
 }

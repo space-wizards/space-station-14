@@ -11,11 +11,11 @@ namespace Content.Server.Atmos.Reactions;
 [UsedImplicitly]
 public sealed partial class N2ODecompositionReaction : IGasReactionEffect
 {
-    public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
+    public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale, float deltaTime)
     {
         var cacheN2O = mixture.GetMoles(Gas.NitrousOxide);
 
-        var burnedFuel = cacheN2O / Atmospherics.N2ODecompositionRate;
+        var burnedFuel = cacheN2O / Atmospherics.N2ODecompositionRate * deltaTime;
 
         if (burnedFuel <= 0 || cacheN2O - burnedFuel < 0)
             return ReactionResult.NoReaction;

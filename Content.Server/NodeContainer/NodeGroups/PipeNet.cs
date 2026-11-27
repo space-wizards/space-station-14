@@ -34,7 +34,8 @@ public sealed class PipeNet : BaseNodeGroup, IPipeNet
 
     public void Update()
     {
-        _atmosphereSystem?.React(Air, this);
+        // TODO: Gotta be a better way of doing this :)
+        _atmosphereSystem?.React(Air, this, _atmosphereSystem.RealAtmosTime());
     }
 
     public override void LoadNodes(List<Node> groupNodes)
