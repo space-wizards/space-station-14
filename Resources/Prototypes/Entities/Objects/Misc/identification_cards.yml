@@ -73,6 +73,7 @@
   - type: StealTarget
     stealGroup:
     - CaptainIDCard
+    - IDCard
 
 - type: entity
   parent: IDCardStandard
