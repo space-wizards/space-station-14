@@ -30,7 +30,7 @@ public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSy
         switch (args.Effect.Type)
         {
             case PlantChangeTraits.TraitModifyType.Add:
-                AddComp(entity.Owner, traitType);
+                AddComp(entity.Owner, traitType, overwrite: true);
                 break;
             case PlantChangeTraits.TraitModifyType.Remove:
                 RemCompDeferred(entity.Owner, traitType.GetType());
@@ -65,7 +65,7 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
     public enum TraitModifyType
     {
         /// <summary>
-        /// Adds the trait if it is not already present.
+        /// Adds or overwrites the trait if it is not already present.
         /// </summary>
         Add,
 

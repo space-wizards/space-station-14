@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Botany.Components;
 
 /// <summary>
-/// Random weighting dataset for solutions, able to specify reagents quantity.
+/// A table of plant mutation entries and their individual odds.
 /// </summary>
 [Prototype]
 public sealed partial class RandomPlantMutationListPrototype : IPrototype
@@ -18,8 +18,24 @@ public sealed partial class RandomPlantMutationListPrototype : IPrototype
     public bool IgnoreMutationMod;
 
     /// <summary>
-    /// List of RandomFills that can be picked from.
+    /// List of random mutations that can be picked from.
     /// </summary>
     [DataField(required: true)]
-    public List<RandomPlantMutation> Mutations = [];
+    public List<RandomPlantMutationEntry> Mutations = [];
+}
+
+/// <summary>
+/// A mutation table entry containing its odds and mutation overrides.
+/// </summary>
+[DataDefinition]
+public sealed partial class RandomPlantMutationEntry
+{
+    /// <summary>
+    /// Odds are rolled individually, this isn't a weight.
+    /// </summary>
+    [DataField]
+    public float BaseOdds;
+
+    [DataField(required: true)]
+    public RandomPlantMutationOverride Mutation = default!;
 }

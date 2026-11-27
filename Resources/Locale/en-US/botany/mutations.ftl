@@ -14,3 +14,4 @@ mutation-plant-noun-scream = mandragora
 mutation-plant-noun-unviable = unviability
 mutation-plant-noun-seedless = seedlessness
 mutation-plant-noun-sampled = clip scarring
+mutation-plant-noun-slippery = slipperiness
