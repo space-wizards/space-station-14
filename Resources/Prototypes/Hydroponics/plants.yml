@@ -2557,7 +2557,7 @@
     production: 6
     yield: 1
     potency: 25
-    growthStages: 4
+    growthStages: 3
   - type: PlantGrowth
     nutrientConsumption: 0.5
   - type: PlantChemicals
@@ -2593,7 +2593,7 @@
     production: 6
     yield: 1
     potency: 25
-    growthStages: 4
+    growthStages: 3
   - type: PlantAtmospheric
     highHeatTolerance: 313 # 40°C
   - type: PlantGrowth
@@ -2634,7 +2634,7 @@
     production: 6
     yield: 1
     potency: 25
-    growthStages: 4
+    growthStages: 3
   - type: PlantAtmospheric
     lowHeatTolerance: 283 # 10°C
   - type: PlantGrowth

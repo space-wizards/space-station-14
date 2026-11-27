@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by Mehnix, produce modified by ahandleman",
+    "copyright": "Based on https://github.com/tgstation/tgstation/blob/ef2317dd53b48801c19befdd017f779fbc1b26af/icons/obj/service/hydroponics/growing_flowers.dmi and https://github.com/goonstation/goonstation/blob/617d8ea71583dd6b9fe093286c0a1d360e968d82/icons/obj/hydroponics/items_hydroponics.dmi, modified by Pok27 (GitHub)",
     "size": {
       "x": 32,
       "y": 32
@@ -35,9 +35,6 @@
       },
       {
         "name": "stage-3"
-      },
-      {
-        "name": "stage-4"
       }
     ]
   }
