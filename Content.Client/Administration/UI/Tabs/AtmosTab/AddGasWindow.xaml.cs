@@ -20,6 +20,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
         protected override void EnteredTree()
         {
+            base.EnteredTree();
             // Fill out grids
             var entManager = IoCManager.Resolve<IEntityManager>();
             var playerManager = IoCManager.Resolve<IPlayerManager>();

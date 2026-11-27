@@ -14,9 +14,9 @@ public sealed class HeavyAttackEvent : AttackEvent
     /// <summary>
     /// As what the client swung at will not match server we'll have them tell us what they hit so we can verify.
     /// </summary>
-    public List<NetEntity> Entities;
+    public HashSet<NetEntity> Entities;
 
-    public HeavyAttackEvent(NetEntity weapon, List<NetEntity> entities, NetCoordinates coordinates) : base(coordinates)
+    public HeavyAttackEvent(NetEntity weapon, HashSet<NetEntity> entities, NetCoordinates coordinates) : base(coordinates)
     {
         Weapon = weapon;
         Entities = entities;

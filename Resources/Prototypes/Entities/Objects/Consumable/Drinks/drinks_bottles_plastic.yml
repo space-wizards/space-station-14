@@ -43,31 +43,30 @@
 # Small Plastic Bottles
 
 - type: entity
-  abstract: true
   parent: [SolutionSmall, DrinkBottlePlasticBase]
-  id: DrinkBottlePlasticSmallBaseFull
-  suffix: Full
+  id: DrinkBottlePlasticSmall
+  name: plastic bottle
+  description: A simple plastic bottle, microplastic included!
+  suffix: Empty
   components:
   - type: Item
     size: Small
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
   - type: FitsInDispenser
     solution: drink
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmall]
   id: DrinkWaterBottleFull
-  name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  suffix: Full
   components:
   - type: Solution
     solution:
       reagents:
       - ReagentId: Water
         Quantity: 60
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
   - type: Label
     localizedLabel: reagent-name-water
 

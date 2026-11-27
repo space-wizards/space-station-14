@@ -1,3 +1,4 @@
+#nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Helpers;
@@ -20,16 +21,39 @@ using static Content.IntegrationTests.Tests.Clumsy.ClumsyTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.Clumsy;
 
-[TestFixture]
 [TestOf(typeof(ClumsyStatusEffectSystem))]
 public sealed class ClumsyStatusTest : InteractionTest
 {
-    private sealed class CatchListenerSystem : TestListenerSystem<CatchAttemptEvent>;
-    private sealed class ClimbListenerSystem : TestListenerSystem<SelfBeforeClimbEvent>;
-    private sealed class DefibListenerSystem : TestListenerSystem<SelfBeforeDefibrillatorZapsEvent>;
-    private sealed class GunListenerSystem : TestListenerSystem<SelfBeforeGunShotEvent>;
-    private sealed class InjectListenerSystem : TestListenerSystem<SelfBeforeInjectEvent>;
-    private sealed class BeforeEquipListenerSystem : TestListenerSystem<BeforeEquippingHandEvent>;
+    // Clumsy effects cancel these events through the status effect relay, so record them after it has run.
+    private sealed class CatchListenerSystem : TestListenerSystem<CatchAttemptEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class ClimbListenerSystem : TestListenerSystem<SelfBeforeClimbEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class DefibListenerSystem : TestListenerSystem<SelfBeforeDefibrillatorZapsEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class GunListenerSystem : TestListenerSystem<SelfBeforeGunShotEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class InjectListenerSystem : TestListenerSystem<SelfBeforeInjectEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class BeforeEquipListenerSystem : TestListenerSystem<BeforeEquippingHandEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
 
     [SidedDependency(Side.Server)] private readonly ClimbSystem _sClimbSystem = default!;
     [SidedDependency(Side.Server)] private readonly StatusEffectsSystem _sStatusSystem = default!;
@@ -54,7 +78,7 @@ public sealed class ClumsyStatusTest : InteractionTest
             _sThrowSystem.TryThrow(ball, Vector2.Zero); // Direction doesn't matter because it spawned on top of the player
         });
 
-        Assert.That(HandSys.ActiveHandIsEmpty((SPlayer,Hands)), Is.True, "Clumsy mob caught the ball.");
+        Assert.That(HandSys.ActiveHandIsEmpty((SPlayer, Hands)), Is.True, "Clumsy mob caught the ball.");
         foreach (var ev in GetEvents<CatchAttemptEvent>(SPlayer))
         {
             Assert.That(ev.Cancelled, Is.True, "Clumsy mob didn't cancel a catch event.");

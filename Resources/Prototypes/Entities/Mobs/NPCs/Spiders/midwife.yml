@@ -1,6 +1,6 @@
 # Midwife Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderMidwife
   name: midwife spider
   description: Skittering and watchful; it seems to tend to egg sacs and cocoons.

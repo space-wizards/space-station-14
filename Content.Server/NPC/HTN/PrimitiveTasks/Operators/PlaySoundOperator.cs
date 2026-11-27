@@ -5,17 +5,10 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
 public sealed partial class PlaySoundOperator : HTNOperator
 {
-    private AudioSystem _audio = default!;
+    [Dependency] private AudioSystem _audio = default!;
 
     [DataField(required: true)]
     public SoundSpecifier? Sound;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-
-        _audio = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-    }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {

@@ -13,8 +13,10 @@ using Content.Shared.Hands;
 using Content.Shared.Medical;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Events;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.NightVision;
 using Content.Shared.Overlays;
 using Content.Shared.Rejuvenate;
@@ -36,6 +38,7 @@ public sealed partial class StatusEffectsSystem
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerAttachedEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerDetachedEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, RejuvenateEvent>(RelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, RefreshNameModifiersEvent>(RelayStatusEffectEvent);
 
         SubscribeLocalEvent<StatusEffectContainerComponent, RefreshMovementSpeedModifiersEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, ModifySlowOnDamageSpeedEvent>(RefRelayStatusEffectEvent);
@@ -56,7 +59,7 @@ public sealed partial class StatusEffectsSystem
 
         SubscribeLocalEvent<StatusEffectContainerComponent, BeforeForceSayEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, BeforeAlertSeverityCheckEvent>(RelayStatusEffectEvent);
-        SubscribeLocalEvent<StatusEffectContainerComponent, SpeakAttemptEvent>(RelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, SpeakAttemptEvent>(RelayStatusEffectEvent, after: [typeof(MobStateSystem)]);
         SubscribeLocalEvent<StatusEffectContainerComponent, ExaminedEvent>(RelayStatusEffectEvent);
 
         SubscribeLocalEvent<StatusEffectContainerComponent, EmoteActionEvent>(RelayStatusEffectEvent, before: new[] { typeof(VocalSystem) });
@@ -69,6 +72,7 @@ public sealed partial class StatusEffectsSystem
         SubscribeLocalEvent<StatusEffectContainerComponent, SelfBeforeDefibrillatorZapsEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, SelfBeforeInjectEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, RefreshNightVisionEvent>(RefRelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, GetMetabolicMultiplierEvent>(RefRelayStatusEffectEvent);
 
         SubscribeLocalEvent<StatusEffectContainerComponent, CatchAttemptEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, SelfBeforeGunShotEvent>(RelayStatusEffectEvent);

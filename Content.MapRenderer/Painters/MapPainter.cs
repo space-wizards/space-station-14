@@ -9,6 +9,7 @@ using Content.Client.Markers;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.GameTicking;
+using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -234,6 +235,12 @@ namespace Content.MapRenderer.Painters
             if (_pair == null)
                 throw new InvalidOperationException("Instance not initialized!");
 
+            // End the round before host shutdown so minds are cleared before their map is deleted.
+            await _pair.Server.WaitAssertion(() =>
+            {
+                _pair.Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
+                _pair.Server.System<ServerGameTicker>().RestartRound();
+            });
             await _pair.CleanReturnAsync();
         }
 

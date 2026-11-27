@@ -14,7 +14,6 @@ public sealed partial class ShuttleComponent : Component
     /// <summary>
     /// Thrust gets multiplied by this value if it's for braking.
     /// </summary>
-    [DataField]
     public const float BrakeCoefficient = 1.5f;
 
     /// <summary>
@@ -23,7 +22,6 @@ public sealed partial class ShuttleComponent : Component
     [DataField]
     public float BaseMaxLinearVelocity = 60f;
 
-    [DataField]
     public const float MaxAngularVelocity = 4f;
 
     /// <summary>
@@ -77,5 +75,17 @@ public sealed partial class ShuttleComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan? FTLCooldownOverride = null;
+
+    /// <summary>
+    /// If true, the shuttle wont damage other grids during collisions
+    /// </summary>
+    [DataField]
+    public bool Harmless = false;
+
+    /// <summary>
+    /// If true, the shuttle is immune to grid collisions
+    /// </summary>
+    [DataField]
+    public bool Invulnerable = false;
 }
 

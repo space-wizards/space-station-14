@@ -11,12 +11,14 @@ namespace Content.IntegrationTests.Tests.Helpers;
 /// </summary>
 public abstract partial class TestListenerSystem<TEvent> : EntitySystem where TEvent : notnull
 {
+    protected virtual Type[]? After => null;
+
     public override void Initialize()
     {
         // TODO
         // supporting broadcast events requires cleanup on test finish, which will probably require  changes to the
         // test pair/pool manager and would conflict with #36797
-        SubscribeLocalEvent<TestListenerComponent, TEvent>(OnDirectedEvent);
+        SubscribeLocalEvent<TestListenerComponent, TEvent>(OnDirectedEvent, after: After);
     }
 
     protected virtual void OnDirectedEvent(Entity<TestListenerComponent> ent, ref TEvent args)

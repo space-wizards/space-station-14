@@ -1,6 +1,6 @@
 # Tarantula Spider
 - type: entity
-  parent: MobSpiderAnimated
+  parent: MobSpiderBase
   id: MobGiantSpiderTarantula
   name: tarantula
   description: Widely considered to be the worse thing in existence.

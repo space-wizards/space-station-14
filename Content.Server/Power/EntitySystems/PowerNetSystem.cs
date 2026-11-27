@@ -84,7 +84,7 @@ namespace Content.Server.Power.EntitySystems
         }
 
         private void ApcPowerReceiverShutdown(EntityUid uid, ApcPowerReceiverComponent component,
-            ComponentShutdown args)
+            ref ComponentShutdown args)
         {
             _powerState.Loads.Free(component.NetworkLoad.Id);
         }
@@ -115,7 +115,7 @@ namespace Content.Server.Power.EntitySystems
             AllocBattery(component.NetworkBattery);
         }
 
-        private void BatteryShutdown(EntityUid uid, PowerNetworkBatteryComponent component, ComponentShutdown args)
+        private void BatteryShutdown(EntityUid uid, PowerNetworkBatteryComponent component, ref ComponentShutdown args)
         {
             _powerState.Batteries.Free(component.NetworkBattery.Id);
         }
@@ -136,7 +136,7 @@ namespace Content.Server.Power.EntitySystems
             AllocLoad(component.NetworkLoad);
         }
 
-        private void PowerConsumerShutdown(EntityUid uid, PowerConsumerComponent component, ComponentShutdown args)
+        private void PowerConsumerShutdown(EntityUid uid, PowerConsumerComponent component, ref ComponentShutdown args)
         {
             _powerState.Loads.Free(component.NetworkLoad.Id);
         }
@@ -157,7 +157,7 @@ namespace Content.Server.Power.EntitySystems
             AllocSupply(component.NetworkSupply);
         }
 
-        private void PowerSupplierShutdown(EntityUid uid, PowerSupplierComponent component, ComponentShutdown args)
+        private void PowerSupplierShutdown(EntityUid uid, PowerSupplierComponent component, ref ComponentShutdown args)
         {
             _powerState.Supplies.Free(component.NetworkSupply.Id);
         }

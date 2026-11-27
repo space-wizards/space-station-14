@@ -172,7 +172,7 @@ public sealed partial class ParcelWrappingSystem
             _transform.DropNextTo((trash, null), (parcel, parcelTransform));
         }
 
-        PredictedQueueDel(parcel);
+        QueueDel(parcel);
 
         return containedEntity;
     }

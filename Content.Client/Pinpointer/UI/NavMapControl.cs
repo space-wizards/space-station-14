@@ -30,7 +30,7 @@ public partial class NavMapControl : MapGridControl
 {
     [Dependency] private IResourceCache _cache = default!;
     private readonly SharedTransformSystem _transformSystem;
-    private readonly SharedNavMapSystem _navMapSystem;
+    private readonly NavMapSystem _navMapSystem;
 
     public EntityUid? Owner;
     public EntityUid? MapUid;
@@ -118,7 +118,7 @@ public partial class NavMapControl : MapGridControl
         IoCManager.InjectDependencies(this);
 
         _transformSystem = EntManager.System<SharedTransformSystem>();
-        _navMapSystem = EntManager.System<SharedNavMapSystem>();
+        _navMapSystem = EntManager.System<NavMapSystem>();
 
         BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
 
@@ -517,18 +517,18 @@ public partial class NavMapControl : MapGridControl
 
         foreach (var (chunkOrigin, chunk) in _navMap.Chunks)
         {
-            for (var i = 0; i < SharedNavMapSystem.ArraySize; i++)
+            for (var i = 0; i < NavMapSystem.ArraySize; i++)
             {
-                var tileData = chunk.TileData[i] & SharedNavMapSystem.WallMask;
+                var tileData = chunk.TileData[i] & NavMapSystem.WallMask;
                 if (tileData == 0)
                     continue;
 
                 tileData >>= (int) NavMapChunkType.Wall;
 
-                var relativeTile = SharedNavMapSystem.GetTileFromIndex(i);
-                var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * _grid.TileSize;
+                var relativeTile = NavMapSystem.GetTileFromIndex(i);
+                var tile = (chunk.Origin * NavMapSystem.ChunkSize + relativeTile) * _grid.TileSize;
 
-                if (tileData != SharedNavMapSystem.AllDirMask)
+                if (tileData != NavMapSystem.AllDirMask)
                 {
                     AddRectForThinWall(tileData, tile);
                     continue;
@@ -539,10 +539,10 @@ public partial class NavMapControl : MapGridControl
 
                 // North edge
                 var neighborData = 0;
-                if (relativeTile.Y != SharedNavMapSystem.ChunkSize - 1)
+                if (relativeTile.Y != NavMapSystem.ChunkSize - 1)
                     neighborData = chunk.TileData[i+1];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Up, out neighborChunk))
-                    neighborData = neighborChunk.TileData[i + 1 - SharedNavMapSystem.ChunkSize];
+                    neighborData = neighborChunk.TileData[i + 1 - NavMapSystem.ChunkSize];
 
                 if ((neighborData & southMask) == 0)
                 {
@@ -553,10 +553,10 @@ public partial class NavMapControl : MapGridControl
 
                 // East edge
                 neighborData = 0;
-                if (relativeTile.X != SharedNavMapSystem.ChunkSize - 1)
-                    neighborData = chunk.TileData[i + SharedNavMapSystem.ChunkSize];
+                if (relativeTile.X != NavMapSystem.ChunkSize - 1)
+                    neighborData = chunk.TileData[i + NavMapSystem.ChunkSize];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Right, out neighborChunk))
-                    neighborData = neighborChunk.TileData[i + SharedNavMapSystem.ChunkSize - SharedNavMapSystem.ArraySize];
+                    neighborData = neighborChunk.TileData[i + NavMapSystem.ChunkSize - NavMapSystem.ArraySize];
 
                 if ((neighborData & westMask) == 0)
                 {
@@ -569,7 +569,7 @@ public partial class NavMapControl : MapGridControl
                 if (relativeTile.Y != 0)
                     neighborData = chunk.TileData[i - 1];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Down, out neighborChunk))
-                    neighborData = neighborChunk.TileData[i - 1 + SharedNavMapSystem.ChunkSize];
+                    neighborData = neighborChunk.TileData[i - 1 + NavMapSystem.ChunkSize];
 
                 if ((neighborData & northMask) == 0)
                 {
@@ -580,9 +580,9 @@ public partial class NavMapControl : MapGridControl
                 // West edge
                 neighborData = 0;
                 if (relativeTile.X != 0)
-                    neighborData = chunk.TileData[i - SharedNavMapSystem.ChunkSize];
+                    neighborData = chunk.TileData[i - NavMapSystem.ChunkSize];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Left, out neighborChunk))
-                    neighborData = neighborChunk.TileData[i - SharedNavMapSystem.ChunkSize + SharedNavMapSystem.ArraySize];
+                    neighborData = neighborChunk.TileData[i - NavMapSystem.ChunkSize + NavMapSystem.ArraySize];
 
                 if ((neighborData & eastMask) == 0)
                 {
@@ -614,19 +614,19 @@ public partial class NavMapControl : MapGridControl
 
         foreach (var chunk in _navMap.Chunks.Values)
         {
-            for (var i = 0; i < SharedNavMapSystem.ArraySize; i++)
+            for (var i = 0; i < NavMapSystem.ArraySize; i++)
             {
-                var tileData = chunk.TileData[i] & SharedNavMapSystem.AirlockMask;
+                var tileData = chunk.TileData[i] & NavMapSystem.AirlockMask;
                 if (tileData == 0)
                     continue;
 
                 tileData >>= (int) NavMapChunkType.Airlock;
 
-                var relative = SharedNavMapSystem.GetTileFromIndex(i);
-                var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relative) * _grid.TileSize;
+                var relative = NavMapSystem.GetTileFromIndex(i);
+                var tile = (chunk.Origin * NavMapSystem.ChunkSize + relative) * _grid.TileSize;
 
                 // If the edges of an airlock tile are not all occupied, draw a thin airlock for each edge
-                if (tileData != SharedNavMapSystem.AllDirMask)
+                if (tileData != NavMapSystem.AllDirMask)
                 {
                     AddRectForThinAirlock(tileData, tile);
                     continue;
@@ -647,7 +647,7 @@ public partial class NavMapControl : MapGridControl
         var leftTop = new Vector2(-0.5f, 0.5f - ThinWallThickness);
         var rightBottom = new Vector2(0.5f, 0.5f);
 
-        for (var i = 0; i < SharedNavMapSystem.Directions; i++)
+        for (var i = 0; i < NavMapSystem.Directions; i++)
         {
             var dirMask = 1 << i;
             if ((tileData & dirMask) == 0)
@@ -669,7 +669,7 @@ public partial class NavMapControl : MapGridControl
         var centreTop = new Vector2(0f, 0.5f - FullWallInstep - ThinDoorThickness);
         var centreBottom = new Vector2(0f, 0.5f - FullWallInstep);
 
-        for (var i = 0; i < SharedNavMapSystem.Directions; i++)
+        for (var i = 0; i < NavMapSystem.Directions; i++)
         {
             var dirMask = 1 << i;
             if ((tileData & dirMask) == 0)

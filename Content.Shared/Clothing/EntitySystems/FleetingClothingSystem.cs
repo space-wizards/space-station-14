@@ -59,7 +59,7 @@ public sealed partial class FleetingClothingSystem : EntitySystem
         if (ent.Comp.DestroyOnUnequip)
             _destructibleSystem.DestroyEntity(ent.Owner); // Empty containers first.
         else
-            PredictedQueueDel(ent.Owner); // Poof!
+            QueueDel(ent.Owner); // Poof!
 
         // Use coords because the entity will be deleted.
         var coords = Transform(ent).Coordinates;
@@ -102,7 +102,7 @@ public sealed partial class FleetingClothingSystem : EntitySystem
         if (ent.Comp.DestroyOnUnequip)
             _destructibleSystem.DestroyEntity(ent.Owner); // Empty containers first.
         else
-            PredictedQueueDel(ent.Owner); // Poof!
+            QueueDel(ent.Owner); // Poof!
 
         // Can't predict the popup or sound without a user.
         // TODO: Make the popup and sound API sane and remove this guard.

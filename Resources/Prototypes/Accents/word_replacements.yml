@@ -407,3 +407,7 @@
     accent-skeleton-words-7: accent-skeleton-words-replace-7
     accent-skeleton-words-8: accent-skeleton-words-replace-8
     accent-skeleton-words-9: accent-skeleton-words-replace-9
+
+# used to give speech back to caks
+- type: accent
+  id: noreplacement

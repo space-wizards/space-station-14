@@ -94,7 +94,7 @@ public sealed partial class DiskConsoleSystem : EntitySystem
         _ui.SetUiState(uid, DiskConsoleUiKey.Key, state);
     }
 
-    private void OnShutdown(EntityUid uid, DiskConsolePrintingComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, DiskConsolePrintingComponent component, ref ComponentShutdown args)
     {
         UpdateUserInterface(uid);
     }
