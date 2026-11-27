@@ -59,7 +59,7 @@ jobs:
       #     dotnet-version: 10.0.x
 
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore Content.Packaging/Content.Packaging.csproj
 
       - name: Build Packaging
         run: dotnet build Content.Packaging --configuration Release --no-restore /m
