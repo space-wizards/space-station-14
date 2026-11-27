@@ -17,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -227,7 +228,8 @@ public sealed partial class FollowerSystem : EntitySystem
             _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), rotation: Angle.Zero);
         }
 
-        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
+        if (HasComp<PhysicsComponent>(follower))
+            _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         EnsureComp<OrbitVisualsComponent>(follower);
 

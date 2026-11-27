@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
+using Content.Client.Stylesheets.Colorspace;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Reaction;
@@ -99,13 +100,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
             BackgroundColor = reagent.SubstanceColor
         };
 
-        var r = reagent.SubstanceColor.R;
-        var g = reagent.SubstanceColor.G;
-        var b = reagent.SubstanceColor.B;
-
-        var textColor = 0.2126f * r + 0.7152f * g + 0.0722f * b > 0.5
-            ? Color.Black
-            : Color.White;
+        var textColor = reagent.SubstanceColor.GetContrastingTextColor();
 
         ReagentName.SetMarkup(Loc.GetString("guidebook-reagent-name",
             ("color", textColor), ("name", reagent.LocalizedName)));

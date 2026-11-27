@@ -1,7 +1,8 @@
-using Content.Shared.Mind;
 using Content.Shared.Actions;
 using Content.Shared.Changeling.Components;
+using Content.Shared.Follower;
 using Content.Shared.Gibbing;
+using Content.Shared.Mind;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 
@@ -14,6 +15,7 @@ public abstract partial class ChangelingLastResortSystem : EntitySystem
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private DestructionResistanceSystem _destructionResistance = default!;
+    [Dependency] private FollowerSystem _follower = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
 
     [SubscribeLocalEvent]
@@ -48,6 +50,8 @@ public abstract partial class ChangelingLastResortSystem : EntitySystem
         _mind.TransferTo(mindId, slug, mind: mind);
 
         _destructionResistance.SetEnabled(args.Performer, false);
+
+        _follower.TransferFollowers(args.Performer, slug);
 
         _gibbing.Gib(args.Performer);
     }
