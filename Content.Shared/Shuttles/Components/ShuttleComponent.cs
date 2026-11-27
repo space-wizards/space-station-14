@@ -77,6 +77,11 @@ public sealed partial class ShuttleComponent : Component
     public TimeSpan? FTLCooldownOverride = null;
 
     /// <summary>
+    /// If set to true, this shuttle will bulldoze grids upon flting & docking
+    /// </summary>
+    [DataField]
+    public bool Bulldoze = false;
+    
     /// If true, the shuttle wont damage other grids during collisions
     /// </summary>
     [DataField]
