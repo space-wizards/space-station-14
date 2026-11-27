@@ -1,15 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using Content.Shared.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Linq;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Contraband;
 
@@ -19,8 +22,10 @@ namespace Content.Shared.Contraband;
 public sealed partial class ContrabandSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IEntityManager _entity = default!;
     [Dependency] private SharedIdCardSystem _id = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     private bool _contrabandExamineEnabled;
     private bool _contrabandExamineOnlyInHudEnabled;
@@ -28,8 +33,6 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<ContrabandComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
-
         Subs.CVar(_configuration, CCVars.ContrabandExamine, SetContrabandExamine, true);
         Subs.CVar(_configuration, CCVars.ContrabandExamineOnlyInHUD, SetContrabandExamineOnlyInHUD, true);
     }
@@ -45,13 +48,18 @@ public sealed partial class ContrabandSystem : EntitySystem
         Dirty(uid, contraband);
     }
 
+    [SubscribeLocalEvent]
     private void OnDetailedExamine(EntityUid ent, ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
 
         if (!_contrabandExamineEnabled)
             return;
 
-        // Checking if contraband is only shown in the HUD
+        // CanAccess is not used here, because we want people to be able to examine legality in strip menu.
+        if (!args.CanInteract)
+            return;
+
+        // if contraband is only supposed to be shown in the HUD, make sure we can see it.
         if (_contrabandExamineOnlyInHudEnabled)
         {
             var ev = new GetContrabandDetailsEvent();
@@ -60,15 +68,10 @@ public sealed partial class ContrabandSystem : EntitySystem
                 return;
         }
 
-        // CanAccess is not used here, because we want people to be able to examine legality in strip menu.
-        if (!args.CanInteract)
-            return;
-
         // two strings:
-        // one, the actual informative 'this is restricted'
-        // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
+        // one, the actual informative 'this is restricted' 
         var severity = ProtoMan.Index(component.Severity);
-        String departmentExamineMessage;
+        string departmentExamineMessage;
         if (severity.ShowDepartmentsAndJobs)
         {
             // department restricted text
@@ -80,20 +83,56 @@ public sealed partial class ContrabandSystem : EntitySystem
             departmentExamineMessage = Loc.GetString(severity.ExamineText, ("type", ContrabandItemType.Item), ("color", severity.Color.ToHex()));
         }
 
-        // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
-        var carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
-        var iconTexture = "/Textures/Interface/VerbIcons/unlock-green.svg.192dpi.png";
-        if (IsContraband((ent, component), args.User, out _))
-        {
-            carryingMessage = Loc.GetString("contraband-examine-text-avoid-carrying-around");
-            iconTexture = "/Textures/Interface/VerbIcons/lock-red.svg.192dpi.png";
-        }
+        // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
+        // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you 
+        var (carryingMessage, iconTexture) = GetLegalityContent((ent, component), args.User, severity.ID);
+
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
+
         _examine.AddHoverExamineVerb(args,
             component,
             Loc.GetString("contraband-examinable-verb-text"),
             examineMarkup.ToMarkup(),
-            iconTexture);
+            iconTexture
+        );
+    }
+
+    private (string, string) GetLegalityContent(Entity<ContrabandComponent> item, EntityUid idOwner, string severity)
+    {
+        _id.TryFindIdCard(idOwner, out var yourId);
+        var illegal = IsContraband((item.Owner, item.Comp), yourId, out _);
+
+        // Checks if the contraband is contained within a container. if NOT, do you.
+        if (!_container.TryGetContainingContainer((item.Owner, null, null), out var ctnr))
+        {
+            return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
+        }
+        // if you are examining your own item, do you.
+        if (idOwner == ctnr.Owner)
+        {
+            return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
+        }
+
+        // holder has neither pronouns nor id, do you.
+        if (!_id.TryFindIdCard(ctnr.Owner, out var theirId) && !HasComp<GrammarComponent>(ctnr.Owner))
+        {
+            return (ResolveAllowedText(illegal, idOwner, true), ResolveIconPath(illegal, severity));
+        }
+
+        // if they (have pronouns or id) and are not you, do them.
+        illegal = IsContraband((item.Owner, item.Comp), theirId, out _);
+
+        return (ResolveAllowedText(illegal, ctnr.Owner, false), ResolveIconPath(illegal, severity));
+    }
+
+    private string ResolveAllowedText(bool illegal, EntityUid idOwner, bool youText)
+    {
+        return Loc.GetString(illegal ? "contraband-examine-text-avoid-carrying-around" : "contraband-examine-text-in-the-clear", ("you", youText ? "true" : "false"), ("gender", Identity.Entity(idOwner, _entity)));
+    }
+
+    private string ResolveIconPath(bool illegal, string severity)
+    {
+        return (illegal ? "/Textures/Interface/VerbIcons/Contraband/locked.color." : "/Textures/Interface/VerbIcons/Contraband/unlock.color.") + severity + ".svg.192dpi.png";
     }
 
     /// <summary>
@@ -141,10 +180,10 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// is contraband in general.
     /// </summary>
     /// <param name="contraband">The entity that we are checking for contraband.</param>
-    /// <param name="player">The player that we are checking if they are allowed to have this contraband.</param>
+    /// <param name="id">The id that we are checking to see if it allows someone to have certain contraband.</param>
     /// <param name="contraProtoId">The contraband ProtoId if the item is contraband.</param>
     /// <returns></returns>
-    public bool IsContraband(Entity<ContrabandComponent?> contraband, EntityUid? player, [NotNullWhen(true)] out ProtoId<ContrabandSeverityPrototype>? contraProtoId)
+    public bool IsContraband(Entity<ContrabandComponent?> contraband, Entity<IdCardComponent> id, [NotNullWhen(true)] out ProtoId<ContrabandSeverityPrototype>? contraProtoId)
     {
         contraProtoId = null;
 
@@ -153,22 +192,23 @@ public sealed partial class ContrabandSystem : EntitySystem
 
         contraProtoId = contraband.Comp.Severity;
 
-        if (player == null)
-            return true;
-
-        List<ProtoId<DepartmentPrototype>> departments = new();
-        var jobId = "";
-        if (_id.TryFindIdCard(player.Value, out var id))
-        {
-            departments = id.Comp.JobDepartments;
-            if (id.Comp.LocalizedJobTitle is not null)
-                jobId = id.Comp.LocalizedJobTitle;
-        }
-
-        var jobs = contraband.Comp.AllowedJobs.Select(p => ProtoMan.Index(p).LocalizedName).ToArray();
         // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
-        if (departments.Intersect(contraband.Comp.AllowedDepartments).Any() || jobs.Contains(jobId))
-            return false;
+        if (id.Owner.IsValid()) //TryGetId returns a broken entity instead of null rn. pr up 4 dat!
+        {
+
+            if (id.Comp.LocalizedJobTitle is not null)
+            {
+                var jobId = id.Comp.LocalizedJobTitle;
+                var jobs = contraband.Comp.AllowedJobs.Select(p => ProtoMan.Index(p).LocalizedName).ToArray(); //although having to pass it through loc is INSANE, id cards literally NEVER. store the JobId, JobTitle or JobPrototype properly
+
+                if (jobs.Contains(jobId))
+                    return false;
+            }
+
+            var departments = id.Comp.JobDepartments;
+            if (departments.Intersect(contraband.Comp.AllowedDepartments).Any())
+                return false;
+        }
 
         return true;
     }
@@ -177,9 +217,9 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// Checks if a storage has contraband.
     /// </summary>
     /// <param name="contraband">The entity that we are checking for contraband.</param>
-    /// <param name="player">The player that we are checking if they are allowed to have certain contraband.</param>
+    /// <param name="id">The id that we are checking to see if it allows someone to have certain contraband.</param>
     /// <param name="contrabandList">All contraband prototypes present in storage.</param>
-    public bool ContainerHasContraband(Entity<ContainerManagerComponent?> contraband, EntityUid? player, out List<ProtoId<ContrabandSeverityPrototype>> contrabandList)
+    public bool ContainerHasContraband(Entity<ContainerManagerComponent?> contraband, Entity<IdCardComponent> id, out List<ProtoId<ContrabandSeverityPrototype>> contrabandList)
     {
         contrabandList = [];
 
@@ -190,10 +230,10 @@ public sealed partial class ContrabandSystem : EntitySystem
         {
             foreach (var ent in container.ContainedEntities)
             {
-                if (IsContraband(ent, player, out var itemContraId))
+                if (IsContraband(ent, id, out var itemContraId))
                     contrabandList.Add((ProtoId<ContrabandSeverityPrototype>)itemContraId);
 
-                ContainerHasContraband(ent, player, out var itemContraList);
+                ContainerHasContraband(ent, id, out var itemContraList);
 
                 contrabandList = contrabandList.Concat(itemContraList).ToList();
             }
