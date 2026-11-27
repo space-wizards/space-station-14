@@ -1,3 +1,4 @@
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -26,6 +27,12 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     public Vector2 Scale { get; private set; } = Vector2.One;
 
     /// <summary>
+    ///     A base sprite offset that is applied to this element.
+    /// </summary>
+    [DataField]
+    public Vector2 Offset { get; private set; } = Vector2.Zero;
+
+    /// <summary>
     /// A localized name piece to build into the item name generator.
     /// </summary>
     [DataField]
@@ -42,4 +49,19 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     /// </summary>
     [DataField]
     public List<ProtoId<TagPrototype>> Tags { get; set; } = new();
+
+    /// <summary>
+    ///     If this is enabled, then this element will calculate a random offset when stacked
+    ///     based on <see cref="FoodSequenceStartPointComponent.MinLayerOffset"/> and
+    ///     <see cref="FoodSequenceStartPointComponent.MaxLayerOffset"/>.
+    /// </summary>
+    [DataField]
+    public bool UseRandomOffset = true;
+
+    /// <summary>
+    ///     Whether or not this ingredient can be flipped when applied to a sequence that
+    ///     has <see cref="FoodSequenceStartPointComponent.AllowHorizontalFlip"/>.
+    /// </summary>
+    [DataField]
+    public bool CanFlip = true;
 }
