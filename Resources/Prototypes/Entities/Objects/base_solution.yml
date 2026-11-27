@@ -152,6 +152,14 @@
   - type: Solution
     id: lube # For autolathes to run faster or slower
 
+- type: entity
+  abstract: true
+  parent: Solution
+  id: SolutionLighter
+  components:
+  - type: Solution
+    id: lighter 
+
 # Solution Sizes
 
 ## Of note, maxVol will be moved out of the Solution class into the SolutionComponent in the future
