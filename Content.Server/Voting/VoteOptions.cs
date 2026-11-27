@@ -45,6 +45,11 @@ namespace Content.Server.Voting
         public VoteManager.VoterEligibility VoterEligibility = VoteManager.VoterEligibility.All;
 
         /// <summary>
+        /// List of specific players to send the vote. Only used when <see cref="VoterEligibility"/> is set to SelectedPlayers.
+        /// </summary>
+        public HashSet<ICommonSession> SelectedVoters = new();
+
+        /// <summary>
         ///     Whether the vote should send and display the number of votes to the clients. Being an admin defaults this option to true for your client.
         /// </summary>
         public bool DisplayVotes = true;
