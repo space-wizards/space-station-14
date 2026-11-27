@@ -14,11 +14,11 @@ public sealed partial class SlurredAccentComponent : BaseAccentComponent
     /// Divisor applied to total seconds used to get the odds of slurred speech occuring.
     /// </summary>
     [DataField]
-    public float SlurredModifier = 1100f;
+    public float SlurredModifier = 180f;
 
     /// <summary>
     /// Minimum amount of time on the slurred accent for it to start taking effect.
     /// </summary>
     [DataField]
-    public float SlurredThreshold = 80f;
+    public float SlurredThreshold;
 }
