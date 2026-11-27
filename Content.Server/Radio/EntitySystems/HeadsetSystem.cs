@@ -1,8 +1,11 @@
+using Content.Server.Popups;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -12,6 +15,8 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 {
     [Dependency] private INetManager _netMan = default!;
     [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public override void Initialize()
     {
@@ -44,13 +49,24 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
     {
-        if (args.Channel != null
-            && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            && keys.Channels.Contains(args.Channel.ID))
+        if (args.Channel is null)
+            return;
+
+        if (!TryComp(component.Headset, out EncryptionKeyHolderComponent? keys))
+            return;
+
+        if (!keys.Channels.Contains(args.Channel.ID))
+            return;
+
+        if (args.Channel.ID == SharedChatSystem.CommonChannel
+            && !_configurationManager.GetCVar(CCVars.ChatCommonRadioChannelAllowHeadset))
         {
-            _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
-            args.Channel = null; // prevent duplicate messages from other listeners.
+            _popup.PopupEntity(Loc.GetString("chat-manager-radio-channel-forbidden-for-headset"), uid, uid);
+            return;
         }
+
+        _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
+        args.Channel = null; // prevent duplicate messages from other listeners.
     }
 
     protected override void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)

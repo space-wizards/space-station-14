@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -9,6 +10,7 @@ using Content.Shared.Radio.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -27,6 +29,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedWiresSystem _wires = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public override void Initialize()
     {
@@ -219,7 +222,9 @@ public sealed partial class EncryptionKeySystem : EntitySystem
                 ("color", proto.Color),
                 ("key", key),
                 ("id", proto.LocalizedName),
-                ("freq", proto.Frequency)));
+                ("freq", proto.Frequency),
+                ("receiveOnly", id == SharedChatSystem.CommonChannel
+                                && !_configurationManager.GetCVar(CCVars.ChatCommonRadioChannelAllowHeadset))));
         }
 
         if (defaultChannel != null && ProtoMan.TryIndex(defaultChannel, out proto))

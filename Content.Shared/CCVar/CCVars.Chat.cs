@@ -99,4 +99,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ChatNameLinks =
         CVarDef.Create("chat.chat_name_links", true, CVar.REPLICATED | CVar.SERVER, "Toggles Chat Name Link functionality.");
+
+    /// <summary>
+    ///     Whether the Common radio channel can be used to send messages from headsets.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatCommonRadioChannelAllowHeadset =
+        CVarDef.Create("chat.common_radio_channel_allow_headset", false, CVar.SERVER | CVar.REPLICATED);
 }
