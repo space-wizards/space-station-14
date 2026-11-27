@@ -39,7 +39,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     private DeviceAddress _currentAddress = DeviceAddress.Invalid;
     private bool _isSwitching;
     private readonly FixedEye _defaultEye = new();
-    private readonly Dictionary<ProtoId<DeviceFrequencyPrototype>, int> _subnetMap = new();
+    private readonly Dictionary<ProtoId<DeviceFrequencyPrototype>, int> _subnetMap = [];
     private EntityUid? _mapUid;
 
     public SurveillanceCameraMonitorWindow()
@@ -191,13 +191,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         SubnetSelector.SetItemMetadata(SubnetSelector.ItemCount - 1, subnet);
 
         return SubnetSelector.ItemCount - 1;
-    }
-
-    private string GetFrequencyName(DeviceFrequency frequency)
-    {
-        return Loc.GetString(_prototypeManager.EnumeratePrototypes<DeviceFrequencyPrototype>()
-            .First(x => x.Frequency == frequency.FrequencyId)
-            .Name ?? "unknown-device-frequency");
     }
 
     private void OnSubnetListSelect(ItemList.ItemListSelectedEventArgs args)

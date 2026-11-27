@@ -1426,6 +1426,14 @@
     - Salvage
 
 - type: entity
+  parent: VendingMachineSalvage
+  id: VendingMachineSalvageCargo
+  suffix: Cargo Access
+  components:
+  - type: AccessReader
+    access: [["Salvage"], ["Cargo"]]
+
+- type: entity
   parent: VendingMachine
   id: VendingMachineDonut
   name: Monkin' Donuts
@@ -2113,6 +2121,14 @@
     - Chemicals
     - Chemist
   - type: AmbientMusicMarkerMedical
+
+- type: entity
+  parent: VendingMachineChemicals
+  id: VendingMachineChemicalsMed
+  suffix: Medical Access
+  components:
+  - type: AccessReader
+    access: [["Chemistry"], ["Medical"]]
 
 - type: entity
   parent: VendingMachineChemicals

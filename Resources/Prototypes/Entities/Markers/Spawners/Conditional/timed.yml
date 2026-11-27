@@ -45,7 +45,7 @@
     - type: Sprite
       layers:
         - state: blue
-        - sprite: Mobs/Animals/mouse.rsi
+        - sprite: Mobs/Animals/Rodents/mouse.rsi
           state: icon-2
         - state: timed
     - type: TimedSpawner

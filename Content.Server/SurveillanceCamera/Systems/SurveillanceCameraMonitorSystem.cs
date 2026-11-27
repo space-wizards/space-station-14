@@ -1,10 +1,9 @@
 using System.Linq;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
-using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
@@ -19,10 +18,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<SurveillanceCameraMonitorComponent, ComponentStartup>(OnComponentStartup);
+
         Subs.BuiEvents<SurveillanceCameraMonitorComponent>(SurveillanceCameraMonitorUiKey.Key, subs =>
         {
             subs.Event<SurveillanceCameraRefreshCamerasMessage>(OnRefreshCamerasMessage);
@@ -78,6 +74,8 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
     /// Router - [ monitor freq ] -> Monitor
 
     #region Event Handling
+
+    [SubscribeLocalEvent]
     private void OnComponentStartup(EntityUid uid, SurveillanceCameraMonitorComponent component, ComponentStartup args)
     {
         RefreshSubnets(uid, component);
@@ -165,6 +163,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         TrySwitchCameraByAddress(uid, message.Address, message.CameraSubnet, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnPowerChanged(EntityUid uid, SurveillanceCameraMonitorComponent component, ref PowerChangedEvent args)
     {
         if (!args.Powered)
@@ -175,12 +174,14 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, SurveillanceCameraMonitorComponent component, ComponentShutdown args)
     {
         RemoveActiveCamera(uid, component);
     }
 
     // This is to ensure that there's no delay in ensuring that a camera is deactivated.
+    [SubscribeLocalEvent]
     private void OnSurveillanceCameraDeactivate(EntityUid uid, SurveillanceCameraMonitorComponent monitor, SurveillanceCameraDeactivateEvent args)
     {
         DisconnectCamera(uid, false, monitor);

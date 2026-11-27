@@ -65,7 +65,7 @@
   authors: IProduceWidgets
 
 - files: ["Shuttles/emergency_box.yml"]
-  authors: 
+  authors:
 
 - files: ["Shuttles/emergency_cluster.yml"]
   authors:

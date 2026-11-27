@@ -1681,7 +1681,7 @@
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Omnizine
+      - ReagentId: ApotheosoticEnzymes
         Quantity: 3
       - ReagentId: SpaceDrugs
         Quantity: 10

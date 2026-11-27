@@ -90,6 +90,12 @@ reagent-desc-lipozine = A chemical that accelerates metabolism, causing the user
 reagent-name-omnizine = omnizine
 reagent-desc-omnizine = A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that its origins remain a mystery because revealing the secrets of its production would render most commercial pharmaceuticals obsolete.
 
+reagent-name-apotheosotic-enzymes = apotheosotic enzymes
+reagent-desc-apotheosotic-enzymes = An abrasive sickly-white extract, though it can shut any wound, it's indiscriminate in what it "fixes" attacking even the genetic coding of the body.
+
+reagent-name-apotheosotic-extract = apotheosotic extract
+reagent-desc-apotheosotic-extract = A clumpy powder synthesized from apotheosotic enzymes, highly useful in manufacturing advanced medicines.
+
 reagent-name-ultravasculine = ultravasculine
 reagent-desc-ultravasculine = A complicated anti-toxin solution that quickly flushes out toxin while causing minor stress on the body. Reacts with histamine, duplicating itself while flushing it out. Overdose causes extreme pain.
 
@@ -125,7 +131,7 @@ reagent-name-bruizine = bruizine
 reagent-desc-bruizine = Originally developed as a cough medicine, it turns out this chemical is wildly effective at treating blunt force trauma.
 
 reagent-name-holywater = holy water
-reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
+reagent-desc-holywater = Water that has been blessed and purified by divine power. Able to cleanse the body, heal minor injuries, and harm unholy creatures.
 
 reagent-name-pyrazine = pyrazine
 reagent-name-pyrazine-dermaline = pyrazine & dermaline
