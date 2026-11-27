@@ -123,17 +123,6 @@
     sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
 
 - type: entity
-  id: BibleCommunistManifesto
-  name: communist manifesto
-  parent: Bible
-  description: "Remove the mask of humanity from Capital."
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
-
-- type: entity
   id: BibleNarsie
   name: tome of nar'sie
   parent: Bible
