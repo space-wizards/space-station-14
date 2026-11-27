@@ -18,6 +18,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.Nutrition;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
@@ -209,6 +210,12 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
         if (TryDoElectrifiedAct(uid, args.User, 1, electrified))
             args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnElectrifiedIngested(Entity<ElectrifiedComponent> entity, ref IngestedEvent args)
+    {
+        TryDoElectrifiedAct(entity, args.Target);
     }
 
     /// <summary>

@@ -10,6 +10,6 @@
         children:
         - id: OrganAnimalLungs
         - id: OrganAnimalHeart
-        - id: OrganMothStomach
+        - id: OrganMothRoachStomach
         - id: OrganAnimalLiver
         - id: OrganAnimalKidneys

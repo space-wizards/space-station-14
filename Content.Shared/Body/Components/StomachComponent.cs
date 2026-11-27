@@ -17,7 +17,7 @@ public sealed partial class StomachComponent : Component
     /// <summary>
     ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
     /// </summary>
-    [DataField]
+    [DataField, AlwaysPushInheritance]
     public EntityWhitelist? SpecialDigestible = null;
 
     /// <summary>
