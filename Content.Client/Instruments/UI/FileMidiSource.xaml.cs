@@ -345,12 +345,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         var filterString = CurrentFilter.Trim().ToLowerInvariant();
         TrackList.Clear();
 
-        foreach (var track in _loadedTracks)
-        {
-            var trackName = track.FilenameWithoutExtension.Trim().ToLowerInvariant();
-            if (trackName.Contains(filterString))
-                TrackList.AddItem(track.FilenameWithoutExtension, null, true, track);
-        }
+        // HOLY LINQ
+        // I don't know how, but this took it from roughly 2.5 seconds at 4.4k files to roughly 17ms at worst.
+        // Checks for the filter, then makes an ItemList.Item, because doing it via AddItem took those many long 2.5 seconds.
+        var testing = from track in _loadedTracks
+                      where track.FilenameWithoutExtension.Trim().ToLowerInvariant().Contains(filterString)
+                      select new ItemList.Item(TrackList) { Text = track.FilenameWithoutExtension, Metadata = track };
+
+        TrackList.Add(testing);
     }
 
     private bool TryGetSelectedTrackPath([NotNullWhen(true)] out ResPath? trackPath)
