@@ -165,9 +165,5 @@
     sprite: Objects/Weapons/Melee/debug.rsi
   - type: EntityEffectMelee
     effects:
-    - !type:EvenHealthChange
-      damage:
-        Burn: -200
-        Toxin: -200
-        Airloss: -200
-        Brute: -200
+    - !type:EvenHeal
+      heal: 200

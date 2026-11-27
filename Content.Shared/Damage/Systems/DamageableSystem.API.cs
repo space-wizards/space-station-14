@@ -2,31 +2,14 @@ using System.Linq;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem
 {
-    /// <returns>If the damage container can take the given damage type</returns>
-    private bool SupportsType(ProtoId<DamageContainerPrototype>? container, ProtoId<DamageTypePrototype> type)
-    {
-        if (container is null)
-            return true;
-
-        return _supportedTypesByContainer[container.Value].Contains(type);
-    }
-
-    public DamageModifierSet? GetDamageModifierSet(Entity<DamageableComponent?> entity)
-    {
-        if (!_damageableQuery.Resolve(entity, ref entity.Comp, false)
-            || entity.Comp.DamageModifierSetId is not { } proto
-            || !ProtoMan.Resolve(proto, out var modifierSet)
-           )
-            return null;
-
-        return modifierSet;
-    }
+    #region Setters
 
     /// <summary>
     ///     Directly sets the damage in a damageable component.
@@ -35,6 +18,7 @@ public sealed partial class DamageableSystem
     ///     Useful for some unfriendly folk. Also ensures that cached values are updated and that a damage changed
     ///     event is raised.
     /// </remarks>
+    [PublicAPI]
     public void SetDamage(Entity<DamageableComponent?> ent, DamageSpecifier damage)
     {
         if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
@@ -55,6 +39,37 @@ public sealed partial class DamageableSystem
     }
 
     /// <summary>
+    ///     Sets all damage types supported by a <see cref="Components.DamageableComponent"/> to the specified value.
+    /// </summary>
+    /// <remarks>
+    ///     Does nothing If the given damage value is negative.
+    /// </remarks>
+    [PublicAPI]
+    public void SetAllDamage(Entity<DamageableComponent?> ent, FixedPoint2 newValue)
+    {
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return;
+
+        if (newValue < 0)
+            return;
+
+        foreach (var type in ent.Comp.Damage.DamageDict.Keys)
+        {
+            ent.Comp.Damage.DamageDict[type] = newValue;
+        }
+
+        // Setting damage does not count as 'dealing' damage, even if it is set to a larger value, so we pass an
+        // empty damage delta.
+        OnEntityDamageChanged((ent, ent.Comp), new DamageSpecifier());
+    }
+
+    [PublicAPI]
+    public void ClearAllDamage(Entity<DamageableComponent?> ent)
+    {
+        SetAllDamage(ent, FixedPoint2.Zero);
+    }
+
+    /// <summary>
     ///     Applies damage specified via a <see cref="DamageSpecifier"/>.
     /// </summary>
     /// <remarks>
@@ -65,6 +80,7 @@ public sealed partial class DamageableSystem
     /// <returns>
     ///     If the attempt was successful or not.
     /// </returns>
+    [PublicAPI]
     public bool TryChangeDamage(
         Entity<DamageableComponent?> ent,
         DamageSpecifier damage,
@@ -90,6 +106,7 @@ public sealed partial class DamageableSystem
     /// <returns>
     ///     If the attempt was successful or not.
     /// </returns>
+    [PublicAPI]
     public bool TryChangeDamage(
         Entity<DamageableComponent?> ent,
         DamageSpecifier damage,
@@ -117,6 +134,7 @@ public sealed partial class DamageableSystem
     /// <returns>
     ///     The actual amount of damage dealt, as a DamageSpecifier.
     /// </returns>
+    [PublicAPI]
     public DamageSpecifier ChangeDamage(
         Entity<DamageableComponent?> ent,
         DamageSpecifier damage,
@@ -166,69 +184,77 @@ public sealed partial class DamageableSystem
     }
 
     /// <summary>
-    /// Will reduce the damage on the entity exactly by <see cref="amount"/> as close as equally distributed among all damage types the entity has.
-    /// If one of the damage types of the entity is too low. it will heal that completly and distribute the excess healing among the other damage types.
-    /// If the <see cref="amount"/> is larger than the total damage of the entity then it just clears all damage.
+    /// Reduce damage on the entity equally distributed among given <see cref="DamageTypePrototype"/>s.
+    /// If a type fully heals the extra is distributed evenly to the remaining types, or discarded once all are fully healed.
     /// </summary>
-    /// <param name="ent">entity to be healed</param>
-    /// <param name="amount">how much to heal. value has to be negative to heal</param>
-    /// <param name="group">from which group to heal. if null, heal from all groups</param>
-    /// <param name="origin">who did the healing</param>
-    public DamageSpecifier HealEvenly(
-        Entity<DamageableComponent?> ent,
-        FixedPoint2 amount,
-        ProtoId<DamageGroupPrototype>? group = null,
-        EntityUid? origin = null)
+    /// <example>
+    /// Healing for 10 on an entity with [5 Heat, 10 Cold, 5 Shock] will result in healing [3.33 Heat, 3.33 Cold, 3.33 Shock].
+    /// </example>
+    /// <param name="ent">Entity getting healed.</param>
+    /// <param name="amount">How much to heal. <b>Must be negative.</b></param>
+    /// <param name="types">Which damage types to heal, or all types if null.</param>
+    /// <param name="origin">Entity that did the healing.</param>
+    [PublicAPI]
+    public DamageSpecifier HealEvenly(Entity<DamageableComponent?> ent,
+                                    FixedPoint2 amount,
+                                    ICollection<ProtoId<DamageTypePrototype>>? types = null,
+                                    EntityUid? origin = null)
     {
         var damageChange = new DamageSpecifier();
 
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false) || amount >= 0)
+        if (amount >= 0)
+        {
+            Log.Error($"HealEvenly() called with non-negative amount {amount} on entity {ent}.");
+            return damageChange;
+        }
+        amount *= -1; // We immediately want it non-negative :o)
+
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return damageChange;
 
-        // Get our total damage, or heal if we're below a certain amount.
-        if (!TryGetDamageGreaterThan((ent, ent.Comp), -amount, out var damage, group))
-            return ChangeDamage(ent, -damage, true, false, origin);
+        // Get our total damage and shortcut to a full heal if possible
+        var currentDamage = GetPositiveDamage((ent, ent.Comp), types);
+        if (currentDamage.GetTotal() <= amount)
+            return ChangeDamage(ent, -currentDamage, true, false, origin);
 
         // make sure damageChange has the same damage types as damage
-        damageChange.DamageDict.EnsureCapacity(damage.DamageDict.Count);
-        foreach (var type in damage.DamageDict.Keys)
+        var keys = currentDamage.DamageDict.Keys.ToList();
+        damageChange.DamageDict.EnsureCapacity(keys.Count);
+        foreach (var type in keys)
         {
             damageChange.DamageDict.Add(type, FixedPoint2.Zero);
         }
 
-        var remaining = -amount;
-        var keys = damage.DamageDict.Keys.ToList();
-
-        while (remaining > 0)
+        while (amount > 0)
         {
             var count = keys.Count;
             // We do this to ensure that we always round up when dividing to avoid excess loops.
             // We already have logic to prevent healing more than we have.
-            var maxHeal = count == 1 ? remaining : (remaining + FixedPoint2.Epsilon * (count - 1)) / count;
+            var maxHeal = count == 1 ? amount : (amount + FixedPoint2.Epsilon * (count - 1)) / count;
 
             // Iterate backwards since we're removing items.
             for (var i = count - 1; i >= 0; i--)
             {
                 var type = keys[i];
                 // This is the amount we're trying to heal, capped by maxHeal
-                var heal = damage.DamageDict[type] + damageChange.DamageDict[type];
+                var heal = currentDamage.DamageDict[type] + damageChange.DamageDict[type];
 
-                // Don't go above max, if we don't go above max
+                // Don't go above max
                 if (heal > maxHeal)
                     heal = maxHeal;
-                // If we're not above max, we will heal it fully and don't need to enumerate anymore!
+                // But if we're not above max, we will heal it fully and don't need to enumerate anymore!
                 else
                     keys.RemoveAt(i);
 
-                if (heal >= remaining)
+                if (heal >= amount)
                 {
                     // Don't remove more than we can remove. Prevents us from healing more than we'd expect...
-                    damageChange.DamageDict[type] -= remaining;
-                    remaining = FixedPoint2.Zero;
+                    damageChange.DamageDict[type] -= amount;
+                    amount = FixedPoint2.Zero;
                     break;
                 }
 
-                remaining -= heal;
+                amount -= heal;
                 damageChange.DamageDict[type] -= heal;
             }
         }
@@ -236,36 +262,57 @@ public sealed partial class DamageableSystem
         return ChangeDamage(ent, damageChange, true, false, origin);
     }
 
+    /// <inheritdoc cref="HealEvenly(Entity{DamageableComponent?}, FixedPoint2, ICollection{ProtoId{DamageTypePrototype}}?, EntityUid?)"/>
+    [PublicAPI]
+    public DamageSpecifier HealEvenly(Entity<DamageableComponent?> ent,
+                                    FixedPoint2 amount,
+                                    ProtoId<DamageGroupPrototype> types,
+                                    EntityUid? origin = null)
+    {
+        if (!ProtoMan.Resolve(types, out var groupProto))
+            return new DamageSpecifier();
+
+        return HealEvenly(ent, amount, groupProto.DamageTypes, origin);
+    }
+
     /// <summary>
-    /// Will reduce the damage on the entity exactly by <see cref="amount"/> distributed by weight among all damage types the entity has.
-    /// (the weight is how much damage of the type there is)
-    /// If the <see cref="amount"/> is larger than the total damage of the entity then it just clears all damage.
+    /// Reduces damage on the entity distributed between <paramref name="types"/> proportional to their percentage of total damage.
     /// </summary>
-    /// <param name="ent">entity to be healed</param>
-    /// <param name="amount">how much to heal. value has to be negative to heal</param>
-    /// <param name="group">from which group to heal. if null, heal from all groups</param>
-    /// <param name="origin">who did the healing</param>
-    public DamageSpecifier HealDistributed(
-        Entity<DamageableComponent?> ent,
-        FixedPoint2 amount,
-        ProtoId<DamageGroupPrototype>? group = null,
-        EntityUid? origin = null)
+    /// <example>
+    /// Healing for 10 on an entity with [5 Heat, 10 Cold, 5 Shock] will result in healing [2.5 Heat, 5 Cold, 2.5 Shock].
+    /// </example>
+    /// <param name="ent">Entity getting healed.</param>
+    /// <param name="amount">How much to heal. <b>Must be negative.</b></param>
+    /// <param name="types">Which damage types to heal, or all types if null.</param>
+    /// <param name="origin">Entity that did the healing.</param>
+    [PublicAPI]
+    public DamageSpecifier HealDistributed(Entity<DamageableComponent?> ent,
+                                        FixedPoint2 amount,
+                                        ICollection<ProtoId<DamageTypePrototype>>? types = null,
+                                        EntityUid? origin = null)
     {
         var damageChange = new DamageSpecifier();
 
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false) || amount >= 0)
+        if (amount >= 0)
+        {
+            Log.Error($"HealDistributed() called with non-negative amount {amount} on entity {ent}.");
+            return damageChange;
+        }
+
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return damageChange;
 
-        // Get our total damage, or heal if we're below a certain amount.
-        if (!TryGetDamageGreaterThan((ent, ent.Comp), -amount, out var damage, group))
-            return ChangeDamage(ent, -damage, true, false, origin);
+        // Get our total damage and shortcut to a full heal if possible
+        var currentDamage = GetPositiveDamage((ent, ent.Comp), types);
+        if (currentDamage.GetTotal() <= -amount)
+            return ChangeDamage(ent, -currentDamage, true, false, origin);
 
         // make sure damageChange has the same damage types as damageEntity
-        damageChange.DamageDict.EnsureCapacity(damage.DamageDict.Count);
-        var total = damage.GetTotal();
+        damageChange.DamageDict.EnsureCapacity(currentDamage.DamageDict.Count);
+        var total = currentDamage.GetTotal();
 
-        // heal weighted by the damage of that type
-        foreach (var (type, value) in damage.DamageDict)
+        // heal weighted by the percentage of damage for that type
+        foreach (var (type, value) in currentDamage.DamageDict)
         {
             damageChange.DamageDict.Add(type, value / total * amount);
         }
@@ -273,69 +320,135 @@ public sealed partial class DamageableSystem
         return ChangeDamage(ent, damageChange, true, false, origin);
     }
 
-    /// <summary>
-    /// Tries to get damage from an entity with an optional group specifier.
-    /// </summary>
-    /// <param name="ent">Entity we're checking the damage on</param>
-    /// <param name="amount">Amount we want the damage to be greater than ideally</param>
-    /// <param name="damage">Damage specifier we're returning with</param>
-    /// <param name="group">An optional group, note that if it fails to index it will just use all damage.</param>
-    /// <returns>True if the total damage is greater than the specified amount</returns>
-    public bool TryGetDamageGreaterThan(Entity<DamageableComponent> ent,
-        FixedPoint2 amount,
-        out DamageSpecifier damage,
-        ProtoId<DamageGroupPrototype>? group = null)
+    /// <inheritdoc cref="HealDistributed(Entity{DamageableComponent?}, FixedPoint2, ICollection{ProtoId{DamageTypePrototype}}?, EntityUid?)"/>
+    [PublicAPI]
+    public DamageSpecifier HealDistributed(Entity<DamageableComponent?> ent,
+                                        FixedPoint2 amount,
+                                        ProtoId<DamageGroupPrototype> types,
+                                        EntityUid? origin = null)
     {
-        // get the damage should be healed (either all or only from one group)
-        damage = group == null ? GetPositiveDamage(ent) : GetPositiveDamage(ent, group.Value);
-
-        // If trying to heal more than the total damage of damageEntity just heal everything
-        return damage.GetTotal() > amount;
-    }
-
-    /// <summary>
-    /// Returns a <see cref="DamageSpecifier"/> with all positive damage of the entity from the group specified
-    /// </summary>
-    /// <param name="ent">entity with damage</param>
-    /// <param name="group">group of damage to get values from</param>
-    /// <returns></returns>
-    public DamageSpecifier GetPositiveDamage(Entity<DamageableComponent> ent, ProtoId<DamageGroupPrototype> group)
-    {
-        // No damage if no group exists...
-        if (!ProtoMan.Resolve(group, out var groupProto))
+        if (!ProtoMan.Resolve(types, out var groupProto))
             return new DamageSpecifier();
 
-        var damage = new DamageSpecifier();
-        damage.DamageDict.EnsureCapacity(groupProto.DamageTypes.Count);
+        return HealDistributed(ent, amount, groupProto.DamageTypes, origin);
+    }
 
-        foreach (var damageId in groupProto.DamageTypes)
-        {
-            if (!ent.Comp.Damage.DamageDict.TryGetValue(damageId, out var value))
-                continue;
-            if (value > FixedPoint2.Zero)
-                damage.DamageDict.Add(damageId, value);
-        }
+    #endregion
+    #region Getters
 
-        return damage;
+    /// <summary>
+    /// Gets the damages currently sustained by an entity.
+    /// </summary>
+    [PublicAPI]
+    [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
+    public DamageSpecifier GetAllDamage(Entity<DamageableComponent?> ent)
+    {
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp))
+            return new();
+
+        return ent.Comp.Damage.Clone();
     }
 
     /// <summary>
-    /// Returns a <see cref="DamageSpecifier"/> with all positive damage of the entity
+    /// Gets the total amount of damage currently sustained by an entity.
     /// </summary>
-    /// <param name="ent">entity with damage</param>
-    /// <returns></returns>
-    public DamageSpecifier GetPositiveDamage(Entity<DamageableComponent> ent)
+    [PublicAPI]
+    [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
+    public FixedPoint2 GetTotalDamage(Entity<DamageableComponent?> ent)
     {
-        var damage = new DamageSpecifier();
-        damage.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return FixedPoint2.Zero;
 
-        foreach (var (damageId, value) in ent.Comp.Damage.DamageDict)
+        return ent.Comp.TotalDamage;
+    }
+
+    /// <summary>
+    /// Returns a <see cref="DamageSpecifier"/> with only positive damage, filtered by <paramref name="types"/>.
+    /// </summary>
+    [PublicAPI]
+    public DamageSpecifier GetPositiveDamage(Entity<DamageableComponent> ent, ICollection<ProtoId<DamageTypePrototype>>? types = null)
+    {
+        return types is null
+            ? DamageSpecifier.GetPositive(ent.Comp.Damage)
+            : DamageSpecifier.GetPositive(ent.Comp.Damage, types);
+    }
+
+    /// <inheritdoc cref="GetPositiveDamage(Entity{DamageableComponent}, ICollection{ProtoId{DamageTypePrototype}})"/>
+    [PublicAPI]
+    public DamageSpecifier GetPositiveDamage(Entity<DamageableComponent> ent, ProtoId<DamageGroupPrototype> types)
+    {
+        // No damage if no group exists...
+        if (!ProtoMan.Resolve(types, out var groupProto))
+            return new DamageSpecifier();
+
+        return DamageSpecifier.GetPositive(ent.Comp.Damage, groupProto.DamageTypes);
+    }
+
+    /// <summary>
+    /// Gets the total amount of damage currently sustained by an entity, indexed by damage group.
+    /// </summary>
+    [PublicAPI]
+    [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
+    public IReadOnlyDictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> GetDamagePerGroup(Entity<DamageableComponent?> ent)
+    {
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp))
+            return new Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2>();
+
+        return ent.Comp.DamagePerGroup;
+    }
+
+    /// <summary>
+    /// Goes through an entity damage's and saves them inside a dictionary if the value is higher than 0
+    /// The dictionary is structured with a string for the name of the damage type, and a FixedPoint2 for the numeric damage value
+    /// </summary>
+    [Obsolete("Highly specific method that take a circuitous route around simply storing damage in a DamageSpecifier.")]
+    public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> GetDamages(Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> damagePerGroup, DamageSpecifier damage)
+    {
+        var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
+
+        foreach (var (damageGroupId, _) in damagePerGroup)  //go through each group
         {
-            if (value > FixedPoint2.Zero)
-                damage.DamageDict.Add(damageId, value);
-        }
+            var group = ProtoMan.Index<DamageGroupPrototype>(damageGroupId);  //get group
+            foreach (var type in group.DamageTypes) //go through each type inside that group
+            {
+                if (!damage.DamageDict.TryGetValue(type, out var damageValue) || damageValue == 0) //get value and make sure it isn't 0
+                    continue;
 
-        return damage;
+                damageTypes.Add(type, damageValue);
+            }
+        }
+        return damageTypes;
+    }
+
+    #endregion
+    #region Damage Modifiers
+
+    /// <summary>
+    /// Set's the damage modifier set prototype for this entity.
+    /// </summary>
+    /// <param name="ent">The entity we're setting the modifier set of.</param>
+    /// <param name="damageModifierSetId">The prototype we're setting.</param>
+    [PublicAPI]
+    public void SetDamageModifierSetId(Entity<DamageableComponent?> ent, ProtoId<DamageModifierSetPrototype>? damageModifierSetId)
+    {
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return;
+
+        ent.Comp.DamageModifierSetId = damageModifierSetId;
+
+        Dirty(ent);
+    }
+
+    [PublicAPI]
+    public DamageModifierSet? GetDamageModifierSet(Entity<DamageableComponent?> entity)
+    {
+        if (!_damageableQuery.Resolve(entity, ref entity.Comp, false)
+            || entity.Comp.DamageModifierSetId is not { } proto
+            || !ProtoMan.Resolve(proto, out var modifierSet)
+           )
+            return null;
+
+        return modifierSet;
     }
 
     /// <summary>
@@ -343,6 +456,7 @@ public sealed partial class DamageableSystem
     /// Individual damage source modifiers are set in their respective code.
     /// </summary>
     /// <param name="damage">The damage to be changed.</param>
+    [PublicAPI]
     public DamageSpecifier ApplyUniversalAllModifiers(DamageSpecifier damage)
     {
         // Checks for changes first since they're unlikely in normal play.
@@ -371,89 +485,13 @@ public sealed partial class DamageableSystem
         return damage;
     }
 
-    public void ClearAllDamage(Entity<DamageableComponent?> ent)
-    {
-        SetAllDamage(ent, FixedPoint2.Zero);
-    }
-
-    /// <summary>
-    ///     Sets all damage types supported by a <see cref="Components.DamageableComponent"/> to the specified value.
-    /// </summary>
-    /// <remarks>
-    ///     Does nothing If the given damage value is negative.
-    /// </remarks>
-    public void SetAllDamage(Entity<DamageableComponent?> ent, FixedPoint2 newValue)
-    {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
-            return;
-
-        if (newValue < 0)
-            return;
-
-        foreach (var type in ent.Comp.Damage.DamageDict.Keys)
-        {
-            ent.Comp.Damage.DamageDict[type] = newValue;
-        }
-
-        // Setting damage does not count as 'dealing' damage, even if it is set to a larger value, so we pass an
-        // empty damage delta.
-        OnEntityDamageChanged((ent, ent.Comp), new DamageSpecifier());
-    }
-
-    /// <summary>
-    /// Set's the damage modifier set prototype for this entity.
-    /// </summary>
-    /// <param name="ent">The entity we're setting the modifier set of.</param>
-    /// <param name="damageModifierSetId">The prototype we're setting.</param>
-    public void SetDamageModifierSetId(Entity<DamageableComponent?> ent, ProtoId<DamageModifierSetPrototype>? damageModifierSetId)
-    {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
-            return;
-
-        ent.Comp.DamageModifierSetId = damageModifierSetId;
-
-        Dirty(ent);
-    }
-
-    /// <summary>
-    /// Gets the damages currently sustained by an entity.
-    /// </summary>
-    [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
-    public DamageSpecifier GetAllDamage(Entity<DamageableComponent?> ent)
-    {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp))
-            return new();
-
-        return ent.Comp.Damage.Clone();
-    }
-
-    /// <summary>
-    /// Gets the total amount of damage currently sustained by an entity.
-    /// </summary>
-    [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
-    public FixedPoint2 GetTotalDamage(Entity<DamageableComponent?> ent)
-    {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
-            return FixedPoint2.Zero;
-
-        return ent.Comp.TotalDamage;
-    }
-
-    /// <summary>
-    /// Gets the total amount of damage currently sustained by an entity, indexed by damage group.
-    /// </summary>
-    [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
-    public IReadOnlyDictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> GetDamagePerGroup(Entity<DamageableComponent?> ent)
-    {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp))
-            return new Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2>();
-
-        return ent.Comp.DamagePerGroup;
-    }
+    #endregion
+    #region Utility
 
     /// <summary>
     /// Returns whether the entity can be damaged by the given type of damage
     /// </summary>
+    [PublicAPI]
     [Obsolete("Do not rely on the ability to determine if an entity will be able to be damaged by something")]
     public bool CanBeDamagedBy(Entity<InjurableComponent?> ent, ProtoId<DamageTypePrototype> type)
     {
@@ -461,5 +499,46 @@ public sealed partial class DamageableSystem
             return false;
 
         return SupportsType(ent.Comp.DamageContainer, type);
+    }
+
+    /// <summary>
+    /// Proxy method used primarily for giving access to tests.
+    /// </summary>
+    [PublicAPI]
+    public void TrimZeros(Entity<DamageableComponent> entity)
+    {
+        entity.Comp.Damage.TrimZeros();
+    }
+
+    /// <summary>
+    /// Tries to get damage from an entity with an optional group specifier.
+    /// </summary>
+    /// <param name="ent">Entity we're checking the damage on</param>
+    /// <param name="amount">Amount we want the damage to be greater than ideally</param>
+    /// <param name="damage">Damage specifier we're returning with</param>
+    /// <param name="group">An optional group, note that if it fails to index it will just use all damage.</param>
+    /// <returns>True if the total damage is greater than the specified amount</returns>
+    [Obsolete("This method is highly specific and misuses the 'TryX' name scheme.")]
+    public bool TryGetDamageGreaterThan(Entity<DamageableComponent> ent,
+        FixedPoint2 amount,
+        out DamageSpecifier damage,
+        ProtoId<DamageGroupPrototype>? group = null)
+    {
+        // get the damage should be healed (either all or only from one group)
+        damage = group == null ? GetPositiveDamage(ent) : GetPositiveDamage(ent, group.Value);
+
+        // If trying to heal more than the total damage of damageEntity just heal everything
+        return damage.GetTotal() > amount;
+    }
+
+    #endregion
+
+    /// <returns>If the damage container can take the given damage type</returns>
+    private bool SupportsType(ProtoId<DamageContainerPrototype>? container, ProtoId<DamageTypePrototype> type)
+    {
+        if (container is null)
+            return true;
+
+        return _supportedTypesByContainer[container.Value].Contains(type);
     }
 }

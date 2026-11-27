@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
@@ -20,7 +21,17 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
     {
         foreach (var (group, amount) in args.Effect.Damage)
         {
-            _damageable.HealEvenly(entity.AsNullable(), amount * args.Scale, group);
+            if (amount < 0)
+                _damageable.HealEvenly(entity.AsNullable(), amount * args.Scale, group);
+
+            else if (amount > 0)
+            {
+                var damage = new DamageSpecifier(ProtoMan.Index(group), amount * args.Scale);
+                _damageable.ChangeDamage(entity.AsNullable(), damage, args.Effect.IgnoreResistances);
+            }
+
+            else
+                Log.Error("Effect called with zero damage.");
         }
     }
 }
