@@ -40,6 +40,9 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: AmmoProviderInsertionCooldown
+  - type: UseDelay
+    delay: 0 # Shotgun doesn't use the default delay, so we set it to 0 here.
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
