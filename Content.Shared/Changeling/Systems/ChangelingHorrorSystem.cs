@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
@@ -6,9 +8,11 @@ using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -34,6 +38,9 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedStoreSystem _stores = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
 
     // constants
     /// <summary>
@@ -44,6 +51,11 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     /// The horror form's prototype
     /// </summary>
     private readonly EntProtoId _protoId = "MobHorror";
+
+    /// <summary>
+    /// The container that items go in/out
+    /// </summary>
+    private readonly string _containerId = "HorrorItemStorage";
     #region transformation
 
     [SubscribeLocalEvent]
@@ -73,7 +85,7 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     }
 
     /// <summary>
-    /// This function will only be executed when transforming to changeling horror to a "regular" person.
+    /// This function will only be executed when transforming from changeling horror to a "regular" person.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnBeforeTransform(Entity<ChangelingHorrorComponent> ent, ref BeforeChangelingTransformEvent args)
@@ -81,6 +93,9 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         // this event fires before the transformation (but after the doafter)
         if (HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
             return; // we shouldn't be transforming into a horror!
+
+        // mark it so that DNA gains do not convert into time
+        ent.Comp.ExitingTransformation = true;
 
         // enable actions again
         foreach (var action in _actions.GetActions(ent.Owner))
@@ -136,6 +151,50 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         if (!HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
             return;
 
+        // VERY CURSED CODE AREA: MOVING THE HORROR'S INVENTORY INTO LINGSPACE
+        // i have become death, destroyer of decent code
+        // we first drop items that are in slots that depend upon other slots, then remove dependency-less items
+        List<(EntityUid item, string slot)> items = new();
+
+        // slots that depend on something
+        foreach (var item in _inventory.GetHandOrInventoryEntities(ent.Owner))
+        {
+            if (!_inventory.TryGetContainingSlot(item, out var slot))
+                continue;
+
+            // drop only if it depends on something
+            var success = slot.DependsOn != null ? _inventory.TryUnequip(ent.Owner, slot.Name, silent: true, force: true) : false;
+            if (success)
+                items.Add((item, slot.Name));
+        }
+
+        // slots that depend on nothing or that are left
+        foreach (var item in _inventory.GetHandOrInventoryEntities(ent.Owner))
+        {
+            if (!_inventory.TryGetContainingSlot(item, out var slot))
+                continue;
+
+            if (_inventory.TryUnequip(ent.Owner, slot.Name, silent: true, force: true))
+                items.Add((item, slot.Name));
+        }
+
+        if (items != null)
+        {
+
+            var container = _containers.EnsureContainer<Container>(ent.Owner, _containerId);
+
+            // throw in the storage
+            foreach (var item in items)
+            {
+                _containers.Insert(item.item, container);
+            }
+
+            AddComp(ent.Owner, new ChangelingHorrorItemsComponent()
+            {
+                LingSpaceItems = items
+            });
+        }
+
         // Turn actions on/off
         foreach (var action in _actions.GetActions(ent.Owner))
         {
@@ -152,6 +211,41 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
 
                 _actions.SetEnabled((action.Owner, action.Comp), false);
             }
+        }
+    }
+    /// <summary>
+    /// This function should only be executed when the changeling transforms back into normal urist mchandness. It gives the ling back their items
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnAfterTransformInventory(Entity<ChangelingHorrorItemsComponent> ent, ref AfterChangelingTransformEvent ev)
+    {
+        if (!HasComp<ChangelingHorrorComponent>(ev.PreviousIdentity))
+            return;
+
+        if (!_containers.TryGetContainer(ent.Owner, _containerId, out var container))
+            return;
+
+        // some more cursed code for the inventory
+        foreach (var item in ent.Comp.LingSpaceItems)
+        {
+            _containers.Remove(item.item, container);
+            _inventory.TryEquip(ent.Owner, item.item, item.slot, silent : true, force : true);
+        }
+        ent.Comp.LingSpaceItems.Clear();
+        RemCompDeferred<ChangelingHorrorItemsComponent>(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnItemsShutdown(Entity<ChangelingHorrorItemsComponent> ent, ref ComponentShutdown args)
+    {
+        // this is to make tests work properly
+        if (ent.Comp.LingSpaceItems == null)
+            return;
+
+        // kill the items
+        foreach (var item in ent.Comp.LingSpaceItems)
+        {
+            QueueDel(item.item);
         }
     }
 
@@ -220,6 +314,35 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     public void OnIsSafeEvent(Entity<ChangelingHorrorComponent> ent, ref IsIdentitySafeEvent args)
     {
         args.IsSafe = false;
+    }
+
+    [SubscribeLocalEvent]
+    public void OnTryDevourEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingDevourAttemptEvent args)
+    {
+        args.BreakOnDamage = ent.Comp.DevourBreakOnDamage;
+        args.DevourMultiplier *= ent.Comp.DevourSpeedMultiplier;
+        // its mouth is already bare
+        args.WindupMultiplier = ent.Comp.WindupMultiplier;
+    }
+
+    [SubscribeLocalEvent]
+    public void OnDnaChanged(Entity<ChangelingHorrorComponent> ent, ref ChangeCurrencyEvent args)
+    {
+        if (ent.Comp.ExitingTransformation)
+            return;
+
+        // if we just received changeling DNA, convert it to horror form time
+        if (args.Changes.ContainsKey(_currency))
+        {
+            var k = args.Changes[_currency];
+            // lets not do weird things with negative DNA, okay?
+            if (k < 0f)
+                return;
+
+            args.Cancel();
+            ent.Comp.EndTime += DNAToTime(k, ent.Comp.SecondPerDNA.TotalSeconds, 0d);
+            Dirty(ent);
+        }
     }
     #endregion
     #region helpers

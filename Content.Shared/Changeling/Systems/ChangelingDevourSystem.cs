@@ -83,24 +83,40 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise, ent)?.Entity;
         }
 
+        var ev = new ChangelingDevourAttemptEvent() { Target = target };
+        RaiseLocalEvent(ent.Owner, ref ev);
+
+        if (ev.Cancelled)
+            return;
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), ent, target: target, used: ent)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.DevourWindupTime * ev.WindupMultiplier, new ChangelingDevourWindupDoAfterEvent()
+        {
+            DevourMultiplier = ev.DevourMultiplier,
+            BreakOnDamage = ev.BreakOnDamage
+
+        }, ent, target: target, used: ent)
         {
             BreakOnMove = true,
+            BreakOnDamage = ev.BreakOnDamage,
             CancelDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
             ExamineText = ent.Comp.WindupExamine == null ? null : Loc.GetString(ent.Comp.WindupExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
 
-        var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupEntity(
-            selfMessage,
-            othersMessage,
-            args.Performer,
-            args.Performer,
-            PopupType.MediumCaution);
+        // no popups for instant windups
+        if (ev.WindupMultiplier > 0f)
+        {
+            var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
+            var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
+            _popupSystem.PopupEntity(
+                selfMessage,
+                othersMessage,
+                args.Performer,
+                args.Performer,
+                PopupType.MediumCaution);
+        }
     }
 
     // First doafter finished.
@@ -118,23 +134,25 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         _damageable.ChangeDamage(target, ent.Comp.WindupDamage, true, true, ent.Owner);
 
-        var selfMessage = Loc.GetString("changeling-devour-begin-consume-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        var othersMessage = Loc.GetString("changeling-devour-begin-consume-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupEntity(
-            selfMessage,
-            othersMessage,
-            ent.Owner,
-            ent.Owner,
-            PopupType.LargeCaution);
+        if (args.DevourMultiplier != 0f)
+        {
+            var selfMessage = Loc.GetString("changeling-devour-begin-consume-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
+            var othersMessage = Loc.GetString("changeling-devour-begin-consume-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
+            _popupSystem.PopupEntity(
+                selfMessage,
+                othersMessage,
+                ent.Owner,
+                ent.Owner,
+                PopupType.LargeCaution);
+        }
 
         if (_net.IsServer)
             ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.ConsumeNoise, ent)?.Entity;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} began to devour {ToPrettyString(target):player}'s identity");
-
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
-            ent.Comp.DevourConsumeTime,
+            ent.Comp.DevourConsumeTime * args.DevourMultiplier,
             new ChangelingDevourConsumeDoAfterEvent(),
             ent,
             target: target,
@@ -142,6 +160,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         {
             BreakOnMove = true,
             CancelDuplicate = true,
+            BreakOnDamage = args.BreakOnDamage,
             DuplicateCondition = DuplicateConditions.None,
             ExamineText = ent.Comp.DevourExamine == null ? null : Loc.GetString(ent.Comp.DevourExamine, ("user", Identity.Entity(ent, EntityManager)), ("target", Identity.Entity(target, EntityManager)))
         });
@@ -205,6 +224,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         // Grants the DNA reward associated with a successful unique devour.
         if (willGrantDna && TryComp<StoreComponent>(ent, out var store))
             _store.TryAddCurrency(ent.Comp.DevourDnaReward, ent.Owner, store);
+
     }
 
     /// <summary>
