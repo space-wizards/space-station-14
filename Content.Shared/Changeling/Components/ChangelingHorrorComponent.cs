@@ -1,7 +1,5 @@
 using Content.Shared.Alert;
 using Content.Shared.EntityEffects;
-using Content.Shared.Inventory;
-using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
