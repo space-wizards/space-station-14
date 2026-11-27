@@ -42,7 +42,7 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// The sound made when bounty skipping is denied due to lacking access.
     /// </summary>
     [DataField]
-    public SoundSpecifier DenySound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
+    public SoundSpecifier DenySound = new SoundPathSpecifier("/Audio/Machines/buzz_two.ogg");
 
     /// <summary>
     /// The time at which the console will be able to make the denial sound again.

@@ -1,3 +1,8 @@
+- files: ["alarm.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken and edited from source"
+  source: "https://github.com/Baystation12/Baystation12/commit/41c3cfd386b11aee101b3f89ab7fefe77a57a1ba#diff-07f56c449048fdb4cef954ea18c4111e53ccb92624a948f15879a74cdf5fc7fa"
+
 - files: ["anomaly_generate.ogg"]
   license: "CC0-1.0"
   copyright: "Created by szegvari, converted to mono and .ogg by EmoGarbage404 (github)."
@@ -176,8 +181,8 @@
 - files:
   - twobeep.ogg
   - chime.ogg
-  - buzz-sigh.ogg
-  - buzztwo.ogg
+  - buzz_sigh.ogg
+  - buzz_two.ogg
   - machine_vend.gg
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."

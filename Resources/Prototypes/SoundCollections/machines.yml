@@ -11,7 +11,7 @@
 - type: soundCollection
   id: CargoError
   files:
-  - /Audio/Effects/Cargo/buzz_sigh.ogg
+  - /Audio/Machines/buzz_sigh.ogg
 
 - type: soundCollection
   id: CargoToggleLimit
