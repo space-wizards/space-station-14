@@ -50,6 +50,10 @@ public sealed partial class MindSystem : SharedMindSystem
         if (EntityManager.ShuttingDown)
             return;
 
+        // A visited entity (e.g. a ghost) returns the mind to its body so we do that before we start doing container work.
+        if (TryComp(uid, out VisitingMindComponent? visitingComp) && visitingComp.MindId is { } visitingMind)
+            UnVisit(visitingMind);
+
         if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
 

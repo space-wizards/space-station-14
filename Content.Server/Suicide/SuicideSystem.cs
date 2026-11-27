@@ -31,15 +31,6 @@ public sealed partial class SuicideSystem : SharedSuicideSystem
 
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DamageableComponent, SuicideEvent>(OnDamageableSuicide);
-        SubscribeLocalEvent<MobStateComponent, SuicideEvent>(OnEnvironmentalSuicide);
-        SubscribeLocalEvent<MindContainerComponent, SuicideGhostEvent>(OnSuicideGhost);
-    }
-
     /// <summary>
     /// Calling this function will attempt to kill the user by suiciding on objects in the surrounding area
     /// or by applying a lethal amount of damage to the user with the default method.
@@ -90,6 +81,7 @@ public sealed partial class SuicideSystem : SharedSuicideSystem
     /// Event subscription created to handle the ghosting aspect relating to suicides
     /// Mainly useful when you can raise an event in Shared and can't call Suicide() directly
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnSuicideGhost(Entity<MindContainerComponent> victim, ref SuicideGhostEvent args)
     {
         if (args.Handled)
@@ -108,6 +100,16 @@ public sealed partial class SuicideSystem : SharedSuicideSystem
 
         if (_ghostSystem.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
             args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSuicide(Entity<MobStateComponent> victim, ref SuicideEvent args)
+    {
+        // Previously we subbed to damageable but it always required mobstate anyway and this removes the ordered event bug too.
+        OnEnvironmentalSuicide(victim, ref args);
+
+        if (!args.Handled && TryComp<DamageableComponent>(victim, out var damageable))
+            OnDamageableSuicide((victim, damageable), ref args);
     }
 
     /// <summary>
