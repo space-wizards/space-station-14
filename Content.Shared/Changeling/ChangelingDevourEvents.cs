@@ -13,7 +13,18 @@ public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEven
 /// A windup has either successfully been completed or has been canceled. If successful start the devouring DoAfter.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEvent
+{
+    /// <summary>
+    /// Multiplies the doafter's time. If 0, that doafter is skipped and the devour is instantaneous
+    /// </summary>
+    public float DevourMultiplier = 1f;
+
+    /// <summary>
+    /// Wether the devour will break on damage
+    /// </summary>
+    public bool BreakOnDamage = true;
+}
 
 /// <summary>
 /// The Consumption DoAfter has either successfully been completed or was canceled.
@@ -22,32 +33,15 @@ public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEv
 public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
-/// Used to skip doafters by horror forms
-/// </summary>
-[ByRefEvent]
-public sealed partial class ChangelingDevourTryWindupEvent : EntityEventArgs
-{
-    /// <summary>
-    /// Multiplies the windup's time. If 0, that doafter is skipped and the devour goes straight to the consume
-    /// </summary>
-    public float Multiplier = 1f;
-
-    /// <summary>
-    /// The target entity
-    /// </summary>
-    public EntityUid Target;
-}
-
-/// <summary>
 /// Used to make devours faster for horror forms
 /// </summary>
 [ByRefEvent]
-public sealed partial class ChangelingTryDevourEvent : EntityEventArgs
+public sealed partial class ChangelingDevourAttemptEvent : CancellableEntityEventArgs
 {
     /// <summary>
     /// Multiplies the doafter's time. If 0, that doafter is skipped and the devour is instantaneous
     /// </summary>
-    public float Multiplier = 1f;
+    public float DevourMultiplier = 1f;
 
     /// <summary>
     /// The target entity
@@ -58,5 +52,10 @@ public sealed partial class ChangelingTryDevourEvent : EntityEventArgs
     /// Wether the devour will break on damage
     /// </summary>
     public bool BreakOnDamage = true;
+
+    /// <summary>
+    /// Multiplies the windup's time. If 0, that doafter is skipped and the devour goes straight to the consume. The windup is the part where the changeling reveals its uncanny mouth.
+    /// </summary>
+    public float WindupMultiplier = 1f;
 }
 

@@ -317,17 +317,12 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    public void OnTryDevourEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingTryDevourEvent args)
+    public void OnTryDevourEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingDevourAttemptEvent args)
     {
-        args.BreakOnDamage = false;
-        args.Multiplier *= ent.Comp.DevourSpeedMultiplier;
-    }
-
-    [SubscribeLocalEvent]
-    public void OnTryWindupEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingDevourTryWindupEvent args)
-    {
+        args.BreakOnDamage = ent.Comp.DevourBreakOnDamage;
+        args.DevourMultiplier *= ent.Comp.DevourSpeedMultiplier;
         // its mouth is already bare
-        args.Multiplier = 0f;
+        args.WindupMultiplier = ent.Comp.WindupMultiplier;
     }
 
     [SubscribeLocalEvent]

@@ -95,6 +95,18 @@ public sealed partial class ChangelingHorrorComponent : Component
     public float DevourSpeedMultiplier = 0.25f;
 
     /// <summary>
+    /// Lower = faster. Affects the devour windup. 0 by default because its big-ass mouth is already revealed???
+    /// </summary>
+    [DataField]
+    public float WindupMultiplier;
+
+    /// <summary>
+    /// Wether the devour doafters will be broken by damage taken.
+    /// </summary>
+    [DataField]
+    public bool DevourBreakOnDamage = false;
+
+    /// <summary>
     /// Used to mark that the horror form is exiting transformation and that granted DNA points shouldn't be converted into time anymore.
     /// </summary>
     public bool ExitingTransformation;
