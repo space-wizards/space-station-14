@@ -242,7 +242,9 @@ public sealed partial class AHelpUIController: UIController, IOnSystemChanged<Bw
         helper.ClydeWindow.DisposeOnClose = true;
 
         helper.WindowRoot = _uiManager.CreateWindowRoot(helper.ClydeWindow);
+        helper.WindowRoot.CreateRootControls();
         helper.WindowRoot.AddChild(helper.Control);
+        helper.Control.SetPositionFirst();
 
         helper.Control.PopOut.Disabled = true;
         helper.Control.PopOut.Visible = false;
