@@ -125,27 +125,6 @@
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
-  id: SpawnPointInstigator
-  components:
-  - type: GhostRole
-    name: ghost-role-information-instigator-name
-    description: ghost-role-information-instigator-description
-    rules: ghost-role-information-instigator-rules
-    mindRoles:
-    - MindRoleInstigator
-
-- type: entity
-  categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointInstigator
-  id: SpawnPointInstigatorCommander
-  components:
-  - type: GhostRole
-    name: ghost-role-information-instigator-commander-name
-    description: ghost-role-information-instigator-commander-description
-
-- type: entity
-  categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsCommander
   components:
   - type: GhostRole

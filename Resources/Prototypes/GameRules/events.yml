@@ -626,7 +626,7 @@
     earliestStart: 30
     weight: 1
     minimumPlayers: 15
-    duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
+    duration: null # needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
     occursDuringRoundEnd: false
   - type: RuleGrids
   - type: LoadMapRule

@@ -124,7 +124,7 @@
 - type: antagSpecifier
   parent: BaseNukeops
   id: Instigator
-  spawnerPrototype: SpawnPointInstigator
+  spawnerPrototype: SpawnPointNukies
   pickPlayer: false
   startingGear: SyndicateInstigatorGearFull
   components:
@@ -138,7 +138,7 @@
 - type: antagSpecifier
   parent: BaseNukeops
   id: InstigatorCommander
-  spawnerPrototype: SpawnPointInstigatorCommander
+  spawnerPrototype: SpawnPointNukies
   pickPlayer: false
   startingGear: SyndicateInstigatorCommanderGearFull
   components:
