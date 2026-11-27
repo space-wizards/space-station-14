@@ -27,6 +27,8 @@ name-format-ert-vanguard = Vanguard {$part0}
 name-format-ert-doctor = Doctor {$part0}
 name-format-ert-corpsman = Corpsman {$part0}
 
+name-format-official = Admiral {$part0}
+
 # "<appearance> <type>"
 name-format-book = {$part0} {$part1}
 
