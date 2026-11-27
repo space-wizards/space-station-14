@@ -173,7 +173,7 @@ public sealed partial class SalvageJobBoardSystem : EntitySystem
             _cargo.UpdateBankAccount(
                 (ent.Owner, stationBankAccount),
                 jobProto.Reward,
-                _cargo.CreateAccountDistribution((ent,  stationBankAccount)));
+                _cargo.CreateAccountDistribution((ent, stationBankAccount)));
         }
 
         // We ranked up!

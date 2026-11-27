@@ -6,11 +6,11 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
+using Content.Shared.Radio;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -121,7 +121,7 @@ public sealed partial class CargoSystem
 
         var targetAccount =
             ent.Comp.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : ent.Comp.Account;
-        var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), ent.Comp.Account);
+        var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), ent.Comp.Account, ent.Comp.AnnouncementChannel);
         if (!TryAddOrder(stationUid.Value, targetAccount, data, orderDatabase))
         {
             PlayDenySound(ent);
@@ -251,8 +251,13 @@ public sealed partial class CargoSystem
                 ("approver", order.Approver ?? string.Empty),
                 ("cost", cost)
             );
-            _radio.SendRadioMessage(ent.Owner, message, account.RadioChannel, ent.Owner, escapeMarkup: false);
-            if (CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel)
+            if (order.RadioChannel != null)
+                _radio.SendRadioMessage(ent.Owner, message, order.RadioChannel.Value, ent.Owner, escapeMarkup: false);
+
+            if (account.RadioChannel != null && order.RadioChannel != account.RadioChannel)
+                _radio.SendRadioMessage(ent.Owner, message, account.RadioChannel.Value, ent.Owner, escapeMarkup: false);
+
+            if (CargoOrderConsoleComponent.BaseAnnouncementChannel != order.RadioChannel && CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel && !account.IsHidden)
             {
                 _radio.SendRadioMessage(
                     ent.Owner,
@@ -405,7 +410,7 @@ public sealed partial class CargoSystem
     {
         // Make an order
         var id = GenerateOrderId(component);
-        var order = new CargoOrderData(id, product, qty, sender, description, account);
+        var order = new CargoOrderData(id, product, qty, sender, description, account, null);
 
         // Approve it now
         order.SetApproverData(dest, sender);
@@ -447,7 +452,7 @@ public sealed partial class CargoSystem
             return;
 
         var orderId = GenerateOrderId(orderDatabase);
-        var data = new CargoOrderData(orderId, product, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account);
+        var data = new CargoOrderData(orderId, product, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account, slip.AnnouncementChannel);
 
         if (!TryAddOrder(stationUid.Value, ent.Comp.Account, data, orderDatabase))
         {
@@ -495,7 +500,7 @@ public sealed partial class CargoSystem
         if (Timing.CurTime < ent.Comp.NextPrintTime)
             return;
 
-        var label = Spawn(account.AcquisitionSlip, Transform(ent.Owner).Coordinates);
+        var label = SpawnAtPosition(ent.Comp.AcquisitionSlip, Transform(ent.Owner).Coordinates);
         ent.Comp.NextPrintTime = Timing.CurTime + ent.Comp.PrintDelay;
         _audio.PlayPvs(ent.Comp.PrintSound, ent.Owner);
 
@@ -522,6 +527,7 @@ public sealed partial class CargoSystem
         slip.Reason = args.Reason;
         slip.OrderQuantity = args.Amount;
         slip.Account = ent.Comp.Account;
+        slip.AnnouncementChannel = ent.Comp.AnnouncementChannel;
     }
 
     private EntityUid? TryFulfillOrder(
@@ -793,10 +799,11 @@ public sealed partial class CargoSystem
         CargoConsoleAddOrderMessage args,
         CargoProductPrototype cargoProduct,
         int id,
-        ProtoId<CargoAccountPrototype> account
+        ProtoId<CargoAccountPrototype> account,
+        ProtoId<RadioChannelPrototype> announcementChannel
     )
     {
-        return new CargoOrderData(id, cargoProduct, args.Amount, args.Requester, args.Reason, account);
+        return new CargoOrderData(id, cargoProduct, args.Amount, args.Requester, args.Reason, account, announcementChannel);
     }
 
     private void PlayDenySound(Entity<CargoOrderConsoleComponent> ent)

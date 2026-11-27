@@ -1,4 +1,5 @@
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using System.Text;
@@ -70,9 +71,15 @@ namespace Content.Shared.Cargo
         public ProtoId<CargoAccountPrototype> Account;
 
         /// <summary>
+        /// Channel used for announcing transactions.
+        /// </summary>
+        [DataField]
+        public ProtoId<RadioChannelPrototype>? RadioChannel;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
-        public CargoOrderData(int orderId, ProtoId<CargoProductPrototype> product, int amount, string requester, string reason, ProtoId<CargoAccountPrototype> account)
+        public CargoOrderData(int orderId, ProtoId<CargoProductPrototype> product, int amount, string requester, string reason, ProtoId<CargoAccountPrototype> account, ProtoId<RadioChannelPrototype>? radioChannel)
         {
             OrderId = orderId;
             Product = product;
@@ -80,6 +87,7 @@ namespace Content.Shared.Cargo
             Requester = requester;
             Reason = reason;
             Account = account;
+            RadioChannel = radioChannel;
         }
 
         /// <summary>

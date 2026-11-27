@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
+using Content.Client.Cargo.Systems;
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Cargo.Components;
@@ -21,13 +21,13 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
+    private readonly CargoSystem _cargoSystem;
 
     private readonly EntityQuery<StationBankAccountComponent> _bankQuery;
 
     public event Action<Dictionary<ProtoId<CargoAccountPrototype>, int>, double, double>? OnSavePressed;
 
     private EntityUid? _station;
-    private bool _allowPrimaryAccountAllocation;
     private bool _allowPrimaryCutAdjustment;
     private bool _lockboxCutEnabled;
 
@@ -35,7 +35,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     private double _lockboxCut;
 
     private readonly HashSet<Control> _addedControls = new();
-    private readonly List<SpinBox> _spinBoxes = new();
+    private readonly Dictionary<ProtoId<CargoAccountPrototype>, SpinBox> _spinBoxes = new();
     private readonly Dictionary<ProtoId<CargoAccountPrototype>, RichTextLabel> _balanceLabels = new();
 
     public FundingAllocationMenu()
@@ -43,6 +43,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _cargoSystem = _entityManager.System<CargoSystem>();
         _bankQuery = _entityManager.GetEntityQuery<StationBankAccountComponent>();
 
         PrimaryCut.ValueChanged += args =>
@@ -61,33 +62,20 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         {
             if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
                 return;
-            var accounts = EditableAccounts(bank).OrderBy(p => p.Key).Select(p => p.Key).ToList();
             var dicts = new Dictionary<ProtoId<CargoAccountPrototype>, int>();
-            for (var i = 0; i< accounts.Count; i++)
+            foreach (var (account, _) in bank.RevenueDistribution)
             {
-                dicts.Add(accounts[i], _spinBoxes[i].Value);
+                dicts.Add(account, _spinBoxes[account].Value);
             }
 
             OnSavePressed?.Invoke(dicts, _primaryCut, _lockboxCut);
             SaveButton.Disabled = true;
         };
 
-        _cfg.OnValueChanged(CCVars.AllowPrimaryAccountAllocation, enabled => { _allowPrimaryAccountAllocation = enabled; }, true);
         _cfg.OnValueChanged(CCVars.AllowPrimaryCutAdjustment, enabled => { _allowPrimaryCutAdjustment = enabled; }, true);
         _cfg.OnValueChanged(CCVars.LockboxCutEnabled, enabled => { _lockboxCutEnabled = enabled; }, true);
 
         BuildEntries();
-    }
-
-    private IEnumerable<KeyValuePair<ProtoId<CargoAccountPrototype>, int>> EditableAccounts(StationBankAccountComponent bank)
-    {
-        foreach (var kvp in bank.Accounts)
-        {
-            if (_allowPrimaryAccountAllocation || kvp.Key != bank.PrimaryAccount)
-            {
-                yield return kvp;
-            }
-        }
     }
 
     private void BuildEntries()
@@ -128,8 +116,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         PrimaryCut.Visible = _allowPrimaryCutAdjustment;
         PrimaryCutLabel.Visible = _allowPrimaryCutAdjustment;
 
-        var accounts = EditableAccounts(bank).OrderBy(p => p.Key);
-        foreach (var (account, balance) in accounts)
+        foreach (var (account, distribution) in bank.RevenueDistribution)
         {
             var accountProto = _prototypeManager.Index(account);
 
@@ -151,7 +138,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
 
             var balanceLabel = new RichTextLabel
             {
-                Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance)),
+                Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetBalanceFromAccount((_station.Value, bank), account))),
                 HorizontalExpand = true,
                 HorizontalAlignment = HAlignment.Center,
                 Margin = new Thickness(5, 0),
@@ -162,13 +149,13 @@ public sealed partial class FundingAllocationMenu : FancyWindow
             {
                 HorizontalAlignment = HAlignment.Center,
                 HorizontalExpand = true,
-                Value = (int) (bank.RevenueDistribution[account] * 100),
+                Value = (int)(distribution * 100),
                 IsValid = val => val is >= 0 and <= 100,
             };
             box.ValueChanged += _ => UpdateButtonDisabled();
             EntriesContainer.AddChild(box);
 
-            _spinBoxes.Add(box);
+            _spinBoxes.Add(account, box);
             _balanceLabels.Add(account, balanceLabel);
             _addedControls.Add(accountNameLabel);
             _addedControls.Add(codeLabel);
@@ -182,15 +169,14 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
             return;
 
-        var sum = _spinBoxes.Sum(s => s.Value);
+        var sum = _spinBoxes.Sum(s => s.Value.Value);
         var incorrectSum = sum != 100;
 
         var differs = false;
-        var accounts = EditableAccounts(bank).OrderBy(p => p.Key).Select(p => p.Key).ToList();
-        for (var i = 0; i < accounts.Count; i++)
+        foreach (var (account, balance) in bank.RevenueDistribution)
         {
-            var percent = _spinBoxes[i].Value;
-            if (percent != (int) Math.Round(bank.RevenueDistribution[accounts[i]] * 100))
+            var percent = _spinBoxes[account].Value;
+            if (percent != (int)Math.Round(balance * 100))
             {
                 differs = true;
                 break;
@@ -223,7 +209,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
 
         foreach (var (account, label) in _balanceLabels)
         {
-            label.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", bank.Accounts[account]));
+            label.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetBalanceFromAccount((_station.Value, bank), account)));
         }
     }
 }

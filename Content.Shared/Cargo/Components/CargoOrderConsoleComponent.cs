@@ -144,6 +144,12 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan DenySoundDelay = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    /// Paper prototype used for acquisition slips.
+    /// </summary>
+    [DataField]
+    public EntProtoId AcquisitionSlip = "PaperAcquisitionSlipCargo";
 }
 
 /// <summary>
