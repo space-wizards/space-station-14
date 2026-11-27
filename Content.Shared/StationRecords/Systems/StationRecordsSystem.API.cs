@@ -24,7 +24,7 @@ public sealed partial class StationRecordsSystem
             keyStorageEntity = id;
         }
 
-        _keyStorage.AssignKey(keyStorageEntity, key);
+        _infoStorage.AssignKey(keyStorageEntity, key);
     }
 
     /// <summary>
