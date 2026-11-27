@@ -1,4 +1,4 @@
-﻿using Content.Shared.Medical.HealthAnalyzer;
+using Content.Shared.Medical.HealthAnalyzer;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Temperature.Components;
 

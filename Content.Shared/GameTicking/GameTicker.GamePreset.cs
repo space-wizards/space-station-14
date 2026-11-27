@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameTicking.Prototypes;
+using Content.Shared.GameTicking.Prototypes;
 using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;

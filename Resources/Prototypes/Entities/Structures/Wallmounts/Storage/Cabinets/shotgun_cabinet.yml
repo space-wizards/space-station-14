@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: FireAxeCabinetConstructed
   id: ShotGunCabinetConstructed
   name: shotgun cabinet
