@@ -14,6 +14,9 @@ namespace Content.Shared.Construction.Conditions
     [DataDefinition]
     public sealed partial class WallmountCondition : IConstructionCondition
     {
+        [DataField("reversed")]
+        private bool _reversed = false;
+
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
@@ -28,6 +31,8 @@ namespace Content.Shared.Construction.Conditions
             // get direction of the grid being placed on as an offset.
             var gridRotation = transformSystem.GetWorldRotation(location.EntityId);
             var directionWithOffset = gridRotation.RotateVec(direction.ToVec());
+            if (_reversed)
+                directionWithOffset = -directionWithOffset;
 
             // dot product will be positive if user direction and blueprint are co-directed
             var dotProd = Vector2.Dot(directionWithOffset.Normalized(), userToObject.Normalized());
