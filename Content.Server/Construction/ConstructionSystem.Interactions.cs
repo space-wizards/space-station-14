@@ -11,7 +11,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Prying.Systems;
 using Content.Shared.Radio.EntitySystems;
-using Content.Shared.Stacks;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Tools.Systems;
@@ -96,39 +95,57 @@ namespace Content.Server.Construction
             // Let's make extra sure this is zero...
             construction.StepIndex = 0;
 
+            // First, if we have a target edge, try that.
+            if (construction.TargetEdgeIndex is { } targetEdge
+                && targetEdge >= 0
+                && targetEdge < node.Edges.Count)
+            {
+                if (HandleEdge(uid, ev, node.Edges[targetEdge], validation, construction) is var result and not HandleResult.False)
+                {
+                    ProcessSuccessfulEdgeResult(result, targetEdge, node, uid, construction);
+                    return result;
+                }
+            }
+
             // When we handle a node, we're essentially testing the current event interaction against all of this node's
             // edges' first steps. If any of them accepts the interaction, we stop iterating and enter that edge.
             for (var i = 0; i < node.Edges.Count; i++)
             {
+                // Don't retry the same edge.
+                if (i == construction.TargetEdgeIndex)
+                    continue;
+
                 var edge = node.Edges[i];
                 if (HandleEdge(uid, ev, edge, validation, construction) is var result and not HandleResult.False)
                 {
-                    // Only a True result may modify the state.
-                    // In the case of DoAfter, it's only allowed to modify the waiting flag and the current edge index.
-                    // In the case of validated, it should NEVER modify the state at all.
-                    if (result is not HandleResult.True)
-                    {
-                        if (result is HandleResult.DoAfter)
-                        {
-                            construction.EdgeIndex = i;
-                        }
-
-                        return result;
-                    }
-
-                    // If we're not on the same edge as we were before, that means handling that edge changed the node.
-                    if (construction.Node != node.Name)
-                        return result;
-
-                    // If we're still in the same node, that means we entered the edge and it's still not done.
-                    construction.EdgeIndex = i;
-                    UpdatePathfinding(uid, construction);
-
+                    ProcessSuccessfulEdgeResult(result, i, node, uid, construction);
                     return result;
                 }
             }
 
             return HandleResult.False;
+        }
+
+        /// <summary>
+        /// Handling a successful edge traversal. Ensures the entity's node index, edge index, and pathfinding information are correct.
+        /// </summary>
+        /// <remarks>
+        /// Only a True result may modify the pathfinding state.
+        /// In the case of DoAfter, it's only allowed to modify the waiting flag and the current edge index.
+        /// In the case of Validated/False, the state should not be changed.
+        /// </remarks>
+        private void ProcessSuccessfulEdgeResult(HandleResult result, int edgeIndex, ConstructionGraphNode node, EntityUid uid, ConstructionComponent construction)
+        {
+            if (result == HandleResult.DoAfter)
+            {
+                construction.EdgeIndex = edgeIndex;
+            }
+            else if (result == HandleResult.True && construction.Node == node.Name)
+            {
+                // If we're still in the same node, that means we entered the edge and it's still not done.
+                construction.EdgeIndex = edgeIndex;
+                UpdatePathfinding(uid, construction);
+            }
         }
 
         /// <summary>
