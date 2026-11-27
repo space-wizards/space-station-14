@@ -209,6 +209,16 @@ public abstract partial class SharedStoreSystem : EntitySystem
                 return false;
         }
 
+        // test if this needs to be cancelled
+        var ev = new ChangeCurrencyEvent()
+        {
+            Changes = currency
+        };
+        RaiseLocalEvent(uid, ev);
+
+        if (ev.Cancelled)
+            return true;
+
         foreach (var type in currency)
         {
             if (!store.Balance.TryAdd(type.Key, type.Value))
@@ -259,3 +269,14 @@ public sealed class CurrencyInsertAttemptEvent : CancellableEntityEventArgs
     }
 }
 
+/// <summary>
+/// Raised when someone tries to change the amount of currency in a store.
+/// If this is cancelled, the currency will be considered "consumed" and <see cref="TryAddCurrency"/> will not return false.
+/// </summary>
+public sealed class ChangeCurrencyEvent : CancellableEntityEventArgs
+{
+    /// <summary>
+    ///  Currency changes that are attempted
+    /// </summary>
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Changes = new();
+}

@@ -93,4 +93,9 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// </summary>
     [DataField]
     public float DevourSpeedMultiplier = 0.25f;
+
+    /// <summary>
+    /// Used to mark that the horror form is exiting transformation and that granted DNA points shouldn't be converted into time anymore.
+    /// </summary>
+    public bool ExitingTransformation;
 }

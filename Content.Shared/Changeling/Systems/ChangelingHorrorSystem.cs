@@ -94,6 +94,9 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
         if (HasComp<ChangelingHorrorComponent>(args.StoredIdentity))
             return; // we shouldn't be transforming into a horror!
 
+        // mark it so that DNA gains do not convert into time
+        ent.Comp.ExitingTransformation = true;
+
         // enable actions again
         foreach (var action in _actions.GetActions(ent.Owner))
         {
@@ -328,23 +331,22 @@ public abstract partial class ChangelingHorrorSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    public void OnEntityDevoured(Entity<ChangelingHorrorComponent> ent, ref ChangelingEntityDevouredEvent args)
+    public void OnDnaChanged(Entity<ChangelingHorrorComponent> ent, ref ChangeCurrencyEvent args)
     {
-        // convert new dna to time
-        if (TryComp<StoreComponent>(ent.Owner, out var store))
+        if (ent.Comp.ExitingTransformation)
+            return;
+
+        // if we just received changeling DNA, convert it to horror form time
+        if (args.Changes.ContainsKey(_currency))
         {
-            if (store.Balance.ContainsKey(_currency))
-            {
-                var k = store.Balance[_currency];
-                // remove all DNA points from the store, since they are being converted into time
-                Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dico = new() {
-                    {_currency, -k }
-                };
-                // note that we dont add a grace period here (set to 0d) because this is mid-transformation
-                _stores.TryAddCurrency(dico, ent.Owner, store);
-                ent.Comp.EndTime += DNAToTime(k, ent.Comp.SecondPerDNA.TotalSeconds, 0d);
-                Dirty(ent);
-            }
+            var k = args.Changes[_currency];
+            // lets not do weird things with negative DNA, okay?
+            if (k < 0f)
+                return;
+
+            args.Cancelled = true;
+            ent.Comp.EndTime += DNAToTime(k, ent.Comp.SecondPerDNA.TotalSeconds, 0d);
+            Dirty(ent);
         }
     }
     #endregion

@@ -60,13 +60,3 @@ public sealed partial class ChangelingTryDevourEvent : EntityEventArgs
     public bool BreakOnDamage = true;
 }
 
-/// <summary>
-/// Raised when a devour is finished
-/// </summary>
-public sealed partial class ChangelingEntityDevouredEvent : EntityEventArgs
-{
-    /// <summary>
-    /// The entity that was just devoured
-    /// </summary>
-    public EntityUid Entity;
-}
