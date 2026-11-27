@@ -1,3 +1,15 @@
+id-card-access-group-command = Command
+id-card-access-group-cargo = Cargo
+id-card-access-group-engineering = Engineering
+id-card-access-group-medical = Medical
+id-card-access-group-research = Research
+id-card-access-group-security = Security
+id-card-access-group-armory = Armory
+id-card-access-group-service = Service
+id-card-access-group-silicon = Silicon
+id-card-access-group-all-access = All Access
+id-card-access-group-general = General
+
 id-card-access-level-command = Command
 id-card-access-level-captain = Captain
 id-card-access-level-head-of-personnel = Head of Personnel

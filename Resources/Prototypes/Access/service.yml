@@ -32,6 +32,7 @@
 
 - type: accessGroup
   id: Service
+  name: id-card-access-group-service
   tags:
   - HeadOfPersonnel
   - Bar

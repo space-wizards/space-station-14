@@ -1,5 +1,6 @@
 - type: accessGroup
   id: AllAccess
+  name: id-card-access-group-all-access
   tags:
   - EmergencyShuttleRepealAll
   - Captain
@@ -37,5 +38,6 @@
 
 - type: accessGroup
   id: General
+  name: id-card-access-group-general
   tags:
   - Maintenance

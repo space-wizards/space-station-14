@@ -12,6 +12,7 @@
 
 - type: accessGroup
   id: Command
+  name: id-card-access-group-command
   tags:
   - Captain
   - Command
@@ -22,7 +23,7 @@
   - HeadOfSecurity
   - Quartermaster
   - ResearchDirector
-  
+
 - type: accessLevel
   id: EmergencyShuttleRepealAll
   name: id-card-access-level-emergency-shuttle-repeal
