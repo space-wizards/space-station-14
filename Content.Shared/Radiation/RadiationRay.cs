@@ -11,7 +11,8 @@ namespace Content.Shared.Radiation.Systems;
 /// </summary>
 public struct RadiationRay(
     MapId mapId,
-    EntityUid sourceUid,
+    EntityUid? sourceUid, // Nullable for tile radiation
+    ushort sourceId,
     Vector2 source,
     EntityUid destinationUid,
     Vector2 destination,
@@ -24,7 +25,11 @@ public struct RadiationRay(
     /// <summary>
     ///     Uid of entity with <see cref="RadiationSourceComponent"/>.
     /// </summary>
-    public EntityUid SourceUid = sourceUid;
+    public EntityUid? SourceUid = sourceUid;
+    /// <summary>
+    ///     Identifier for tile radiation sources. Empty if it's an entity source.
+    /// </summary>
+    public ushort SourceId = sourceId;
     /// <summary>
     ///     World coordinates of radiation source.
     /// </summary>
@@ -63,7 +68,8 @@ public struct RadiationRay(
 [Serializable, NetSerializable]
 public readonly record struct DebugRadiationRay(
     MapId MapId,
-    NetEntity SourceUid,
+    NetEntity? SourceUid,
+    ushort SourceId,
     Vector2 Source,
     NetEntity DestinationUid,
     Vector2 Destination,
