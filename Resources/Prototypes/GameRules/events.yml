@@ -401,6 +401,25 @@
   - type: KudzuGrowthRule
   - type: DynamicRuleCost
     cost: 40 #this shit can get insane
+    
+- type: entity
+  parent: BaseStationEventShortDelay
+  id: GiantMushroomSpawnHorde
+  components:
+  - type: StationEvent
+    startAnnouncement: giant-mushroom-spawn-event
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 10
+    minimumPlayers: 15
+    weight: 3
+    duration: 5
+    maxDuration: 20
+  - type: VentHordeRule
+    table:
+      id: MomMushroom
+  - type: DynamicRuleCost 
+    cost: 20 # Might need tuning
 
 - type: entity
   id: PowerGridCheck
