@@ -40,7 +40,9 @@ public sealed partial class LightBehaviorSystem : EntitySystem
         }
         else
         {
-            StopLightBehaviour((uid, component), container.LightBehaviour.ID);
+            // Only stop this specific behavior, not all siblings with the same id
+            if (TryComp(uid, out AnimationPlayerComponent? animPlayer))
+                _player.Stop(uid, animPlayer, container.FullKey);
         }
     }
 
@@ -74,7 +76,7 @@ public sealed partial class LightBehaviorSystem : EntitySystem
             var propertyValue = AnimationHelper.GetAnimatableProperty(light, property);
             if (propertyValue != null)
             {
-                entity.Comp.OriginalPropertyValues.Add(property, propertyValue);
+                entity.Comp.OriginalPropertyValues[property] = propertyValue;
             }
         }
         else
