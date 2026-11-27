@@ -6,6 +6,7 @@ using Content.Shared.Disposal.Unit;
 using Content.Shared.Maps;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -26,6 +27,7 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private TileSystem _tile = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
@@ -121,6 +123,8 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
         // because the holder might have something teleported into it,
         // outside the usual container insertion logic.
         var children = xform.ChildEnumerator;
+        // no need to play the exit sound more than once
+        var soundPlayed = false;
         while (children.MoveNext(out var held))
         {
             DetachEntity(held);
@@ -132,6 +136,9 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
             if (unit != null && unit.Value.Comp.Container != null && _container.Insert((held, heldXform, heldMeta), unit.Value.Comp.Container))
             {
                 _disposalUnit.Remove(unit.Value, held);
+                if (!soundPlayed && unit.Value.Comp.ExitSound != null)
+                    _audio.PlayPvs(unit.Value.Comp.ExitSound, unit.Value.Owner);
+                soundPlayed = true;
             }
             else
             {
