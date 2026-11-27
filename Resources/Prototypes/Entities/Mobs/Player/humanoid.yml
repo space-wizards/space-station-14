@@ -633,6 +633,8 @@
       randomizeName: false
     - type: NukeOperative
 
+## Misc.
+
 - type: entity
   id: RandomHumanoidSpawnerCluwne
   name: Cluwne
@@ -661,3 +663,30 @@
       raffle:
         settings: default
     - type: Cluwne
+
+- type: entity
+  id: RandomHumanoidSpawnerGreytider
+  name: greytider spawner
+  suffix: Ghost role
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: greytider
+  - type: RandomHumanoidSpawner
+    settings: Greytider
+
+- type: randomHumanoidSettings
+  parent: EventHumanoid
+  id: Greytider
+  components:
+  - type: GhostRole
+    name: ghost-role-information-greytider-name
+    description: ghost-role-information-greytider-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+    raffle:
+      settings: default
+  - type: Loadout
+    prototypes: [ GreytiderPassengerGear ]
+    roleLoadout: [ RoleSurvivalStandard ]

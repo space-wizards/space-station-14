@@ -194,3 +194,19 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     shoes: ClothingShoesColorBlack
+
+# Passenger with insuls, tools, and greytide stamp
+- type: startingGear
+  id: GreytiderPassengerGear
+  equipment:
+    mask: ClothingMaskGas
+    ears: ClothingHeadsetGrey
+    back: ClothingBackpack
+    belt: ClothingBeltUtilityEngineering # the one that has a multitool in it, for hacking purposes
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    gloves: ClothingHandsGlovesColorYellow # insuls
+    shoes: ClothingShoesColorBlack
+    id: PassengerPDA
+  storage:
+    back:
+    - RubberStampGreytide # for paperwork shennanigans
