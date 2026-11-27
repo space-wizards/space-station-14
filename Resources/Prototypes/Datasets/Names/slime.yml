@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesSlime
+  values:
+    prefix: names-slime-dataset-
+    count: 2823
