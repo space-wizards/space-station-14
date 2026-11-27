@@ -13,6 +13,7 @@ public static class Palettes
     public static readonly ColorPalette Cyan = ColorPalette.FromHexBase("#42586a", lightnessShift: 0.05f, chromaShift: 0.0045f);
     public static readonly ColorPalette Slate = ColorPalette.FromHexBase("#545562");
     public static readonly ColorPalette Neutral = ColorPalette.FromHexBase("#555555");
+    public static readonly ColorPalette Dark = ColorPalette.FromHexBase("#383838");
 
     // status tones
     public static readonly ColorPalette Red = ColorPalette.FromHexBase("#b62124", chromaShift: 0.02f);
@@ -23,8 +24,9 @@ public static class Palettes
     // highlight tones
     public static readonly ColorPalette Gold = ColorPalette.FromHexBase("#a88b5e");
     public static readonly ColorPalette Maroon = ColorPalette.FromHexBase("#9b2236");
+    public static readonly ColorPalette Emerald = ColorPalette.FromHexBase("#557979");
+    public static readonly ColorPalette White = ColorPalette.FromHexBase("#dfdfdf");
 
     // Intended to be used with `ModulateSelf` to darken / lighten something
     public static readonly ColorPalette AlphaModulate = ColorPalette.FromHexBase("#ffffff");
-
 }
