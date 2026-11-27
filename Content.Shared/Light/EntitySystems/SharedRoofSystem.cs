@@ -19,8 +19,9 @@ public abstract partial class SharedRoofSystem : EntitySystem
     /// Returns whether the specified tile is roof-occupied.
     /// </summary>
     /// <returns>Returns false if no data or not rooved.</returns>
+    /// <param name="considerEntities">If true, calls <see cref="IsRoovedEntity"/> </param>
     [Pure]
-    public bool IsRooved(Entity<MapGridComponent, RoofComponent> grid, Vector2i index)
+    public bool IsRooved(Entity<MapGridComponent, RoofComponent> grid, Vector2i index, bool considerEntities = true)
     {
         var roof = grid.Comp2;
         var chunkOrigin = SharedMapSystem.GetChunkIndices(index, RoofComponent.ChunkSize);
@@ -37,6 +38,19 @@ public abstract partial class SharedRoofSystem : EntitySystem
                 return true;
         }
 
+        if (considerEntities)
+            return IsRoovedEntity(grid, index);
+        else
+            return false;
+    }
+
+    /// <summary>
+    /// Returns whether the specified tile has a roof-producing entity.
+    /// </summary>
+    /// <returns>Returns false if no data or not rooved.</returns>
+    [Pure]
+    public bool IsRoovedEntity(Entity<MapGridComponent, RoofComponent> grid, Vector2i index)
+    {
         _roofSet.Clear();
         _lookup.GetLocalEntitiesIntersecting(grid.Owner, index, _roofSet);
 
