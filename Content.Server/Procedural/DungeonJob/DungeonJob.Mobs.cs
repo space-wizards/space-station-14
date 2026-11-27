@@ -22,7 +22,6 @@ public sealed partial class DungeonJob
         var availableRooms = new ValueList<DungeonRoom>();
         availableRooms.AddRange(dungeon.Rooms);
         var availableTiles = new ValueList<Vector2i>(dungeon.AllTiles);
-        var contents = _prototype.Index(gen.Contents);
 
         var count = random.Next(gen.MinCount, gen.MaxCount + 1);
         var npcs = _entManager.System<NPCSystem>();
@@ -39,7 +38,7 @@ public sealed partial class DungeonJob
                     continue;
                 }
 
-                var entities = _entTable.GetSpawns(contents, random);
+                var entities = _entTable.GetSpawns(gen.Contents, random);
 
                 foreach (var ent in entities)
                 {
