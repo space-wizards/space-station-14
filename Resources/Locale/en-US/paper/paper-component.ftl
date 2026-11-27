@@ -7,6 +7,7 @@ paper-ui-blank-page-message = This page intentionally left blank
 paper-component-examine-detail-has-words = {CAPITALIZE(THE($paper))} has something written on it.
 # Shown when paper with stamps examined
 paper-component-examine-detail-stamped-by = {CAPITALIZE(THE($paper))} {CONJUGATE-HAVE($paper)} been stamped by: {$stamps}.
+paper-component-examine-detail-signed-by = {CAPITALIZE(THE($paper))} {CONJUGATE-HAVE($paper)} been signed by: {$signers}.
 paper-component-illiterate = You are unable to write.
 paper-component-illiterate-mime = Your vow forbids you from writing.
 
