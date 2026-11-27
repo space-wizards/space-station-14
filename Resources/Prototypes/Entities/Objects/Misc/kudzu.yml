@@ -205,7 +205,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 30
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -219,7 +219,7 @@
       - Flesh
   - type: Kudzu
     growthTickChance: 0.1
-    spreadChance: 0.4
+    spreadChance: 0.2
     # Heals each time it manages to do a growth tick:
     damageRecovery:
       types:
@@ -266,11 +266,6 @@
     tags:
     - Meat
     - Ruminant
-
-- type: entity
-  parent: BaseFleshKudzu
-  id: FleshKudzu
-  components:
   - type: Temperature
   - type: TemperatureDamage
     heatDamage:
@@ -280,6 +275,11 @@
       types:
         Cold: 5 #per second, scales with temperature & other constants
     coldDamageThreshold: 0
+
+- type: entity
+  parent: BaseFleshKudzu
+  id: FleshKudzu
+  components:
   - type: Barotrauma
     damage:
       types:
