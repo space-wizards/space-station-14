@@ -19,16 +19,10 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     public int Capacity = 20;
 
     /// <summary>
-    /// Every outstanding order across every account.
-    /// </summary>
-    [ViewVariables]
-    public IEnumerable<CargoOrderData> AllOrders => Orders.SelectMany(p => p.Value);
-
-    /// <summary>
     /// A dictionary containing every outstanding order on the system, indexed by account.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<CargoAccountPrototype>, List<CargoOrderData>> Orders = new();
+    public List<CargoOrderData> Orders = new();
 
     /// <summary>
     /// Used to determine unique order IDs.
