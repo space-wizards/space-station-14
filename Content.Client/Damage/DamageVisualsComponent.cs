@@ -111,6 +111,13 @@ public sealed partial class DamageVisualsComponent : Component
     ///     defined - otherwise, it will not work.
     /// </remarks>
     [DataField("trackAllDamage")] public  bool TrackAllDamage;
+
+    /// <summary>
+    ///     Hides the tracked damage overlay while the door is open or moving,
+    ///     since the door's sprite no longer matches the overlay.
+    /// </summary>
+    [DataField]
+    public bool HideWhenDoorOpen;
     /// <summary>
     ///     This is the overlay sprite used, if _trackAllDamage is
     ///     enabled. Supports no complex per-group layering,
