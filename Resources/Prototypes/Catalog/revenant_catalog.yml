@@ -24,19 +24,6 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-#- type: listing
-#  id: RevenantBlight
-#  name: revenant-blight-name
-#  description: revenant-blight-desc
-#  productAction: ActionRevenantBlight
-#  cost:
-#    StolenEssence: 75
-#  categories:
-#  - RevenantAbilities
-#  conditions:
-#  - !type:ListingLimitedStockCondition
-#    stock: 1
-
 - type: listing
   id: RevenantMalfunction
   name: revenant-malfunction-name

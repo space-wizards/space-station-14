@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
@@ -241,6 +242,98 @@ public abstract partial class SatiationSystem : EntitySystem
             nextLowerThreshold
         );
         DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
+    }
+
+    private int? GetThresholdValueOrNull(Satiation satiation, SatiationValue satiationValue)
+    {
+        if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+            return null;
+
+        if (proto.GetValueOrNull(satiationValue) is not { } value)
+            return null;
+
+        if (satiationValue.Key == null)
+            return value;
+
+        if (satiation.OverrideThresholds.TryGetValue(satiationValue.Key, out var overrideValue))
+            value = overrideValue;
+
+        return value;
+    }
+
+    private void SetOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        Satiation satiation,
+        SatiationPrototype proto,
+        string key,
+        int value
+    )
+    {
+        satiation.OverrideThresholds[key] = value;
+
+        SetAuthoritativeValue(entity, satiation, proto, CalculateCurrentValue(satiation, proto));
+    }
+
+    private void ClearOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        Satiation satiation,
+        string key
+    )
+    {
+        satiation.OverrideThresholds.Remove(key);
+    }
+
+    private void ClearAllOverrideThreshold(
+        Entity<SatiationComponent> entity,
+        Satiation satiation
+    )
+    {
+        satiation.OverrideThresholds.Clear();
+    }
+
+    private bool TryGetNearestThresholds(Entity<SatiationComponent> ent,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        float value,
+        out int? nextHigherThreshold,
+        out int? nextLowerThreshold,
+        Dictionary<SatiationValue, int>? thresholds = null
+    )
+    {
+        nextHigherThreshold = null;
+        nextLowerThreshold = null;
+        if (thresholds == null && !TryGetThresholds(ent, type, out thresholds))
+            return false;
+
+        var valuesByDescendingThreshold = thresholds
+            .OrderByDescending(it => it.Value)
+            .GetEnumerator();
+        if (!valuesByDescendingThreshold.MoveNext())
+            return false;
+
+        if (value > valuesByDescendingThreshold.Current.Value)
+        {
+            nextHigherThreshold = null;
+            nextLowerThreshold = valuesByDescendingThreshold.Current.Value;
+            return true;
+        }
+
+        var nextHigher = valuesByDescendingThreshold.Current;
+        while (valuesByDescendingThreshold.MoveNext())
+        {
+            var nextLower = valuesByDescendingThreshold.Current;
+            if (value > nextLower.Value)
+            {
+                nextHigherThreshold = nextHigher.Value;
+                nextLowerThreshold = nextLower.Value;
+                return true;
+            }
+
+            nextHigher = nextLower;
+        }
+
+        nextHigherThreshold = nextHigher.Value;
+        nextLowerThreshold = null;
+        return true;
     }
 }
 
