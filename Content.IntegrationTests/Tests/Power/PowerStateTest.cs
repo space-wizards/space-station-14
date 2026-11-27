@@ -52,6 +52,7 @@ public sealed class PowerStateTest : GameTest
           - type: BatteryDischarger
             voltage: Apc
           - type: Apc
+          - type: PowerProvider
             voltage: Apc
           - type: NodeContainer
             nodes:

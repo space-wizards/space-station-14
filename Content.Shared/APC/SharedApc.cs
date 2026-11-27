@@ -120,21 +120,16 @@ public enum ApcChargeState : byte
 
 /// <summary>
 /// The state of an APC BUI.
-/// Contains the details of the charge, breaker, and power delivery for a given APC.
+/// Contains the details of the charge and power delivery for a given APC.
+/// The breaker state is predicted, so it lives on <see cref="ApcBreakerComponent"/> instead.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ApcBoundInterfaceState(bool mainBreaker,
-    int power,
+public sealed class ApcBoundInterfaceState(int power,
     ApcExternalPowerState apcExternalPower,
     float charge,
     float maxLoad,
     bool tripped) : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
 {
-    /// <summary>
-    /// If true, the breaker is active, and the APC can deliver power.
-    /// </summary>
-    public readonly bool MainBreaker = mainBreaker;
-
     /// <summary>
     /// The current amount of power being delivered, in Watts.
     /// </summary>
@@ -165,8 +160,7 @@ public sealed class ApcBoundInterfaceState(bool mainBreaker,
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return MainBreaker == other.MainBreaker &&
-                Power == other.Power &&
+        return Power == other.Power &&
                 ApcExternalPower == other.ApcExternalPower &&
                 MathHelper.CloseTo(Charge, other.Charge) &&
                 MathHelper.CloseTo(MaxLoad, other.MaxLoad) &&
@@ -182,7 +176,7 @@ public sealed class ApcBoundInterfaceState(bool mainBreaker,
     /// <inheritdoc/>
     public override int GetHashCode()
     {
-        return HashCode.Combine(MainBreaker, Power, (int)ApcExternalPower, Charge, MaxLoad, Tripped);
+        return HashCode.Combine(Power, (int)ApcExternalPower, Charge, MaxLoad, Tripped);
     }
 }
 

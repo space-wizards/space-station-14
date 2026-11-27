@@ -485,9 +485,8 @@ namespace Content.Server.Power.EntitySystems
 
             DoReconnectBasePowerNet(net, netNode);
 
-            foreach (var apc in net.Apcs)
+            foreach (var netBattery in net.Apcs)
             {
-                var netBattery = _powerNetworkBatteryQuery.GetComponent(apc.Owner);
                 netNode.BatterySupplies.Add(netBattery.NetworkBattery.Id);
                 netBattery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }

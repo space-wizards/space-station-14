@@ -1,12 +1,15 @@
-using Content.Server.Power.NodeGroups;
-using Content.Shared.APC;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Power.Components;
+namespace Content.Shared.APC;
 
-[RegisterComponent, AutoGenerateComponentPause]
-public sealed partial class ApcComponent : BaseApcNetComponent
+/// <summary>
+/// A wall-mounted battery bank and breaker for stepping down MV to LV power.
+/// The APC's battery discharges into the LV net through the entity's ApcPowerProvider.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
+public sealed partial class ApcComponent : Component
 {
     [DataField("onReceiveMessageSound")]
     public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
@@ -25,7 +28,10 @@ public sealed partial class ApcComponent : BaseApcNetComponent
     /// </summary>
     public TimeSpan LastUiUpdate;
 
-    [DataField("enabled")]
+    /// <summary>
+    /// If true, the breaker is active, and the APC can deliver power.
+    /// </summary>
+    [DataField("enabled"), AutoNetworkedField]
     public bool MainBreakerEnabled = true;
 
     /// <summary>
@@ -61,16 +67,4 @@ public sealed partial class ApcComponent : BaseApcNetComponent
     /// </summary>
     [DataField]
     public bool TripFlag;
-
-    // TODO ECS power a little better!
-    // End the suffering
-    protected override void AddSelfToNet(IApcNet apcNet)
-    {
-        apcNet.AddApc(Owner, this);
-    }
-
-    protected override void RemoveSelfFromNet(IApcNet apcNet)
-    {
-        apcNet.RemoveApc(Owner, this);
-    }
 }

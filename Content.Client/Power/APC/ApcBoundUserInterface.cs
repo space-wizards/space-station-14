@@ -31,6 +31,9 @@ namespace Content.Client.Power.APC
                 hasAccess = accessReader.IsAllowed((EntityUid)PlayerManager.LocalEntity, Owner);
             }
             _menu?.SetAccessEnabled(hasAccess);
+
+            if (EntMan.TryGetComponent(Owner, out ApcComponent? apc))
+                UpdateBreaker(apc.MainBreakerEnabled);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -43,7 +46,12 @@ namespace Content.Client.Power.APC
 
         public void BreakerPressed()
         {
-            SendMessage(new ApcToggleMainBreakerMessage());
+            SendPredictedMessage(new ApcToggleMainBreakerMessage());
+        }
+
+        public void UpdateBreaker(bool enabled)
+        {
+            _menu?.UpdateBreaker(enabled);
         }
     }
 }

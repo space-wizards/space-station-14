@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.APC;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
@@ -66,7 +67,7 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
         if (rule == null || !apcComp.MainBreakerEnabled)
             return;
 
-        _apc.ApcToggleBreaker(apcUid, apcComp);
+        _apc.ApcToggleBreaker((apcUid, apcComp));
         rule.Unpowered.Add(apcUid);
     }
 
@@ -120,7 +121,7 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
                 continue;
 
             if (!apcComponent.MainBreakerEnabled)
-                _apc.ApcToggleBreaker(entity, apcComponent);
+                _apc.ApcToggleBreaker((entity, apcComponent));
         }
 
         rule.Comp.Unpowered.Clear();
@@ -172,7 +173,7 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
             if (TryComp<ApcComponent>(selected, out var apcComponent))
             {
                 if (apcComponent.MainBreakerEnabled)
-                    _apc.ApcToggleBreaker(selected, apcComponent);
+                    _apc.ApcToggleBreaker((selected, apcComponent));
             }
 
             component.Unpowered.Add(selected);

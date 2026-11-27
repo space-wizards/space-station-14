@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.APC;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
@@ -43,7 +44,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         for (var i = 0; i < toDisable; i++)
         {
             var apc = stationApcs[i];
-            _apcSystem.ApcToggleBreaker(apc, apc);
+            _apcSystem.ApcToggleBreaker(apc.AsNullable());
 
             var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
             AdminLogManager.Add(LogType.ItemConfigure,

@@ -8,13 +8,11 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ApcComponent, ComponentInit>(OnApcInit);
         SubscribeLocalEvent<ApcPowerProviderComponent, ComponentInit>(OnApcPowerProviderInit);
         SubscribeLocalEvent<BatteryChargerComponent, ComponentInit>(OnBatteryChargerInit);
         SubscribeLocalEvent<BatteryDischargerComponent, ComponentInit>(OnBatteryDischargerInit);
 
         // TODO please end my life
-        SubscribeLocalEvent<ApcComponent, ComponentRemove>(OnRemove<ApcComponent, IApcNet>);
         SubscribeLocalEvent<ApcPowerProviderComponent, ComponentRemove>(OnRemove<ApcPowerProviderComponent, IApcNet>);
         SubscribeLocalEvent<BatteryChargerComponent, ComponentRemove>(OnRemove<BatteryChargerComponent, IPowerNet>);
         SubscribeLocalEvent<BatteryDischargerComponent, ComponentRemove>(OnRemove<BatteryDischargerComponent, IPowerNet>);
@@ -45,11 +43,6 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
     }
 
     private void OnApcPowerProviderInit(EntityUid uid, ApcPowerProviderComponent component, ComponentInit args)
-    {
-        BaseNetConnectorInit(component);
-    }
-
-    private void OnApcInit(EntityUid uid, ApcComponent component, ComponentInit args)
     {
         BaseNetConnectorInit(component);
     }

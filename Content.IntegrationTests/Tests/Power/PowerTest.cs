@@ -136,6 +136,7 @@ namespace Content.IntegrationTests.Tests.Power
   - type: BatteryDischarger
     voltage: Apc
   - type: Apc
+  - type: PowerProvider
     voltage: Apc
   - type: NodeContainer
     nodes:

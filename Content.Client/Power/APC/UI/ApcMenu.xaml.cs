@@ -33,8 +33,6 @@ namespace Content.Client.Power.APC.UI
         {
             var castState = (ApcBoundInterfaceState) state;
 
-            BreakerButton.Pressed = castState.MainBreaker;
-
             if (PowerLabel != null)
             {
                 if (castState.Tripped)
@@ -75,6 +73,11 @@ namespace Content.Client.Power.APC.UI
                 var chargePercentage = (castState.Charge / ChargeBar.MaxValue);
                 ChargePercentage.Text = Loc.GetString("apc-menu-charge-label",("percent",  chargePercentage.ToString("P0")));
             }
+        }
+
+        public void UpdateBreaker(bool enabled)
+        {
+            BreakerButton.Pressed = enabled;
         }
 
         public void SetAccessEnabled(bool hasAccess)
