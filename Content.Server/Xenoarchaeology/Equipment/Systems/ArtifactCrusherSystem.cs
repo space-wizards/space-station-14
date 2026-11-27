@@ -5,19 +5,17 @@ using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Collections;
-using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
 /// <inheritdoc/>
 public sealed partial class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 {
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
-    // TODO: Move to shared once StackSystem spawning is in Shared and we have RandomPredicted
+    // TODO: Move to shared once StackSystem spawning is in Shared
     public override void FinishCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
     {
         var (_, crusher, storage) = ent;
@@ -30,10 +28,15 @@ public sealed partial class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         var coords = Transform(ent).Coordinates;
         foreach (var contained in contents)
         {
-            if (_whitelistSystem.IsWhitelistPass(crusher.CrushingWhitelist, contained))
+            var lockedNodes = 0;
+            if (ArtifactQuery.HasComp(contained) && _whitelistSystem.IsWhitelistPass(crusher.CrushingWhitelist, contained))
+                lockedNodes = MakeShards(contained, coords, crusher);
+
+            if (lockedNodes > 0)
             {
-                var amount = _random.Next(crusher.MinFragments, crusher.MaxFragments);
-                var stacks = _stack.SpawnMultipleAtPosition(crusher.FragmentStackProtoId, amount, coords);
+                if (lockedNodes > ent.Comp1.MaxFragments) //limit fragment spawning
+                    lockedNodes = ent.Comp1.MaxFragments;
+                var stacks = _stack.SpawnMultipleAtPosition(crusher.FragmentStackProtoId, lockedNodes, coords);
                 foreach (var stack in stacks)
                 {
                     ContainerSystem.Insert((stack, null, null, null), crusher.OutputContainer);
