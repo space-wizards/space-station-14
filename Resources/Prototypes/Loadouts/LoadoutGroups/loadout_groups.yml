@@ -14,22 +14,12 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
+  # Accessories
   - FlowerWreath
   - Hairflower
   - Headphones
-  - PlushieLizard
-  - PlushieSpaceLizard
-  - ThreeCandles
-  - Lighter
-  - CigPackGreen
-  - CigPackRed
-  - CigPackBlue
-  - CigPackBlack
-  - CigarCase
-  - CigarGold
-  - BoxFolderBaseThreePapers
-  - BoxFolderPlasticClipboardThreePapers
-  - BoxFolderClipboardThreePapers
+  - Wristwatch
+  # Pins
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
@@ -48,6 +38,22 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  # Plushies
+  - PlushiePenguin
+  - PlushieSharkBlue
+  - PlushieSharkGrey
+  - PlushieSharkPink
+  - PlushieSheep
+  - PlushieSnake
+  - PlushieArachind
+  - PlushieDiona
+  - PlushieLizard
+  - PlushieSpaceLizard
+  - PlushieMoth
+  - PlushieSlime
+  - PlushieVox
+  - PlushieVulp
+  # Towels
   - TowelColorWhite
 
 - type: loadoutGroup
