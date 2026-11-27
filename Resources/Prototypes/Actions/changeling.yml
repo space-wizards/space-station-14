@@ -38,13 +38,13 @@
     layers:
     - state: biodegrade
   - type: ActionRequirements
-    failPopup: changeling-not-enough-chemicals
     failPopupType: SmallCaution
-    conditions:
+    requirements:
       Performer:
-      - !type:SatiationCondition
-        satiationType: Chemicals
-        min: 20
+      - condition: !type:SatiationCondition
+          satiationType: Chemicals
+          min: 20
+        failPopup: changeling-not-enough-chemicals
     effects:
       Performer:
       - !type:Satiate
@@ -212,11 +212,11 @@
   - type: ActionRequirements
     failPopup: changeling-not-enough-chemicals
     failPopupType: SmallCaution
-    conditions:
+    requirements:
       Performer:
-      - !type:SatiationCondition
-        satiationType: Chemicals
-        min: 30
+      - condition: !type:SatiationCondition
+          satiationType: Chemicals
+          min: 30
     effects:
       Performer:
       - !type:Satiate
@@ -288,11 +288,11 @@
     layers:
     - state: lethal_sting
   - type: ActionRequirements
-    conditions:
+    requirements:
       Performer:
-      - !type:SatiationCondition
-        satiationType: Chemicals
-        min: 50
+      - condition: !type:SatiationCondition
+          satiationType: Chemicals
+          min: 50
     effects:
       Performer:
       - !type:Satiate
@@ -340,11 +340,11 @@
     layers:
     - state: armblade_sting
   - type: ActionRequirements
-    conditions:
+    requirements:
       Performer:
-      - !type:SatiationCondition
-        satiationType: Chemicals
-        min: 50
+      - condition: !type:SatiationCondition
+          satiationType: Chemicals
+          min: 50
     effects:
       Performer:
       - !type:Satiate
@@ -510,16 +510,17 @@
   - type: TargetAction
     interactOnMiss: false
   - type: ActionRequirements
-    failPopup: changeling-action-fail-generic # Currently no way to tell which condition failed
     failPopupType: SmallCaution
-    conditions:
+    requirements:
       Performer:
-      - !type:SatiationCondition
-        satiationType: Chemicals
-        min: 35
+      - condition: !type:SatiationCondition
+          satiationType: Chemicals
+          min: 35
+        failPopup: changeling-not-enough-chemicals
       Target:
-      - !type:MobStateCondition
-        mobstate: Dead
+      - condition: !type:MobStateCondition
+          mobstate: Dead
+        failPopup: changeling-action-fail-generic
     effects:
       Performer:
       - !type:Satiate
