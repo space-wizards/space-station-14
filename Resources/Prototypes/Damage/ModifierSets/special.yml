@@ -19,3 +19,18 @@
     Shock: 0.0
     Slash: 0.25
     Structural: 0.0
+
+# This is to make indestructible things be punchable and not flash red.
+- type: damageModifierSet
+  id: Indestructible
+  coefficients:
+    Blunt: 0
+    Slash: 0
+    Piercing: 0
+    Heat: 0
+    Cold: 0
+    Shock: 0
+    Caustic: 0
+    Structural: 0
+    Radiation: 0
+    Holy: 0
