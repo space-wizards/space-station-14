@@ -74,6 +74,8 @@ public abstract partial class MicrowaveSystem
         if (!MicrowaveQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
+        ent.Comp.PlayingStream = Audio.Stop(ent.Comp.PlayingStream);
+
         ent.Comp.Broken = true;
         DirtyField(ent.AsNullable(), nameof(ent.Comp.Broken));
     }
@@ -307,6 +309,7 @@ public abstract partial class MicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void StopCooking(Entity<MicrowaveComponent> ent)
     {
+        ent.Comp.PlayingStream = Audio.Stop(ent.Comp.PlayingStream);
         RemComp<ActiveMicrowaveComponent>(ent);
     }
 }
