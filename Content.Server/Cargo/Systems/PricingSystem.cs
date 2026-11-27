@@ -191,20 +191,51 @@ public sealed partial class PricingSystem : EntitySystem
     /// Appraises an entity, returning it's price.
     /// </summary>
     /// <param name="uid">The entity to appraise.</param>
+    /// <param name="includeContents">Whether to include the price of contained entities.</param>
+    /// <param name="pricingStack">The stack used to detect recursive pricing, see <see cref="PriceCalculationEvent.PricingStack"/>.</param>
     /// <returns>The price of the entity.</returns>
     /// <remarks>
     /// This fires off an event to calculate the price.
-    /// Calculating the price of an entity that somehow contains itself will likely hang.
+    /// Recursive price handlers are detected and broken by returning the entity's own price.
     /// </remarks>
-    public double GetPrice(EntityUid uid, bool includeContents = true)
+    public double GetPrice(EntityUid uid, bool includeContents = true, HashSet<string>? pricingStack = null)
     {
-        var ev = new PriceCalculationEvent();
+        pricingStack ??= new HashSet<string>();
+
+        // Detect recursive pricing (e.g. a spawn handler pricing an ancestor prototype).
+        var prototypeId = MetaData(uid).EntityPrototype?.ID;
+
+        if (prototypeId != null && !pricingStack.Add(prototypeId))
+            return GetOwnPrice(uid);
+
+        var ev = new PriceCalculationEvent { PricingStack = pricingStack };
         RaiseLocalEvent(uid, ref ev);
+
+        if (prototypeId != null)
+            pricingStack.Remove(prototypeId);
 
         if (ev.Handled)
             return ev.Price;
 
-        var price = ev.Price;
+        var price = ev.Price + GetOwnPrice(uid);
+
+        if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
+        {
+            foreach (var container in containers.Containers.Values)
+            {
+                foreach (var ent in container.ContainedEntities)
+                {
+                    price += GetPrice(ent, pricingStack: pricingStack);
+                }
+            }
+        }
+
+        return price;
+    }
+
+    private double GetOwnPrice(EntityUid uid)
+    {
+        var price = 0.0;
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
         // DO NOT FORGET TO UPDATE ESTIMATED PRICING
         price += GetMaterialsPrice(uid);
@@ -217,17 +248,6 @@ public sealed partial class PricingSystem : EntitySystem
         if (oldPrice.Equals(price))
         {
             price += GetStaticPrice(uid);
-        }
-
-        if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
-        {
-            foreach (var container in containers.Containers.Values)
-            {
-                foreach (var ent in container.ContainedEntities)
-                {
-                    price += GetPrice(ent);
-                }
-            }
         }
 
         return price;

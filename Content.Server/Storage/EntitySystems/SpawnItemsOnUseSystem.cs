@@ -35,10 +35,13 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var entry in ungrouped)
             {
+                if (entry.PrototypeId == null)
+                    continue;
+
                 var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
 
                 // Calculate the average price of the possible spawned items
-                args.Price += _pricing.GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
+                args.Price += _pricing.GetPrice(protUid, pricingStack: args.PricingStack) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
 
                 Del(protUid);
             }
@@ -47,10 +50,13 @@ namespace Content.Server.Storage.EntitySystems
             {
                 foreach (var entry in group.Entries)
                 {
+                    if (entry.PrototypeId == null)
+                        continue;
+
                     var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
 
                     // Calculate the average price of the possible spawned items
-                    args.Price += _pricing.GetPrice(protUid) *
+                    args.Price += _pricing.GetPrice(protUid, pricingStack: args.PricingStack) *
                                   (entry.SpawnProbability / group.CumulativeProbability) *
                                   entry.GetAmount(getAverage: true);
 
