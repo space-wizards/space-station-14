@@ -24,12 +24,36 @@ namespace Content.IntegrationTests.Tests.Clumsy;
 [TestOf(typeof(ClumsyStatusEffectSystem))]
 public sealed class ClumsyStatusTest : InteractionTest
 {
-    private sealed class CatchListenerSystem : TestListenerSystem<CatchAttemptEvent>;
-    private sealed class ClimbListenerSystem : TestListenerSystem<SelfBeforeClimbEvent>;
-    private sealed class DefibListenerSystem : TestListenerSystem<SelfBeforeDefibrillatorZapsEvent>;
-    private sealed class GunListenerSystem : TestListenerSystem<SelfBeforeGunShotEvent>;
-    private sealed class InjectListenerSystem : TestListenerSystem<SelfBeforeInjectEvent>;
-    private sealed class BeforeEquipListenerSystem : TestListenerSystem<BeforeEquippingHandEvent>;
+    // Clumsy effects cancel these events through the status effect relay, so record them after it has run.
+    private sealed class CatchListenerSystem : TestListenerSystem<CatchAttemptEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class ClimbListenerSystem : TestListenerSystem<SelfBeforeClimbEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class DefibListenerSystem : TestListenerSystem<SelfBeforeDefibrillatorZapsEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class GunListenerSystem : TestListenerSystem<SelfBeforeGunShotEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class InjectListenerSystem : TestListenerSystem<SelfBeforeInjectEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
+
+    private sealed class BeforeEquipListenerSystem : TestListenerSystem<BeforeEquippingHandEvent>
+    {
+        protected override Type[] After => [typeof(StatusEffectsSystem)];
+    }
 
     [SidedDependency(Side.Server)] private readonly ClimbSystem _sClimbSystem = default!;
     [SidedDependency(Side.Server)] private readonly StatusEffectsSystem _sStatusSystem = default!;
