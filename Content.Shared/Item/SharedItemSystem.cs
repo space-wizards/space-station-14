@@ -112,7 +112,7 @@ public abstract partial class SharedItemSystem : EntitySystem
     /// <summary>
     ///     Copy all item specific visuals from another item.
     /// </summary>
-    public void CopyVisuals(EntityUid uid, ItemComponent otherItem, ItemComponent? item = null)
+    public void CopyVisuals(EntityUid uid, ItemComponent otherItem, ItemComponent? item = null, bool notifyVisualsChanged = true)
     {
         if (!Resolve(uid, ref item))
             return;
@@ -122,7 +122,8 @@ public abstract partial class SharedItemSystem : EntitySystem
         item.HeldPrefix = otherItem.HeldPrefix;
 
         Dirty(uid, item);
-        VisualsChanged(uid);
+        if (notifyVisualsChanged)
+    VisualsChanged(uid);
     }
 
     #endregion
