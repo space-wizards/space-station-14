@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -96,10 +97,10 @@ public sealed partial class DumpableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable)
+    private bool StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable, bool needHand = true)
     {
-        if (!TryComp<StorageComponent>(storageUid, out var storage))
-            return;
+        if (!TryComp<StorageComponent>(storageUid, out var storage) || storage.Container.ContainedEntities.Count == 0)
+            return false;
 
         var delay = 0f;
 
@@ -116,10 +117,10 @@ public sealed partial class DumpableSystem : EntitySystem
 
         delay *= (float)dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
+        return _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
             BreakOnMove = true,
-            NeedHand = true,
+            NeedHand = needHand,
         });
     }
 
@@ -153,4 +154,12 @@ public sealed partial class DumpableSystem : EntitySystem
             _audio.PlayPredicted(component.DumpSound, uid, args.User);
         }
     }
+
+    [SubscribeLocalEvent]
+    private void OnDumpStorageAction(Entity<DumpableComponent> ent, ref DumpStorageActionEvent args)
+    {
+        args.Handled = StartDoAfter(ent, ent, args.Performer, ent, false);
+    }
 }
+
+public sealed partial class DumpStorageActionEvent : InstantActionEvent;
