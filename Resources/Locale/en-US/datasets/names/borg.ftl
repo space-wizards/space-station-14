@@ -1,3 +1,5 @@
+# All borgs (currently) share the same names list regardless of their chassis, so try to avoid being TOO specific with function here!
+
 names-borg-dataset-1 = 9 of 7
 names-borg-dataset-2 = Autoborg
 names-borg-dataset-3 = B-0-RG
