@@ -3,6 +3,7 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Station.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -13,6 +14,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class IonStormRule : StationEventSystem<IonStormRuleComponent>
 {
     [Dependency] private IonStormSystem _ionStorm = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     protected override void Started(Entity<IonStormRuleComponent, GameRuleComponent> ent, ref GameRuleStartedEvent args)
     {
@@ -21,14 +23,15 @@ public sealed partial class IonStormRule : StationEventSystem<IonStormRuleCompon
         if (!Station.TryGetRandomStation<StationEventEligibleComponent>(out var chosenStation))
             return;
 
-        var query = EntityQueryEnumerator<SiliconLawBoundComponent, TransformComponent, IonStormTargetComponent>();
-        while (query.MoveNext(out var borgUid, out var lawBound, out var xform, out var target))
+        var query = EntityQueryEnumerator<IonStormTargetComponent, TransformComponent>();
+        while (query.MoveNext(out var borgUid, out var target, out var xform))
         {
             // only affect law holders on the station
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner)
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation.Value.Owner ||
+                !_random.Prob(target.Chance))
                 continue;
 
-            _ionStorm.IonStormTarget((borgUid, lawBound, target));
+            _ionStorm.IonStormTarget((borgUid, target));
         }
     }
 }
