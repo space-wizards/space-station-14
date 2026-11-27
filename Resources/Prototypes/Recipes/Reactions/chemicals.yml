@@ -615,4 +615,14 @@
   products:
     TearGas: 3
 
-
+- type: reaction
+  id: Hypersomnolene
+  reactants:
+    Aluminium:
+      amount: 1
+    Hydroxide:
+      amount: 1
+    Mercury:
+      amount: 1
+  products:
+    Hypersomnolene: 1

@@ -166,3 +166,6 @@ reagent-desc-heparin = Commonly used as an anticoagulant medication. Causes bloo
 
 reagent-name-ignisol = ignisol
 reagent-desc-ignisol = A volatile medicinal extract that treats frostbite by rapidly raising body temperature. Highly flammable and can cause overheating when overdosed.
+
+reagent-name-hypersomnolene = hypersomnolene
+reagent-desc-hypersomnolene = A soothing chemical that speeds up metabolization drastically while asleep. Commonly used as an additive in intravenous medicine to aid recovery time.

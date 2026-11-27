@@ -30,11 +30,17 @@ public sealed partial class WhitelistCondition : EntityConditionBase<WhitelistCo
     [DataField]
     public EntityWhitelist? Blacklist;
 
+    /// <summary>
+    /// This holds the LocId for the guidebook description.
+    /// </summary>
+    [DataField]
+    public LocId? GuidebookDescription;
+
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         // I seriously doubt this is possible to sanely fill out based on a whitelist/blacklist.
         // "Target must not have HumanoidProfile" type shit.
-        return String.Empty;
+        return GuidebookDescription is { } locId ? Loc.GetString(locId) : string.Empty;
     }
 }
 

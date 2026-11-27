@@ -101,3 +101,13 @@
   components:
     - type: NightVision
       relayOverlay: True
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectFastMetabolism
+  name: rushed metabolism
+  components:
+  - type: RushedMetabolismStatusEffect
+    multiplier: 0.66666 # Roughly 50% faster
+  - type: StatusEffectAlert
+    alert: RushedMetabolismAlert
