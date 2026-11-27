@@ -20,6 +20,8 @@ chat-manager-no-radio-key = No radio key specified!
 chat-manager-no-such-channel = There is no channel with key '{$key}'!
 chat-manager-whisper-headset-on-message = You can't whisper on the radio!
 
+chat-manager-repeated-message-stacking-wrap = {$message} [italics][font size={$size}][color=red]×{$count}[/color][/font][/italics]
+
 # Unicode U+201C and U+201D Double quotes.
 chat-manager-speech-double-quote-begin = “
 chat-manager-speech-double-quote-end = ”

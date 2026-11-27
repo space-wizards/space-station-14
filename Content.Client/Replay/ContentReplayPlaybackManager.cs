@@ -146,7 +146,7 @@ public sealed partial class ContentReplayPlaybackManager
         // TODO REPLAYS add chat messages when jumping forward in time.
         // Need to allow content to add data to checkpoint states.
 
-        _uiMan.GetUIController<ChatUIController>().History.RemoveAll(x => x.Item1 > _timing.CurTick);
+        _uiMan.GetUIController<ChatUIController>().History.RemoveAll(x => x.Item1 > _timing.CurTime);
         _uiMan.GetUIController<ChatUIController>().Repopulate();
     }
 
@@ -171,7 +171,7 @@ public sealed partial class ContentReplayPlaybackManager
                     _entMan.System<ReplaySpectatorSystem>().SetSpectatorPosition(default);
                 return true;
             case ChatMessage chat:
-                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffects);
+                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffects, out _);
                 return true;
         }
 
