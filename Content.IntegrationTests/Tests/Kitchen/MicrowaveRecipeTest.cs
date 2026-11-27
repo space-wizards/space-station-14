@@ -91,7 +91,9 @@ public sealed class MicrowaveRecipeTest : InteractionTest
         var server = Pair.Server;
 
         // Spawn the microwave we will use for our recipes.
-        var microwave = ToServer(await Spawn(MicrowavePrototype));
+        
+        var targetCoords = SEntMan.GetCoordinates(TargetCoords);
+        var microwave = await SpawnAtPosition(MicrowavePrototype, targetCoords);//await SpawnAtPosition(MicrowavePrototype, targetCoords);
         var microwaveString = SEntMan.ToPrettyString(microwave);
 
         await server.WaitAssertion(() =>
@@ -150,13 +152,17 @@ public sealed class MicrowaveRecipeTest : InteractionTest
     [Description("Tests that a recipe with a reagent ingredient doesn't change mid-cook.")]
     public async Task ReagentDupeTest()
     {
-        var m = ToServer(await Spawn(MicrowavePrototype));
+        var targetCoords = SEntMan.GetCoordinates(TargetCoords);
+        var m = await SpawnAtPosition(MicrowavePrototype, targetCoords);
         var microwave = (Owner: m, Comp: SComp<MicrowaveComponent>(m));
 
         ToggleNeedPower(FromServer(m));
 
-        var solid = ToServer(await Spawn(TestSolid));
-        var reagent = ToServer(await Spawn(TestReagentContainer));
+        var solid = await SpawnAtPosition(TestSolid, targetCoords);
+        var reagent = await SpawnAtPosition(TestReagentContainer, targetCoords);
+
+        // let server respect power toggle
+        await RunTicks(5);
 
         await Server.WaitPost(() =>
         {
