@@ -563,6 +563,14 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconCentcommLawyer
+  icon:
+    sprite: *icon-rsi
+    state: CentcommLawyer
+  jobName: job-name-centcommlawyer
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconAdmin
   icon:
     sprite: *icon-rsi

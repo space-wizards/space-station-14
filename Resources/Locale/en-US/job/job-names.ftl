@@ -8,6 +8,7 @@ job-name-captain = Captain
 job-name-cargotech = Cargo Technician
 job-name-cburn = CBURN Officer
 job-name-ce = Chief Engineer
+job-name-centcommlawyer = CentComm Lawyer
 job-name-centcommoff = CentComm Official
 job-name-chef = Chef
 job-name-chaplain = Chaplain

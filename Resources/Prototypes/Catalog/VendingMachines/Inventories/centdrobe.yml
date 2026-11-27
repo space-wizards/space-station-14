@@ -6,7 +6,7 @@
     startingInventory:
       ClothingUniformJumpsuitCentcomOfficer: 3
       ClothingUniformJumpsuitCentcomOfficial: 3
-      ClothingUniformJumpsuitCentcomAgent: 3
+      ClothingUniformJumpsuitCentcomLawyer: 3
       ClothingUniformJumpsuitCentcomFormal: 3
       ClothingUniformJumpskirtCentcomFormalDress: 3
   - name: vending-machine-category-outerwear
