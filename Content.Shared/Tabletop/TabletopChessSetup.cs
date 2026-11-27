@@ -10,7 +10,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
-        var chessboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
+        var chessboard = entityManager.Spawn(BoardPrototype, session.Position.Offset(-1, 0));
 
         session.Entities.Add(chessboard);
 
@@ -30,9 +30,9 @@ public sealed partial class TabletopChessSetup : TabletopSetup
         SpawnPiecesRow(session, entityManager, "White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
 
         // Extra queens.
-        var tempQualifier = entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
+        var tempQualifier = entityManager.Spawn("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
         session.Entities.Add(tempQualifier);
-        var tempQualifier1 = entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
+        var tempQualifier1 = entityManager.Spawn("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
         session.Entities.Add(tempQualifier1);
     }
 
@@ -48,23 +48,23 @@ public sealed partial class TabletopChessSetup : TabletopSetup
             switch (piecesRow[i])
             {
                 case 'r':
-                    var tempQualifier = entityManager.SpawnEntity(color + "Rook", new MapCoordinates(x + i * separation, y, mapId));
+                    var tempQualifier = entityManager.Spawn(color + "Rook", new MapCoordinates(x + i * separation, y, mapId));
                     session.Entities.Add(tempQualifier);
                     break;
                 case 'n':
-                    var tempQualifier1 = entityManager.SpawnEntity(color + "Knight", new MapCoordinates(x + i * separation, y, mapId));
+                    var tempQualifier1 = entityManager.Spawn(color + "Knight", new MapCoordinates(x + i * separation, y, mapId));
                     session.Entities.Add(tempQualifier1);
                     break;
                 case 'b':
-                    var tempQualifier2 = entityManager.SpawnEntity(color + "Bishop", new MapCoordinates(x + i * separation, y, mapId));
+                    var tempQualifier2 = entityManager.Spawn(color + "Bishop", new MapCoordinates(x + i * separation, y, mapId));
                     session.Entities.Add(tempQualifier2);
                     break;
                 case 'q':
-                    var tempQualifier3 = entityManager.SpawnEntity(color + "Queen", new MapCoordinates(x + i * separation, y, mapId));
+                    var tempQualifier3 = entityManager.Spawn(color + "Queen", new MapCoordinates(x + i * separation, y, mapId));
                     session.Entities.Add(tempQualifier3);
                     break;
                 case 'k':
-                    var tempQualifier4 = entityManager.SpawnEntity(color + "King", new MapCoordinates(x + i * separation, y, mapId));
+                    var tempQualifier4 = entityManager.Spawn(color + "King", new MapCoordinates(x + i * separation, y, mapId));
                     session.Entities.Add(tempQualifier4);
                     break;
             }
@@ -78,7 +78,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
 
         for (var i = 0; i < 8; i++)
         {
-            var tempQualifier = entityManager.SpawnEntity(color + "Pawn", new MapCoordinates(x + i * separation, y, mapId));
+            var tempQualifier = entityManager.Spawn(color + "Pawn", new MapCoordinates(x + i * separation, y, mapId));
             session.Entities.Add(tempQualifier);
         }
     }

@@ -128,8 +128,8 @@ public sealed partial class TippyUIController : UIController
                     return;
 
                 _entity = next.Proto is null
-                    ? EntityManager.SpawnEntity(_cfg.GetCVar(CCVars.TippyEntity), MapCoordinates.Nullspace)
-                    : EntityManager.SpawnEntity(next.Proto, MapCoordinates.Nullspace);
+                    ? EntityManager.Spawn(_cfg.GetCVar(CCVars.TippyEntity))
+                    : EntityManager.Spawn(next.Proto);
 
                 if (!EntityManager.TryGetComponent(_entity, out sprite))
                     return;

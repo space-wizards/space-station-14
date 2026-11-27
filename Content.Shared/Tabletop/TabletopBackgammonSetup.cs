@@ -13,7 +13,7 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
-        var board = entityManager.SpawnEntity(BoardPrototype, session.Position);
+        var board = entityManager.Spawn(BoardPrototype, session.Position);
 
         const float borderLengthX = 7.35f; //BORDER
         const float borderLengthY = 5.60f; //BORDER
@@ -42,7 +42,7 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
         {
             for (var i = 0; i < numberOfPieces; i++)
             {
-                session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop))));
+                session.Entities.Add(entityManager.Spawn(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop))));
             }
         }
 

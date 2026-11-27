@@ -128,7 +128,7 @@ public sealed partial class TabletopSystem
         var session = tabletop.Session!;
 
         // Spawn an empty entity at the coordinates.
-        var camera = EntityManager.SpawnEntity(null, session.Position.Offset(offset));
+        var camera = Spawn(null, session.Position.Offset(offset));
 
         // Add an eye component and disable FOV.
         var eyeComponent = EnsureComp<EyeComponent>(camera);
