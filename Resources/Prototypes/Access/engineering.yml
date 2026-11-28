@@ -12,6 +12,7 @@
 
 - type: accessGroup
   id: Engineering
+  name: id-card-access-group-engineering
   tags:
   - ChiefEngineer
   - Engineering

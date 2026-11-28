@@ -28,6 +28,7 @@
 
 - type: accessGroup
   id: Security
+  name: id-card-access-group-security
   tags:
   - HeadOfSecurity
   - Security
@@ -38,6 +39,7 @@
 
 - type: accessGroup
   id: Armory
+  name: id-card-access-group-armory
   tags:
   - Security
   - Armory

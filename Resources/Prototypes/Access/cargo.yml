@@ -12,6 +12,7 @@
 
 - type: accessGroup
   id: Cargo
+  name: id-card-access-group-cargo
   tags:
   - Quartermaster
   - Salvage

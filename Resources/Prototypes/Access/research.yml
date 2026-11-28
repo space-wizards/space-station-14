@@ -8,6 +8,7 @@
 
 - type: accessGroup
   id: Research
+  name: id-card-access-group-research
   tags:
   - ResearchDirector
   - Research
