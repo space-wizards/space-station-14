@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 293.0.1
+  engineVersion: 297.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/22/2026 01:40:44
+  time: 11/28/2026 02:47:29
   entityCount: 567
 maps: []
 grids:
@@ -245,7 +245,7 @@ entities:
       pos: 11.5,2.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -106.7974
+      secondsUntilStateChange: -171.06258
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -3358,7 +3358,7 @@ entities:
     - type: Transform
       parent: 1
       pos: 8.5,-0.5
-- proto: SuitStorageSyndie
+- proto: SuitStorageEVASyndicate
   entities:
   - uid: 452
     components:
@@ -3370,6 +3370,8 @@ entities:
     - type: Transform
       parent: 1
       pos: -9.5,6.5
+- proto: SuitStorageSyndie
+  entities:
   - uid: 455
     components:
     - type: Transform
