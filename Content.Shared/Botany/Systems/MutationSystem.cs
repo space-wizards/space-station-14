@@ -49,7 +49,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
                 var odds = mutation.BaseOdds * severity - triggers;
                 triggers++;
                 if (Random(Math.Min(odds, 1.0f)))
-                    TryAddMutation(ent, mutation);
+                    TryAddMutation(ent, mutation, false);
             }
         }
 
@@ -62,7 +62,7 @@ public sealed partial class PlantMutationSystem : EntitySystem
     /// </summary>
     /// <returns>True if the mutation was applied.</returns>
     [PublicAPI]
-    public bool TryAddMutation(Entity<PlantComponent?> ent, RandomPlantMutation mutation)
+    public bool TryAddMutation(Entity<PlantComponent?> ent, RandomPlantMutation mutation, bool raiseMutationChangedEvent = true)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -78,6 +78,11 @@ public sealed partial class PlantMutationSystem : EntitySystem
         }
 
         ApplyMutation((ent, ent.Comp), mutation);
+        if (raiseMutationChangedEvent)
+        {
+            var ev = new PlantMutationsChangedEvent(ent.Owner);
+            RaiseLocalEvent(ref ev);
+        }
         return true;
     }
 
