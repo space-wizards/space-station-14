@@ -8,24 +8,29 @@
     - state: red
     - sprite: Structures/Specific/anomaly.rsi
       state: anom1
-  - type: RandomSpawner
-    chance: 1
-    prototypes:
-    - AnomalyPyroclastic
-    - AnomalyGravity
-    - AnomalyElectricity
-    - AnomalyFlesh
-    - AnomalyBluespace
-    - AnomalyIce
-    - RandomRockAnomalySpawner
-    - AnomalyLiquid
-    - AnomalyFlora
-    - AnomalyShadow
-    - AnomalyTech
-    - AnomalySanta
-    rareChance: 0.3
-    rarePrototypes:
-    - RandomAnomalyInjectorSpawner
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 7
+        children:
+        - id: AnomalyPyroclastic
+        - id: AnomalyGravity
+        - id: AnomalyElectricity
+        - id: AnomalyFlesh
+        - id: AnomalyBluespace
+        - id: AnomalyIce
+        - id: RandomRockAnomalySpawner
+        - id: AnomalyLiquid
+        - id: AnomalyFlora
+        - id: AnomalyShadow
+        - id: AnomalyTech
+        - id: AnomalySanta
+          conditions:
+          - !type:HolidayCondition
+            holiday: FestiveSeason
+      - id: RandomAnomalyInjectorSpawner
+        weight: 3
     offset: 0.15 # not to put it higher. The anomaly sychnronizer looks for anomalies within this radius, and if the radius is higher, the anomaly can be attracted from a neighboring tile.
 
 - type: entity
@@ -59,17 +64,20 @@
     - state: red
     - sprite: Structures/Specific/Anomalies/tech_anom.rsi
       state: pulse
-  - type: RandomSpawner
-    prototypes:
-    - AnomalyTrapPyroclastic
-    - AnomalyTrapElectricity
-    - AnomalyTrapShadow
-    - AnomalyTrapIce
-    - AnomalyTrapFlora
-    - AnomalyTrapBluespace
-    - AnomalyTrapFlesh
-    - AnomalyTrapGravity
-    - AnomalyTrapTech
-    - AnomalyTrapRock
-    - AnomalyTrapSanta
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: AnomalyTrapPyroclastic
+      - id: AnomalyTrapElectricity
+      - id: AnomalyTrapShadow
+      - id: AnomalyTrapIce
+      - id: AnomalyTrapFlora
+      - id: AnomalyTrapBluespace
+      - id: AnomalyTrapFlesh
+      - id: AnomalyTrapGravity
+      - id: AnomalyTrapTech
+      - id: AnomalyTrapRock
+      - id: AnomalyTrapSanta
+        conditions:
+        - !type:HolidayCondition
+          holiday: FestiveSeason
