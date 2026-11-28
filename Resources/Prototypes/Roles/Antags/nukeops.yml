@@ -253,7 +253,7 @@
     head: ClothingHeadHelmetSwat
     mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudSyndicate
-    outerClothing: ClothingOuterVestWebElite
+    outerClothing: ClothingOuterArmorBase
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpackSyndicate
     shoes: ClothingShoesBootsCombatFilled
@@ -271,6 +271,5 @@
     neck: SyndicateWhistle
     jumpsuit: ClothingUniformJumpsuitSyndieFormal
     head: ClothingHeadHelmetSwatSyndicate
-    outerClothing: ClothingOuterVestWeb
     pocket1: BaseUplinkRadioInstigator20TC
     pocket2: EnergySword
