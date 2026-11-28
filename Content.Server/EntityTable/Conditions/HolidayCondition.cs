@@ -17,11 +17,15 @@ public sealed partial class HolidayCondition : EntityTableCondition
     [DataField(required: true)]
     public ProtoId<HolidayPrototype> Holiday;
 
+    private static HolidaySystem? _holiday;
+
     protected override bool EvaluateImplementation(EntityTableSelector root,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        return entMan.System<HolidaySystem>().IsCurrentlyHoliday(Holiday);
+        _holiday ??= entMan.System<HolidaySystem>();
+
+        return _holiday.IsCurrentlyHoliday(Holiday);
     }
 }
