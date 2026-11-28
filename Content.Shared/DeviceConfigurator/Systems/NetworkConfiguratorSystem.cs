@@ -359,8 +359,8 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
         var name = Identity.Name(target, EntityManager, configurator);
         addressId ??= target.Comp.Address;
-        configurator.Comp.Devices.Add(addressId.Value, target);
-        configurator.Comp.NamedDevices.Add(addressId.Value, (target.Comp.Prefix, name));
+        configurator.Comp.Devices[addressId.Value] = target;
+        configurator.Comp.NamedDevices[addressId.Value] = (target.Comp.Prefix, name);
         DirtyFields(configurator, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
 
         var linkedDeviceComp = EnsureComp<LinkedDeviceNetworkComponent>(target.Owner);
