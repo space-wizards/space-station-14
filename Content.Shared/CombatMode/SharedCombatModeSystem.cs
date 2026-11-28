@@ -31,7 +31,7 @@ public abstract partial class SharedCombatModeSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnShutdown(EntityUid uid, CombatModeComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, CombatModeComponent component, ref ComponentShutdown args)
     {
         _actionsSystem.RemoveAction(uid, component.CombatToggleActionEntity);
 

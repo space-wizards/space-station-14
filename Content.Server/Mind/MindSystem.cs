@@ -26,7 +26,7 @@ public sealed partial class MindSystem : SharedMindSystem
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
 
     [SubscribeLocalEvent]
-    private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
+    private void OnMindShutdown(EntityUid uid, MindComponent mind, ref ComponentShutdown args)
     {
         if (mind.UserId is {} user)
         {
@@ -46,6 +46,14 @@ public sealed partial class MindSystem : SharedMindSystem
     [SubscribeLocalEvent]
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
+        // TODO: This sucks but I want tests working; we don't want to start spawning on test teardown.
+        if (EntityManager.ShuttingDown)
+            return;
+
+        // A visited entity (e.g. a ghost) returns the mind to its body so we do that before we start doing container work.
+        if (TryComp(uid, out VisitingMindComponent? visitingComp) && visitingComp.MindId is { } visitingMind)
+            UnVisit(visitingMind);
+
         if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
 

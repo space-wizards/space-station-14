@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Power.EntitySystems;
+using Content.Server.SurveillanceCamera.Components;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
@@ -12,6 +13,8 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private PowerReceiverSystem _power = default!;
+
+    private readonly HashSet<EntityUid> _dirtyGrids = [];
 
     [SubscribeLocalEvent(after: [typeof(DeviceNetworkSystem)])]
     private void OnCameraInit(Entity<SurveillanceCameraComponent> ent, ref MapInitEvent args)
@@ -32,14 +35,7 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         var newGridUid = args.Component.GridUid;
 
         if (oldGridUid != newGridUid && oldGridUid is not null && !TerminatingOrDeleted(oldGridUid.Value))
-        {
-            if (TryComp<SurveillanceCameraMapComponent>(oldGridUid, out var oldMapComp))
-            {
-                var netEntity = GetNetEntity(ent.Owner);
-                if (oldMapComp.Cameras.Remove(netEntity))
-                    Dirty(oldGridUid.Value, oldMapComp);
-            }
-        }
+            RemoveCameraMarker(ent.Owner, oldGridUid.Value);
 
         if (newGridUid is not null && !TerminatingOrDeleted(newGridUid.Value))
             UpdateCameraMarker(ent);
@@ -57,14 +53,20 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         UpdateCameraMarker(ent);
     }
 
-    [SubscribeNetworkEvent]
-    private void OnRequestCameraMarkerUpdate(RequestCameraMarkerUpdateMessage args)
+    public override void Update(float frameTime)
     {
-        var cameraEntity = GetEntity(args.CameraEntity);
+        base.Update(frameTime);
 
-        if (TryComp<SurveillanceCameraComponent>(cameraEntity, out var comp)
-            && HasComp<DeviceNetworkComponent>(cameraEntity))
-            UpdateCameraMarker((cameraEntity, comp));
+        if (_dirtyGrids.Count == 0)
+            return;
+
+        var ev = new SurveillanceCameraMapMarkersChangedEvent();
+        foreach (var grid in _dirtyGrids)
+        {
+            if (!TerminatingOrDeleted(grid))
+                RaiseLocalEvent(grid, ref ev);
+        }
+        _dirtyGrids.Clear();
     }
 
     /// <summary>
@@ -77,15 +79,18 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         if (TerminatingOrDeleted(uid))
             return;
 
-        if (!TryComp(uid, out TransformComponent? xform) || !TryComp(uid, out DeviceNetworkComponent? deviceNet))
+        if (!TryComp(uid, out TransformComponent? xform))
             return;
 
         var gridUid = xform.GridUid;
         if (gridUid is null)
             return;
 
-        if (deviceNet.ReceiveFrequencyId == null)
+        if (!TryComp(uid, out DeviceNetworkComponent? deviceNet) || deviceNet.ReceiveFrequencyId is null)
+        {
+            RemoveCameraMarker(uid, gridUid.Value);
             return;
+        }
 
         var netEntity = GetNetEntity(uid);
 
@@ -120,7 +125,18 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
             Subnet = subnet,
             Visible = visible,
         };
-        Dirty(gridUid.Value, mapComp);
+
+        _dirtyGrids.Add(gridUid.Value);
+    }
+
+    private void RemoveCameraMarker(EntityUid cameraUid, EntityUid gridUid)
+    {
+        if (!TryComp<SurveillanceCameraMapComponent>(gridUid, out var mapComp))
+            return;
+
+        var netEntity = GetNetEntity(cameraUid);
+        if (mapComp.Cameras.Remove(netEntity))
+            _dirtyGrids.Add(gridUid);
     }
 
     /// <summary>
@@ -142,7 +158,7 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
 
         marker.Visible = visible;
         mapComp.Cameras[netEntity] = marker;
-        Dirty(gridUid.Value, mapComp);
+        _dirtyGrids.Add(gridUid.Value);
     }
 
     /// <summary>

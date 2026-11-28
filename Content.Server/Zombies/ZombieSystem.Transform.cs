@@ -8,6 +8,7 @@ using Content.Server.Ghost;
 using Content.Server.Inventory;
 using Content.Server.Mind;
 using Content.Server.NPC;
+using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.StationEvents.Components;
@@ -307,6 +308,7 @@ public sealed partial class ZombieSystem
 
         _identity.QueueIdentityUpdate(target);
 
+        RemComp<NPCImprintedComponent>(target);
         var htn = EnsureComp<HTNComponent>(target);
         htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
         htn.Blackboard.SetValue(NPCBlackboard.Owner, target);

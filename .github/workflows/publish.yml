@@ -58,7 +58,7 @@ jobs:
         git fetch --depth=1
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore Content.Packaging/Content.Packaging.csproj
 
     - name: Get last publish SHA
       id: last-publish

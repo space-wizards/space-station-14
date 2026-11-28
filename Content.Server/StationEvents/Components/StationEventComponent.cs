@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -32,9 +33,11 @@ public sealed partial class StationEventComponent : Component
     public Color EndAnnouncementColor = Color.Gold;
 
     [DataField]
+    [AllowStereo]
     public SoundSpecifier? StartAudio;
 
     [DataField]
+    [AllowStereo]
     public SoundSpecifier? EndAudio;
 
     /// <summary>

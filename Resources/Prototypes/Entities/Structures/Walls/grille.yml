@@ -168,6 +168,10 @@
   - type: Construction
     graph: GrilleDiagonal
     node: grilleDiagonal
+  - type: Tag
+    tags:
+    - Diagonal
+    - Structure
 
 ### Broken state
 - type: entity
@@ -208,6 +212,7 @@
   - type: Tag
     tags:
     - ForceNoFixRotations
+    - Structure
   - type: Damageable
     damageModifierSet: RodMetalMod
   - type: Destructible

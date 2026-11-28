@@ -93,4 +93,15 @@ public static class ColorExtensions
             A = from.A,
         };
     }
+
+    /// <summary>
+    /// Returns Black or White based on the background color to allow readability
+    /// </summary>
+    public static Color GetContrastingTextColor(this Color color)
+    {
+        var textColor = 0.2126f * color.R + 0.7152f * color.G + 0.0722f * color.B > 0.5
+                ? Color.Black
+                : Color.White;
+        return textColor;
+    }
 }

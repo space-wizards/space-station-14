@@ -25,10 +25,10 @@ jobs:
         dotnet-version: 10.0.x
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore Content.IntegrationTests/Content.IntegrationTests.csproj
 
     - name: Build Project
-      run: dotnet build --configuration DebugOpt --no-restore /m
+      run: dotnet build Content.IntegrationTests/Content.IntegrationTests.csproj --configuration DebugOpt --no-restore /m
 
     - name: Run Content.Tests
       id: tests

@@ -1,3 +1,5 @@
+# When adding new shards also add them to id: RandomCrystalShardTable
+
 - type: entity
   abstract: true
   parent: MaterialBase
@@ -161,20 +163,3 @@
     tags:
       - Trash
       - CrystalRed
-
-- type: entity
-  parent: ShardCrystalBase
-  id: ShardCrystalRandom
-  name: random crystal shard
-  components:
-  - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      - id: ShardCrystalGreen
-      - id: ShardCrystalPink
-      - id: ShardCrystalYellow
-      - id: ShardCrystalBlack
-      - id: ShardCrystalOrange
-      - id: ShardCrystalBlue
-      - id: ShardCrystalCyan
-      - id: ShardCrystalRed
