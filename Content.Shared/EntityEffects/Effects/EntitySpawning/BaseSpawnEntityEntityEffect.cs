@@ -31,6 +31,6 @@ public abstract partial class BaseSpawnEntityEntityEffect<T> : EntityEffectBase<
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-spawn-entity",
             ("chance", Probability),
-            ("entname", IoCManager.Resolve<IPrototypeManager>().Index<EntityPrototype>(Entity).Name),
+            ("entname", prototype.Index(Entity).Name),
             ("amount", Number));
 }

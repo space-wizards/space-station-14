@@ -85,7 +85,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         SetActive(camera, args.Powered, component);
     }
 
-    private void OnShutdown(EntityUid camera, SurveillanceCameraComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid camera, SurveillanceCameraComponent component, ref ComponentShutdown args)
     {
         Deactivate(camera, component);
     }

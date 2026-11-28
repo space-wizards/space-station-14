@@ -107,7 +107,7 @@ public sealed partial class DragonSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnShutdown(EntityUid uid, DragonComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, DragonComponent component, ref ComponentShutdown args)
     {
         DeleteRifts(uid, false, component);
     }

@@ -67,8 +67,21 @@ public sealed partial class IconSmoothSystem : EntitySystem
         // However, I'm pretty sure the caching behavior is more taxing, although that can't be made parallel without engine changes.
         while (_dirtyEntities.TryDequeue(out var entity))
         {
+            entity.Comp.UpdateQueued = false;
+            if (entity.Comp.Deleted)
+                continue;
+
             CalculateNewSprite(entity);
         }
+    }
+
+    private void QueueUpdate(Entity<IconSmoothComponent> entity)
+    {
+        if (entity.Comp.UpdateQueued || entity.Comp.Deleted)
+            return;
+
+        entity.Comp.UpdateQueued = true;
+        _dirtyEntities.Enqueue(entity);
     }
 
     private void CalculateNewSprite(Entity<IconSmoothComponent> entity)
@@ -144,7 +157,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
             return;
 
         entity.Comp.States[index].Base = state;
-        _dirtyEntities.Enqueue((entity, entity.Comp));
+        QueueUpdate((entity, entity.Comp));
     }
 
     [SubscribeLocalEvent]
@@ -200,7 +213,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void UpdateNeighbors(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid, Vector2i pos, bool updateSelf = true)
     {
         if (updateSelf)
-            _dirtyEntities.Enqueue(entity);
+            QueueUpdate(entity);
 
         foreach (var direction in DirectionExtensions.AllDirections)
         {
@@ -216,7 +229,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         while (entities.MoveNext(out var entity))
         {
             if (_iconSmoothQuery.TryComp(entity, out var iconSmooth) && iconSmooth.Enabled)
-                _dirtyEntities.Enqueue((entity.Value, iconSmooth));
+                QueueUpdate((entity.Value, iconSmooth));
         }
     }
 
@@ -457,7 +470,8 @@ public sealed partial class IconSmoothSystem : EntitySystem
             ExpandCache();
 
         var index = _freeListHead;
-        _freeListHead = _keyCaches[index].RefCount;
+        DebugTools.Assert(_keyCaches[index].RefCount <= 255, $"Cache entry ref count exceeded valid _freeListHead limit (RefCount: {_keyCaches[index].RefCount}, limit is 255)"); // ensuring it did not exceed 255 before overwriting _freeListHead
+        _freeListHead = (short)_keyCaches[index].RefCount;
         _keyCaches[index] = new KeyCache(_workingKeyRing);
 
         return (byte)index;
@@ -560,7 +574,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         /// When empty, stores a reference to the next available index in _keyCache
         /// If there is no reference available, is set to -1
         /// </summary>
-        public short RefCount = 1; // Doubles as freelist chain
+        public int RefCount = 1; // Doubles as freelist chain
     }
 }
 

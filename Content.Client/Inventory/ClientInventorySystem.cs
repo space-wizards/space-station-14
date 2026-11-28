@@ -92,7 +92,7 @@ namespace Content.Client.Inventory
             OnSpriteUpdate?.Invoke(update);
         }
 
-        private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, InventoryComponent component, ref ComponentShutdown args)
         {
             if (TryComp(uid, out InventorySlotsComponent? inventorySlots))
             {
@@ -249,7 +249,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            _pointing.TryPointAtEntity(GetNetEntity(item.Value));
+            _pointing.TryPointAtEntity(item.Value);
         }
 
         protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)

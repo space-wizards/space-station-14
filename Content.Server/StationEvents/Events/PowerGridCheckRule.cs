@@ -123,8 +123,15 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
                 _apc.ApcToggleBreaker(entity, apcComponent);
         }
 
+        rule.Comp.Unpowered.Clear();
+
         // Can't use the default EndAudio
         rule.Comp.AnnounceCancelToken?.Cancel();
+        rule.Comp.AnnounceCancelToken = null;
+
+        if (TerminatingOrDeleted(rule))
+            return;
+
         rule.Comp.AnnounceCancelToken = new CancellationTokenSource();
         Timer.Spawn(3000,
             () =>
@@ -132,7 +139,13 @@ public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridChe
             Audio.PlayGlobal(rule.Comp.PowerOnSound, Filter.Broadcast(), true);
         },
             rule.Comp.AnnounceCancelToken.Token);
-        rule.Comp.Unpowered.Clear();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnShutdown(EntityUid uid, PowerGridCheckRuleComponent component, ComponentShutdown args)
+    {
+        component.AnnounceCancelToken?.Cancel();
+        component.AnnounceCancelToken = null;
     }
 
     protected override void ActiveTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)

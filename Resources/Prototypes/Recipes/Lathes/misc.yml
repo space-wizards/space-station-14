@@ -310,3 +310,10 @@
     Steel: 400
     Plastic: 200
     Glass: 200
+
+- type: latheRecipe
+  id: DrinkBottlePlasticSmall
+  result: DrinkBottlePlasticSmall
+  completetime: 1
+  materials:
+    Plastic: 50

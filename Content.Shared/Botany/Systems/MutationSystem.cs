@@ -159,15 +159,6 @@ public sealed partial class PlantMutationSystem : EntitySystem
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
         // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
         targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
-
-        // Hybrids have a high chance of being seedless. Balances very
-        // effective hybrid crossings.
-        if (pollenProtoId != null
-            && pollenProtoId != MetaData(targetPlant).EntityPrototype?.ID
-            && Random(0.7f))
-        {
-            EnsureComp<PlantTraitSeedlessComponent>(targetPlant);
-        }
     }
 
     /// <summary>
@@ -281,9 +272,21 @@ public sealed partial class PlantMutationSystem : EntitySystem
     [PublicAPI]
     public void CrossTrait(EntityUid val, EntityUid pollenData)
     {
-        foreach (var component in AllComps(pollenData))
+        foreach (var component in AllComps<PlantTraitsComponent>(val))
         {
-            if (component is not PlantTraitsComponent)
+            if (component.PollinationProtected)
+                continue;
+
+            if (HasComp(pollenData, component.GetType()))
+                continue;
+
+            if (Random(0.5f))
+                RemComp(val, component);
+        }
+
+        foreach (var component in AllComps<PlantTraitsComponent>(pollenData))
+        {
+            if (component.PollinationProtected)
                 continue;
 
             if (HasComp(val, component.GetType()))

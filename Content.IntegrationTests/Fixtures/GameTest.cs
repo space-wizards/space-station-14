@@ -166,28 +166,38 @@ public abstract partial class GameTest
 
         Pair = await PoolManager.GetServerClient(settings, new NUnitTestContextWrap(testContext, TestContext.Out));
 
-        Task.WaitAll(
-            Server.WaitPost(() => ServerThread = Thread.CurrentThread),
-            Client.WaitPost(() => ClientThread = Thread.CurrentThread)
-        );
-
-        await Pair.ReallyBeIdle(5); // Arbitrary setup time wait.
-
-        InjectDependencies(this);
-
-        var attribs = test.Method!.GetCustomAttributes<IGameTestModifier>(false);
-        var suiteAttribs = test.Method!.TypeInfo.GetCustomAttributes<IGameTestModifier>(true);
-
-        foreach (var attribute in suiteAttribs.Concat(attribs))
+        try
         {
-            await attribute.ApplyToTest(this);
+            await Task.WhenAll(
+                Server.WaitPost(() => ServerThread = Thread.CurrentThread),
+                Client.WaitPost(() => ClientThread = Thread.CurrentThread)
+            );
+
+            await Pair.ReallyBeIdle(5); // Arbitrary setup time wait.
+
+            InjectDependencies(this);
+
+            var attribs = test.Method!.GetCustomAttributes<IGameTestModifier>(false);
+            var suiteAttribs = test.Method!.TypeInfo.GetCustomAttributes<IGameTestModifier>(true);
+
+            foreach (var attribute in suiteAttribs.Concat(attribs))
+            {
+                await attribute.ApplyToTest(this);
+            }
+
+            _setupDone = true;
+
+            await DoPreTestOverrides();
+
+            await Pair.RunUntilSynced();
         }
-
-        _setupDone = true;
-
-        await DoPreTestOverrides();
-
-        await Pair.RunUntilSynced();
+        catch
+        {
+            _pairDestroyed = true;
+            try { await Pair.DisposeAsync(); }
+            catch (Exception cleanup) { TestContext.Out.WriteLine($"Setup cleanup: {cleanup}"); }
+            throw;
+        }
     }
 
     /// <summary>
@@ -227,40 +237,40 @@ public abstract partial class GameTest
     [TearDown]
     public virtual async Task DoTeardown()
     {
+        if (Pair == null || _pairDestroyed)
+            return;
+
+        var alreadyFailed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed;
         try
         {
-            // In some cool future we might be able to make this only throw out the pair
-            // if the test threw exceptions. But that'd require fixing all of them to do cleanup properly on failure.
-            //
-            // So not yet.
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            _pairDestroyed = alreadyFailed;
+            if (!alreadyFailed)
             {
-                _pairDestroyed = true; // Blow it up, we failed and it might be screwed.
-                return;
+                await Pair.RunUntilSynced();
+                await CleanUpEntities();
             }
-
-            // Roll forward til sync for teardown.
-            await Pair.RunUntilSynced();
-
-            await CleanUpEntities();
-
-            // And other teardown logic will go here. Eventually.
-
+            PreFinalizeHook?.Invoke();
         }
-        catch (Exception)
+        catch (Exception cleanup)
         {
             _pairDestroyed = true;
-            Assert.Fail();
-            throw;
+            if (!alreadyFailed)
+                throw;
+            TestContext.Out.WriteLine($"Teardown after test failure: {cleanup}");
         }
         finally
         {
-            PreFinalizeHook?.Invoke();
-
-            if (!_pairDestroyed)
-                await Pair.CleanReturnAsync();
-            else
-                await Pair.DisposeAsync();
+            try
+            {
+                if (!_pairDestroyed)
+                    await Pair.CleanReturnAsync();
+                else
+                    await Pair.DisposeAsync();
+            }
+            catch (Exception cleanup) when (_pairDestroyed)
+            {
+                TestContext.Out.WriteLine($"Teardown shutdown: {cleanup}");
+            }
         }
     }
 }

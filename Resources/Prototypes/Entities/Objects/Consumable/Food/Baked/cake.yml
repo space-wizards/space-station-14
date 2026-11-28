@@ -1039,16 +1039,46 @@
 - type: entity
   name: cak
   id: MobCatCake
-  parent: [SolutionLarge, FoodBase]
+  parent: [MobCat, SolutionLarge, FoodBase]
   description: It's a cake. It's a cat. It's a cak.
   components:
+  - type: EntityTableContainerFill # drops nothing on gib
+    containers:
+      body_organs: !type:AllSelector
+        children: []
+  - type: Edible
+    requireDead: false
+  - type: CollisionWake
+    enabled: false # EVIL! (without this the cak behaves like an item and loses its collisions after being immobile for a while, preventing me from crippling its body with .30 caliber. death to all caks)
   - type: FlavorProfile
     flavors:
     - sweet
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodCakeBirthdaySlice
+      amount: 5
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodCakeBirthdaySlice:
+            min: 3
+            max: 5
   - type: InjectableSolution
     solution: food
   - type: RefillableSolution
     solution: food
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 40
+      - ReagentId: Butter
+        Quantity: 20
   - type: Solution
     solution:
       reagents:
@@ -1090,6 +1120,14 @@
     - 0,5,0,6
     - 4,5,4,6
     heldPrefix: cak
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cak
+      Critical:
+        Base: cak_dead
+      Dead:
+        Base: cak_dead
   - type: Clothing
     quickEquip: false
     sprite: Mobs/Pets/cat.rsi
@@ -1122,16 +1160,17 @@
     baseResistTime: 2
   - type: Puller
     needsHands: false
-  - type: Examiner
-  - type: DoAfter
-  - type: CombatMode
+  - type: ReplacementAccent
+    accent: noreplacement
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Animals/cat_hiss.ogg
     hidden: true
     damage:
       types:
-        Blunt: 1
+        Blunt: 2
+        Piercing: 3
+        Slash: 3
 
 # Suppermatter
 # I can't figure out where to put this. It kind of acts like a cake I guess?
