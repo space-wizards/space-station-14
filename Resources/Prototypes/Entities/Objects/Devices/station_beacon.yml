@@ -231,6 +231,14 @@
 
 - type: entity
   parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconGenpop
+  suffix: Genpop
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-genpop
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
   id: DefaultStationBeaconDetectiveRoom
   suffix: Detective's Room
   components:
@@ -333,6 +341,22 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-clinic
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconCloning
+  suffix: Cloning
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-cloning
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconVirology
+  suffix: Virology
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-virology
 
 - type: entity
   parent: DefaultStationBeacon
@@ -533,7 +557,7 @@
 - type: entity
   parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconGravGen
-  suffix: Grav Gen
+  suffix: Gravity Generator
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-gravgen
