@@ -138,7 +138,6 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
 
         var address = _deviceNetwork.GetAddress(target);
-        var addressId = target.Comp.Address;
         if (target.Comp.Address == 0)
         {
             // This primarily checks if the entity in question is pre-map init or not.
@@ -159,7 +158,6 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             }
 
             address = $"UID: {target}";
-            addressId = new DeviceAddress(target.Owner.Id); // Weird but works for me.
         }
 
         if (configurator.Comp.Devices.ContainsValue(target))
@@ -168,7 +166,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
         }
 
-        AddDevice(configurator, target, addressId);
+        AddDevice(configurator, target);
 
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-saved", ("address", address), ("device", target)),
             target,
@@ -350,17 +348,23 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     /// </summary>
     /// <param name="configurator">Configurator to add the device to.</param>
     /// <param name="target">Target device to add.</param>
-    /// <param name="addressId">Optional address ID to use as an override.</param>
-    private void AddDevice(Entity<NetworkConfiguratorComponent?> configurator, Entity<DeviceNetworkComponent?> target, DeviceAddress? addressId = null)
+    private void AddDevice(Entity<NetworkConfiguratorComponent?> configurator, Entity<DeviceNetworkComponent?> target)
     {
         if (!_networkConfigQuery.Resolve(configurator.Owner, ref configurator.Comp)
             || !_deviceNetworkQuery.Resolve(target.Owner, ref target.Comp, false))
             return;
 
         var name = Identity.Name(target, EntityManager, configurator);
-        addressId ??= target.Comp.Address;
-        configurator.Comp.Devices.Add(addressId.Value, target);
-        configurator.Comp.NamedDevices.Add(addressId.Value, (target.Comp.Prefix, name));
+        var addressId = target.Comp.Address == DeviceAddress.Invalid // Pre MapInit devices will have an invalid address, make up a consistent one
+            ? new DeviceAddress(target.Owner.Id)
+            : target.Comp.Address;
+
+        if (!configurator.Comp.Devices.TryAdd(addressId, target))
+            Log.Error($"Tried to add device {ToPrettyString(target)} with address {addressId} but was already present.");
+
+        if (!configurator.Comp.NamedDevices.TryAdd(addressId, (target.Comp.Prefix, name)))
+            Log.Error($"Tried to add device name {name} with prefix {target.Comp.Address} and address {addressId} but was already present.");
+
         DirtyFields(configurator, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
 
         var linkedDeviceComp = EnsureComp<LinkedDeviceNetworkComponent>(target.Owner);
