@@ -1,0 +1,43 @@
+# Runs the pre-commit tool (https://pre-commit.com/) against a PR.
+# Failures indicate an uncorrected issue with the code.
+
+# If you have opened this action to modify the pre-commit behavior,
+# please go to .pre-commit-config.yaml.
+
+name: Run Pre-Commit Checks
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true  # We only care about latest.
+
+jobs:
+  check:
+    name: Run Pre-Commit
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0 # Ensures we get all the history we need
+        persist-credentials: true
+
+    - uses: actions/setup-python@v7
+      with:
+        python-version: '3.15'
+
+    # Run pre-commit against all commits in this PR
+    # Works by fetching head and base and operating over the range
+    - name: Run Pre-Commit
+      uses: pre-commit/action@v3.0.1
+      with:
+        extra_args: --from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}
+    - name: Explain
+      if: failure()
+      run: |
+        echo "If you're seeing this failure, you have something in your PR that does not meet the pre-commit rules.
+        You can install the pre-commit tool from here: https://pre-commit.com/ which will automatically resolve issues when you make commits.
+        If you do not want to use the tool, read through the errors listed and resolve them manually."
