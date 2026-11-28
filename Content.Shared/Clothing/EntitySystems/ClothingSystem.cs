@@ -195,7 +195,7 @@ public abstract partial class ClothingSystem : EntitySystem
     /// <summary>
     ///     Copy all clothing specific visuals from another item.
     /// </summary>
-    public void CopyVisuals(EntityUid uid, ClothingComponent otherClothing, ClothingComponent? clothing = null)
+    public void CopyVisuals(EntityUid uid, ClothingComponent otherClothing, ClothingComponent? clothing = null, bool notifyVisualsChanged = true)
     {
         if (!Resolve(uid, ref clothing))
             return;
@@ -204,7 +204,8 @@ public abstract partial class ClothingSystem : EntitySystem
         clothing.EquippedPrefix = otherClothing.EquippedPrefix;
         clothing.RsiPath = otherClothing.RsiPath;
 
-        _itemSys.VisualsChanged(uid);
+        if (notifyVisualsChanged)
+    _itemSys.VisualsChanged(uid);
         Dirty(uid, clothing);
     }
 
