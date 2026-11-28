@@ -177,8 +177,8 @@
             min: 20
           - !type:RoundDurationCondition
             min: 2700 # 45 minutes
-        - id: LoneOpsSpawn
-          weight: 15
+        - id: MidRoundOpsSpawn
+          weight: 20
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition

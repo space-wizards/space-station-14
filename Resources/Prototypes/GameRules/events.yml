@@ -44,7 +44,7 @@
     - id: ParadoxCloneSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
-    - id: LoneOpsSpawn
+    - id: MidRoundOpsSpawn
     - id: WizardSpawn
     - id: SpaceChangelingSpawn
     - !type:NestedSelector
@@ -596,12 +596,33 @@
     cost: 200
 
 - type: entity
+  parent: BaseGameRule
+  id: MidRoundOpsSpawn # this gamerule is used to ensure you either have loners or instigators but not both spawning at the same time
+  components:
+  - type: StationEvent
+    earliestStart: 35
+    weight: 4.5
+    minimumPlayers: 20
+    occursDuringRoundEnd: false
+    reoccurrenceDelay: 30
+  - type: DynamicRuleCost
+    cost: 75
+  - type: SubGamemodes
+    rules:
+    - id: LoneOpsSpawn
+      prob: 0.75
+      orGroup: nukeops
+    - id: InstigatorsSpawn
+      prob: 0.25
+      orGroup: nukeops
+
+- type: entity
   parent: [ BaseAntagGhostRoleRule, BaseNukeopsRule ]
   id: LoneOpsSpawn
   components:
   - type: StationEvent
     earliestStart: 35
-    weight: 5.5
+    weight: 4.5
     minimumPlayers: 20
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
     occursDuringRoundEnd: false
@@ -614,6 +635,32 @@
     antags:
     - !type:FixedAntagCount
       proto: LoneOp
+  - type: DynamicRuleCost
+    cost: 75
+
+- type: entity
+  parent: [ BaseAntagGhostRoleRule, BaseNukeopsRule ]
+  id: InstigatorsSpawn # those are basically weaker loneops
+  components:
+  - type: StationEvent
+    earliestStart: 30
+    weight: 1
+    minimumPlayers: 15
+    duration: null # needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
+    occursDuringRoundEnd: false
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/Shuttles/ShuttleEvent/instigator.yml
+  - type: NukeopsRule
+    roundEndBehavior: Nothing
+  - type: AntagSelection
+    antags:
+    - !type:FixedAntagCount
+      proto: Instigator
+      count: 2
+    - !type:FixedAntagCount
+      proto: InstigatorCommander
+      count: 1
   - type: DynamicRuleCost
     cost: 75
 
