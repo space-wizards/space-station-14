@@ -153,19 +153,20 @@ public abstract partial class SharedCuffableSystem : EntitySystem
 
     public void UpdateCuffState(Entity<CuffableComponent> ent)
     {
-        var canInteract = TryComp(ent, out HandsComponent? hands) && hands.Hands.Count > ent.Comp.CuffedHandCount;
+        var component = ent.Comp;
+        var canInteract = TryComp(ent, out HandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
 
-        if (canInteract == ent.Comp.CanStillInteract)
+        if (canInteract == component.CanStillInteract)
             return;
 
-        ent.Comp.CanStillInteract = canInteract;
+        component.CanStillInteract = canInteract;
         Dirty(ent);
         _actionBlocker.UpdateCanMove(ent);
 
-        if (ent.Comp.CanStillInteract)
-            _alerts.ClearAlert(ent.Owner, ent.Comp.CuffedAlert);
+        if (component.CanStillInteract)
+            _alerts.ClearAlert(ent.Owner, component.CuffedAlert);
         else
-            _alerts.ShowAlert(ent.Owner, ent.Comp.CuffedAlert);
+            _alerts.ShowAlert(ent.Owner, component.CuffedAlert);
 
         var ev = new CuffedStateChangeEvent();
         RaiseLocalEvent(ent, ref ev);
@@ -266,13 +267,13 @@ public abstract partial class SharedCuffableSystem : EntitySystem
         if (!args.CanAccess || ent.Comp.CuffedHandCount == 0 || args.Hands == null)
             return;
 
+        var user = args.User;
+
         // We only check can interact if the user is not uncuffing themselves. As a result, the verb will show up
         // when the user is incapacitated & trying to uncuff themselves, but TryUncuff() will still fail when
         // attempted.
-        if (args.User != args.Target && !args.CanInteract)
+        if (user != args.Target && !args.CanInteract)
             return;
-
-        var user = args.User;
 
         Verb verb = new()
         {
