@@ -1,4 +1,6 @@
 construction-recipe-diagonal-shuttle-wall = shuttle wall (diagonal)
+construction-recipe-diagonal-solid-wall = solid wall (diagonal)
+construction-recipe-diagonal-reinforced-wall = reinforced wall (diagonal)
 construction-window-diagonal = window (diagonal)
 construction-recipe-reinforced-window-diagonal = reinforced window (diagonal)
 construction-recipe-clockwork-window-diagonal = clockwork window (diagonal)
@@ -6,6 +8,7 @@ construction-recipe-plasma-window-diagonal = plasma window (diagonal)
 construction-recipe-reinforced-plasma-window-diagonal = reinforced plasma window (diagonal)
 construction-recipe-uranium-window-diagonal = uranium window (diagonal)
 construction-recipe-reinforced-uranium-window-diagonal = reinforced uranium window (diagonal)
+construction-recipe-shuttle-window-diagonal = shuttle window (diagonal)
 construction-recipe-firelock-edge = directional firelock
 construction-recipe-fence-metal-corner = chain link fence corner
 construction-recipe-fence-metal-end = chain link fence end

@@ -40,6 +40,18 @@
               amount: 2
               doAfter: 2
 
+        - to: diagonalSolidWall
+          completed:
+            - !type:SnapToGrid
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - material: Steel
+              amount: 2
+              doAfter: 2
+
         - to: reinforcedGirder
           completed:
             - !type:SnapToGrid
@@ -124,6 +136,18 @@
 
     - node: wall
       entity: WallSolid
+      edges:
+        - to: girder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+
+    - node: diagonalSolidWall
+      entity: WallSolidDiagonal
       edges:
         - to: girder
           completed:
@@ -242,6 +266,18 @@
               amount: 2
               doAfter: 1
 
+        - to: diagonalReinforcedWall
+          completed:
+            - !type:SnapToGrid
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+
         - to: shuttleWall
           completed:
             - !type:SnapToGrid
@@ -262,13 +298,15 @@
           conditions:
             - !type:EntityAnchored { }
           steps:
-            - material: Steel
-              amount: 1
-              doAfter: 1
             - tool: Welding
               doAfter: 4
+            - material: MetalRod
+              amount: 4
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 2
             - material: Plasteel
-              amount: 1
+              amount: 2
               doAfter: 1
 
         - to: girder
@@ -333,6 +371,34 @@
                 - !type:VisualizerDataInt
                   key: "enum.ReinforcedWallVisuals.DeconstructionStage"
                   data: 0
+            - tool: Cutting
+              doAfter: 1
+
+    - node: diagonalReinforcedWall
+      entity: WallReinforcedDiagonal
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 5
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
             - tool: Cutting
               doAfter: 1
 
@@ -452,10 +518,10 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetPlasteel1
-              amount: 1
+              amount: 2
             - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 1
+              prototype: PartRodMetal1
+              amount: 4
           steps:
           #To-Do: Add deconstruct visuals
             - tool: Welding
