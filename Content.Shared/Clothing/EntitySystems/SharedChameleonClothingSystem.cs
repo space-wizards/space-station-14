@@ -94,6 +94,10 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
         // world sprite icon
         UpdateSprite(uid, proto);
         var visualsCopied = false;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         // copy name and description, unless its an ID card
         if (!HasComp<IdCardComponent>(uid))
         {
@@ -136,9 +140,16 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
         {
             RemComp<ContrabandComponent>(uid);
         }
+<<<<<<< Updated upstream
     if (visualsCopied)
     { 
     _itemSystem.VisualsChanged(uid);
+=======
+
+        // Refresh the held or worn appearance once all copied visual components match.
+        if (visualsCopied)
+            _itemSystem.VisualsChanged(uid);
+>>>>>>> Stashed changes
     }
 
     private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
