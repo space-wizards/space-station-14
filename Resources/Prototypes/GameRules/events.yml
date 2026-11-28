@@ -44,8 +44,7 @@
     - id: ParadoxCloneSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
-    - id: LoneOpsSpawn
-    - id: InstigatorsSpawn
+    - id: MidRoundOpsSpawn
     - id: WizardSpawn
     - id: SpaceChangelingSpawn
     - !type:NestedSelector
@@ -595,6 +594,27 @@
         max: 3
   - type: DynamicRuleCost
     cost: 200
+
+- type: entity
+  parent: BaseGameRule
+  id: MidRoundOpsSpawn # this gamerule is used to ensure you either have loners or instigators but not both spawning at the same time
+  components:
+  - type: StationEvent
+    earliestStart: 35
+    weight: 4.5
+    minimumPlayers: 20
+    occursDuringRoundEnd: false
+    reoccurrenceDelay: 30
+  - type: DynamicRuleCost
+    cost: 75
+  - type: SubGamemodes
+    rules:
+    - id: LoneOpsSpawn
+      prob: 0.75
+      orGroup: nukeops
+    - id: InstigatorsSpawn
+      prob: 0.25
+      orGroup: nukeops
 
 - type: entity
   parent: [ BaseAntagGhostRoleRule, BaseNukeopsRule ]
