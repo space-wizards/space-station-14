@@ -93,7 +93,7 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
 
         // world sprite icon
         UpdateSprite(uid, proto);
-
+        var visualsCopied = false;
         // copy name and description, unless its an ID card
         if (!HasComp<IdCardComponent>(uid))
         {
@@ -106,14 +106,16 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
         if (TryComp(uid, out ItemComponent? item) &&
             proto.TryComp(out ItemComponent? otherItem, Factory))
         {
-            _itemSystem.CopyVisuals(uid, otherItem, item);
+            _itemSystem.CopyVisuals(uid, otherItem, item, notifyVisualsChanged: false);
+            visualsCopied = true;
         }
 
         // clothing sprite logic
         if (TryComp(uid, out ClothingComponent? clothing) &&
             proto.TryComp(out ClothingComponent? otherClothing, Factory))
         {
-            _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
+            _clothingSystem.CopyVisuals(uid, otherClothing, clothing, notifyVisualsChanged: false);
+            visualsCopied = true;
         }
 
         // appearance data logic
@@ -134,6 +136,9 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
         {
             RemComp<ContrabandComponent>(uid);
         }
+    if (visualsCopied)
+    { 
+    _itemSystem.VisualsChanged(uid);
     }
 
     private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
