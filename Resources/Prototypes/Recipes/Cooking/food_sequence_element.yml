@@ -1058,6 +1058,39 @@
   tags:
   - Flower
 
+# sunflower
+
+- type: foodSequenceElement
+  id: Sunflower
+  name: food-sequence-content-sunflower
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/sunflower.rsi
+    state: produce
+  tags:
+  - Flower
+
+# solarflower
+
+- type: foodSequenceElement
+  id: Solarflower
+  name: food-sequence-content-solarflower
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/solarflower.rsi
+    state: produce
+  tags:
+  - Flower
+
+# shadowflower
+
+- type: foodSequenceElement
+  id: Shadowflower
+  name: food-sequence-content-shadowflower
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/shadowflower.rsi
+    state: produce
+  tags:
+  - Flower
+
 # lingzhi
 
 - type: foodSequenceElement
