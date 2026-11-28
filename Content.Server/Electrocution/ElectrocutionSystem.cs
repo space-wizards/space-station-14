@@ -158,6 +158,9 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
     {
+        if (!args.OtherFixture.Hard)
+            return;
+
         if (electrified.OnBump)
             TryDoElectrifiedAct(uid, args.OtherEntity, 1, electrified);
     }
