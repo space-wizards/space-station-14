@@ -355,7 +355,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
 
         var name = Identity.Name(target, EntityManager, configurator);
-        var addressId = target.Comp.Address == DeviceAddress.Invalid // Pre MapInit devices will have an invalid address, just make it up
+        var addressId = target.Comp.Address == DeviceAddress.Invalid // Pre MapInit devices will have an invalid address, make up a consistent one
             ? new DeviceAddress(target.Owner.Id)
             : target.Comp.Address;
 
